@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[java] java学习笔记 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="学习目标及进程 1.工具的统一 mysql，idea 2019.2 ，tomcat 8 ，jdk 1.8 2.学习内容 java基础语法（变量，结构化，oop） java内存" /><meta name="keywords" content="java" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/java/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[java] java学习笔记" />
+<meta property="og:description" content="学习目标及进程 1.工具的统一 mysql，idea 2019.2 ，tomcat 8 ，jdk 1.8 2.学习内容 java基础语法（变量，结构化，oop） java内存" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/java/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-04-17T15:37:56+08:00" />
+<meta property="article:modified_time" content="2019-04-17T15:37:56+08:00" />
+
+<meta itemprop="name" content="[java] java学习笔记">
+<meta itemprop="description" content="学习目标及进程 1.工具的统一 mysql，idea 2019.2 ，tomcat 8 ，jdk 1.8 2.学习内容 java基础语法（变量，结构化，oop） java内存"><meta itemprop="datePublished" content="2019-04-17T15:37:56+08:00" />
+<meta itemprop="dateModified" content="2019-04-17T15:37:56+08:00" />
+<meta itemprop="wordCount" content="14115">
+<meta itemprop="keywords" content="java," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[java] java学习笔记"/>
+<meta name="twitter:description" content="学习目标及进程 1.工具的统一 mysql，idea 2019.2 ，tomcat 8 ，jdk 1.8 2.学习内容 java基础语法（变量，结构化，oop） java内存"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[java] java学习笔记</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-04-17 </span>
+        <div class="post-category">
+            <a href="/categories/java/"> java </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#java学习笔记">java学习笔记</a>
+      <ul>
+        <li><a href="#一java安装"><strong>一.java安装</strong></a>
+          <ul>
+            <li><a href="#1下载安装"><strong>1.下载安装</strong></a></li>
+            <li><a href="#2环境变量配置"><strong>2.环境变量配置</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#二apache-tomcat安装"><strong>二.apache-tomcat安装</strong></a>
+          <ul>
+            <li><a href="#1下载安装-1"><strong>1.下载安装</strong></a></li>
+            <li><a href="#2环境变量配置-1"><strong>2.环境变量配置</strong></a></li>
+            <li><a href="#3安装服务"><strong>3.安装服务</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#三java运行原理及过程"><strong>三.java运行原理及过程</strong></a>
+          <ul>
+            <li><a href="#1java程序运行原理"><strong>1.Java程序运行原理</strong></a></li>
+            <li><a href="#2java程序运行过程"><strong>2.Java程序运行过程</strong></a></li>
+            <li><a href="#3-jdkjrejvm三者间的关系"><strong>3.</strong> <strong>JDK、JRE、JVM三者间的关系</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#三java基础知识"><strong>三.java基础知识</strong></a>
+          <ul>
+            <li><a href="#1基础语法"><strong>1.基础语法</strong></a></li>
+            <li><a href="#2变量"><strong>2.变量</strong></a></li>
+            <li><a href="#3结构化"><strong>3.结构化</strong></a></li>
+            <li><a href="#4修饰符">**4.**<strong>修饰符</strong></a></li>
+            <li><a href="#5对象和类">5**.对象和类**</a></li>
+            <li><a href="#5string类"><strong>5.String类</strong></a></li>
+            <li><a href="#6数组"><strong>6.数组</strong></a></li>
+            <li><a href="#7方法"><strong>7.方法</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#四oop面向对象"><strong>四.oop(面向对象)</strong></a>
+          <ul>
+            <li></li>
+            <li><a href="#2-重写override与重载overload"><strong>2.</strong> <strong>重写(Override)与重载(Overload)</strong></a></li>
+            <li><a href="#3-多态"><strong>3.</strong> <strong>多态</strong></a></li>
+            <li><a href="#4-抽象类"><strong>4.</strong> <strong>抽象类</strong></a></li>
+            <li><a href="#5封装"><strong>5.封装</strong></a></li>
+            <li><a href="#6接口"><strong>6.接口</strong></a></li>
+            <li><a href="#7-包package"><strong>7.</strong> <strong>包(package)</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#五-数据结构"><strong>五.</strong> <strong>数据结构</strong></a></li>
+        <li><a href="#六内存模型"><strong>六.内存模型</strong></a></li>
+        <li><a href="#七jdbc"><strong>七.jdbc</strong></a></li>
+        <li><a href="#八maven项目"><strong>八.maven项目</strong></a></li>
+        <li><a href="#九jspservlet"><strong>九.jsp/servlet</strong></a></li>
+        <li><a href="#十-注解-annotation"><strong>十.</strong> <strong>注解</strong> <strong>(Annotation)</strong></a></li>
+        <li><a href="#十一java反射"><strong>十一.java反射</strong></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <blockquote>
+<p>学习目标及进程</p>
+<p>1.工具的统一</p>
+<p>mysql，idea 2019.2 ，tomcat 8 ，jdk 1.8</p>
+<p>2.学习内容</p>
+<p>java基础语法（变量，结构化，oop） java内存模型 java数据结构 jdbc jsp/servlet</p>
+<p>3.学习资料</p>
+<p>学习文档 学习视频推荐 基础代码一份 项目代码一份 开发工具</p>
+<p>4.学习笔记</p>
+<p>有道云</p>
+<p>5.项目验收</p>
+<p>学籍管理系统: <a href="https://blog.csdn.net/qq_37787333/article/details/83541909">https://blog.csdn.net/qq_37787333/article/details/83541909</a></p>
+<p>实现登录，学籍crud即可</p>
+<p>6.学习进度 第一周 java基础语法 java内存模型 java数据结构 基础代码敲一遍 第二周 jdbc jsp/servlet</p>
+<p>完成项目编写 <a href="https://blog.csdn.net/u014653854/article/details/937642">https://blog.csdn.net/u014653854/article/details/937642</a>&hellip;</p>
+</blockquote>
+<h1 id="java学习笔记">java学习笔记</h1>
+<h2 id="一java安装"><strong>一.java安装</strong></h2>
+<h3 id="1下载安装"><strong>1.下载安装</strong></h3>
+<p><a href="http://ftp-new-pc.pconline.com.cn/e8107d13d2cca79e80d5d69abb54a5dc/pub/download/201903/pconline1552198052014.zip">http://ftp-new-pc.pconline.com.cn/e8107d13d2cca79e80d5d69abb54a5dc/pub/download/201903/pconline1552198052014.zip</a></p>
+<h3 id="2环境变量配置"><strong>2.环境变量配置</strong></h3>
+<p>用户变量-&gt;新建-&gt;JAVA_HOME-&gt;C:\Program Files\Java\jdk1.8.0_181</p>
+<p>用户变量-&gt;编辑PATH-&gt;添加-&gt;%JAVA_HOME%\bin</p>
+<p>​                 -&gt;%JAVA_HOME%\jre\bin</p>
+<p>用户变量-&gt;新建-&gt;CLASSPATH-&gt;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar</p>
+<h2 id="二apache-tomcat安装"><strong>二.apache-tomcat安装</strong></h2>
+<h3 id="1下载安装-1"><strong>1.下载安装</strong></h3>
+<p><a href="http://mirror.bit.edu.cn/apache/tomcat/tomcat-8/v8.5.43/bin/apache-tomcat-8.5.43-windows-x64.zip">http://mirror.bit.edu.cn/apache/tomcat/tomcat-8/v8.5.43/bin/apache-tomcat-8.5.43-windows-x64.zip</a></p>
+<h3 id="2环境变量配置-1"><strong>2.环境变量配置</strong></h3>
+<p>用户变量-&gt;新建-&gt;CATALINA_HOME-&gt;D:\wnmp\apache-tomcat-8.5.43</p>
+<p>用户变量-&gt;编辑PATH-&gt;添加-&gt;%CATALINA_HOME%\bin</p>
+<p>​                        -&gt;%CATALINA_HOME%\lib</p>
+<h3 id="3安装服务"><strong>3.安装服务</strong></h3>
+<p>cd D:\wnmp\apache-tomcat-8.5.43\bin</p>
+<p>​	./service.bat install</p>
+<h2 id="三java运行原理及过程"><strong>三.java运行原理及过程</strong></h2>
+<h3 id="1java程序运行原理"><strong>1.Java程序运行原理</strong></h3>
+<p>在Java中引入了虚拟机（JVM，Java Virtual Machine）的概念，即在机器和编译程序之间加入了一层抽象的虚拟的机器。虚拟机在任何平台上都提供给编译程序一个的共同的接口。</p>
+<p>编译程序只需要面向虚拟机，生成虚拟机能够理解的字节码(ByteCode)（class文件的内容），然后由解释器来将虚拟机代码转换为特定系统的机器码执行，每一种平台的解释器是不同的，但是实现的虚拟机是相同的。</p>
+<p>Java源程序经过编译器编译后变成字节码，字节码由虚拟机解释执行，虚拟机将每一条要执行的字节码送给解释器，解释器将其翻译成特定机器上的机器码，然后在特定的机器上运行。</p>
+<p>java编译器 (javac)(编译) → 虚拟机(jvm)(解释执行) →  解释器(翻译) → 机器码</p>
+<h3 id="2java程序运行过程"><strong>2.Java程序运行过程</strong></h3>
+<p>1).创建 <strong>HelloWorld.java文件</strong></p>
+<p>public class HelloWorld {</p>
+<p>​    public static void main(String[] args) {</p>
+<p>​        System.out.println(&ldquo;Hello World&rdquo;);</p>
+<p>​    }</p>
+<p>}</p>
+<p>2).在命令行中输入以下代码</p>
+<p>javac HelloWorld.java</p>
+<p>java HelloWorld</p>
+<p>Hello World #输出的内容</p>
+<p>3).ide中完成编写代码,运行即可输出内容</p>
+<h3 id="3-jdkjrejvm三者间的关系"><strong>3.</strong> <strong>JDK、JRE、JVM三者间的关系</strong></h3>
+<p>JDK(Java Development Kit）是针对Java开发员的产品，是整个Java的核心，包括了Java运行环境JRE、Java工具和Java基础类库。</p>
+<p>JRE(Java Runtime Environment）是运行JAVA程序所必须的环境的集合，包含JVM标准实现及Java核心类库。</p>
+<p>JVM(Java Virtual Machine)（Java虚拟机）是整个java实现跨平台的最核心的部分，能够运行以Java语言写作的软件程序。</p>
+<p><strong>JDK中包含JRE，在JDK的安装目录下有一个名为jre的目录，里面有两个文件夹bin和lib，在这里可以认为bin里的就是jvm，lib中则是jvm工作所需要的类库，而jvm和 lib和起来就称为jre。</strong>　　</p>
+<p>SE(J2SE)，standard edition，标准版，是我们通常用的一个版本，从JDK 5.0开始，改名为Java SE。</p>
+<p>EE(J2EE)，enterprise edition，企业版，使用这种JDK开发J2EE应用程序，从JDK 5.0开始，改名为Java EE。</p>
+<p>ME(J2ME)，micro edition，主要用于移动设备、嵌入式设备上的java应用程序，从JDK 5.0开始，改名为Java ME。</p>
+<h2 id="三java基础知识"><strong>三.java基础知识</strong></h2>
+<h3 id="1基础语法"><strong>1.基础语法</strong></h3>
+<p><strong>大小写敏感</strong>：Java 是大小写敏感的，这就意味着标识符 Hello 与 hello 是不同的。</p>
+<p><strong>类名</strong>：对于所有的类来说，类名的首字母应该大写。如果类名由若干单词组成，那么每个单词的首字母应该大写，例如 <strong>MyFirstJavaClass</strong>。</p>
+<p><strong>方法名</strong>：所有的方法名都应该以小写字母开头。如果方法名含有若干单词，则后面的每个单词首字母大写。</p>
+<p><strong>源文件名</strong>：源文件名必须和类名相同。当保存文件的时候，你应该使用类名作为文件名保存（切记 Java 是大小写敏感的），文件名的后缀为 <strong>.java</strong>。（如果文件名和类名不相同则会导致编译错误）。</p>
+<p><strong>主方法入口</strong>：所有的 Java 程序由 <strong>public static void main(String []args)</strong> 方法开始执行。</p>
+<h3 id="2变量"><strong>2.变量</strong></h3>
+<h4 id="1命名">1).命名:</h4>
+<p>由字母、数字、下划线、$组成，不能以数字开头(注意:此处的字母还可以是中文,日文等)</p>
+<p>大小写敏感</p>
+<p>不得使用java中的关键字和保留字</p>
+<p>别用Java API里面的类名作为自己的类名。</p>
+<h4 id="2基本类型">2).基本类型</h4>
+<pre><code>char、boolean、byte、short、int、long、float、double
+</code></pre>
+<p>注意:单双引号不同</p>
+<p>常量</p>
+<p>final double PI = 3.1415927;</p>
+<h4 id="3变量作用域">3).变量作用域</h4>
+<p>类变量（静态变量）：独立于方法之外的变量，用 static 修饰。</p>
+<p>实例变量：独立于方法之外的变量，不过没有 static 修饰。</p>
+<p>局部变量：类的方法中的变量，使用前必须初始化值。</p>
+<h4 id="4变量操作">4).变量操作</h4>
+<p>算术运算符（+ 、— 、* 、/ 、%）</p>
+<p>赋值运算符（= 、+=、-=、*=、/=,、%=）</p>
+<p>关系运算符（&gt;、&gt;=、&lt;、&lt;=、!=）</p>
+<p>条件运算符（&amp;&amp;、||、！&amp;、|、^）</p>
+<p>位运算符（&amp;、|、^、~、&raquo;、&laquo;、&laquo;&lt;、&raquo;&gt;）</p>
+<p>三目运算符(<strong>x ? y : z</strong>)</p>
+<h4 id="5变量转换">5).变量转换</h4>
+<p>小转大，自动！自动类型转换（也叫隐式类型转换）</p>
+<p>大转小，强转！强制类型转换（也叫显式类型转换）</p>
+<h3 id="3结构化"><strong>3.结构化</strong></h3>
+<h4 id="1顺序结构">1).顺序结构</h4>
+<h4 id="2选择结构">2).选择结构</h4>
+<p>if(条件表达式){</p>
+<p>​    执行语句；</p>
+<p>}else if (条件表达式){</p>
+<p>​    执行语句；</p>
+<p>}else{</p>
+<p>​    执行语句；</p>
+<p>}</p>
+<p>switch(expression){</p>
+<p>​    case value :</p>
+<p>​       //语句</p>
+<p>​       break; //可选</p>
+<p>​    case value :</p>
+<p>​       //语句</p>
+<p>​       break; //可选</p>
+<p>​    //你可以有任意数量的case语句</p>
+<p>​    default : //可选</p>
+<p>​       //语句</p>
+<p>}</p>
+<h4 id="3循环结构">3).循环结构</h4>
+<p>while(条件表达式值为true)</p>
+<p>{</p>
+<p>​    执行语句；</p>
+<p>}</p>
+<p>do{</p>
+<p>​    执行语句；</p>
+<p>}while(条件表达式值为true);</p>
+<p>for(初始化表达式（1）；循环条件表达式（2）；循环后的操作表达式（3）)</p>
+<p>{</p>
+<p>​    执行语句；（4）</p>
+<p>}</p>
+<h3 id="4修饰符">**4.**<strong>修饰符</strong></h3>
+<h4 id="1访问控制修饰符">**1).**<strong>访问控制修饰符</strong></h4>
+<p><strong>default</strong> (即默认，什么也不写）: 在同一包内可见，不使用任何修饰符。使用对象：类、接口、变量、方法。</p>
+<p><strong>private</strong> : 在同一类内可见。使用对象：变量、方法。 <strong>注意：不能修饰类（外部类）</strong></p>
+<p><strong>public</strong> : 对所有类可见。使用对象：类、接口、变量、方法</p>
+<p><strong>protected</strong> : 对同一包内的类和所有子类可见。使用对象：变量、方法。 <strong>注意：不能修饰类（外部类）</strong>。</p>
+<h4 id="2访问控制和继承">2).<strong>访问控制和继承</strong></h4>
+<p>父类中声明为 public 的方法在子类中也必须为 public。</p>
+<p>父类中声明为 protected 的方法在子类中要么声明为 protected，要么声明为 public，不能声明为 private。</p>
+<p>父类中声明为 private 的方法，不能够被继承。</p>
+<h4 id="3static-修饰符">3).<strong>static 修饰符</strong></h4>
+<p>**静态变量：**无论一个类实例化多少对象，它的静态变量只有一份拷贝。 静态变量也被称为类变量。局部变量不能被声明为 static 变量。</p>
+<p>**静态方法：**静态方法不能使用类的非静态变量。静态方法从参数列表得到数据，然后计算这些数据。</p>
+<h4 id="4final-修饰符">4).<strong>final 修饰符</strong></h4>
+<p>**final 变量：**final 表示&quot;最后的、最终的&quot;含义，变量一旦赋值后，不能被重新赋值。被 final 修饰的实例变量必须显式指定初始值。final 修饰符通常和 static 修饰符一起使用来创建类常量。</p>
+<p><strong>final 方法:</strong> 类中的 final 方法可以被子类继承，但是不能被子类修改。声明 final 方法的主要目的是防止该方法的内容被修改。</p>
+<h4 id="5abstract-修饰符">5).<strong>abstract 修饰符</strong></h4>
+<p>**抽象类：**抽象类不能用来实例化对象，声明抽象类的唯一目的是为了将来对该类进行扩充。</p>
+<p>一个类不能同时被 abstract 和 final 修饰。如果一个类包含抽象方法，那么该类一定要声明为抽象类，否则将出现编译错误。</p>
+<p><strong>抽象方法:</strong> 抽象方法是一种没有任何实现的方法，该方法的的具体实现由子类提供。</p>
+<p>抽象方法不能被声明成 final 和 static。</p>
+<h3 id="5对象和类">5**.对象和类**</h3>
+<p><strong>对象</strong>：对象是类的一个实例（<strong>对象不是找个女朋友</strong>），有状态和行为。例如，一条狗是一个对象，它的状态有：颜色、名字、品种；行为有：摇尾巴、叫、吃等。</p>
+<p><strong>类</strong>：类是一个模板，它描述一类对象的行为和状态。</p>
+<p>public class Dog{</p>
+<p>String breed;</p>
+<p>int age;</p>
+<p>String color;</p>
+<p>public Dog(){</p>
+<p>​      //构造方法的名称必须与类同名，一个类可以有多个构造方法</p>
+<p>}</p>
+<p>public Dog(String name){</p>
+<p>​     // 这个构造器仅有一个参数：name</p>
+<p>​    System.out.println(&ldquo;小狗的名字是 : &quot; + name );</p>
+<p>}</p>
+<p>void barking(){</p>
+<p>​      System.out.println(&ldquo;小狗是黑色的&rdquo; );</p>
+<p>}</p>
+<p>public static void main(String[] args){</p>
+<p>​      // 下面的语句将创建一个Dog对象</p>
+<p>​      Dog myDog = new Dog( &ldquo;tommy&rdquo; );</p>
+<p>​      /* 访问类中的变量 */</p>
+<p>​      myDog.age;</p>
+<p>​      /* 访问类中的方法 */</p>
+<p>​      myDog.barking();</p>
+<p>}</p>
+<p>}</p>
+<p><strong>源文件声明规则</strong></p>
+<p>一个源文件中只能有一个public类</p>
+<p>一个源文件可以有多个非public类</p>
+<p>源文件的名称应该和public类的类名保持一致。例如：源文件中public类的类名是Employee，那么源文件应该命名为Employee.java。</p>
+<p>如果一个类定义在某个包中，那么package语句应该在源文件的首行。</p>
+<p>如果源文件包含import语句，那么应该放在package语句和类定义之间。如果没有package语句，那么import语句应该在源文件中最前面。</p>
+<p>import语句和package语句对源文件中定义的所有类都有效。在同一源文件中，不能给不同的类不同的包声明。</p>
+<h3 id="5string类"><strong>5.String类</strong></h3>
+<p>定义: String &ldquo;strVar&rdquo;  注意:只能用双引号</p>
+<p>连接: 字符串 + 字符串 或 字符串.concat</p>
+<p>长度: 字符串.length()</p>
+<p>格式化: String.format() 或 System.out.printf()</p>
+<h3 id="6数组"><strong>6.数组</strong></h3>
+<h4 id="1声明数组变量"><strong>1).声明数组变量</strong></h4>
+<p>dataType[] arrayRefVar;   // 首选的方法 	dataType arrayRefVar[];  // 效果相同，但不是首选方法</p>
+<p>double[] myList;         // 首选的方法</p>
+<p>或</p>
+<p>double myList[];         //  效果相同，但不是首选方法</p>
+<h4 id="2创建数组"><strong>2).创建数组</strong></h4>
+<p>dataType[] arrayRefVar = new dataType[arraySize];</p>
+<p>dataType[] arrayRefVar = {value0, value1, &hellip;, valuek};</p>
+<p>public class TestArray {</p>
+<p>public static void main(String[] args) {</p>
+<p>​      // 数组大小</p>
+<p>​      int size = 3;</p>
+<p>​      // 定义数组</p>
+<p>​      double[] myList = new double[size];</p>
+<p>​      myList[0] = 5.6;</p>
+<p>​      myList[1] = 4.5;</p>
+<p>​      myList[2] = 3.3;</p>
+<p>​      // 计算所有元素的总和</p>
+<p>​      double total = 0;</p>
+<p>​      for (int i = 0; i &lt; size; i++) {</p>
+<p>​         total += myList[i];</p>
+<p>​      }</p>
+<p>​      System.out.println(&ldquo;总和为： &quot; + total);</p>
+<p>}</p>
+<p>}</p>
+<h4 id="3处理数组"><strong>3).处理数组</strong></h4>
+<p>数组长度: myList.length</p>
+<p>循环: For-Each</p>
+<p>public class TestArray {</p>
+<p>public static void main(String[] args) {</p>
+<p>​      double[] myList = {1.9, 2.9, 3.4, 3.5};</p>
+<p>​      // 打印所有数组元素</p>
+<p>​      for (double element: myList) {</p>
+<p>​         System.out.println(element);</p>
+<p>​      }</p>
+<p>}</p>
+<p>}</p>
+<h4 id="4-数组作为函数的参数"><strong>4).</strong> <strong>数组作为函数的参数</strong></h4>
+<p>####<strong>5).数组作为函数的返回值</strong></p>
+<h4 id="6多维数组"><strong>6).多维数组</strong></h4>
+<p>type[][] typeName = new type[typeLength1][typeLength2];</p>
+<p>String s[][] = new String[2][];</p>
+<p>s[0] = new String[2];</p>
+<p>s[1] = new String[3];</p>
+<p>s[0][0] = new String(&ldquo;Good&rdquo;);</p>
+<p>s[0][1] = new String(&ldquo;Luck&rdquo;);</p>
+<p>s[1][0] = new String(&ldquo;to&rdquo;);</p>
+<p>s[1][1] = new String(&ldquo;you&rdquo;);</p>
+<p>s[1][2] = new String(&rdquo;!&quot;);</p>
+<h4 id="7arrays类"><strong>7).arrays类</strong></h4>
+<p>java.util.Arrays 类能方便地操作数组，它提供的所有方法都是静态的。</p>
+<p>具有以下功能：</p>
+<p>给数组赋值：通过 fill 方法。</p>
+<p>对数组排序：通过 sort 方法,按升序。</p>
+<p>比较数组：通过 equals 方法比较数组中元素值是否相等。</p>
+<p>查找数组元素：通过 binarySearch 方法能对排序好的数组进行二分查找法操作。</p>
+<p>public void useArraysUtil(){</p>
+<p>​    int[] arrVar = new int[5];</p>
+<p>​    Arrays.fill(arrVar,1);</p>
+<p>​    printArray(arrVar);</p>
+<p>​    int[] arrVar2 = {1,3,2,4,5};</p>
+<p>​    Arrays.sort(arrVar2);</p>
+<p>​    printArray(arrVar2);</p>
+<p>}</p>
+<h3 id="7方法"><strong>7.方法</strong></h3>
+<h4 id="1命名规则"><strong>1).命名规则</strong></h4>
+<p>方法的名字的第一个单词应以小写字母作为开头，后面的单词则用大写字母开头写，不使用连接符。例如：<strong>addPerson</strong>。</p>
+<h4 id="2方法的定义"><strong>2).方法的定义</strong></h4>
+<p>修饰符 返回值类型 方法名(参数类型 参数名){</p>
+<p>​    &hellip;</p>
+<p>​    方法体</p>
+<p>​    &hellip;</p>
+<p>​    return 返回值;</p>
+<p>}</p>
+<p>**修饰符：**修饰符，这是可选的，告诉编译器如何调用该方法。定义了该方法的访问类型。</p>
+<p><strong>返回值类型 ：<strong>方法可能会返回值。returnValueType 是方法返回值的数据类型。有些方法执行所需的操作，但没有返回值。在这种情况下，returnValueType 是关键字</strong>void</strong>。</p>
+<p>**方法名：**是方法的实际名称。方法名和参数表共同构成方法签名。</p>
+<p>**参数类型：**参数像是一个占位符。当方法被调用时，传递值给参数。这个值被称为实参或变量。参数列表是指方法的参数类型、顺序和参数的个数。参数是可选的，方法可以不包含任何参数。</p>
+<p>**方法体：**方法体包含具体的语句，定义该方法的功能。</p>
+<h4 id="3方法调用"><strong>3).方法调用</strong></h4>
+<p>public class TestMax {</p>
+<p>/** 主方法 */</p>
+<p>public static void main(String[] args) {</p>
+<p>​      int i = 5;</p>
+<p>​      int j = 2;</p>
+<p>​      int k = sum(i, j);</p>
+<p>​      System.out.println( k );</p>
+<p>}</p>
+<p>public static int sum(int num1, int num2) {</p>
+<p>​      int result;</p>
+<p>​      result = num1 + num2</p>
+<p>​      return result;</p>
+<p>}</p>
+<p>}</p>
+<h4 id="4可变参数double-numbers"><strong>4).可变参数(<strong>double&hellip; numbers</strong>)</strong></h4>
+<p>public class VarargsDemo {</p>
+<p>​    public static void main(String args[]) {</p>
+<p>​        // 调用可变参数的方法</p>
+<p>​        printMax(34, 3, 3, 2, 56.5);</p>
+<p>​        printMax(new double[]{1, 2, 3});</p>
+<p>​    }</p>
+<p>​    public static void printMax( double&hellip; numbers) {</p>
+<p>​        if (numbers.length == 0) {</p>
+<p>​            System.out.println(&ldquo;No argument passed&rdquo;);</p>
+<p>​            return;</p>
+<p>​        }</p>
+<p>​        double result = numbers[0];</p>
+<p>​        for (int i = 1; i &lt;  numbers.length; i++){</p>
+<p>​            if (numbers[i] &gt;  result) {</p>
+<p>​                result = numbers[i];</p>
+<p>​            }</p>
+<p>​        }</p>
+<p>​        System.out.println(&ldquo;The max value is &quot; + result);</p>
+<p>​    }</p>
+<p>}</p>
+<h4 id="8-character类"><strong>8.</strong> <strong>Character类</strong></h4>
+<p>char[] charArray ={ &lsquo;a&rsquo;, &lsquo;b&rsquo;, &lsquo;c&rsquo;, &rsquo;d', &lsquo;e&rsquo; };</p>
+<p>Character ch = new Character(&lsquo;a&rsquo;);</p>
+<p>转义字符:前面有反斜杠（\）的字符代表转义字符，它对编译器来说是有特殊含义的。</p>
+<h4 id="9-number--math-类"><strong>9.</strong> <strong>Number &amp; Math 类</strong></h4>
+<p>public class Test {</p>
+<p>​    public static void main (String []args)</p>
+<p>​    {</p>
+<p>​        System.out.println(&ldquo;90 度的正弦值：&rdquo; + Math.sin(Math.PI/2));</p>
+<p>​        System.out.println(&ldquo;0度的余弦值：&rdquo; + Math.cos(0));</p>
+<p>​        System.out.println(&ldquo;60度的正切值：&rdquo; + Math.tan(Math.PI/3));</p>
+<p>​        System.out.println(&ldquo;1的反正切值： &quot; + Math.atan(1));</p>
+<p>​        System.out.println(&ldquo;π/2的角度值：&rdquo; + Math.toDegrees(Math.PI/2));</p>
+<p>​        System.out.println(Math.PI);</p>
+<p>​    }</p>
+<p>}</p>
+<h4 id="10日期时间"><strong>10.日期时间</strong></h4>
+<p>Date(long millisec)</p>
+<p>import java.util.Date;</p>
+<p>public class DateDemo {</p>
+<p>public static void main(String args[]) {</p>
+<p>​       // 初始化 Date 对象</p>
+<p>​       Date date = new Date();</p>
+<p>​</p>
+<p>​       // 使用 toString() 函数显示日期时间</p>
+<p>​       System.out.println(date.toString());</p>
+<p>}</p>
+<p>}</p>
+<h2 id="四oop面向对象"><strong>四.oop(面向对象)</strong></h2>
+<p>###<strong>1.继承</strong></p>
+<h4 id="1什么是继承"><strong>1).什么是继承</strong></h4>
+<p>将多段代码中相同的部分提取出来组成 一个父类,提高代码复用性,可维护性</p>
+<h4 id="2继承的类型"><strong>2).继承的类型</strong></h4>
+<p>单继承:  B继承A</p>
+<p>多重继承: C继承B,B继承A</p>
+<p>不同类继承同一个类: B继承A,C继承A</p>
+<p>多继承: 不支持</p>
+<h4 id="3继承的特性"><strong>3).继承的特性</strong></h4>
+<p>子类拥有父类非 private 的属性、方法。</p>
+<p>子类可以拥有自己的属性和方法，即子类可以对父类进行扩展。</p>
+<p>子类可以用自己的方式实现父类的方法。</p>
+<p>Java 的继承是单继承，但是可以多重继承，这是 Java 继承区别于 C++ 继承的一个特性。</p>
+<p>提高了类之间的耦合性（继承的缺点，耦合度高就会造成代码之间的联系越紧密，代码独立性越差）。</p>
+<h4 id="4继承的关键字"><strong>4).继承的关键字</strong></h4>
+<p><strong>extends</strong>:类的继承是单一继承，也就是说，一个子类只能拥有一个父类，所以 extends 只能继承一个类</p>
+<p>public class Animal {      private String name;        private int id;      public Animal(String myName, String myid) {          //初始化属性值     }      public void eat() {  //吃东西方法的具体实现  }      public void sleep() { //睡觉方法的具体实现  }  }    public class Penguin  extends  Animal{  }</p>
+<h4 id="5-implements关键字"><strong>5).</strong> <strong>implements关键字</strong></h4>
+<p>使用 implements 关键字可以变相的使java具有多继承的特性，使用范围为类继承接口的情况，可以同时继承多个接口（接口跟接口之间采用逗号分隔）。</p>
+<p>public interface A {</p>
+<p>​    public void eat();</p>
+<p>​    public void sleep();</p>
+<p>}</p>
+<p>public interface B {</p>
+<p>​    public void show();</p>
+<p>}</p>
+<p>public class C implements A,B {</p>
+<p>}</p>
+<h4 id="6-super-与-this-关键字"><strong>6).</strong> <strong>super 与 this 关键字</strong></h4>
+<p>super关键字：我们可以通过super关键字来实现对父类成员的访问，用来引用当前对象的父类。</p>
+<p>this关键字：指向自己的引用。</p>
+<p>class Animal {</p>
+<p>void eat() {</p>
+<p>​    System.out.println(&ldquo;animal : eat&rdquo;);</p>
+<p>}</p>
+<p>}</p>
+<p>class Dog extends Animal {</p>
+<p>void eat() {</p>
+<p>​    System.out.println(&ldquo;dog : eat&rdquo;);</p>
+<p>}</p>
+<p>void eatTest() {</p>
+<p>​    this.eat();   // this 调用自己的方法</p>
+<p>​    super.eat();  // super 调用父类方法</p>
+<p>}</p>
+<p>}</p>
+<h4 id="7-final关键字"><strong>7).</strong> <strong>final关键字</strong></h4>
+<p>final 关键字声明类可以把类定义为不能继承的，即最终类；或者用于修饰方法，该方法不能被子类重写</p>
+<p>声明类：final class 类名 {//类体}</p>
+<p>声明方法：修饰符(public/private/default/protected) final 返回值类型 方法名(){//方法体}</p>
+<h4 id="8-构造器"><strong>8).</strong> <strong>构造器</strong></h4>
+<p>子类是不继承父类的构造器（构造方法或者构造函数）的，它只是调用（隐式或显式）</p>
+<p>如果父类的构造器带有参数，则必须在子类的构造器中显式地通过 super 关键字调用父类的构造器并配以适当的参数列表。</p>
+<p>如果父类构造器没有参数，则在子类的构造器中不需要使用 <strong>super</strong> 关键字调用父类构造器，系统会自动调用父类的无参构造器。</p>
+<h3 id="2-重写override与重载overload"><strong>2.</strong> <strong>重写(Override)与重载(Overload)</strong></h3>
+<h4 id="1重写override"><strong>1).重写(Override)</strong></h4>
+<p>重写是子类对父类的允许访问的方法的实现过程进行重新编写, 返回值和形参都不能改变。<strong>即外壳不变，核心重写！</strong></p>
+<p>重写的好处在于子类可以根据需要，定义特定于自己的行为。 也就是说子类能够根据需要实现父类的方法。</p>
+<p><strong>2).方法的重写规则</strong></p>
+<p>参数列表必须完全与被重写方法的相同。</p>
+<p>返回类型与被重写方法的返回类型可以不相同，但是必须是父类返回值的派生类（java5 及更早版本返回类型要一样，java7 及更高版本可以不同）。</p>
+<p>访问权限不能比父类中被重写的方法的访问权限更低。例如：如果父类的一个方法被声明为 public，那么在子类中重写该方法就不能声明为 protected。</p>
+<p>父类的成员方法只能被它的子类重写。</p>
+<p>声明为 final 的方法不能被重写。</p>
+<p>声明为 static 的方法不能被重写，但是能够被再次声明。</p>
+<p>子类和父类在同一个包中，那么子类可以重写父类所有方法，除了声明为 private 和 final 的方法。</p>
+<p>子类和父类不在同一个包中，那么子类只能够重写父类的声明为 public 和 protected 的非 final 方法。</p>
+<p>重写的方法能够抛出任何非强制异常，无论被重写的方法是否抛出异常。但是，重写的方法不能抛出新的强制性异常，或者比被重写方法声明的更广泛的强制性异常，反之则可以。</p>
+<p>构造方法不能被重写。</p>
+<p>如果不能继承一个方法，则不能重写这个方法。</p>
+<p>**3).**<strong>super调用父类的被重写方法,this调用重写后的方法</strong></p>
+<p>class Animal{</p>
+<p>public void move(){</p>
+<p>​      System.out.println(&ldquo;动物可以移动&rdquo;);</p>
+<p>}</p>
+<p>}</p>
+<p>class Dog extends Animal{</p>
+<p>public void move(){</p>
+<p>​      super.move(); // 应用super类的方法</p>
+<p>​      System.out.println(&ldquo;狗可以跑和走&rdquo;);</p>
+<p>}</p>
+<p>}</p>
+<p>public class TestDog{</p>
+<p>public static void main(String args[]){</p>
+<p>​      Animal b = new Dog(); // Dog 对象</p>
+<p>​      b.move(); //执行 Dog类的方法</p>
+<p>}</p>
+<p>}</p>
+<p><strong>4).重载(Overload)</strong></p>
+<p>重载(overloading) 是在一个类里面，方法名字相同，而参数不同。返回类型可以相同也可以不同。</p>
+<p>每个重载的方法（或者构造函数）都必须有一个独一无二的参数类型列表。</p>
+<p>最常用的地方就是构造器的重载。</p>
+<p><strong>重载规则:</strong></p>
+<p>被重载的方法必须改变参数列表(参数个数或类型不一样)；</p>
+<p>被重载的方法可以改变返回类型；</p>
+<p>被重载的方法可以改变访问修饰符；</p>
+<p>被重载的方法可以声明新的或更广的检查异常；</p>
+<p>方法能够在同一个类中或者在一个子类中被重载。</p>
+<p>无法以返回值类型作为重载函数的区分标准。</p>
+<p>public class Overloading {</p>
+<p>​    public int test(){</p>
+<p>​        System.out.println(&ldquo;test1&rdquo;);</p>
+<p>​        return 1;</p>
+<p>​    }</p>
+<p>​    public void test(int a){</p>
+<p>​        System.out.println(&ldquo;test2&rdquo;);</p>
+<p>​    }</p>
+<p>​    //以下两个参数类型顺序不同</p>
+<p>​    public String test(int a,String s){</p>
+<p>​        System.out.println(&ldquo;test3&rdquo;);</p>
+<p>​        return &ldquo;returntest3&rdquo;;</p>
+<p>​    }</p>
+<p>​    public String test(String s,int a){</p>
+<p>​        System.out.println(&ldquo;test4&rdquo;);</p>
+<p>​        return &ldquo;returntest4&rdquo;;</p>
+<p>​    }</p>
+<p>​    public static void main(String[] args){</p>
+<p>​        Overloading o = new Overloading();</p>
+<p>​        System.out.println(o.test());</p>
+<p>​        o.test(1);</p>
+<p>​        System.out.println(o.test(1,&ldquo;test3&rdquo;));</p>
+<p>​        System.out.println(o.test(&ldquo;test4&rdquo;,1));</p>
+<p>​    }</p>
+<p>}</p>
+<p><strong>5).重写与重载之间的区别</strong></p>
+<p>方法重载是一个类中定义了多个方法名相同,而他们的参数的数量不同或数量相同而类型和次序不同,则称为方法的重载(Overloading)。</p>
+<p>方法重写是在子类存在方法与父类的方法的名字相同,而且参数的个数与类型一样,返回值也一样的方法,就称为重写(Overriding)。</p>
+<p>方法重载是一个类的多态性表现,而方法重写是子类与父类的一种多态性表现。</p>
+<h3 id="3-多态"><strong>3.</strong> <strong>多态</strong></h3>
+<p>**1).**<strong>多态是同一个行为具有多个不同表现形式或形态的能力</strong></p>
+<p><strong>2).多态的实现方式</strong></p>
+<p>重写与重载</p>
+<p>接口:多重继承</p>
+<p>抽象类和抽象方法</p>
+<h3 id="4-抽象类"><strong>4.</strong> <strong>抽象类</strong></h3>
+<p><strong>1).抽象类定义:</strong></p>
+<p>如果一个类中没有包含足够的信息来描绘一个具体的对象，这样的类就是抽象类,不能实例化,抽象类必须被继承,并在子类中实现抽象方法</p>
+<p><strong>2).抽象方法定义:</strong></p>
+<p>抽象类中定义,子类中实现</p>
+<p>如果一个类包含抽象方法，那么该类必须是抽象类。</p>
+<p>抽象类中的抽象方法只是声明，不包含方法体</p>
+<p>任何子类必须重写父类的抽象方法，或者声明自身为抽象类。</p>
+<p>**3).抽象类&amp;方法:**<strong>abstract定义,extends继承</strong></p>
+<p>public abstract class Employee</p>
+<p>{</p>
+<p>private String name;</p>
+<p>private String address;</p>
+<p>private int number;</p>
+<p>public abstract double computePay();</p>
+<p>}</p>
+<p>public class Salary extends Employee</p>
+<p>{</p>
+<p>private double salary=104.00;</p>
+<p>public double computePay()</p>
+<p>{</p>
+<p>​      System.out.println(&ldquo;Computing salary pay for &quot; + getName());</p>
+<p>​      return salary/52;</p>
+<p>}</p>
+<p>}</p>
+<h3 id="5封装"><strong>5.封装</strong></h3>
+<p><strong>1).定义</strong></p>
+<p>是指一种将抽象性函式接口的实现细节部份包装、隐藏起来的方法。</p>
+<p>封装可以被认为是一个保护屏障，防止该类的代码和数据被外部类定义的代码随机访问。</p>
+<p>要访问该类的代码和数据，必须通过严格的接口控制。</p>
+<p><strong>2).优点</strong></p>
+<p>\1. 良好的封装能够减少耦合。</p>
+<p>\2. 类内部的结构可以自由修改。</p>
+<p>\3. 可以对成员变量进行更精确的控制。</p>
+<p>\4. 隐藏信息，实现细节。</p>
+<p><strong>3).实现:</strong></p>
+<p>使用修饰符去实现封装,public是外界访问的入口,private和protected是实现封装</p>
+<p>public class Person{</p>
+<p>​    private String name;</p>
+<p>​    private int age;</p>
+<p>​    public int getAge(){</p>
+<p>​      return age;</p>
+<p>​    }</p>
+<p>​    public String getName(){</p>
+<p>​      return name;</p>
+<p>​    }</p>
+<p>​    public void setAge(int age){</p>
+<p>​      this.age = age;</p>
+<p>​    }</p>
+<p>​    public void setName(String name){</p>
+<p>​      this.name = name;</p>
+<p>​    }</p>
+<p>}</p>
+<h3 id="6接口"><strong>6.接口</strong></h3>
+<p><strong>1).定义</strong></p>
+<p>在JAVA编程语言中是一个抽象类型，是抽象方法的集合，接口通常以interface来声明。一个类通过继承接口的方式，从而来继承接口的抽象方法。</p>
+<p><strong>2).特点</strong></p>
+<p>接口不能用于实例化对象。</p>
+<p>接口没有构造方法,且没有具体的抽象方法</p>
+<p>接口中所有的方法必须是抽象方法,每一个方法也是隐式抽象。</p>
+<p>接口不能包含成员变量，除了 static 和 final 变量,变量会被隐式的指定为 <strong>public static final</strong> 变量。</p>
+<p>接口不是被类继承了，而是要被类实现。</p>
+<p>接口支持多继承。</p>
+<p><strong>和抽象类的区别</strong></p>
+<p>抽象类中的方法可以有方法体，就是能实现方法的具体功能，但是接口中的方法不行。</p>
+<p>抽象类中的成员变量可以是各种类型的，而接口中的成员变量只能是 <strong>public static final</strong> 类型的。</p>
+<p>接口中不能含有静态代码块以及静态方法(用 static 修饰的方法)，而抽象类是可以有静态代码块和静态方法。</p>
+<p>一个类只能继承一个抽象类，而一个类却可以实现多个接口。</p>
+<p>**3).实现,**<strong>interface定义,implements实现</strong></p>
+<p>interface Animal {</p>
+<p>public void eat();</p>
+<p>public void travel();</p>
+<p>}</p>
+<p>public class MammalInt implements Animal{</p>
+<p>public void eat(){</p>
+<p>​      System.out.println(&ldquo;Mammal eats&rdquo;);</p>
+<p>}</p>
+<p>public static void main(String args[]){</p>
+<p>​      MammalInt m = new MammalInt();</p>
+<p>​      m.eat();</p>
+<p>}</p>
+<p>}</p>
+<p><strong>4).接口的继承</strong></p>
+<p>一个接口能继承另一个接口，和类之间的继承方式比较相似。接口的继承使用extends关键字，子接口继承父接口的方法。</p>
+<p>public interface Sports</p>
+<p>{</p>
+<p>public void setHomeTeam(String name);</p>
+<p>public void setVisitingTeam(String name);</p>
+<p>}</p>
+<p>public interface Football extends Sports</p>
+<p>{</p>
+<p>public void homeTeamScored(int points);</p>
+<p>public void visitingTeamScored(int points);</p>
+<p>public void endOfQuarter(int quarter);</p>
+<p>}</p>
+<p><strong>5).接口的多继承</strong></p>
+<p>public interface Hockey extends Sports, Event</p>
+<p><strong>6).标记接口</strong></p>
+<p>标记接口是没有任何方法和属性的接口.它仅仅表明它的类属于一个特定的类型,供其他代码来测试允许做一些事情。</p>
+<p>package java.util;</p>
+<p>public interface EventListener</p>
+<p>{}</p>
+<p><strong>建立一个公共的父接口：</strong></p>
+<p>正如EventListener接口，这是由几十个其他接口扩展的Java API，你可以使用一个标记接口来建立一组接口的父接口。例如：当一个接口继承了EventListener接口，Java虚拟机(JVM)就知道该接口将要被用于一个事件的代理方案。</p>
+<p><strong>向一个类添加数据类型：</strong></p>
+<p>这种情况是标记接口最初的目的，实现标记接口的类不需要定义任何接口方法(因为标记接口根本就没有方法)，但是该类通过多态性变成一个接口类型。</p>
+<h3 id="7-包package"><strong>7.</strong> <strong>包(package)</strong></h3>
+<p><strong>1).包的定义</strong></p>
+<p>为了更好地组织类，Java 提供了包机制，用于区别类名的命名空间。</p>
+<p><img src="file:///C:%5CUsers%5CEDZ%5CAppData%5CLocal%5CTemp%5Cksohtml%5CwpsB7E1.tmp.jpg" alt="img"></p>
+<p><strong>2).包的作用</strong></p>
+<p>把功能相似或相关的类或接口组织在同一个包中，方便类的查找和使用。</p>
+<p>如同文件夹一样，包也采用了树形目录的存储方式。同一个包中的类名字是不同的，不同的包中的类的名字是可以相同的，当同时调用两个不同包中相同类名的类时，应该加上包名加以区别。因此，包可以避免名字冲突。</p>
+<p>包也限定了访问权限，拥有包访问权限的类才能访问某个包中的类。</p>
+<p>package net.java.util;</p>
+<p>//它的路径应该是 net/java/util/Something.java 这样保存的</p>
+<p>public class Something{</p>
+<p>&hellip;</p>
+<p>}</p>
+<p><strong>3).导入包,import 关键字</strong></p>
+<p>import net.java.util.*;</p>
+<h2 id="五-数据结构"><strong>五.</strong> <strong>数据结构</strong></h2>
+<p>枚举（Enumeration）</p>
+<p>位集合（BitSet）</p>
+<p>向量（Vector）</p>
+<p>栈（Stack）</p>
+<p>字典（Dictionary）</p>
+<p>哈希表（Hashtable）</p>
+<p>属性（Properties）</p>
+<h2 id="六内存模型"><strong>六.内存模型</strong></h2>
+<p><img src="file:///C:%5CUsers%5CEDZ%5CAppData%5CLocal%5CTemp%5Cksohtml%5CwpsB7E2.tmp.jpg" alt="img"></p>
+<h2 id="七jdbc"><strong>七.jdbc</strong></h2>
+<p><strong>1.官网下载包</strong></p>
+<p><a href="http://dev.mysql.com/downloads/connector/j/"><strong>http://dev.mysql.com/downloads/connector/j/</strong></a></p>
+<p><strong>选择合适的版本下载</strong></p>
+<p><strong>2.使用idea在项目中导入包</strong></p>
+<orderEntry type="library" name="mysql-connector-java-5.1.39-bin" level="project" />
+<p><strong>3.使用,加载包,链接数据库</strong></p>
+<p>Class.forName(&ldquo;com.mysql.cj.jdbc.Driver&rdquo;);</p>
+<p>conn = DriverManager.getConnection(&ldquo;jdbc:mysql://localhost:3306/test_demo?useSSL=false&amp;serverTimezone=UTC&rdquo;,&ldquo;root&rdquo;,&ldquo;password&rdquo;);</p>
+<p><strong>4.执行查询</strong></p>
+<p>stmt = conn.createStatement();</p>
+<p>ResultSet rs = stmt.executeQuery(sql);</p>
+<p>while(rs.next()){</p>
+<p>​    // 通过字段检索</p>
+<p>​    int id  = rs.getInt(&ldquo;id&rdquo;);</p>
+<p>​    String name = rs.getString(&ldquo;name&rdquo;);</p>
+<p>​    String url = rs.getString(&ldquo;url&rdquo;);</p>
+<p>}</p>
+<p><strong>5.关闭链接</strong></p>
+<p>rs.close();</p>
+<p>stmt.close();</p>
+<p>conn.close();</p>
+<h2 id="八maven项目"><strong>八.maven项目</strong></h2>
+<p><strong>1.官网下载</strong></p>
+<p><a href="http://maven.apache.org/download.cgi">http://maven.apache.org/download.cgi</a></p>
+<p>选择<a href="http://mirrors.tuna.tsinghua.edu.cn/apache/maven/maven-3/3.6.1/binaries/apache-maven-3.6.1-bin.zip">apache-maven-3.6.1-bin.zip</a>下载</p>
+<p><strong>2.配置环境变量</strong></p>
+<p>MAVEN_HOME	D:\wnmp\apache-maven-3.6.1</p>
+<p>PATH			%MAVEN_HOME%\bin</p>
+<p>mvn -v 可看到版本信息,看是否配置成功</p>
+<p><strong>3.修改国内阿里源</strong></p>
+<p>打开文件 D:\wnmp\apache-maven-3.6.1\conf\settings.xml</p>
+<p>在<mirrors></mirrors>间添加下列代码</p>
+<mirror>
+<p>​    <id>aliyunmaven</id></p>
+<p>​    <mirrorOf>*</mirrorOf></p>
+<p>​    <name>阿里云公共仓库</name></p>
+<p>​    <url><a href="https://maven.aliyun.com/repository/public">https://maven.aliyun.com/repository/public</a></url></p>
+</mirror>
+<p><strong>4.修改本地仓库位置</strong></p>
+<p>新建D:\wnmp\apache-maven-3.6.1\MavenRepository文件夹</p>
+<p>打开文件 D:\wnmp\apache-maven-3.6.1\conf\settings.xml</p>
+<p>在<settings></settings>间添加下列代码</p>
+<p><localRepository>D:\wnmp\apache-maven-3.6.1\MavenRepository</localRepository></p>
+<p><strong>5.构建项目</strong></p>
+<p>新建文件夹:D:\www\mvnpro</p>
+<p>mvn -B archetype:generate -DgroupId=com.jtthink -DartifactId=htmlparser</p>
+<p>GroupID:项目唯一的标识符，对应初始项目包。在main下放的java里面</p>
+<p>ArtifactID:项目唯一的标识符，好比项目名称</p>
+<p>修改项目下pom.xml</p>
+<dependency>
+  <!-- jsoup HTML parser library @ http://jsoup.org/ -->
+<p><groupId>org.jsoup</groupId></p>
+<p><artifactId>jsoup</artifactId></p>
+<p><version>1.10.2</version></p>
+</dependency>
+<p>下载依赖</p>
+<p>mvn dependency:copy-dependencies</p>
+<h2 id="九jspservlet"><strong>九.jsp/servlet</strong></h2>
+<p><strong>1.jsp</strong></p>
+<p><strong>1).定义</strong></p>
+<p>JSP是一种在HTML中嵌入Java代码的动态网页技术</p>
+<p>与Servlet相比，JSP更偏重于将数据展示在HTML中，更适合制作动态页面</p>
+<p>JSP的执行过程需要经过翻译、编译、执行三个步骤</p>
+<p>JSP页面的构成元素有指令、声明、表达式、脚本、动作标签和注释</p>
+<p>JSP指令用来向JSP容器提供编译信息</p>
+<p>JSP声明用于在JSP中定义变量和方法</p>
+<p>JSP表达式用于将Java表达式的运行结果输出在页面中</p>
+<p>JSP脚本用于在JSP页面中插入Java代码</p>
+<p>JSP提供了很多动作标签实现特定的功能</p>
+<p><strong>2).文件组成</strong></p>
+<p>JSP文件由6类基本元素组成</p>
+<p>JSP指令</p>
+<p>JSP声明</p>
+<p>JSP表达式</p>
+<p>JSP脚本</p>
+<p>JSP动作</p>
+<p>JSP注释</p>
+<p>&lt;%&ndash; 指令 &ndash;%&gt;</p>
+<p>&lt;%@ page language=&ldquo;java&rdquo; contentType=&ldquo;text/html; charset=UTF-8&rdquo;%&gt;</p>
+<p>&lt;%&ndash; 申明 &ndash;%&gt;</p>
+<p>&lt;%!</p>
+<p>​	//全局方法和变量</p>
+<p>​	private String str = &ldquo;全局变量&rdquo;;</p>
+<p>​	void setStrParam(String param) {</p>
+<p>​		str = param;</p>
+<p>​	}</p>
+<p>%&gt;</p>
+<html>
+<head>
+<title>第一个JSP页面</title>
+</head>
+<body>
+<h1 align="center">欢迎！</h1>
+<p>&lt;%&ndash; 表达式 &ndash;%&gt;</p>
+<p>&lt;%</p>
+<p>​	java.util.Date now = new java.util.Date();</p>
+<p>​	out.println(&ldquo;当前时间是：&rdquo; + now);</p>
+<p>%&gt;</p>
+</body>
+</html>
+<p><strong>3).JSP中有9个内置对象</strong></p>
+<p>out对象是一个输出流，用于将信息输出到网页中</p>
+<p>request对象封装了当前请求信息，可以存取数据</p>
+<p>response对象封装了当前响应信息</p>
+<p>session对象表示当前会话，可以存取数据</p>
+<p>application对象表示整个应用程序，可以存取数据</p>
+<p>pageContext对象表示当前JSP页面，可以存取数据</p>
+<p>JSP的4种作用范围分别使用pageContext、request、session、application来表示，它们都具有getAttribute()和setAttribute()方法</p>
+<p>&lt;%</p>
+<p>request.setCharacterEncoding(&ldquo;GBK&rdquo;);</p>
+<p>String age = request.getParameter(&ldquo;age&rdquo;);</p>
+<p>String[] channels = request.getParameterValues(&ldquo;channel&rdquo;);</p>
+<p>out.println(age);</p>
+<p>//response.sendRedirect(&quot;/test/&quot;);</p>
+<p>session.setAttribute(&ldquo;name&rdquo;, &ldquo;海尔&rdquo;);</p>
+<p>String name = (String)session.getAttribute(&ldquo;name&rdquo;);</p>
+<p>out.println(name);</p>
+<p>application.setAttribute(&ldquo;number&rdquo;, 1);</p>
+<p>Integer i = (Integer) application.getAttribute(&ldquo;number&rdquo;);</p>
+<p>out.println(i);</p>
+<p>​    String initValue = config.getInitParameter(&ldquo;initValue&rdquo;);</p>
+<p>​    out.println(initValue);</p>
+<p>%&gt;</p>
+<p><strong>2.EL &amp;&amp; JSTL</strong></p>
+<p><strong>1).EL定义</strong></p>
+<p>jsp2.0的一种简捷的语言,表达式语言（Expression Language，EL）,简化了访问方式</p>
+<p><strong>2).EL基础语法</strong></p>
+<p>EL提供 . 和 [] 两种运算符来导航数据，可以同时混合使用。</p>
+<p>以下两种情况需要使用 [] :</p>
+<p>当要存取的属性名称中包含一些特殊字符时，例如${user.My-Name}。</p>
+<p>当属性名称需动态取值时，例如${sessinScope.user[data]}，其中data是一个变量。</p>
+<p>${EL表达式}</p>
+<p>${person.name}</p>
+<p>${person[age]}</p>
+<p><strong>3).JSTL定义</strong></p>
+<p>提供了简单易用的标签,简化了JSP开发,减少了代码数量及增强了可移植性</p>
+<p>核心标签库导入:</p>
+<p>&lt;%@taglib uri=&ldquo;<a href="http://java.sun.com/jsp/jstl/core%22">http://java.sun.com/jsp/jstl/core&quot;</a> prefix=&ldquo;c&rdquo;%&gt;</p>
+<p><strong>4).JSTL标签</strong></p>
+<p>通用标签</p>
+<p>条件标签</p>
+<p>迭代标签</p>
+<p>URL标签</p>
+<p><strong>5).总结</strong></p>
+<p>EL的隐含对象有pageScope、requestScope、sessionScope、applicationScope、param、paramValues、initParam等</p>
+<p>EL中可以使用算术运算符、关系运算符和逻辑运算符进行运算</p>
+<p>JSTL简化了JSP开发，提供了一个无脚本环境</p>
+<p>JSTL提供了5个标签库：核心标签库、I18N标签库、XML标签库、SQL标签库和EL函数库</p>
+<p>在JSP页面中使用标签库，需要使用taglib指令导入，格式如下：</p>
+<p>​       &lt;%@taglib uri=&ldquo;标签库uri路径&rdquo; prefix=&ldquo;前缀名&rdquo;%&gt;</p>
+<p>核心标签库分为通用标签、条件标签、迭代标签和URL标签</p>
+<p>常用的通用标签有：&lt;c:out&gt;、&lt;c:set&gt;、&lt;c:remove&gt;和&lt;c:catch&gt;</p>
+<p>条件标签有：&lt;c:if&gt;、&lt;c:choose&gt;、&lt;c:when&gt;和&lt;c:otherwise&gt;</p>
+<p>迭代标签有：&lt;c:forEach&gt;、&lt;c:forTokens&gt;</p>
+<p>URL标签有：&lt;c:import&gt;、&lt;c:redirect&gt;和&lt;c:url&gt;</p>
+<p>常用的I18N标签有：<a href="fmt:setLocale">fmt:setLocale</a>、<a href="fmt:bundle">fmt:bundle</a>、<a href="fmt:setBundle">fmt:setBundle</a>、<a href="fmt:message">fmt:message</a>、<a href="fmt:formatNumber">fmt:formatNumber</a>、<a href="fmt:formatDate">fmt:formatDate</a></p>
+<p>EL函数主要提供了对字符串处理的功能，此外还可以利用EL函数获取集合的大小</p>
+<p><strong>3.Servlet</strong></p>
+<p><strong>1).定义</strong></p>
+<p>Servlet是运行在Web服务器中的小型Java程序。Servlet通常通过HTTP（超文本传输协议）接收和响应来自Web客户端的请求</p>
+<p><strong>2).配置</strong></p>
+<p>将TOMCAT服务器中的common\lib 下的servlet-api.jar文件复制到JDK的安装目录的\jre\lib\ext子目录中</p>
+<p>Servlet需要在web.xml文件中配置</p>
+<servlet>
+<p>​	<servlet-name>Hello</servlet-name></p>
+<p>​	<servlet-class></p>
+<p>​		com.haiersoft.ch01.HelloServlet</p>
+<p>​	</servlet-class></p>
+</servlet>
+<servlet-mapping>
+<p>​	<servlet-name>Hello</servlet-name></p>
+<p>​	<url-pattern>/hello</url-pattern></p>
+</servlet-mapping>
+<p><strong>3).生命周期</strong></p>
+<p>init()：用于Servlet初始化。当容器创建Servlet实例后，会自动调用此方法</p>
+<p>service()：用于服务处理。当客户端发出请求，容器会自动调用此方法进行处理，并将处理结果响应到客户端</p>
+<p>destroy()：用于销毁Servlet。当容器销毁Servlet实例时自动调用此方法，释放Servlet实例，清除当前Servlet所持有的资源</p>
+<p><img src="file:///C:%5CUsers%5CEDZ%5CAppData%5CLocal%5CTemp%5Cksohtml%5CwpsB7E3.tmp.jpg" alt="img"></p>
+<p><strong>4).总结</strong></p>
+<p>动态网站开发技术有Servlet、JSP、PHP、ASP、ASP.NET和CGI等</p>
+<p>Servlet是运行在服务器端的Java程序，内嵌HTML</p>
+<p>Servlet生命周期的三个方法分别是：init()、service()和destroy()</p>
+<p>Servlet处理Get/Post请求时分别使用doGet()/doPost()方法进行处理</p>
+<p>HttpServletRequest的getParameter(“参数名称”)获取表单、URL参数值</p>
+<p>HttpServletResponse的getWriter()获取向客户端发送信息的输出流</p>
+<p>HttpServletRequest的getHeader(“报头名称”)获取相关报头信息</p>
+<p>请求转发和重定向都可以使浏览器获得另外一个URL所指向的资源</p>
+<p>请求转发通常由RequestDispatcher接口的forward()方法实现，转发前后共享同一个请求对象</p>
+<p>重定向由HttpServletResponse接口的sendRedirect()方法实现，重定向不共享同一个请求对象</p>
+<h2 id="十-注解-annotation"><strong>十.</strong> <strong>注解</strong> <strong>(Annotation)</strong></h2>
+<h2 id="十一java反射"><strong>十一.java反射</strong></h2>
+<p><strong>1.定义</strong></p>
+<p>反射就是把java类中的各种成分映射成一个个的Java对象</p>
+<p>例如：一个类有：成员变量、方法、构造方法、包等等信息，利用反射技术可以对一个类进行解剖，把个个组成部分映射成一个个对象。</p>
+<p>​     （其实：一个类中这些成员方法、构造方法、在加入类中都有一个类来描述）</p>
+<p><img src="file:///C:%5CUsers%5CEDZ%5CAppData%5CLocal%5CTemp%5Cksohtml%5CwpsB7E4.tmp.jpg" alt="img"></p>
+<p>**2.**<strong>反射的使用</strong></p>
+<p>1、获取Class对象的三种方式</p>
+<p>1.1 Object ——&gt; getClass();</p>
+<p>1.2 任何数据类型（包括基本数据类型）都有一个“静态”的class属性</p>
+<p>1.3 通过Class类的静态方法：forName（String  className）(常用)</p>
+<p>public static void getObjectClass(){</p>
+<p>​    //第一种方式获取Class对象</p>
+<p>​    Student stu1 = new Student();//这一new 产生一个Student对象，一个Class对象。</p>
+<p>​    Class stuClass = stu1.getClass();//获取Class对象</p>
+<p>​    System.out.println(stuClass.getName());</p>
+<p>​    System.out.println(stuClass.getClasses());</p>
+<p>​    //第二种方式获取Class对象</p>
+<p>​    Class stuClass2 = Student.class;</p>
+<p>​    System.out.println(stuClass == stuClass2);//判断第一种方式获取的Class对象和第二种方式获取的是否是同一个</p>
+<p>​    //第三种方式获取Class对象</p>
+<p>​    try {</p>
+<p>​        Class stuClass3 = Class.forName(&ldquo;com.zhu.test.Student&rdquo;);//注意此字符串必须是真实路径，就是带包名的类路径，包名.类名</p>
+<p>​        System.out.println(stuClass3 == stuClass2);//判断三种方式是否获取的是同一个Class对象</p>
+<p>​    } catch (ClassNotFoundException e) {</p>
+<p>​        e.printStackTrace();</p>
+<p>​    }</p>
+<p>}</p>
+<p>2、获取Class对象的构造方法</p>
+<p>//1.加载Class对象</p>
+<p>Class clazz = Class.forName(&ldquo;com.zhu.test.Student&rdquo;);</p>
+<p>//2.获取所有公有构造方法</p>
+<p>System.out.println(&quot;<strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>所有公有构造方法</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>***********&quot;);</p>
+<p>Constructor[] conArray = clazz.getConstructors();</p>
+<p>for(Constructor c : conArray){</p>
+<p>​    System.out.println(c);</p>
+<p>}</p>
+<p>System.out.println(&quot;<strong><strong><strong><strong><strong><strong>所有的构造方法(包括：私有、受保护、默认、公有)</strong></strong></strong></strong></strong></strong>***&quot;);</p>
+<p>conArray = clazz.getDeclaredConstructors();</p>
+<p>for(Constructor c : conArray){</p>
+<p>​    System.out.println(c);</p>
+<p>}</p>
+<p>System.out.println(&quot;<em><strong><strong><strong><strong><strong><strong><strong><strong>获取公有、无参的构造方法</strong></strong></strong></strong></strong></strong></strong></strong></em>**************&quot;);</p>
+<p>Constructor con = clazz.getConstructor(null);</p>
+<p>//1&gt;、因为是无参的构造方法所以类型是一个null,不写也可以：这里需要的是一个参数的类型，切记是类型</p>
+<p>//2&gt;、返回的是描述这个无参构造函数的类对象。</p>
+<p>System.out.println(&ldquo;con = &quot; + con);</p>
+<p>//调用构造方法</p>
+<p>Object obj = con.newInstance();</p>
+<p>//  System.out.println(&ldquo;obj = &quot; + obj);</p>
+<p>//  Student stu = (Student)obj;</p>
+<p>System.out.println(&quot;<strong><strong><strong><strong><strong><strong><strong><strong><strong>获取私有构造方法，并调用</strong></strong></strong></strong></strong></strong></strong></strong></strong>*************&quot;);</p>
+<p>con = clazz.getDeclaredConstructor(char.class);</p>
+<p>System.out.println(con);</p>
+<p>//调用构造方法</p>
+<p>con.setAccessible(true);//暴力访问(忽略掉访问修饰符)</p>
+<p>obj = con.newInstance(&lsquo;男&rsquo;);</p>
+<p>3、获取成员变量并调用</p>
+<p>public static void getParams() throws Exception {</p>
+<p>​    //1.获取Class对象</p>
+<p>​    Class stuClass = Class.forName(&ldquo;com.zhu.test.Student&rdquo;);</p>
+<p>​    //2.获取字段</p>
+<p>​    System.out.println(&quot;<strong><strong><strong><strong><strong><strong>获取所有公有的字段</strong></strong></strong></strong></strong></strong>********&quot;);</p>
+<p>​    Field[] fieldArray = stuClass.getFields();</p>
+<p>​    for(Field f : fieldArray){</p>
+<p>​        System.out.println(f);</p>
+<p>​    }</p>
+<p>​    System.out.println(&quot;<strong><strong><strong><strong><strong><strong>获取所有的字段(包括私有、受保护、默认的)</strong></strong></strong></strong></strong></strong>********&quot;);</p>
+<p>​    fieldArray = stuClass.getDeclaredFields();</p>
+<p>​    for(Field f : fieldArray){</p>
+<p>​        System.out.println(f);</p>
+<p>​    }</p>
+<p>​    System.out.println(&quot;<em><strong><strong><strong><strong><strong><strong>获取公有字段<strong>并调用</strong></strong></strong></strong></strong></strong></strong></em>********************&quot;);</p>
+<p>​    Field f = stuClass.getField(&ldquo;name&rdquo;);</p>
+<p>​    System.out.println(f);</p>
+<p>​    //获取一个对象</p>
+<p>​    Object obj = stuClass.getConstructor().newInstance();//产生Student对象–》Student stu = new Student();</p>
+<p>​    //为字段设置值</p>
+<p>​    f.set(obj, &ldquo;刘德华&rdquo;);//为Student对象中的name属性赋值–》stu.name = &ldquo;刘德华&rdquo;</p>
+<p>​    //验证</p>
+<p>​    Student stu = (Student)obj;</p>
+<p>​    System.out.println(&ldquo;验证姓名：&rdquo; + stu.name);</p>
+<p>​    System.out.println(&quot;<strong><strong><strong><strong><strong><strong><strong>获取私有字段****并调用</strong></strong></strong></strong></strong></strong></strong>******************&quot;);</p>
+<p>​    f = stuClass.getDeclaredField(&ldquo;phoneNum&rdquo;);</p>
+<p>​    System.out.println(f);</p>
+<p>​    f.setAccessible(true);//暴力反射，解除私有限定</p>
+<p>​    f.set(obj, &ldquo;18888889999&rdquo;);</p>
+<p>​    System.out.println(&ldquo;验证电话：&rdquo; + stu);</p>
+<p>}</p>
+<p>4、获取成员方法并调用</p>
+<p>public static void getAction() throws Exception {</p>
+<p>​    //1.获取Class对象</p>
+<p>​    Class stuClass = Class.forName(&ldquo;com.zhu.test.Student&rdquo;);</p>
+<p>​    //2.获取所有公有方法</p>
+<p>​    System.out.println(&quot;<em><strong><strong><strong><strong><strong><strong><strong>获取所有的”公有“方法</strong></strong></strong></strong></strong></strong></strong></em>****&quot;);</p>
+<p>​    stuClass.getMethods();</p>
+<p>​    Method[] methodArray = stuClass.getMethods();</p>
+<p>​    for(Method m : methodArray){</p>
+<p>​        System.out.println(m);</p>
+<p>​    }</p>
+<p>​    System.out.println(&quot;<em><strong><strong><strong><strong><strong><strong><strong>获取所有的方法，包括私有的</strong></strong></strong></strong></strong></strong></strong></em>****&quot;);</p>
+<p>​    methodArray = stuClass.getDeclaredMethods();</p>
+<p>​    for(Method m : methodArray){</p>
+<p>​        System.out.println(m);</p>
+<p>​    }</p>
+<p>​    System.out.println(&quot;<em><strong><strong><strong><strong><strong><strong><strong>获取公有的show1()方法</strong></strong></strong></strong></strong></strong></strong></em>****&quot;);</p>
+<p>​    Method m = stuClass.getMethod(&ldquo;show1&rdquo;, String.class);</p>
+<p>​    System.out.println(m);</p>
+<p>​    //实例化一个Student对象</p>
+<p>​    Object obj = stuClass.getConstructor().newInstance();</p>
+<p>​    m.invoke(obj, &ldquo;刘德华&rdquo;);</p>
+<p>​    System.out.println(&quot;<em><strong><strong><strong><strong><strong><strong><strong>获取私有的show4()方法</strong></strong></strong></strong></strong></strong></strong></em>***&quot;);</p>
+<p>​    m = stuClass.getDeclaredMethod(&ldquo;show4&rdquo;, int.class);</p>
+<p>​    System.out.println(m);</p>
+<p>​    m.setAccessible(true);//解除私有限定</p>
+<p>​    Object result = m.invoke(obj, 20);//需要两个参数，一个是要调用的对象（获取有反射），一个是实参</p>
+<p>​    System.out.println(&ldquo;返回值：&rdquo; + result);</p>
+<p>}</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-04-17
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/java/">java</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/php/laravel/laravels%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[laravel]laravelS安装及使用</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/php/swoole/swoole%E5%AE%89%E8%A3%85%E4%B8%8E%E5%85%A5%E9%97%A8/">
+            <span class="next-text nav-default">[swoole]安装swoole及入门</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

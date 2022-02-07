@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>集群 on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/tags/%E9%9B%86%E7%BE%A4/</link>
+    <description>Recent content in 集群 on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Thu, 06 Jan 2022 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/%E9%9B%86%E7%BE%A4/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[ceph] ceph集群安装记录</title>
+      <link>https://blog.nevergiveup.tech/post/ceph/ceph%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E8%AE%B0%E5%BD%95/</link>
+      <pubDate>Thu, 06 Jan 2022 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/ceph/ceph%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E8%AE%B0%E5%BD%95/</guid>
+      <description>ceph集群安装记录 一、准备工作 1.参考文档 ceph官方文档：https://docs.ceph.com/en/latest/install</description>
+    </item>
+    
+  </channel>
+</rss>

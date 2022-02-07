@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[typora] Typora画图-UML时序图 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="Typora画图-UML时序图 一、介绍 PlantUML 是一个开源项目，支持快速绘制： 时序图 用例图 类图 对象图 活动图 组件图 部署图 状态图 定时图 同时还支持以下非 UML" /><meta name="keywords" content="typora, uml, 画图, 时序图" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/%E5%B7%A5%E5%85%B7/typora%E7%94%BB%E5%9B%BEuml/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[typora] Typora画图-UML时序图" />
+<meta property="og:description" content="Typora画图-UML时序图 一、介绍 PlantUML 是一个开源项目，支持快速绘制： 时序图 用例图 类图 对象图 活动图 组件图 部署图 状态图 定时图 同时还支持以下非 UML" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/%E5%B7%A5%E5%85%B7/typora%E7%94%BB%E5%9B%BEuml/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-12-13T15:37:56+08:00" />
+<meta property="article:modified_time" content="2020-12-13T15:37:56+08:00" />
+
+<meta itemprop="name" content="[typora] Typora画图-UML时序图">
+<meta itemprop="description" content="Typora画图-UML时序图 一、介绍 PlantUML 是一个开源项目，支持快速绘制： 时序图 用例图 类图 对象图 活动图 组件图 部署图 状态图 定时图 同时还支持以下非 UML"><meta itemprop="datePublished" content="2020-12-13T15:37:56+08:00" />
+<meta itemprop="dateModified" content="2020-12-13T15:37:56+08:00" />
+<meta itemprop="wordCount" content="1113">
+<meta itemprop="keywords" content="typora,uml,画图,时序图," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[typora] Typora画图-UML时序图"/>
+<meta name="twitter:description" content="Typora画图-UML时序图 一、介绍 PlantUML 是一个开源项目，支持快速绘制： 时序图 用例图 类图 对象图 活动图 组件图 部署图 状态图 定时图 同时还支持以下非 UML"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[typora] Typora画图-UML时序图</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-12-13 </span>
+        <div class="post-category">
+            <a href="/categories/typora/"> typora </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#typora画图-uml时序图">Typora画图-UML时序图</a>
+          <ul>
+            <li><a href="#一介绍">一、介绍</a></li>
+            <li><a href="#二基础">二、基础</a></li>
+            <li><a href="#三代码示例">三、代码示例</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="typora画图-uml时序图">Typora画图-UML时序图</h2>
+<h3 id="一介绍">一、介绍</h3>
+<ul>
+<li>PlantUML 是一个开源项目，支持快速绘制：
+<ul>
+<li>时序图</li>
+<li>用例图</li>
+<li>类图</li>
+<li>对象图</li>
+<li>活动图</li>
+<li>组件图</li>
+<li>部署图</li>
+<li>状态图</li>
+<li>定时图</li>
+</ul>
+</li>
+<li>同时还支持以下非 UML 图: - JSON Data
+<ul>
+<li>YAML Data</li>
+<li>Network diagram (nwdiag)</li>
+<li>线框图形界面</li>
+<li>架构图</li>
+<li>规范和描述语言 (SDL)</li>
+<li>Ditaa diagram</li>
+<li>甘特图</li>
+<li>MindMap diagram</li>
+<li>Work Breakdown Structure diagram</li>
+<li>以 AsciiMath 或 JLaTeXMath 符号的数学公式</li>
+<li>Entity Relationship diagram</li>
+</ul>
+</li>
+</ul>
+<h3 id="二基础">二、基础</h3>
+<h4 id="1时序图">1、时序图</h4>
+<ul>
+<li>以用-&gt; 来绘制参与者之间传递的消息</li>
+<li>使用 &ndash;&gt; 绘制一个虚线箭头</li>
+<li>&lt;- 和 &lt;&ndash;，这不影响绘图，但可以提高可读性</li>
+</ul>
+<h3 id="三代码示例">三、代码示例</h3>
+<h4 id="1横向流程图">1.横向流程图</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">graph LR
+A[方形] --变化--&gt; B(圆角)
+B -.变化.-&gt; C{条件a}
+C --&gt; |a=1| D[结果1]
+C --&gt; |a=2| D[结果2]
+F[横向流程图]
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2竖向流程图">2.竖向流程图</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">graph TD
+A[方形] --&gt; B(圆角)
+B --&gt; C{条件a}
+C --&gt; D[结果1]
+C --&gt; E[结果2]
+F[竖向流程图]
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3标准流程图纵向">3.标准流程图(纵向)</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">st=&gt;start: 开始框
+op=&gt;operation: 处理框
+cond=&gt;condition: 判断框（是或否？）
+sub1=&gt;subroutine: 子流程
+io=&gt;inputoutput: 输入输出框
+e=&gt;end: 结束框
+st-&gt;op-&gt;cond
+cond(yes)-&gt;io-&gt;e
+cond(no)-&gt;sub1(right)-&gt;op
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="4标准流程图横向">4.标准流程图(横向)</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">st=&gt;start: 开始框
+op=&gt;operation: 处理框
+cond=&gt;condition: 判断框（是或否？）
+sub1=&gt;subroutine: 子流程
+io=&gt;inputoutput: 输入输出框
+e=&gt;end: 结束框
+st(right)-&gt;op(right)-&gt;cond
+cond(yes)-&gt;io(bottom)-&gt;e
+cond(no)-&gt;sub1(right)-&gt;op
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="5uml-简单时序图样例">5.UML 简单时序图样例</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">对象A-&gt;对象B: 对象B你好吗？（请求）
+Note right of 对象B: 对象B的描述
+Note left of 对象A: 对象A的描述
+对象B--&gt;对象A: 我很好（响应）
+对象A-&gt;对象B: 你真的好吗？
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="6uml-复杂时序图样例">6.UML 复杂时序图样例</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">Title: 标题: 复杂使用
+对象A-&gt;对象B: 对象B，你好吗？（请求）
+Note right of 对象B: 对象B的描述
+Note left of 对象A: 对象A的描述（提示）
+对象B--&gt;对象A: 我很好（响应）
+对象B-&gt;小三: 你好吗？
+小三--&gt;&gt;对象A: 对象B找我了
+对象A-&gt;对象B: 你真的好吗？
+Note over 小三,对象B: 我们是朋友
+participant C
+Note right of C: 没人陪我玩
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="7uml-准样时序图标例">7.UML 准样时序图标例</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">sequenceDiagram
+participant 张三
+participant 李四
+张三-&gt;王五: 王五，你好吗？
+loop 健康检查
+王五-&gt;王五: 与疾病战斗
+end
+Note right of 王五: 合理 食物
+看医生...
+李四--&gt;张三: 很好！
+王五-&gt;李四: 你怎么样？
+李四--&gt;王五: 很好！
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="8甘兰图">8.甘兰图</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">gantt
+
+title 软件开发甘特图
+dateFormat YYYY-MM-DD
+section 设计
+需求:done,des1,2020-01-01,2020-01-05
+原型:active,des2,2020-01-06,3d
+UI设计:des3,after des2,5d
+未来任务:des4,after des3,5d
+section 开发
+学习准备理解需求:crit,done,2020-01-01,24h
+设计框架:crit,done,after des2,2d
+开发:crit,active,3d
+未来任务:crit,5d
+耍:2d
+section 测试
+功能测试:active,a1,after des3,3d
+压力测试:after a1,20h
+测试报告:48h
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-12-13
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" target="_blank">Creative Commons Attribution-ShareAlike License</a></span>
+  </p>
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/typora/">typora</a>
+          <a href="/tags/uml/">uml</a>
+          <a href="/tags/%E7%94%BB%E5%9B%BE/">画图</a>
+          <a href="/tags/%E6%97%B6%E5%BA%8F%E5%9B%BE/">时序图</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/mysql/mysql%E9%94%81%E8%A1%A8%E5%A4%84%E7%90%86%E5%91%BD%E4%BB%A4%E5%BD%92%E7%BA%B3/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[mysql]mysql锁表处理命令归纳</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/%E5%B7%A5%E5%85%B7/typora%E7%94%BB%E5%9B%BEmermaid/">
+            <span class="next-text nav-default">[typora] Typora画图-Mermaid流程图</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

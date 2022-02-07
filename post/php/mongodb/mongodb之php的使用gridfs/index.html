@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[MongoDB]MongoDB之PHP的使用(GridFs) - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="MongoDB之PHP的使用(GridFs) 一：第一种方法，直接调Driver的方式: 一个简单上传例子: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18" /><meta name="keywords" content="MongoDB, GridFs, php" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/php/mongodb/mongodb%E4%B9%8Bphp%E7%9A%84%E4%BD%BF%E7%94%A8gridfs/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[MongoDB]MongoDB之PHP的使用(GridFs)" />
+<meta property="og:description" content="MongoDB之PHP的使用(GridFs) 一：第一种方法，直接调Driver的方式: 一个简单上传例子: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/php/mongodb/mongodb%E4%B9%8Bphp%E7%9A%84%E4%BD%BF%E7%94%A8gridfs/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-07-27T15:37:56+08:00" />
+<meta property="article:modified_time" content="2019-07-27T15:37:56+08:00" />
+
+<meta itemprop="name" content="[MongoDB]MongoDB之PHP的使用(GridFs)">
+<meta itemprop="description" content="MongoDB之PHP的使用(GridFs) 一：第一种方法，直接调Driver的方式: 一个简单上传例子: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18"><meta itemprop="datePublished" content="2019-07-27T15:37:56+08:00" />
+<meta itemprop="dateModified" content="2019-07-27T15:37:56+08:00" />
+<meta itemprop="wordCount" content="1117">
+<meta itemprop="keywords" content="MongoDB,GridFs,php," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[MongoDB]MongoDB之PHP的使用(GridFs)"/>
+<meta name="twitter:description" content="MongoDB之PHP的使用(GridFs) 一：第一种方法，直接调Driver的方式: 一个简单上传例子: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[MongoDB]MongoDB之PHP的使用(GridFs)</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-07-27 </span>
+        <div class="post-category">
+            <a href="/categories/php/"> php </a>
+            <a href="/categories/mongodb/"> MongoDB </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#mongodb之php的使用gridfs">MongoDB之PHP的使用(GridFs)</a>
+      <ul>
+        <li><a href="#一第一种方法直接调driver的方式">一：第一种方法，直接调Driver的方式:</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="mongodb之php的使用gridfs">MongoDB之PHP的使用(GridFs)</h1>
+<h2 id="一第一种方法直接调driver的方式">一：第一种方法，直接调Driver的方式:</h2>
+<p>一个简单上传例子:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="nx">classMongoPHP</span>
+<span class="p">{</span>
+
+    <span class="k">private</span> <span class="nv">$_db</span><span class="o">=</span><span class="s1">&#39;publicfiles&#39;</span><span class="p">;</span>
+    
+    <span class="k">private</span> <span class="nv">$manager</span><span class="o">=</span><span class="k">null</span><span class="p">;</span>
+    
+    <span class="k">public</span> <span class="nx">function__construct</span><span class="p">(</span><span class="nv">$config</span><span class="o">=</span> <span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span><span class="s1">&#39;port&#39;</span><span class="o">=&gt;</span><span class="mi">27017</span><span class="p">])</span>
+    
+    <span class="p">{</span>
+    
+        <span class="nv">$server</span><span class="o">=</span><span class="nx">sprintf</span><span class="p">(</span><span class="s2">&#34;mongodb://%s:%s&#34;</span><span class="p">,</span><span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">],</span><span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;port&#39;</span><span class="p">]);</span>
+    
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">manager</span><span class="o">=</span><span class="nx">newMongoDB\Driver\Manager</span><span class="p">(</span><span class="nv">$server</span><span class="p">);</span>
+    
+    <span class="p">}</span>
+    
+    <span class="sd">/**
+</span><span class="sd">    
+</span><span class="sd">    * insert插入
+</span><span class="sd">    
+</span><span class="sd">    *@param$arr
+</span><span class="sd">    
+</span><span class="sd">    *@returnmixed
+</span><span class="sd">    
+</span><span class="sd">    */</span>
+    
+    <span class="k">public</span> <span class="nx">functioninsertDb</span> <span class="p">(</span><span class="nv">$table</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="nv">$arr</span><span class="o">=</span> <span class="p">[])</span> <span class="p">{</span>
+    
+        <span class="nv">$bulk</span><span class="o">=</span><span class="nx">newMongoDB\Driver\BulkWrite</span><span class="p">;</span>
+    
+        <span class="nv">$_id</span><span class="o">=</span><span class="nx">newMongoDB\BSON\ObjectID</span><span class="p">;</span>
+    
+        <span class="nv">$arr</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span> <span class="o">=</span><span class="nv">$_id</span><span class="p">;</span>
+    
+        <span class="nv">$_id</span><span class="o">=</span><span class="nv">$bulk</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$arr</span><span class="p">);</span>
+    
+        <span class="nv">$writeConcern</span><span class="o">=</span><span class="nx">newMongoDB\Driver\WriteConcern</span><span class="p">(</span><span class="nx">MongoDB\Driver\WriteConcern</span><span class="o">::</span><span class="na">MAJORITY</span><span class="p">,</span><span class="mi">1000</span><span class="p">);</span>
+    
+        <span class="nv">$result</span><span class="o">=</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">manager</span><span class="o">-&gt;</span><span class="na">executeBulkWrite</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">_db</span><span class="o">.</span><span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="nv">$table</span><span class="p">,</span><span class="nv">$bulk</span><span class="p">,</span><span class="nv">$writeConcern</span><span class="p">);</span>
+    
+        <span class="k">return</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="o">=&gt;</span><span class="nv">$_id</span><span class="p">,</span><span class="s1">&#39;statsu&#39;</span><span class="o">=&gt;</span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">getWriteConcernError</span><span class="p">()];</span>
+    
+    <span class="p">}</span>
+
+<span class="p">}</span>
+
+<span class="nv">$mongo</span><span class="o">=</span><span class="nx">newMongoPHP</span><span class="p">();</span>
+
+<span class="nv">$data</span><span class="o">=</span> <span class="p">[</span>
+
+    <span class="s1">&#39;fileName&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;1&#39;</span><span class="p">,</span>
+    
+    <span class="s1">&#39;fileTyple&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;doxs&#39;</span><span class="p">,</span>
+    
+    <span class="s1">&#39;fileSize&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;1024&#39;</span><span class="p">,</span>
+    
+    <span class="s1">&#39;fileContent&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+    
+    <span class="s1">&#39;isGenerateJpg&#39;</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">,</span>
+    
+    <span class="s1">&#39;generatePage&#39;</span><span class="o">=&gt;</span><span class="mi">2</span>
+
+<span class="p">];</span>
+
+<span class="nv">$mongo</span><span class="o">-&gt;</span><span class="na">insertDb</span><span class="p">(</span><span class="s1">&#39;publicfiles&#39;</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这样处理显然是没有问题的，但是我在使用GridFs的时候，发现新版的已经找不到对它的使用了，找了很多资料都不符合我的需求.</p>
+<p>今天突然在PHP官网看到了一个关于MongDB的类库。。。好把，瞬间感觉泪崩,附上连接http://php.net/manual/en/mongodb.tutorial.library.php</p>
+<p>使用composer安装好就直接可以用了(很简单)，附上我的安装版本：&ldquo;mongodb/mongodb&rdquo;:&quot;^1.2&quot;</p>
+<p>com.atlassian.confluence.content.render.xhtml.XhtmlException: Missing required attribute: {http://atlassian.com/resource/identifier}value</p>
+<p>自己写的一个简单的PHP框架</p>
+<p>附上简单的调用:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="k">require</span> <span class="s1">&#39;./vendor/autoload.php&#39;</span><span class="p">;</span><span class="c1">//首先引入
+</span><span class="c1"></span>
+<span class="nv">$clent</span><span class="o">=</span><span class="nx">newMongoDB\Client</span><span class="p">(</span><span class="s2">&#34;mongodb://localhost:27017&#34;</span><span class="p">);</span><span class="c1">//连接数据库
+</span><span class="c1"></span>
+<span class="mf">1.</span><span class="nx">添加数据</span>
+
+<span class="nv">$recordArray</span> <span class="o">=</span> <span class="p">[];</span><span class="c1">//随便一个数组
+</span><span class="c1"></span>
+<span class="nv">$contentCollection</span><span class="o">=</span><span class="nv">$clent</span><span class="o">-&gt;</span><span class="na">publicfiles</span><span class="o">-&gt;</span><span class="na">fileContent</span><span class="p">;</span><span class="c1">//database+collection
+</span><span class="c1"></span>
+<span class="nv">$contentResult</span><span class="o">=</span><span class="nv">$contentCollection</span><span class="o">-&gt;</span><span class="na">insertOne</span><span class="p">(</span><span class="nv">$recordArray</span><span class="p">);</span>
+
+<span class="nv">$contentResult</span><span class="o">-&gt;</span><span class="na">isAcknowledged</span><span class="p">()</span><span class="c1">//返回bool值
+</span><span class="c1"></span>
+<span class="nv">$contentResult</span><span class="o">-&gt;</span><span class="na">getInsertedId</span><span class="p">()</span><span class="c1">//返回插入ID,一个对象，如果需要将其存入mysql可以strval()转成字符串
+</span><span class="c1"></span>
+<span class="mf">2.</span><span class="nx">GridFs存储文件</span>
+
+<span class="nv">$gridFsCollection</span><span class="o">=</span><span class="nv">$clent</span><span class="o">-&gt;</span><span class="na">publicfiles</span><span class="o">-&gt;</span><span class="na">selectGridFSBucket</span><span class="p">();</span><span class="c1">//这里只指定了databases，collection按照默认的来就行
+</span><span class="c1"></span>
+<span class="nv">$file</span><span class="o">=</span><span class="nx">fopen</span><span class="p">(</span><span class="nv">$fileName</span><span class="p">,</span><span class="s1">&#39;rb&#39;</span><span class="p">);</span>
+
+<span class="nv">$gridFsResult</span><span class="o">=</span><span class="nv">$gridFsCollection</span><span class="o">-&gt;</span><span class="na">uploadFromStream</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;fileName&#39;</span><span class="p">],</span><span class="nv">$file</span><span class="p">);</span><span class="c1">//返回fs.file中的_id
+</span><span class="c1"></span>
+<span class="mf">3.</span><span class="nx">GridFs获取文件二进制流</span>
+
+<span class="nv">$data_id</span><span class="o">=</span><span class="nx">Object</span><span class="p">(</span><span class="s2">&#34;231223er23r4rr223r233r&#34;</span><span class="p">);</span>
+
+<span class="nv">$gridFsCollection</span><span class="o">=</span><span class="nv">$clent</span><span class="o">-&gt;</span><span class="na">publicfiles</span><span class="o">-&gt;</span><span class="na">selectGridFSBucket</span><span class="p">();</span>
+
+<span class="nv">$stream</span><span class="o">=</span><span class="nv">$gridFsCollection</span><span class="o">-&gt;</span><span class="na">openDownloadStream</span><span class="p">(</span><span class="nv">$data_id</span><span class="p">);</span>
+
+<span class="nv">$contentString</span><span class="o">=</span><span class="nx">stream_get_contents</span><span class="p">(</span><span class="nv">$stream</span><span class="p">);</span><span class="c1">//二进制流数据
+</span></code></pre></td></tr></table>
+</div>
+</div><p>这样子就完美处理了，无论你用什么框架还是自己写原生的框架都可以</p>
+<p>这里附上mongodb php库的说明文档https://docs.mongodb.com/php-library/current/tutorial/gridfs/</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-07-27
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/mongodb/">MongoDB</a>
+          <a href="/tags/gridfs/">GridFs</a>
+          <a href="/tags/php/">php</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/cache/redis%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%8E%9F%E7%90%86%E5%92%8C%E9%85%8D%E7%BD%AE/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[数据库] Redis主从复制原理和配置</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/php/laravel/%E5%9C%A8%E7%BA%BF%E8%81%8A%E5%A4%A9%E7%B3%BB%E7%BB%9Flaravel-swoole-redis-vue/">
+            <span class="next-text nav-default">[laravel]在线聊天系统(laravel swoole redis vue)</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>power shell on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/tags/power-shell/</link>
+    <description>Recent content in power shell on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Sun, 15 Aug 2021 16:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/power-shell/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>windows10下修改cmd和power shell的编码方式(解决中文乱码)</title>
+      <link>https://blog.nevergiveup.tech/post/%E5%85%B6%E4%BB%96/windows10%E4%B8%8B%E4%BF%AE%E6%94%B9cmd%E5%92%8Cpower-shell%E7%9A%84%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F/</link>
+      <pubDate>Sun, 15 Aug 2021 16:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/%E5%85%B6%E4%BB%96/windows10%E4%B8%8B%E4%BF%AE%E6%94%B9cmd%E5%92%8Cpower-shell%E7%9A%84%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F/</guid>
+      <description>windows10下修改cmd和power shell的编码方式 power shell 使用用Powershell的配置文件（PROFILE）来实现。PROFIL</description>
+    </item>
+    
+  </channel>
+</rss>

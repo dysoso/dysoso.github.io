@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>docker on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/tags/docker/</link>
+    <description>Recent content in docker on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Sat, 07 Sep 2019 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[数据库] Redis-Docker部署及主从复制配置</title>
+      <link>https://blog.nevergiveup.tech/post/cache/redis-docker%E9%83%A8%E7%BD%B2%E5%8F%8A%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Sat, 07 Sep 2019 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/cache/redis-docker%E9%83%A8%E7%BD%B2%E5%8F%8A%E9%85%8D%E7%BD%AE/</guid>
+      <description>Redis-Docker部署及主从复制配置 1.安装部署Redis 1).查看所有的Redis镜像 docker search redis 2).拉取你中意的Redis镜像（推荐s</description>
+    </item>
+    
+    <item>
+      <title>[rabbitmq]RabbitMQ在Docker安装及使用</title>
+      <link>https://blog.nevergiveup.tech/post/%E4%B8%AD%E9%97%B4%E4%BB%B6/rabbitmq%E5%9C%A8docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Fri, 13 Apr 2018 16:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/%E4%B8%AD%E9%97%B4%E4%BB%B6/rabbitmq%E5%9C%A8docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
+      <description>RabbitMQ在Docker安装及使用 1.安装部署RabbitMQ 1).查看所有的RabbitMQ镜像 1 docker search RabbitMQ 2).拉取你中意的es镜像（</description>
+    </item>
+    
+    <item>
+      <title>[docker]docker安装及入门</title>
+      <link>https://blog.nevergiveup.tech/post/%E4%B8%AD%E9%97%B4%E4%BB%B6/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Sun, 12 Nov 2017 16:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/%E4%B8%AD%E9%97%B4%E4%BB%B6/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E5%85%A5%E9%97%A8/</guid>
+      <description>docker安装及入门 0.docker 官方文档: https://docs.docker.com/get-started/ 1.CentOS 7安装docker 参考文档: https://help.aliyun.com/document_detail/60742.html?spm=a2c4g.11186623.6.548.a7121e66mRh5sD 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36</description>
+    </item>
+    
+  </channel>
+</rss>

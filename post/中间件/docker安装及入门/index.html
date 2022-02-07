@@ -1,0 +1,1874 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[docker]docker安装及入门 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="docker安装及入门 0.docker 官方文档: https://docs.docker.com/get-started/ 1.CentOS 7安装docker 参考文档: https://help.aliyun.com/document_detail/60742.html?spm=a2c4g.11186623.6.548.a7121e66mRh5sD 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36" /><meta name="keywords" content="docker" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/%E4%B8%AD%E9%97%B4%E4%BB%B6/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E5%85%A5%E9%97%A8/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[docker]docker安装及入门" />
+<meta property="og:description" content="docker安装及入门 0.docker 官方文档: https://docs.docker.com/get-started/ 1.CentOS 7安装docker 参考文档: https://help.aliyun.com/document_detail/60742.html?spm=a2c4g.11186623.6.548.a7121e66mRh5sD 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/%E4%B8%AD%E9%97%B4%E4%BB%B6/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E5%85%A5%E9%97%A8/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2017-11-12T16:37:56+08:00" />
+<meta property="article:modified_time" content="2017-11-12T16:37:56+08:00" />
+
+<meta itemprop="name" content="[docker]docker安装及入门">
+<meta itemprop="description" content="docker安装及入门 0.docker 官方文档: https://docs.docker.com/get-started/ 1.CentOS 7安装docker 参考文档: https://help.aliyun.com/document_detail/60742.html?spm=a2c4g.11186623.6.548.a7121e66mRh5sD 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36"><meta itemprop="datePublished" content="2017-11-12T16:37:56+08:00" />
+<meta itemprop="dateModified" content="2017-11-12T16:37:56+08:00" />
+<meta itemprop="wordCount" content="4328">
+<meta itemprop="keywords" content="docker," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[docker]docker安装及入门"/>
+<meta name="twitter:description" content="docker安装及入门 0.docker 官方文档: https://docs.docker.com/get-started/ 1.CentOS 7安装docker 参考文档: https://help.aliyun.com/document_detail/60742.html?spm=a2c4g.11186623.6.548.a7121e66mRh5sD 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[docker]docker安装及入门</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017-11-12 </span>
+        <div class="post-category">
+            <a href="/categories/docker/"> docker </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#docker安装及入门">docker安装及入门</a>
+      <ul>
+        <li><a href="#0docker">0.docker</a></li>
+        <li><a href="#1centos-7安装docker">1.CentOS 7安装docker</a></li>
+        <li><a href="#2安装检验简单运行">2.安装检验,简单运行</a></li>
+        <li><a href="#3阿里加速镜像">3.阿里加速镜像</a></li>
+        <li><a href="#4删除-docker-ce">4.删除 Docker CE</a></li>
+        <li><a href="#5常用命令">5.常用命令</a>
+          <ul>
+            <li><a href="#1docker信息">1).docker信息</a></li>
+            <li><a href="#2镜像信息">2).镜像信息</a></li>
+            <li><a href="#3容器信息">3).容器信息</a></li>
+            <li><a href="#4bridge网络">4).bridge网络</a></li>
+          </ul>
+        </li>
+        <li><a href="#6docker-compose">6.Docker Compose</a>
+          <ul>
+            <li><a href="#1安装">1).安装</a></li>
+            <li><a href="#2查看安装是否成功">2).查看安装是否成功</a></li>
+            <li><a href="#3卸载">3).卸载</a></li>
+            <li><a href="#4常见命令">4).常见命令</a></li>
+            <li><a href="#5docker-composeyml">5).docker-compose.yml</a></li>
+          </ul>
+        </li>
+        <li><a href="#7安装composer">7.安装composer</a>
+          <ul>
+            <li><a href="#1容器外安装">1.容器外安装</a></li>
+            <li><a href="#2容器内安装">2.容器内安装</a></li>
+          </ul>
+        </li>
+        <li><a href="#8如何清理您的docker数据">8.如何清理您的Docker数据</a>
+          <ul>
+            <li><a href="#1-使用情况统计信息">1). 使用情况统计信息</a></li>
+            <li><a href="#2-定期修剪">2). 定期修剪</a></li>
+            <li><a href="#3-全面清理启动">3). 全面清理启动</a></li>
+            <li><a href="#4-使用情况">4). 使用情况</a></li>
+          </ul>
+        </li>
+        <li><a href="#9搭建php开发环境">9.搭建php开发环境</a>
+          <ul>
+            <li><a href="#1克隆基础包">1).克隆基础包</a></li>
+            <li><a href="#2修改docker-composeyml">2).修改docker-compose.yml</a></li>
+            <li><a href="#4tips">4).tips</a></li>
+          </ul>
+        </li>
+        <li><a href="#10docker-samba文件夹共享">10.Docker samba(文件夹共享)</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="docker安装及入门">docker安装及入门</h1>
+<h2 id="0docker">0.docker</h2>
+<blockquote>
+<p>官方文档: <a href="https://docs.docker.com/get-started/">https://docs.docker.com/get-started/</a></p>
+</blockquote>
+<h2 id="1centos-7安装docker">1.CentOS 7安装docker</h2>
+<blockquote>
+<p>参考文档: <a href="https://help.aliyun.com/document_detail/60742.html?spm=a2c4g.11186623.6.548.a7121e66mRh5sD">https://help.aliyun.com/document_detail/60742.html?spm=a2c4g.11186623.6.548.a7121e66mRh5sD</a></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># step 1: Docker 要求 CentOS 系统的内核版本高于 3.10(3.10.0-862.11.6.el7.x86_64)</span>
+sudo uname -r
+<span class="c1"># step 2: 移除旧的版本</span>
+sudo yum remove docker <span class="se">\
+</span><span class="se"></span>				docker-client <span class="se">\
+</span><span class="se"></span>				docker-client-latest <span class="se">\
+</span><span class="se"></span>				docker-common <span class="se">\
+</span><span class="se"></span>				docker-latest <span class="se">\
+</span><span class="se"></span>				docker-latest-logrotate <span class="se">\
+</span><span class="se"></span>				docker-logrotate <span class="se">\
+</span><span class="se"></span>				docker-selinux <span class="se">\
+</span><span class="se"></span>				docker-engine-selinux <span class="se">\
+</span><span class="se"></span>				docker-engine
+<span class="c1">#sudo yum remove docker-ce</span>
+sudo rm -rf /var/lib/docker
+<span class="c1"># step 3: 安装必要的一些系统工具</span>
+sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+<span class="c1"># Step 4: 添加软件源信息</span>
+sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+<span class="c1"># Step 5: 更新yum缓存并安装Docker-CE</span>
+sudo yum makecache fast
+sudo yum -y install docker-ce
+<span class="c1"># Step 6: 开启Docker服务</span>
+sudo systemctl start docker 或 sudo service docker start
+
+<span class="c1"># 注意：</span>
+<span class="c1"># 官方软件源默认启用了最新的软件，您可以通过编辑软件源的方式获取各个版本的软件包。例如官方并没有将测试版本的软件源置为可用，您可以通过以下方式开启。同理可以开启各种测试版本等。</span>
+<span class="c1"># vim /etc/yum.repos.d/docker-ee.repo</span>
+<span class="c1">#   将[docker-ce-test]下方的enabled=0修改为enabled=1</span>
+<span class="c1">#</span>
+<span class="c1"># 安装指定版本的Docker-CE:</span>
+<span class="c1"># Step 1: 查找Docker-CE的版本:</span>
+<span class="c1"># yum list docker-ce.x86_64 --showduplicates | sort -r</span>
+<span class="c1">#   Loading mirror speeds from cached hostfile</span>
+<span class="c1">#   Loaded plugins: branch, fastestmirror, langpacks</span>
+<span class="c1">#   docker-ce.x86_64            17.03.1.ce-1.el7.centos            docker-ce-stable</span>
+<span class="c1">#   docker-ce.x86_64            17.03.1.ce-1.el7.centos            @docker-ce-stable</span>
+<span class="c1">#   docker-ce.x86_64            17.03.0.ce-1.el7.centos            docker-ce-stable</span>
+<span class="c1">#   Available Packages</span>
+<span class="c1"># Step2: 安装指定版本的Docker-CE: (VERSION例如上面的17.03.0.ce.1-1.el7.centos)</span>
+<span class="c1"># sudo yum -y install docker-ce-[VERSION]</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="2安装检验简单运行">2.安装检验,简单运行</h2>
+<p>安装校验</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">root@iZbp12adskpuoxodbkqzjfZ:$ docker version
+Client:
+ Version:      17.03.0-ce
+ API version:  1.26
+ Go version:   go1.7.5
+ Git commit:   3a232c8
+ Built:        Tue Feb <span class="m">28</span> 07:52:04 <span class="m">2017</span>
+ OS/Arch:      linux/amd64
+Server:
+ Version:      17.03.0-ce
+ API version:  1.26 <span class="o">(</span>minimum version 1.12<span class="o">)</span>
+ Go version:   go1.7.5
+ Git commit:   3a232c8
+ Built:        Tue Feb <span class="m">28</span> 07:52:04 <span class="m">2017</span>
+ OS/Arch:      linux/amd64
+ Experimental: <span class="nb">false</span>
+
+//测试运行
+sudo docker run hello-world
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="3阿里加速镜像">3.阿里加速镜像</h2>
+<blockquote>
+<p>参考文档: <a href="https://cr.console.aliyun.com/cn-shenzhen/instances/mirrors">https://cr.console.aliyun.com/cn-shenzhen/instances/mirrors</a></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#进入阿里云控制台-&gt;容器镜像服务控制台-&gt;镜像加速器配置加速地址</span>
+
+<span class="c1">#配置镜像加速器</span>
+<span class="c1">#针对Docker客户端版本大于 1.10.0 的用户</span>
+<span class="c1">#您可以通过修改daemon配置文件/etc/docker/daemon.json来使用加速器</span>
+
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json <span class="s">&lt;&lt;-&#39;EOF&#39;
+</span><span class="s">{
+</span><span class="s">  &#34;registry-mirrors&#34;: [&#34;https://s9tk92p0.mirror.aliyuncs.com&#34;]
+</span><span class="s">}
+</span><span class="s">EOF</span>
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="4删除-docker-ce">4.删除 Docker CE</h2>
+<blockquote>
+<p>参考文档: <a href="https://www.runoob.com/docker/centos-docker-install.html">https://www.runoob.com/docker/centos-docker-install.html</a></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sudo yum remove docker-ce
+sudo rm -rf /var/lib/docker
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="5常用命令">5.常用命令</h2>
+<h3 id="1docker信息">1).docker信息</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># List Docker CLI commands</span>
+docker
+docker container --help
+<span class="c1"># 查看版本&amp;详情</span>
+docker --version
+docker version
+docker info
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2镜像信息">2).镜像信息</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 列出镜像列表</span>
+docker images
+docker image ls
+docker image ls -a <span class="c1"># List all images on this machine</span>
+<span class="c1"># 删除镜像</span>
+docker image rm &lt;image id&gt; <span class="c1"># Remove specified image from this machine</span>
+docker image rm <span class="k">$(</span>docker image ls -a -q<span class="k">)</span> <span class="c1"># Remove all images from this machine</span>
+<span class="c1"># 获取一个新的镜像</span>
+docker pull <span class="o">{</span><span class="nv">$docker_name</span><span class="o">}</span>:<span class="o">{</span><span class="nv">$docker_tag</span><span class="o">}</span>
+<span class="c1"># 查找镜像</span>
+docker search <span class="o">{</span><span class="nv">$docker_name</span><span class="o">}</span>
+<span class="c1"># 创建镜像</span>
+docker build -t 镜像名称 --tag<span class="o">=</span>标签名称 <span class="o">{</span><span class="nv">$Dockerfile</span> 的绝对路径<span class="o">}</span>
+<span class="c1"># 更新镜像</span>
+docker commit -m<span class="o">=</span><span class="s2">&#34;has update&#34;</span> -a<span class="o">=</span><span class="s2">&#34;runoob&#34;</span> e218edb10161 runoob/ubuntu:v2
+<span class="c1"># 运行镜像</span>
+docker run <span class="o">{</span><span class="nv">$docker_name</span><span class="o">}</span>
+docker run -p 4000:80 <span class="o">{</span><span class="nv">$docker_name</span><span class="o">}</span>
+<span class="c1"># 登录云端</span>
+docker login <span class="c1"># Log in this CLI session using your Docker credentials</span>
+<span class="c1"># 标记image</span>
+docker tag image username/repository:tag
+<span class="c1"># 上传云仓库</span>
+docker push username/repository:tag
+<span class="c1"># 运行云仓库</span>
+docker run --name 容器名称 -p 4000:80 username/repository:tag
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3容器信息">3).容器信息</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 查看容器列表 (running, all, all in quiet mode)</span>
+docker container ls
+docker container ls -a
+docker container ls -all
+docker container ls --all
+docker container ls -aq
+
+<span class="c1"># 运行容器</span>
+docker run --privileged<span class="o">=</span><span class="nb">true</span> <span class="se">\
+</span><span class="se"></span>-p 6379:6379 <span class="se">\
+</span><span class="se"></span>-v /data/LPAPP/docker_redis_6379/data:/data <span class="se">\
+</span><span class="se"></span>-v /data/LPAPP/docker_redis_6379/etc:/etc/redis <span class="se">\
+</span><span class="se"></span>-v /data/LPAPP/docker_redis_6379/log:/var/log/redis <span class="se">\
+</span><span class="se"></span>--network mybridge <span class="se">\
+</span><span class="se"></span>--name redis_6379 <span class="se">\
+</span><span class="se"></span>-itd redis redis-server /etc/redis/redis.conf
+
+<span class="c1">#配置说明</span>
+-p 6379:6379:把容器内的6379端口映射到宿主机6379端口
+-v /data/LPAPP/docker_redis_6379/data:/data：把宿主机配置好的redis.conf放到容器内的这个位置中
+-v /root/redis/data:/data：把redis持久化的数据在宿主机内显示，做数据备份
+redis-server /etc/redis/redis.conf -p 6379：这个是关键配置，让redis不是无配置启动，而是按照这个redis.conf的配置启动，并且端口为630
+--privileged<span class="o">=</span><span class="nb">true</span> 增加权限，解决权限不够，导致执行后docker ps 查不到redis
+--network 指定网络
+
+<span class="c1"># 容器停止</span>
+docker container stop &lt;hash&gt; <span class="c1"># Gracefully stop the specified container</span>
+docker container <span class="nb">kill</span> &lt;hash&gt; <span class="c1"># Force shutdown of the specified container</span>
+<span class="c1"># 容器删除</span>
+docker container rm &lt;hash&gt; <span class="c1"># Remove specified container from this machine</span>
+docker container rm <span class="k">$(</span>docker container ls -a -q<span class="k">)</span> <span class="c1"># Remove all containers</span>
+<span class="c1"># 进入容器内操作</span>
+docker <span class="nb">exec</span> -it content-name-or-id /bin/bash
+
+<span class="c1"># 查看运行中的容器</span>
+docker ps
+docker ps -a
+<span class="c1"># 查看进程</span>
+docker top
+<span class="c1"># 重启WEB应用容器</span>
+docker start &lt;Container NAME or ID&gt;
+<span class="c1"># 停止 WEB 应用容器</span>
+docker stop &lt;Container NAME or ID&gt;
+<span class="c1"># 移除WEB应用容器</span>
+docker rm wizardly_chandrasekhar
+
+<span class="c1">#给运行中的容器增加端口映射</span>
+docker ps -a <span class="o">=</span>&gt; 40319ca66428
+docker port <span class="nv">40319ca66428</span> <span class="o">=</span>&gt; 
+docker inspect 40319ca66428<span class="p">|</span>grep <span class="nv">Id</span> <span class="o">=</span>&gt; 40319ca66428037fc9bf0c5f604e462388ab6f0105dc9867a811bbb421888b9f
+docker stop 40319ca66428
+systemctl stop docker.socket
+systemctl stop docker
+进到/var/lib/docker/containers 目录下找到与 Id 相同的目录，修改 hostconfig.json 和 config.v2.json文件
+<span class="nb">cd</span> /var/lib/docker/containers/40319ca66428037fc9bf0c5f604e462388ab6f0105dc9867a811bbb421888b9f
+修改hostconfig.json如下，添加端口绑定<span class="s2">&#34;9502/tcp&#34;</span>: <span class="o">[{</span><span class="s2">&#34;HostIp&#34;</span>: <span class="s2">&#34;&#34;</span>,<span class="s2">&#34;HostPort&#34;</span>: <span class="s2">&#34;9502&#34;</span><span class="o">}]</span>，表示绑定端口9502
+修改config.v2.json在ExposedPorts中加上要暴露的端口<span class="s2">&#34;9502/tcp&#34;</span>:<span class="o">{}</span>，即9002
+systemctl start docker
+docker start 40319ca66428
+netstat -an <span class="p">|</span>grep <span class="m">9502</span>
+docker port <span class="nv">40319ca66428</span> <span class="o">=</span>&gt; 
+ps -ef <span class="p">|</span>grep <span class="nv">9602</span> <span class="o">=</span>&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4bridge网络">4).bridge网络</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#查看默认命令</span>
+docker network
+<span class="c1">#显示默认命令</span>
+Commands:
+    connect     Connect a container to a network
+    create      Create a network
+    disconnect  Disconnect a container from a network
+    inspect     Display detailed information on one or more networks
+    ls          List networks
+    prune       Remove all unused networks
+    rm          Remove one or more networks
+    
+Create a network
+Options:
+      --attachable          Enable manual container attachment
+      --aux-addressmap     Auxiliary IPv4 or IPv6 addresses used by
+                             Network driver <span class="o">(</span>default map<span class="o">[])</span>
+      --config-fromstring   The network from which copying the configuration
+      --config-only        Create a configuration only network
+  -d, --driverstring       Driver to manage the Network <span class="o">(</span>default <span class="s2">&#34;bridge&#34;</span><span class="o">)</span>
+      --gatewaystrings     IPv4 or IPv6 Gateway forthe master subnet
+      --ingress            Create swarm routing-mesh network
+      --internal            Restrict external access to the network
+      --ip-rangestrings     Allocate container ip from a sub-range
+      --ipam-driverstring   IP Address Management Driver <span class="o">(</span>default <span class="s2">&#34;default&#34;</span><span class="o">)</span>
+      --ipam-optmap         Set IPAM driver specific options <span class="o">(</span>default map<span class="o">[])</span>
+      --ipv6                Enable IPv6 networking
+      --labellist           Set metadata on a network
+  -o, --optmap             Set driver specific options <span class="o">(</span>default map<span class="o">[])</span>
+      --scopestring         Control the network<span class="err">&#39;</span>s scope
+      --subnetstrings       Subnet inCIDR format that represents a
+
+
+
+<span class="c1">#查看现在的网络</span>
+docker network ls
+<span class="c1">#显示默认网络</span>
+68c135591e54        bridge              bridge              <span class="nb">local</span>
+0a8e99ac21b7        host                host                <span class="nb">local</span>
+e1b4087d1d32        none                null                <span class="nb">local</span>
+
+<span class="c1">#创建自己的bridge</span>
+docker network create --driver bridge &lt;网络名称&gt; --subnet<span class="o">=</span>172.18.0.0/24 net1
+--subnet是定义网段
+创建容器指定共享网络，ip，和别名
+
+<span class="c1">#创建容器并且指定bridge</span>
+docker run --network &lt;网络名称&gt; 
+docker run --network container:&lt;容器名称&gt;
+
+<span class="c1">#将服务添加到自己的新建的网络里面</span>
+docker network connect &lt;网络名称&gt; &lt;容器名称&gt;
+<span class="c1">#将服务退出新建网络</span>
+docker network disconnect &lt;网络名称&gt; &lt;容器名称&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="6docker-compose">6.Docker Compose</h2>
+<h3 id="1安装">1).安装</h3>
+<p>安装 Docker Compose 可以通过下面命令自动下载适应版本的 Compose，并为安装脚本添加执行权限</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sudo curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-<span class="k">$(</span>uname -s<span class="k">)</span>-<span class="k">$(</span>uname -m<span class="k">)</span> -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2查看安装是否成功">2).查看安装是否成功</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">docker-compose -v
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3卸载">3).卸载</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">rm /usr/local/bin/docker-compose <span class="c1"># 使用curl安装的</span>
+pip uninstall docker-compose <span class="c1"># 使用pip卸载</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4常见命令">4).常见命令</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">ps：列出所有运行容器
+docker-compose ps
+logs：查看服务日志输出
+docker-compose logs
+port：打印绑定的公共端口，下面命令可以输出 eureka 服务 <span class="m">8761</span> 端口所绑定的公共端口
+docker-compose port eureka <span class="m">8761</span>
+build：构建或者重新构建服务
+docker-compose build
+start：启动指定服务已存在的容器
+docker-compose start eureka
+stop：停止已运行的服务的容器
+docker-compose stop eureka
+rm：删除指定服务的容器
+docker-compose rm eureka
+up：构建、启动容器
+docker-compose up
+kill：通过发送 SIGKILL 信号来停止指定服务的容器
+docker-compose <span class="nb">kill</span> eureka
+pull：下载服务镜像
+scale：设置指定服务运气容器的个数，以 <span class="nv">service</span><span class="o">=</span>num 形式指定
+docker-compose scale <span class="nv">user</span><span class="o">=</span><span class="m">3</span> <span class="nv">movie</span><span class="o">=</span><span class="m">3</span>
+run：在一个服务上执行一个命令
+docker-compose run web bash
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="5docker-composeyml">5).docker-compose.yml</h3>
+<h2 id="7安装composer">7.安装composer</h2>
+<h3 id="1容器外安装">1.容器外安装</h3>
+<h4 id="1-确定composer缓存的路径">1). 确定composer缓存的路径。</h4>
+<p>比如，我的dnmp下载在~/dnmp目录，那composer的缓存路径就是~/dnmp/data/composer。</p>
+<h4 id="2-参考bashaliassample示例文件将对应-php-composer-函数拷贝到主机的-bashrc">2). 参考bash.alias.sample示例文件，将对应 php composer 函数拷贝到主机的 ~/.bashrc</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">composer <span class="o">()</span> <span class="o">{</span>
+    <span class="nv">tty</span><span class="o">=</span>
+    tty -s <span class="o">&amp;&amp;</span> <span class="nv">tty</span><span class="o">=</span>--tty
+    docker run <span class="se">\
+</span><span class="se"></span>        <span class="nv">$tty</span> <span class="se">\
+</span><span class="se"></span>        --interactive <span class="se">\
+</span><span class="se"></span>        --rm <span class="se">\
+</span><span class="se"></span>        --user www-data:www-data <span class="se">\
+</span><span class="se"></span>        --volume ~/dnmp/data/composer:/tmp/composer <span class="se">\
+</span><span class="se"></span>        --volume <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/app <span class="se">\
+</span><span class="se"></span>        --workdir /app <span class="se">\
+</span><span class="se"></span>        dnmp_php composer <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3-让文件起效">3). 让文件起效：</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">source</span> ~/.bashrc
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="4-在主机的任何目录下就能用composer了">4). 在主机的任何目录下就能用composer了：</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> ~/dnmp/www/
+composer create-project yeszao/fastphp project --no-dev
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2容器内安装">2.容器内安装</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 镜像容器运行后，在容器内安装 Composer</span>
+wget https://github.com/composer/composer/releases/download/1.8.6/composer.phar
+chmod u+x composer.phar
+mv composer.phar /usr/local/bin/composer
+<span class="c1"># 将 Composer 镜像设置为阿里云镜像，加速国内下载速度</span>
+composer config -g repo.packagist composer https://mirrors.aliyun.com/composer
+<span class="c1"># 通过 Composer 安装 hyperf 项目</span>
+composer create-project hyperf/hyperf-skeleton <span class="nb">test</span> --prefer-dist
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="8如何清理您的docker数据">8.如何清理您的Docker数据</h2>
+<h3 id="1-使用情况统计信息">1). 使用情况统计信息</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ docker system df
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE  
+Images          <span class="m">25</span>        <span class="m">13</span>        9.467GB   4.368GB <span class="o">(</span>46%<span class="o">)</span>
+Containers      <span class="m">13</span>        <span class="m">8</span>         235MB     19.47MB <span class="o">(</span>8%<span class="o">)</span> 
+Local Volumes   <span class="m">14</span>        <span class="m">2</span>         6.45GB    5.869GB <span class="o">(</span>90%<span class="o">)</span>
+Build Cache     <span class="m">0</span>         <span class="m">0</span>         0B        0B
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2-定期修剪">2). 定期修剪</h3>
+<p>为了安全地删除已停止的容器，未使用的网络和悬挂的图像，最好每隔一段时间运行以下命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ docker system prune
+WARNING! This will remove:
+  - all stopped containers
+  - all networks not used by at least one container
+  - all dangling images
+  - all dangling build cache
+
+Are you sure you want to <span class="k">continue</span>? <span class="o">[</span>y/N<span class="o">]</span> y
+Deleted Containers:
+5096cc97946c148450214a4330e35a67035289ecacc2806e9f693a0d46ebe75e
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3-全面清理启动">3). 全面清理启动</h3>
+<p>可以使用单个命令擦除每个未使用的容器，图像，卷和网络</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ docker system prune -a --volumes
+WARNING! This will remove:
+  - all stopped containers
+  - all networks not used by at least one container
+  - all volumes not used by at least one container
+  - all images without at least one container associated to them
+  - all build cache
+
+Are you sure you want to <span class="k">continue</span>? <span class="o">[</span>y/N<span class="o">]</span> y
+Deleted Volumes:
+d8827bb292a529057fc972acb982a6f13b6608ed10132b9e9a689959cafec30e
+...
+Deleted Images:
+untagged: dnmp_php72:latest
+deleted: sha256:1b29834e4f9054d78a0d5e91e114e40b865ad8ddce06a3c7ba3703f9911775e6
+
+Total reclaimed space: 12.71GB
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4-使用情况">4). 使用情况</h3>
+<p><img src="/docker/docker-clear-clipboard.png" alt="img"></p>
+<h2 id="9搭建php开发环境">9.搭建php开发环境</h2>
+<blockquote>
+<p>docker搭建lnmp环境，php 7.2 + nginx latest + mysql 5.7 + redis 4<br>
+默认已经安装了 docker 和 docker-compose<br>
+已使用阿里云镜像加速器</p>
+</blockquote>
+<h3 id="1克隆基础包">1).克隆基础包</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">git clone https://github.com/chichoyi/dnmp.git
+git clone https://gitee.com/dysoso/dnmp.git
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2修改docker-composeyml">2).修改docker-compose.yml</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span><span class="lnt">223
+</span><span class="lnt">224
+</span><span class="lnt">225
+</span><span class="lnt">226
+</span><span class="lnt">227
+</span><span class="lnt">228
+</span><span class="lnt">229
+</span><span class="lnt">230
+</span><span class="lnt">231
+</span><span class="lnt">232
+</span><span class="lnt">233
+</span><span class="lnt">234
+</span><span class="lnt">235
+</span><span class="lnt">236
+</span><span class="lnt">237
+</span><span class="lnt">238
+</span><span class="lnt">239
+</span><span class="lnt">240
+</span><span class="lnt">241
+</span><span class="lnt">242
+</span><span class="lnt">243
+</span><span class="lnt">244
+</span><span class="lnt">245
+</span><span class="lnt">246
+</span><span class="lnt">247
+</span><span class="lnt">248
+</span><span class="lnt">249
+</span><span class="lnt">250
+</span><span class="lnt">251
+</span><span class="lnt">252
+</span><span class="lnt">253
+</span><span class="lnt">254
+</span><span class="lnt">255
+</span><span class="lnt">256
+</span><span class="lnt">257
+</span><span class="lnt">258
+</span><span class="lnt">259
+</span><span class="lnt">260
+</span><span class="lnt">261
+</span><span class="lnt">262
+</span><span class="lnt">263
+</span><span class="lnt">264
+</span><span class="lnt">265
+</span><span class="lnt">266
+</span><span class="lnt">267
+</span><span class="lnt">268
+</span><span class="lnt">269
+</span><span class="lnt">270
+</span><span class="lnt">271
+</span><span class="lnt">272
+</span><span class="lnt">273
+</span><span class="lnt">274
+</span><span class="lnt">275
+</span><span class="lnt">276
+</span><span class="lnt">277
+</span><span class="lnt">278
+</span><span class="lnt">279
+</span><span class="lnt">280
+</span><span class="lnt">281
+</span><span class="lnt">282
+</span><span class="lnt">283
+</span><span class="lnt">284
+</span><span class="lnt">285
+</span><span class="lnt">286
+</span><span class="lnt">287
+</span><span class="lnt">288
+</span><span class="lnt">289
+</span><span class="lnt">290
+</span><span class="lnt">291
+</span><span class="lnt">292
+</span><span class="lnt">293
+</span><span class="lnt">294
+</span><span class="lnt">295
+</span><span class="lnt">296
+</span><span class="lnt">297
+</span><span class="lnt">298
+</span><span class="lnt">299
+</span><span class="lnt">300
+</span><span class="lnt">301
+</span><span class="lnt">302
+</span><span class="lnt">303
+</span><span class="lnt">304
+</span><span class="lnt">305
+</span><span class="lnt">306
+</span><span class="lnt">307
+</span><span class="lnt">308
+</span><span class="lnt">309
+</span><span class="lnt">310
+</span><span class="lnt">311
+</span><span class="lnt">312
+</span><span class="lnt">313
+</span><span class="lnt">314
+</span><span class="lnt">315
+</span><span class="lnt">316
+</span><span class="lnt">317
+</span><span class="lnt">318
+</span><span class="lnt">319
+</span><span class="lnt">320
+</span><span class="lnt">321
+</span><span class="lnt">322
+</span><span class="lnt">323
+</span><span class="lnt">324
+</span><span class="lnt">325
+</span><span class="lnt">326
+</span><span class="lnt">327
+</span><span class="lnt">328
+</span><span class="lnt">329
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;3&#34;</span><span class="w">
+</span><span class="w"></span><span class="nt">services</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">nginx</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">build</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l">./services/nginx</span><span class="w">
+</span><span class="w">      </span><span class="nt">args</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">NGINX_VERSION</span><span class="p">:</span><span class="w"> </span><span class="l">nginx:${NGINX_VERSION}</span><span class="w">
+</span><span class="w">        </span><span class="nt">CONTAINER_PACKAGE_URL</span><span class="p">:</span><span class="w"> </span><span class="l">${CONTAINER_PACKAGE_URL}</span><span class="w">
+</span><span class="w">        </span><span class="nt">NGINX_INSTALL_APPS</span><span class="p">:</span><span class="w"> </span><span class="l">${NGINX_INSTALL_APPS}</span><span class="w">
+</span><span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
+</span><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;${NGINX_HTTP_HOST_PORT}:80&#34;</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;${NGINX_HTTPS_HOST_PORT}:443&#34;</span><span class="w">
+</span><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">${SOURCE_DIR}:/www/:rw</span><span class="w">
+</span><span class="w">      </span>- <span class="l">${NGINX_SSL_CERTIFICATE_DIR}:/ssl:rw</span><span class="w">
+</span><span class="w">      </span>- <span class="l">${NGINX_CONFD_DIR}:/etc/nginx/conf.d/:rw</span><span class="w">
+</span><span class="w">      </span>- <span class="l">${NGINX_CONF_FILE}:/etc/nginx/nginx.conf:ro</span><span class="w">
+</span><span class="w">      </span>- <span class="l">${NGINX_FASTCGI_PHP_CONF}:/etc/nginx/fastcgi-php.conf:ro</span><span class="w">
+</span><span class="w">      </span>- <span class="l">${NGINX_FASTCGI_PARAMS}:/etc/nginx/fastcgi_params:ro</span><span class="w">
+</span><span class="w">      </span>- <span class="l">${NGINX_LOG_DIR}:/var/log/nginx/:rw</span><span class="w">
+</span><span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">TZ</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;$TZ&#34;</span><span class="w">
+</span><span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l">always</span><span class="w">
+</span><span class="w">    </span><span class="nt">networks</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">default</span><span class="w">
+</span><span class="w">
+</span><span class="w">  </span><span class="nt">php</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">build</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l">./services/php</span><span class="w">
+</span><span class="w">      </span><span class="nt">args</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">PHP_VERSION</span><span class="p">:</span><span class="w"> </span><span class="l">php:${PHP_VERSION}-fpm-alpine</span><span class="w">
+</span><span class="w">        </span><span class="nt">CONTAINER_PACKAGE_URL</span><span class="p">:</span><span class="w"> </span><span class="l">${CONTAINER_PACKAGE_URL}</span><span class="w">
+</span><span class="w">        </span><span class="nt">PHP_EXTENSIONS</span><span class="p">:</span><span class="w"> </span><span class="l">${PHP_EXTENSIONS}</span><span class="w">
+</span><span class="w">        </span><span class="nt">TZ</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;$TZ&#34;</span><span class="w">
+</span><span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">php</span><span class="w">
+</span><span class="w">    </span><span class="nt">expose</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="m">9501</span><span class="w">
+</span><span class="w">    </span><span class="nt">extra_hosts</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;www.site1.com:172.17.0.1&#34;</span><span class="w">
+</span><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">${SOURCE_DIR}:/www/:rw</span><span class="w">
+</span><span class="w">      </span>- <span class="l">${PHP_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro</span><span class="w">
+</span><span class="w">      </span>- <span class="l">${PHP_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw</span><span class="w">
+</span><span class="w">      </span>- <span class="l">${PHP_LOG_DIR}:/var/log/php</span><span class="w">
+</span><span class="w">      </span>- <span class="l">${DATA_DIR}/composer:/tmp/composer</span><span class="w">
+</span><span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l">always</span><span class="w">
+</span><span class="w">    </span><span class="nt">cap_add</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">SYS_PTRACE</span><span class="w">
+</span><span class="w">    </span><span class="nt">networks</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">default</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c">#  php56:</span><span class="w">
+</span><span class="w"></span><span class="c">#    build:</span><span class="w">
+</span><span class="w"></span><span class="c">#      context: ./services/php</span><span class="w">
+</span><span class="w"></span><span class="c">#      args:</span><span class="w">
+</span><span class="w"></span><span class="c">#        PHP_VERSION: php:${PHP56_VERSION}-fpm-alpine</span><span class="w">
+</span><span class="w"></span><span class="c">#        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}</span><span class="w">
+</span><span class="w"></span><span class="c">#        PHP_EXTENSIONS: ${PHP56_EXTENSIONS}</span><span class="w">
+</span><span class="w"></span><span class="c">#        TZ: &#34;$TZ&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#    container_name: php56</span><span class="w">
+</span><span class="w"></span><span class="c">#    expose:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - 9501</span><span class="w">
+</span><span class="w"></span><span class="c">#    volumes:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - ${SOURCE_DIR}:/www/:rw</span><span class="w">
+</span><span class="w"></span><span class="c">#      - ${PHP56_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro</span><span class="w">
+</span><span class="w"></span><span class="c">#      - ${PHP56_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw</span><span class="w">
+</span><span class="w"></span><span class="c">#      - ${PHP56_LOG_DIR}:/var/log/php</span><span class="w">
+</span><span class="w"></span><span class="c">#      - ${DATA_DIR}/composer:/tmp/composer</span><span class="w">
+</span><span class="w"></span><span class="c">#    restart: always</span><span class="w">
+</span><span class="w"></span><span class="c">#    cap_add:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - SYS_PTRACE</span><span class="w">
+</span><span class="w"></span><span class="c">#    networks:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - default</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c">#  php54:</span><span class="w">
+</span><span class="w"></span><span class="c">#    build:</span><span class="w">
+</span><span class="w"></span><span class="c">#      context: ./services/php54</span><span class="w">
+</span><span class="w"></span><span class="c">#      args:</span><span class="w">
+</span><span class="w"></span><span class="c">#        PHP_VERSION: php:${PHP54_VERSION}-fpm</span><span class="w">
+</span><span class="w"></span><span class="c">#        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}</span><span class="w">
+</span><span class="w"></span><span class="c">#        PHP_EXTENSIONS: ${PHP54_EXTENSIONS}</span><span class="w">
+</span><span class="w"></span><span class="c">#        TZ: &#34;$TZ&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#    container_name: php54</span><span class="w">
+</span><span class="w"></span><span class="c">#    volumes:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - ${SOURCE_DIR}:/www/:rw</span><span class="w">
+</span><span class="w"></span><span class="c">#      - ${PHP54_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro</span><span class="w">
+</span><span class="w"></span><span class="c">#      - ${PHP54_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw</span><span class="w">
+</span><span class="w"></span><span class="c">#      - ${PHP54_LOG_DIR}:/var/log/php</span><span class="w">
+</span><span class="w"></span><span class="c">#      - ${DATA_DIR}/composer:/tmp/composer</span><span class="w">
+</span><span class="w"></span><span class="c">#    restart: always</span><span class="w">
+</span><span class="w"></span><span class="c">#    cap_add:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - SYS_PTRACE</span><span class="w">
+</span><span class="w"></span><span class="c">#    networks:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - default</span><span class="w">
+</span><span class="w">
+</span><span class="w">  </span><span class="nt">mysql</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">mysql:${MYSQL_VERSION}</span><span class="w">
+</span><span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">mysql</span><span class="w">
+</span><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;${MYSQL_HOST_PORT}:3306&#34;</span><span class="w">
+</span><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">${MYSQL_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:ro</span><span class="w">
+</span><span class="w">      </span>- <span class="l">${DATA_DIR}/mysql:/var/lib/mysql/:rw</span><span class="w">
+</span><span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l">always</span><span class="w">
+</span><span class="w">    </span><span class="nt">networks</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">default</span><span class="w">
+</span><span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">MYSQL_ROOT_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;${MYSQL_ROOT_PASSWORD}&#34;</span><span class="w">
+</span><span class="w">      </span><span class="nt">TZ</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;$TZ&#34;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c">#  mysql5:</span><span class="w">
+</span><span class="w"></span><span class="c">#    image: mysql:${MYSQL5_VERSION}</span><span class="w">
+</span><span class="w"></span><span class="c">#    container_name: mysql5</span><span class="w">
+</span><span class="w"></span><span class="c">#    ports:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - &#34;${MYSQL5_HOST_PORT}:3306&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#    volumes:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - ${MYSQL5_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:ro</span><span class="w">
+</span><span class="w"></span><span class="c">#      - ${DATA_DIR}/mysql5:/var/lib/mysql/:rw</span><span class="w">
+</span><span class="w"></span><span class="c">#    restart: always</span><span class="w">
+</span><span class="w"></span><span class="c">#    networks:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - default</span><span class="w">
+</span><span class="w"></span><span class="c">#    environment:</span><span class="w">
+</span><span class="w"></span><span class="c">#      MYSQL_ROOT_PASSWORD: &#34;${MYSQL5_ROOT_PASSWORD}&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#      TZ: &#34;$TZ&#34;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c">#  openresty:</span><span class="w">
+</span><span class="w"></span><span class="c">#    image:  openresty/openresty:${OPENRESTY_VERSION}</span><span class="w">
+</span><span class="w"></span><span class="c">#    container_name: openresty</span><span class="w">
+</span><span class="w"></span><span class="c">#    ports:</span><span class="w">
+</span><span class="w"></span><span class="c">#       - &#34;${OPENRESTY_HTTP_HOST_PORT}:80&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#       - &#34;${OPENRESTY_HTTPS_HOST_PORT}:443&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#    volumes:</span><span class="w">
+</span><span class="w"></span><span class="c">#       - ${SOURCE_DIR}:/www/:rw</span><span class="w">
+</span><span class="w"></span><span class="c">#       - ${OPENRESTY_CONFD_DIR}:/etc/nginx/conf.d/:ro</span><span class="w">
+</span><span class="w"></span><span class="c">#       - ${OPENRESTY_SSL_CERTIFICATE_DIR}:/ssl:rw</span><span class="w">
+</span><span class="w"></span><span class="c">#       - ${OPENRESTY_CONF_FILE}:/usr/local/openresty/nginx/conf/nginx.conf:ro</span><span class="w">
+</span><span class="w"></span><span class="c">#       - ${OPENRESTY_FASTCGI_PHP_CONF}:/usr/local/openresty/nginx/conf/fastcgi-php.conf:ro</span><span class="w">
+</span><span class="w"></span><span class="c">#       - ${OPENRESTY_CONF_FASTCGIPARAMS_FILE}:/usr/local/openresty/nginx/conf/fastcgi_params:ro</span><span class="w">
+</span><span class="w"></span><span class="c">#       - ${OPENRESTY_LOG_DIR}:/var/log/nginx/:rw</span><span class="w">
+</span><span class="w"></span><span class="c">#    environment:</span><span class="w">
+</span><span class="w"></span><span class="c">#      TZ: &#34;$TZ&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#    networks:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - default</span><span class="w">
+</span><span class="w">
+</span><span class="w">  </span><span class="nt">redis</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">redis:${REDIS_VERSION}</span><span class="w">
+</span><span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">redis</span><span class="w">
+</span><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;${REDIS_HOST_PORT}:6379&#34;</span><span class="w">
+</span><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">${REDIS_CONF_FILE}:/etc/redis.conf:ro</span><span class="w">
+</span><span class="w">      </span>- <span class="l">${DATA_DIR}/redis:/data/:rw</span><span class="w">
+</span><span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l">always</span><span class="w">
+</span><span class="w">    </span><span class="nt">entrypoint</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;redis-server&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;/etc/redis.conf&#34;</span><span class="p">]</span><span class="w">
+</span><span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">TZ</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;$TZ&#34;</span><span class="w">
+</span><span class="w">    </span><span class="nt">networks</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">default</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c">#  memcached:</span><span class="w">
+</span><span class="w"></span><span class="c">#    image: memcached:${MEMCACHED_VERSION}</span><span class="w">
+</span><span class="w"></span><span class="c">#    container_name: memcached</span><span class="w">
+</span><span class="w"></span><span class="c">#    ports:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - &#34;${MEMCACHED_HOST_PORT}:11211&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#    environment:</span><span class="w">
+</span><span class="w"></span><span class="c">#       MEMCACHED_CACHE_SIZE: &#34;${MEMCACHED_CACHE_SIZE}&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#    networks:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - default</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c">#  rabbitmq:</span><span class="w">
+</span><span class="w"></span><span class="c">#    image: rabbitmq:${RABBITMQ_VERSION}</span><span class="w">
+</span><span class="w"></span><span class="c">#    container_name: rabbitmq</span><span class="w">
+</span><span class="w"></span><span class="c">#    restart: always</span><span class="w">
+</span><span class="w"></span><span class="c">#    ports:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - &#34;${RABBITMQ_HOST_PORT_C}:5672&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#      - &#34;${RABBITMQ_HOST_PORT_S}:15672&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#    environment:</span><span class="w">
+</span><span class="w"></span><span class="c">#       TZ: &#34;$TZ&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#       RABBITMQ_DEFAULT_USER: &#34;${RABBITMQ_DEFAULT_USER}&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#       RABBITMQ_DEFAULT_PASS: &#34;${RABBITMQ_DEFAULT_PASS}&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#    networks:</span><span class="w">
+</span><span class="w"></span><span class="c">#          - default</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c">#  phpmyadmin:</span><span class="w">
+</span><span class="w"></span><span class="c">#    image: phpmyadmin/phpmyadmin:latest</span><span class="w">
+</span><span class="w"></span><span class="c">#    container_name: phpmyadmin</span><span class="w">
+</span><span class="w"></span><span class="c">#    ports:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - &#34;${PHPMYADMIN_HOST_PORT}:80&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#    volumes:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - ${PHPMYADMIN_USER_CONF_FILE}:/etc/phpmyadmin/config.user.inc.php:ro</span><span class="w">
+</span><span class="w"></span><span class="c">#      - ${PHPMYADMIN_PHP_CONF_FILE}:/usr/local/etc/php/conf.d/php-phpmyadmin.ini:ro</span><span class="w">
+</span><span class="w"></span><span class="c">#    networks:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - default</span><span class="w">
+</span><span class="w"></span><span class="c">#    environment:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - PMA_HOST=mysql</span><span class="w">
+</span><span class="w"></span><span class="c">#      - PMA_PORT=3306</span><span class="w">
+</span><span class="w"></span><span class="c">#      - TZ=$TZ</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c">#  phpredisadmin:</span><span class="w">
+</span><span class="w"></span><span class="c">#    image: erikdubbelboer/phpredisadmin:latest</span><span class="w">
+</span><span class="w"></span><span class="c">#    container_name: phpredisadmin</span><span class="w">
+</span><span class="w"></span><span class="c">#    ports:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - &#34;${REDISMYADMIN_HOST_PORT}:80&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#    networks:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - default</span><span class="w">
+</span><span class="w"></span><span class="c">#    environment:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - REDIS_1_HOST=redis</span><span class="w">
+</span><span class="w"></span><span class="c">#      - REDIS_1_PORT=6379</span><span class="w">
+</span><span class="w"></span><span class="c">#      - TZ=$TZ</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c">#  mongodb:</span><span class="w">
+</span><span class="w"></span><span class="c">#    image: mongo:${MONGODB_VERSION}</span><span class="w">
+</span><span class="w"></span><span class="c">#    container_name: mongodb</span><span class="w">
+</span><span class="w"></span><span class="c">#    environment:</span><span class="w">
+</span><span class="w"></span><span class="c">#        MONGO_INITDB_ROOT_USERNAME: &#34;${MONGODB_INITDB_ROOT_USERNAME}&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#        MONGO_INITDB_ROOT_PASSWORD: &#34;${MONGODB_INITDB_ROOT_PASSWORD}&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#        TZ: &#34;$TZ&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#    volumes:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - ${DATA_DIR}/mongo:/data/db:rw</span><span class="w">
+</span><span class="w"></span><span class="c">#      - ${DATA_DIR}/mongo_key:/mongo:rw</span><span class="w">
+</span><span class="w"></span><span class="c">#    ports:</span><span class="w">
+</span><span class="w"></span><span class="c">#       - &#34;${MONGODB_HOST_PORT}:27017&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#    networks:</span><span class="w">
+</span><span class="w"></span><span class="c">#       - default</span><span class="w">
+</span><span class="w"></span><span class="c">#    command:</span><span class="w">
+</span><span class="w"></span><span class="c">#       --auth</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c">#  adminmongo:</span><span class="w">
+</span><span class="w"></span><span class="c">#    image: mrvautin/adminmongo</span><span class="w">
+</span><span class="w"></span><span class="c">#    container_name: adminmongo</span><span class="w">
+</span><span class="w"></span><span class="c">#    ports:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - &#34;${ADMINMONGO_HOST_PORT}:1234&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#    environment:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - HOST=0.0.0.0</span><span class="w">
+</span><span class="w"></span><span class="c">#      - DB_HOST=mongodb</span><span class="w">
+</span><span class="w"></span><span class="c">#      - DB_PORT=27017</span><span class="w">
+</span><span class="w"></span><span class="c">#    networks:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - default</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c">#  elasticsearch:</span><span class="w">
+</span><span class="w"></span><span class="c">#    build:</span><span class="w">
+</span><span class="w"></span><span class="c">#      context: ./services/elasticsearch</span><span class="w">
+</span><span class="w"></span><span class="c">#      args:</span><span class="w">
+</span><span class="w"></span><span class="c">#        ELASTICSEARCH_VERSION: ${ELASTICSEARCH_VERSION}</span><span class="w">
+</span><span class="w"></span><span class="c">#        ELASTICSEARCH_PLUGINS: ${ELASTICSEARCH_PLUGINS}</span><span class="w">
+</span><span class="w"></span><span class="c">#    container_name: elasticsearch</span><span class="w">
+</span><span class="w"></span><span class="c">#    environment:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - TZ=$TZ</span><span class="w">
+</span><span class="w"></span><span class="c">#      - discovery.type=single-node</span><span class="w">
+</span><span class="w"></span><span class="c">#      - &#34;ES_JAVA_OPTS=-Xms512m -Xmx512m&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#    volumes:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - ${DATA_DIR}/esdata:/usr/share/elasticsearch/data</span><span class="w">
+</span><span class="w"></span><span class="c">#      - ${ELASTICSEARCH_CONF_FILE}:/usr/share/elasticsearch/config/elasticsearch.yml</span><span class="w">
+</span><span class="w"></span><span class="c">#    hostname: elasticsearch</span><span class="w">
+</span><span class="w"></span><span class="c">#    restart: always</span><span class="w">
+</span><span class="w"></span><span class="c">#    ports:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - &#34;${ELASTICSEARCH_HOST_PORT_C}:9200&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#      - &#34;${ELASTICSEARCH_HOST_PORT_S}:9300&#34;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c">#  kibana:</span><span class="w">
+</span><span class="w"></span><span class="c">#    image: kibana:${KIBANA_VERSION}</span><span class="w">
+</span><span class="w"></span><span class="c">#    container_name: kibana</span><span class="w">
+</span><span class="w"></span><span class="c">#    environment:</span><span class="w">
+</span><span class="w"></span><span class="c">#      TZ: &#34;$TZ&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#      elasticsearch.hosts: http://elasticsearch:9200</span><span class="w">
+</span><span class="w"></span><span class="c">#      I18N_LOCALE: &#34;${KIBANA_I18N_LOCALE}&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#    hostname: kibana</span><span class="w">
+</span><span class="w"></span><span class="c">#    depends_on:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - elasticsearch</span><span class="w">
+</span><span class="w"></span><span class="c">#    restart: always</span><span class="w">
+</span><span class="w"></span><span class="c">#    ports:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - &#34;${KIBANA_HOST}:5601&#34;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c">#  logstash:</span><span class="w">
+</span><span class="w"></span><span class="c">#    image: logstash:${LOGSTASH_VERSION}</span><span class="w">
+</span><span class="w"></span><span class="c">#    container_name: logstash</span><span class="w">
+</span><span class="w"></span><span class="c">#    hostname: logstash</span><span class="w">
+</span><span class="w"></span><span class="c">#    restart: always</span><span class="w">
+</span><span class="w"></span><span class="c">#    depends_on:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - elasticsearch</span><span class="w">
+</span><span class="w"></span><span class="c">#    environment:</span><span class="w">
+</span><span class="w"></span><span class="c">#      TZ: &#34;$TZ&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#    ports:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - &#34;${LOGSTASH_HOST_PORT_C}:9600&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#      - &#34;${LOGSTASH_HOST_PORT_S}:5044&#34;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c">#  node:</span><span class="w">
+</span><span class="w"></span><span class="c">#    image: node:${NODE_VERSION}</span><span class="w">
+</span><span class="w"></span><span class="c">#    environment:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - NODE_ENV=production</span><span class="w">
+</span><span class="w"></span><span class="c">#    volumes:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - ${SOURCE_DIR}:/www/:rw</span><span class="w">
+</span><span class="w"></span><span class="c">#    expose:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - &#34;8081&#34;</span><span class="w">
+</span><span class="w"></span><span class="c">#    networks:</span><span class="w">
+</span><span class="w"></span><span class="c">#      - default</span><span class="w">
+</span><span class="w"></span><span class="c">#    stdin_open: true</span><span class="w">
+</span><span class="w"></span><span class="c">#    tty: true</span><span class="w">
+</span><span class="w">
+</span><span class="w">
+</span><span class="w">  </span><span class="nt">supervisor</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">build</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l">./services/supervisor</span><span class="w">
+</span><span class="w">      </span><span class="nt">args</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">ALPINE_VERSION</span><span class="p">:</span><span class="w"> </span><span class="l">alpine:${ALPINE_VERSION}</span><span class="w">
+</span><span class="w">        </span><span class="nt">TZ</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;$TZ&#34;</span><span class="w">
+</span><span class="w">        </span><span class="nt">CONTAINER_PACKAGE_URL</span><span class="p">:</span><span class="w"> </span><span class="l">${CONTAINER_PACKAGE_URL}</span><span class="w">
+</span><span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">supervisor</span><span class="w">
+</span><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;${SUPERVISOR_HOST_PORT_C}:9001&#34;</span><span class="w">
+</span><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">${SOURCE_DIR}:/www/:rw</span><span class="w">
+</span><span class="w">      </span>- <span class="l">${SUPERVISOR_LOG}:/var/log/supervisor/:rw</span><span class="w">
+</span><span class="w">      </span>- <span class="l">${SUPERVISOR_CONFIG}:/etc/supervisor/conf.d/:rw</span><span class="w">
+</span><span class="w">      </span>- <span class="l">${SUPERVISOR_CONF_FILE}:/etc/supervisor/supervisord.conf:ro</span><span class="w">
+</span><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">/bin/sh</span><span class="w">
+</span><span class="w">      </span>- -<span class="l">c</span><span class="w">
+</span><span class="w">      </span>- <span class="p">|</span><span class="sd">
+</span><span class="sd">        </span><span class="w">        </span><span class="l">supervisord -n -c /etc/supervisor/supervisord.conf</span><span class="w">
+</span><span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l">always</span><span class="w">
+</span><span class="w">    </span><span class="nt">cap_add</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">SYS_PTRACE</span><span class="w">
+</span><span class="w">    </span><span class="nt">networks</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">default</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">networks</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">default</span><span class="p">:</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#cd dnmp</span>
+<span class="c1">#docker-compose up -d</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>第一次执行需要花点时间下载镜像</p>
+<h3 id="4tips">4).tips</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 你自己修改了docker-compose文件或Dockerfile文件的话，请执行</span>
+docker-compose build
+<span class="c1"># 开启 dnmp 服务（-d 后台运行）</span>
+docker-compose up -d
+<span class="c1"># 重启 dnmp 服务</span>
+docker-compose restart
+<span class="c1"># 关闭 dnmp 服务</span>
+docker-compose down
+<span class="c1"># 如果修改或增加了 nginx 服务配置</span>
+docker restart nginx
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="10docker-samba文件夹共享">10.Docker samba(文件夹共享)</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#开启139、445</span>
+firewall-cmd --add-port<span class="o">=</span>139/tcp --permanent
+firewall-cmd --add-port<span class="o">=</span>445/tcp --permanent
+firewall-cmd --reload
+firewall-cmd --list-all
+<span class="c1">#官方镜像</span>
+https://hub.docker.com/r/dperson/samba/
+<span class="c1"># 运行</span>
+docker run -it -p 139:139 -p 445:445  --name samba  <span class="se">\
+</span><span class="se"></span> -v /data/website:/mount <span class="se">\
+</span><span class="se"></span> -d dperson/samba <span class="se">\
+</span><span class="se"></span> -u <span class="s2">&#34;root;root&#34;</span> <span class="se">\
+</span><span class="se"></span> -s <span class="s2">&#34;root;/mount/;yes;no;yes;all;all;all&#34;</span> <span class="se">\
+</span><span class="se"></span> -w <span class="s2">&#34;WORKGROUP&#34;</span> <span class="se">\
+</span><span class="se"></span> -g <span class="s2">&#34;force user= root&#34;</span> <span class="se">\
+</span><span class="se"></span> -g <span class="s2">&#34;guest account= root&#34;</span>
+
+<span class="c1">#注意: -u &#34;用户名:密码&#34;</span>
+
+<span class="c1">#映射网络驱动器</span>
+此计算机-&gt;右击
+<span class="se">\\</span>ip<span class="se">\r</span>oot
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2017-11-12
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/docker/">docker</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/%E4%B8%AD%E9%97%B4%E4%BB%B6/rabbitmq%E5%8E%9F%E7%90%86%E5%8F%8Alinux%E5%AE%89%E8%A3%85/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[rabbitmq]RabbitMQ原理及Linux安装</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/%E5%B7%A5%E5%85%B7/vmware%E5%AE%89%E8%A3%85%E5%B9%B6%E5%88%9D%E5%A7%8B%E5%8C%96/">
+            <span class="next-text nav-default">[VMware]VMware安装及初始化环境</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

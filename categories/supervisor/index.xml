@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>supervisor on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/categories/supervisor/</link>
+    <description>Recent content in supervisor on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Thu, 27 Feb 2020 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/categories/supervisor/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[linux]CentOS7 supervisor 安装与配置</title>
+      <link>https://blog.nevergiveup.tech/post/linux/centos7-supervisor-%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Thu, 27 Feb 2020 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/linux/centos7-supervisor-%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/</guid>
+      <description>CentOS7 supervisor 安装与配置 安装 1 yum install supervisor 配置文件目录 1 2 3 4 5 /etc/ supervisor.conf supervisor.d/ 项目一.ini 项目二.ini laravel 队列配置示例 1 2 3 4 5 6 7 8 9 10 11 12 13 14 说明， user=www 为启动的</description>
+    </item>
+    
+  </channel>
+</rss>

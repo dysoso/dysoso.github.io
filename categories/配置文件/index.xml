@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>配置文件 on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/categories/%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</link>
+    <description>Recent content in 配置文件 on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Thu, 23 Dec 2021 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/categories/%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[配置文件] toml配置和使用</title>
+      <link>https://blog.nevergiveup.tech/post/%E5%B7%A5%E5%85%B7/toml%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Thu, 23 Dec 2021 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/%E5%B7%A5%E5%85%B7/toml%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BD%BF%E7%94%A8/</guid>
+      <description>toml配置和使用 一.简介 TOML是前GitHub CEO， Tom Preston-Werner，于2013年创建的语言，其目标是成为一个小规模的易</description>
+    </item>
+    
+  </channel>
+</rss>

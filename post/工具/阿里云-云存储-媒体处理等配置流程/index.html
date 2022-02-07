@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>阿里云-云存储-媒体处理等配置流程 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="阿里云-云存储-媒体处理等配置流程 A.云存储 1.创建 - AccessKey 2.开通 - 开通OSS服务 3.创建 - 创建OSS服务存储空间 4.绑定 - 绑定自定义域名(使" /><meta name="keywords" content="阿里云, 云存储, 媒体处理, 文档转换" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/%E5%B7%A5%E5%85%B7/%E9%98%BF%E9%87%8C%E4%BA%91-%E4%BA%91%E5%AD%98%E5%82%A8-%E5%AA%92%E4%BD%93%E5%A4%84%E7%90%86%E7%AD%89%E9%85%8D%E7%BD%AE%E6%B5%81%E7%A8%8B/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="阿里云-云存储-媒体处理等配置流程" />
+<meta property="og:description" content="阿里云-云存储-媒体处理等配置流程 A.云存储 1.创建 - AccessKey 2.开通 - 开通OSS服务 3.创建 - 创建OSS服务存储空间 4.绑定 - 绑定自定义域名(使" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/%E5%B7%A5%E5%85%B7/%E9%98%BF%E9%87%8C%E4%BA%91-%E4%BA%91%E5%AD%98%E5%82%A8-%E5%AA%92%E4%BD%93%E5%A4%84%E7%90%86%E7%AD%89%E9%85%8D%E7%BD%AE%E6%B5%81%E7%A8%8B/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-11-11T15:37:56+08:00" />
+<meta property="article:modified_time" content="2021-11-11T15:37:56+08:00" />
+
+<meta itemprop="name" content="阿里云-云存储-媒体处理等配置流程">
+<meta itemprop="description" content="阿里云-云存储-媒体处理等配置流程 A.云存储 1.创建 - AccessKey 2.开通 - 开通OSS服务 3.创建 - 创建OSS服务存储空间 4.绑定 - 绑定自定义域名(使"><meta itemprop="datePublished" content="2021-11-11T15:37:56+08:00" />
+<meta itemprop="dateModified" content="2021-11-11T15:37:56+08:00" />
+<meta itemprop="wordCount" content="537">
+<meta itemprop="keywords" content="阿里云,云存储,媒体处理,文档转换," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="阿里云-云存储-媒体处理等配置流程"/>
+<meta name="twitter:description" content="阿里云-云存储-媒体处理等配置流程 A.云存储 1.创建 - AccessKey 2.开通 - 开通OSS服务 3.创建 - 创建OSS服务存储空间 4.绑定 - 绑定自定义域名(使"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">阿里云-云存储-媒体处理等配置流程</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-11-11 </span>
+        <div class="post-category">
+            <a href="/categories/%E9%98%BF%E9%87%8C%E4%BA%91/"> 阿里云 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#阿里云-云存储-媒体处理等配置流程">阿里云-云存储-媒体处理等配置流程</a>
+          <ul>
+            <li><a href="#a云存储">A.云存储</a></li>
+            <li><a href="#b控制授权">B.控制授权</a></li>
+            <li><a href="#c文档转换">C.文档转换</a></li>
+            <li><a href="#d消息mns">D.消息MNS</a></li>
+            <li><a href="#e媒体处理">E.媒体处理</a></li>
+            <li><a href="#f视频点播">F.视频点播</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="阿里云-云存储-媒体处理等配置流程">阿里云-云存储-媒体处理等配置流程</h2>
+<h3 id="a云存储">A.云存储</h3>
+<ul>
+<li>1.创建 - AccessKey</li>
+<li>2.开通 - 开通OSS服务</li>
+<li>3.创建 - 创建OSS服务存储空间</li>
+<li>4.绑定 - 绑定自定义域名(使用OSS默认域名生成的文件URL从浏览器访问时会以附件形式下载；使用自有域名生成的文件URL访问时，可以预览文件内容)</li>
+<li>5.设置 - 设置跨域访问(imm文件预览)</li>
+</ul>
+<h3 id="b控制授权">B.控制授权</h3>
+<ul>
+<li>1.创建 - 创建用户</li>
+<li>2.创建 - 创建角色</li>
+<li>3.授权 - 授权角色权限</li>
+</ul>
+<h3 id="c文档转换">C.文档转换</h3>
+<ul>
+<li>1.开通 - 开通智能媒体管理 IMM</li>
+<li>2.创建 - 创建智能媒体管理 IMM创建项目</li>
+<li>3.绑定 - OSS存储空间绑定IMM</li>
+<li>4.授权 - 授权RAM子账户MNS,OSS,STS</li>
+</ul>
+<h3 id="d消息mns">D.消息MNS</h3>
+<ul>
+<li>1.开通 - 开通消息服务MNS并授权</li>
+<li>2.创建 - 消息服务MN创建队列</li>
+<li>3.创建 - 消息服务MN创建主题</li>
+<li>4.创建 - 消息服务MN创建订阅</li>
+</ul>
+<h3 id="e媒体处理">E.媒体处理</h3>
+<ul>
+<li>1.开通 - 开通媒体处理</li>
+<li>2.授权 - 授权OSS存储访问权限</li>
+<li>3.设置 - 设置媒体bucket</li>
+<li>4.设置 - 设置管道</li>
+<li>5.设置 - 转码模板(m3u8)</li>
+<li>6.设置 - 设置工作流(可忽略)</li>
+<li>7.绑定 - 管道绑定MNS消息队列</li>
+<li>8.授权 - RAM用户授权媒体处理,授权MNS消息</li>
+<li>9.开通 - 开通KMS服务</li>
+<li>10..授权 - 授权媒体处理访问KMS</li>
+</ul>
+<h3 id="f视频点播">F.视频点播</h3>
+<ul>
+<li>1.开通 - 开通视频点播</li>
+<li>2.设置 - 设置视频点播转码模板</li>
+<li>3.设置 - 设置视频点播工作流</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-11-11
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E9%98%BF%E9%87%8C%E4%BA%91/">阿里云</a>
+          <a href="/tags/%E4%BA%91%E5%AD%98%E5%82%A8/">云存储</a>
+          <a href="/tags/%E5%AA%92%E4%BD%93%E5%A4%84%E7%90%86/">媒体处理</a>
+          <a href="/tags/%E6%96%87%E6%A1%A3%E8%BD%AC%E6%8D%A2/">文档转换</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/%E5%B7%A5%E5%85%B7/toml%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BD%BF%E7%94%A8/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[配置文件] toml配置和使用</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/%E5%85%B6%E4%BB%96/windows10%E4%B8%8B%E4%BF%AE%E6%94%B9cmd%E5%92%8Cpower-shell%E7%9A%84%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F/">
+            <span class="next-text nav-default">windows10下修改cmd和power shell的编码方式(解决中文乱码)</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

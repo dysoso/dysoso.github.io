@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>git on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/tags/git/</link>
+    <description>Recent content in git on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Thu, 22 Apr 2021 16:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[github]优化github打开速度(解决无法打开或者打开慢的问题)</title>
+      <link>https://blog.nevergiveup.tech/post/%E5%B7%A5%E5%85%B7/%E4%BC%98%E5%8C%96github%E6%89%93%E5%BC%80%E9%80%9F%E5%BA%A6/</link>
+      <pubDate>Thu, 22 Apr 2021 16:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/%E5%B7%A5%E5%85%B7/%E4%BC%98%E5%8C%96github%E6%89%93%E5%BC%80%E9%80%9F%E5%BA%A6/</guid>
+      <description>一.翻墙 自行购买vpn并配置 二.使用DevSidecar辅助工具(推荐) DevSidecar辅助工具是一个开源工具 开发者边车，命名取自ser</description>
+    </item>
+    
+  </channel>
+</rss>

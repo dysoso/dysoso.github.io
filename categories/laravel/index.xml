@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>laravel on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/categories/laravel/</link>
+    <description>Recent content in laravel on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Tue, 11 Jun 2019 17:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/categories/laravel/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[laravel]在线聊天系统(laravel swoole redis vue)</title>
+      <link>https://blog.nevergiveup.tech/post/php/laravel/%E5%9C%A8%E7%BA%BF%E8%81%8A%E5%A4%A9%E7%B3%BB%E7%BB%9Flaravel-swoole-redis-vue/</link>
+      <pubDate>Tue, 11 Jun 2019 17:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/php/laravel/%E5%9C%A8%E7%BA%BF%E8%81%8A%E5%A4%A9%E7%B3%BB%E7%BB%9Flaravel-swoole-redis-vue/</guid>
+      <description>在线聊天系统(laravel swoole redis vue) 一.前端页面完成 1.安装准备 安装前必须保证系统已经安装了下列软件 PHP &amp;gt;= 7.1.3 PHP OpenSSL 扩展 PHP PDO 扩展 PHP Mbstring 扩展 PHP Tokenizer 扩展 PHP XML</description>
+    </item>
+    
+    <item>
+      <title>[laravel]基于 Laravel &#43; Swoole &#43; Vue 组件实现支持高并发的实时弹幕功能</title>
+      <link>https://blog.nevergiveup.tech/post/php/laravel/%E5%AE%9E%E6%97%B6%E5%BC%B9%E5%B9%95%E5%8A%9F%E8%83%BDlaravel-swoole-vue/</link>
+      <pubDate>Tue, 11 Jun 2019 16:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/php/laravel/%E5%AE%9E%E6%97%B6%E5%BC%B9%E5%B9%95%E5%8A%9F%E8%83%BDlaravel-swoole-vue/</guid>
+      <description>基于 Laravel + Swoole + Vue 组件实现支持高并发的实时弹幕功能 一.前端页面完成 1.安装准备 安装前必须保证系统已经安装了下列软件 PHP &amp;gt;= 7.1.3 PHP OpenSSL 扩展 PHP PDO 扩展 PHP Mbstring 扩展</description>
+    </item>
+    
+    <item>
+      <title>[laravel]laravelS安装及使用</title>
+      <link>https://blog.nevergiveup.tech/post/php/laravel/laravels%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Tue, 11 Jun 2019 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/php/laravel/laravels%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
+      <description>一.安装laravel 1.安装准备 安装前必须保证系统已经安装了下列软件 PHP &amp;gt;= 7.1.3 PHP OpenSSL 扩展 PHP PDO 扩展 PHP Mbstring 扩展 PHP Tokenizer 扩展 PHP XML 扩展 PHP Ctype 扩展 PHP JSON 扩展 PHP BCMath 扩展</description>
+    </item>
+    
+  </channel>
+</rss>

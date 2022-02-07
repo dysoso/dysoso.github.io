@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[linux]CentOS7 supervisor 安装与配置 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="CentOS7 supervisor 安装与配置 安装 1 yum install supervisor 配置文件目录 1 2 3 4 5 /etc/ supervisor.conf supervisor.d/ 项目一.ini 项目二.ini laravel 队列配置示例 1 2 3 4 5 6 7 8 9 10 11 12 13 14 说明， user=www 为启动的" /><meta name="keywords" content="linux, supervisor, CentOS7" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/linux/centos7-supervisor-%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[linux]CentOS7 supervisor 安装与配置" />
+<meta property="og:description" content="CentOS7 supervisor 安装与配置 安装 1 yum install supervisor 配置文件目录 1 2 3 4 5 /etc/ supervisor.conf supervisor.d/ 项目一.ini 项目二.ini laravel 队列配置示例 1 2 3 4 5 6 7 8 9 10 11 12 13 14 说明， user=www 为启动的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/linux/centos7-supervisor-%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-02-27T15:37:56+08:00" />
+<meta property="article:modified_time" content="2020-02-27T15:37:56+08:00" />
+
+<meta itemprop="name" content="[linux]CentOS7 supervisor 安装与配置">
+<meta itemprop="description" content="CentOS7 supervisor 安装与配置 安装 1 yum install supervisor 配置文件目录 1 2 3 4 5 /etc/ supervisor.conf supervisor.d/ 项目一.ini 项目二.ini laravel 队列配置示例 1 2 3 4 5 6 7 8 9 10 11 12 13 14 说明， user=www 为启动的"><meta itemprop="datePublished" content="2020-02-27T15:37:56+08:00" />
+<meta itemprop="dateModified" content="2020-02-27T15:37:56+08:00" />
+<meta itemprop="wordCount" content="1801">
+<meta itemprop="keywords" content="linux,supervisor,CentOS7," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[linux]CentOS7 supervisor 安装与配置"/>
+<meta name="twitter:description" content="CentOS7 supervisor 安装与配置 安装 1 yum install supervisor 配置文件目录 1 2 3 4 5 /etc/ supervisor.conf supervisor.d/ 项目一.ini 项目二.ini laravel 队列配置示例 1 2 3 4 5 6 7 8 9 10 11 12 13 14 说明， user=www 为启动的"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[linux]CentOS7 supervisor 安装与配置</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-02-27 </span>
+        <div class="post-category">
+            <a href="/categories/linux/"> linux </a>
+            <a href="/categories/supervisor/"> supervisor </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#centos7-supervisor-安装与配置">CentOS7 supervisor 安装与配置</a>
+      <ul>
+        <li><a href="#安装">安装</a></li>
+        <li><a href="#配置文件目录">配置文件目录</a></li>
+        <li><a href="#laravel-队列配置示例">laravel 队列配置示例</a></li>
+        <li><a href="#常用命令">常用命令</a></li>
+        <li><a href="#状态信息">状态信息</a></li>
+        <li><a href="#网页查看状态">网页查看状态</a></li>
+        <li><a href="#配置项说明">配置项说明</a></li>
+        <li><a href="#常见问题">常见问题</a>
+          <ul>
+            <li><a href="#问题一-启动报错">问题一 启动报错</a></li>
+            <li><a href="#问题二-启动报错">问题二 启动报错</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="centos7-supervisor-安装与配置">CentOS7 supervisor 安装与配置</h1>
+<h2 id="安装">安装</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">yum install supervisor
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="配置文件目录">配置文件目录</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">/etc/
+	supervisor.conf
+	supervisor.d/
+		项目一.ini
+		项目二.ini
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="laravel-队列配置示例">laravel 队列配置示例</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">说明， user=www 为启动的 php artisan 进程执行用户，这个要和 php 执行用户使用一个，而 supervisor 启动用户为 root, 配置在 supervisor.conf 文件中，stdout 等日志文件创建者均为 supervisor 用户，即 root
+
+supervisor 主配置文件路径为 /var/log/supervisor/supervisord.log (版本间可能不同，请查看主配置文件 /etc/supervisor.conf logfile 配置项)，写 stdout 等日志路径时，可使用 /var/log/supervisor/{programname 即 smallnews}.log
+
+[program:smallnews]
+process_name=%(program_name)s_%(process_num)02d
+command=/usr/local/php/bin/php /data/html/smallnews/artisan queue:work database --sleep=3 --tries=3 --daemon
+numprocs=3
+autostart=true
+autorestart=true
+user=www
+redirect_stderr=true
+stdout_logfile=/var/log/supervisor/smallnews.log
+stderr_logfile=/var/log/supervisor/smallnews_err.log
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="常用命令">常用命令</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">启动与停止
+stop 之后相关的进程全部被杀死，restart 相关进程全部重启
+开机自启动
+systemctl enable supervisord
+启动停止重启
+systemctl start|stop|restart supervisord
+状态
+systemctl status supervisord
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="状态信息">状态信息</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">正在运行
+● supervisord.service - Process Monitoring and Control Daemon
+   Loaded: loaded (/usr/lib/systemd/system/supervisord.service; disabled; vendor preset: disabled)
+   Active: active (running) since Sat 2019-05-25 17:53:33 CST; 1min 34s ago
+  Process: 20182 ExecStart=/usr/bin/supervisord -c /etc/supervisord.conf (code=exited, status=0/SUCCESS)
+ Main PID: 20185 (supervisord)
+   CGroup: /system.slice/supervisord.service
+           ├─20185 /usr/bin/python /usr/bin/supervisord -c /etc/supervisord.conf
+           ├─20186 /usr/local/php/bin/php /data/html/smallnews/artisan queue:work database --sleep=3 --tries=3 --daemon
+           ├─20187 /usr/local/php/bin/php /data/html/smallnews/artisan queue:work database --sleep=3 --tries=3 --daemon
+           └─20188 /usr/local/php/bin/php /data/html/smallnews/artisan queue:work database --sleep=3 --tries=3 --daemon
+停止运行
+● supervisord.service - Process Monitoring and Control Daemon
+   Loaded: loaded (/usr/lib/systemd/system/supervisord.service; disabled; vendor preset: disabled)
+   Active: inactive (dead)
+查看启动的进程
+主进程
+#&gt; ps -ef | grep supervisor
+root     23668     1  0 18:29 ?        00:00:00 /usr/bin/python /usr/bin/supervisord -c /etc/supervisord.conf
+
+子进程 即 supervisor 坚守的进程
+#&gt; ps -ef | grep artisan
+www      23669 23668  0 18:29 ?        00:00:00 /usr/local/php/bin/php /data/html/smallnews/artisan queue:work database --sleep=3 --tries=3 --daemon
+www      23670 23668  0 18:29 ?        00:00:00 /usr/local/php/bin/php /data/html/smallnews/artisan queue:work database --sleep=3 --tries=3 --daemon
+www      23671 23668  0 18:29 ?        00:00:00 /usr/local/php/bin/php /data/html/smallnews/artisan queue:work database --sleep=3 --tries=3 --daemon
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="网页查看状态">网页查看状态</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[inet_http_server]         ; inet (TCP) server disabled by default
+port=0.0.0.0:9001          ; (ip_address:port specifier, *:port for all iface)
+username=user              ; 用户名 (default is no username (open server))
+password=123               ; 密码 (default is no password (open server))
+访问网址查看 Supervisor status，可直接操作启动，重启，停止等指令
+
+ip:9001 
+账号：user
+密码：123
+State	Description	Name	Action
+running	pid 22506, uptime 0:00:28	smallnews:smallnews_00	Restart Stop Clear Log Tail -f
+running	pid 22505, uptime 0:00:28	smallnews:smallnews_01	Restart Stop Clear Log Tail -f
+running	pid 22504, uptime 0:00:28	smallnews:smallnews_02	Restart Stop Clear Log Tail -f
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="配置项说明">配置项说明</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">摘取至上面文档
+
+;*为必须填写项
+;*[program:应用名称]
+[program:cat]
+;*命令路径,如果使用python启动的程序应该为 python /home/test.py, 
+;不建议放入/home/user/, 对于非user用户一般情况下是不能访问
+command=/bin/cat
+;当numprocs为1时,process_name=%(program_name)s
+;当numprocs&gt;=2时,%(program_name)s_%(process_num)02d
+process_name=%(program_name)s
+;进程数量
+numprocs=1
+;执行目录,若有/home/supervisor_test/test1.py
+;将directory设置成/home/supervisor_test
+;则command只需设置成python test1.py
+;否则command必须设置成绝对执行目录
+directory=/tmp
+;掩码:--- -w- -w-, 转换后rwx r-x w-x
+umask=022
+;优先级,值越高,最后启动,最先被关闭,默认值999
+priority=999
+;如果是true,当supervisor启动时,程序将会自动启动
+autostart=true
+;*自动重启
+autorestart=true
+;启动延时执行,默认1秒
+startsecs=10
+;启动尝试次数,默认3次
+startretries=3
+;当退出码是0,2时,执行重启,默认值0,2
+exitcodes=0,2
+;停止信号,默认TERM
+;中断:INT(类似于Ctrl+C)(kill -INT pid),退出后会将写文件或日志(推荐)
+;终止:TERM(kill -TERM pid)
+;挂起:HUP(kill -HUP pid),注意与Ctrl+Z/kill -stop pid不同
+;从容停止:QUIT(kill -QUIT pid)
+;KILL, USR1, USR2其他见命令(kill -l),说明1
+stopsignal=TERM
+stopwaitsecs=10
+;*以root用户执行，如果是 php 相关进程，请使用 php 启动用户
+user=root
+;重定向
+redirect_stderr=false
+stdout_logfile=/a/path
+stdout_logfile_maxbytes=1MB
+stdout_logfile_backups=10
+stdout_capture_maxbytes=1MB
+stderr_logfile=/a/path
+stderr_logfile_maxbytes=1MB
+stderr_logfile_backups=10
+stderr_capture_maxbytes=1MB
+;环境变量设置
+environment=A=&#34;1&#34;,B=&#34;2&#34;
+serverurl=AUTO
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="常见问题">常见问题</h2>
+<h3 id="问题一-启动报错">问题一 启动报错</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">描述
+#&gt; systemctl restart supervisord
+
+Job for supervisord.service failed because the control process exited with error code. See &#34;systemctl status supervisord.service&#34; and &#34;journalctl -xe&#34; for details
+
+#&gt; systemctl status supervisord.service
+
+supervisord.service - Process Monitoring and Control Daemon
+   Loaded: loaded (/usr/lib/systemd/system/supervisord.service; disabled; vendor preset: disabled)
+   Active: failed (Result: exit-code) since Sat 2019-05-25 18:23:46 CST; 13s ago
+  Process: 23126 ExecStart=/usr/bin/supervisord -c /etc/supervisord.conf (code=exited, status=2)
+ Main PID: 22502 (code=exited, status=0/SUCCESS)
+
+May 25 18:23:46 VM_115_62_centos systemd[1]: Starting Process Monitoring and Control Daemon...
+May 25 18:23:46 VM_115_62_centos supervisord[23126]: Error: section [inet_http_server] has no port value
+May 25 18:23:46 VM_115_62_centos supervisord[23126]: For help, use /usr/bin/supervisord -h
+May 25 18:23:46 VM_115_62_centos systemd[1]: supervisord.service: control process exited, code=exited status=2
+May 25 18:23:46 VM_115_62_centos systemd[1]: Failed to start Process Monitoring and Control Daemon.
+May 25 18:23:46 VM_115_62_centos systemd[1]: Unit supervisord.service entered failed state.
+May 25 18:23:46 VM_115_62_centos systemd[1]: supervisord.service failed.
+从上面得出报错信息为
+
+Error: section [inet_http_server] has no port value
+解决
+如果存在 [inet_http_server] 则必须存在 127.0.0.1::9001 或者 0.0.0.0:9001，即必须启动这个监听进程
+如果想关掉 必须把 [inet_http_server] 注释掉，即最前面加 “;”
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="问题二-启动报错">问题二 启动报错</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">描述
+#&gt; systemctl restart supervisord
+
+Job for supervisord.service failed because the control process exited with error code. See &#34;systemctl status supervisord.service&#34; and &#34;journalctl -xe&#34; for details
+
+#&gt; systemctl status supervisord.service
+
+● supervisord.service - Process Monitoring and Control Daemon
+   Loaded: loaded (/usr/lib/systemd/system/supervisord.service; enabled; vendor preset: disabled)
+   Active: failed (Result: exit-code) since Sat 2021-03-27 18:28:47 CST; 5min ago
+  Process: 19173 ExecStart=/usr/bin/supervisord -c /etc/supervisord.conf (code=exited, status=2)
+
+Mar 27 18:28:47 VM-0-14-centos systemd[1]: Starting Process Monitoring and Control Daemon...
+Mar 27 18:28:47 VM-0-14-centos supervisord[19173]: Error: The directory named as part of the path /data/log/supervisor/laraveldy_timing.log does...ng.ini&#39;)
+Mar 27 18:28:47 VM-0-14-centos supervisord[19173]: For help, use /usr/bin/supervisord -h
+Mar 27 18:28:47 VM-0-14-centos systemd[1]: supervisord.service: control process exited, code=exited status=2
+Mar 27 18:28:47 VM-0-14-centos systemd[1]: Failed to start Process Monitoring and Control Daemon.
+Mar 27 18:28:47 VM-0-14-centos systemd[1]: Unit supervisord.service entered failed state.
+Mar 27 18:28:47 VM-0-14-centos systemd[1]: supervisord.service failed.
+从上面得出报错信息为
+Error: /data/log/supervisor/laraveldy_timing.log 文件不存在
+解决
+手动创建文件
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-02-27
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/linux/">linux</a>
+          <a href="/tags/supervisor/">supervisor</a>
+          <a href="/tags/centos7/">CentOS7</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/%E4%B8%AD%E9%97%B4%E4%BB%B6/rabbitmq%E5%A6%82%E4%BD%95%E6%B8%85%E7%A9%BAqueue%E9%98%9F%E5%88%97%E6%95%B0%E6%8D%AE/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[rabbitmq]rabbitmq如何清空queue队列数据</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/java/spring-boot%E5%AD%A6%E4%B9%A0%E5%8F%8A%E4%BD%BF%E7%94%A8/">
+            <span class="next-text nav-default">[java]Spring boot学习笔记</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

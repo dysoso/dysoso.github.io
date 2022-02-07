@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>elasticsearch on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/tags/elasticsearch/</link>
+    <description>Recent content in elasticsearch on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Mon, 14 May 2018 16:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/elasticsearch/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[elasticsearch]Elasticsearch在docker安装及使用</title>
+      <link>https://blog.nevergiveup.tech/post/%E4%B8%AD%E9%97%B4%E4%BB%B6/elasticsearch%E5%9C%A8docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Mon, 14 May 2018 16:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/%E4%B8%AD%E9%97%B4%E4%BB%B6/elasticsearch%E5%9C%A8docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
+      <description>Elasticsearch在docker安装及使用 1.安装docker ①安装依赖 yum install -y yum-utils device-mapper-persistent-data lvm2 ②添加阿里云的docker部署仓库 yum-config-manager &amp;ndash;add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo ③安装d</description>
+    </item>
+    
+    <item>
+      <title>[elasticsearch]Elasticsearch在linux安装及使用</title>
+      <link>https://blog.nevergiveup.tech/post/%E4%B8%AD%E9%97%B4%E4%BB%B6/elasticsearch%E5%9C%A8linux%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Sun, 13 May 2018 16:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/%E4%B8%AD%E9%97%B4%E4%BB%B6/elasticsearch%E5%9C%A8linux%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/</guid>
+      <description>#Elasticsearch在linux安装及使用 一.Linux安装Elasticsearch 1.环境 php 7.2 elasticsearch 6.2.4 elasticsearch-php 6 2.安装JDK 网上教程很多</description>
+    </item>
+    
+    <item>
+      <title>[elasticsearch]Elasticsearch原理和语法</title>
+      <link>https://blog.nevergiveup.tech/post/%E4%B8%AD%E9%97%B4%E4%BB%B6/elasticsearch%E5%8E%9F%E7%90%86%E5%92%8C%E8%AF%AD%E6%B3%95/</link>
+      <pubDate>Sat, 12 May 2018 16:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/%E4%B8%AD%E9%97%B4%E4%BB%B6/elasticsearch%E5%8E%9F%E7%90%86%E5%92%8C%E8%AF%AD%E6%B3%95/</guid>
+      <description>Elasticsearch原理和语法 一. 介绍 Elasticsearch 是一个分布式可扩展的实时搜索和分析引擎,一个建立在全文搜索引擎 Apache Lucene(TM) 基础上的搜索引擎.当然 Elasticsearch 并不</description>
+    </item>
+    
+  </channel>
+</rss>

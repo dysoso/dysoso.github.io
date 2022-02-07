@@ -1,0 +1,1950 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[ceph] ceph集群安装记录 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="ceph集群安装记录 一、准备工作 1.参考文档 ceph官方文档：https://docs.ceph.com/en/latest/install" /><meta name="keywords" content="ceph, 分布式, 文件系统, 集群" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/ceph/ceph%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E8%AE%B0%E5%BD%95/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[ceph] ceph集群安装记录" />
+<meta property="og:description" content="ceph集群安装记录 一、准备工作 1.参考文档 ceph官方文档：https://docs.ceph.com/en/latest/install" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/ceph/ceph%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E8%AE%B0%E5%BD%95/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-01-06T15:37:56+08:00" />
+<meta property="article:modified_time" content="2022-01-08T15:37:56+08:00" />
+
+<meta itemprop="name" content="[ceph] ceph集群安装记录">
+<meta itemprop="description" content="ceph集群安装记录 一、准备工作 1.参考文档 ceph官方文档：https://docs.ceph.com/en/latest/install"><meta itemprop="datePublished" content="2022-01-06T15:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-01-08T15:37:56+08:00" />
+<meta itemprop="wordCount" content="4770">
+<meta itemprop="keywords" content="ceph,分布式,文件系统,集群," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[ceph] ceph集群安装记录"/>
+<meta name="twitter:description" content="ceph集群安装记录 一、准备工作 1.参考文档 ceph官方文档：https://docs.ceph.com/en/latest/install"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[ceph] ceph集群安装记录</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-01-06 </span>
+        <div class="post-category">
+            <a href="/categories/ceph/"> ceph </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ceph集群安装记录">ceph集群安装记录</a>
+      <ul>
+        <li><a href="#一准备工作">一、准备工作</a>
+          <ul>
+            <li><a href="#1参考文档">1.参考文档</a></li>
+            <li><a href="#2配置说明">2.配置说明</a></li>
+            <li><a href="#3服务器配置">3.服务器配置</a></li>
+            <li><a href="#4部署工具cpeh-deploy安装">4.部署工具（cpeh-deploy）安装</a></li>
+          </ul>
+        </li>
+        <li><a href="#二常用命令">二、常用命令</a>
+          <ul>
+            <li><a href="#1安装命令">1.安装命令</a></li>
+            <li><a href="#2集群命令">2.集群命令</a></li>
+          </ul>
+        </li>
+        <li><a href="#三部署集群环境">三、部署集群环境</a>
+          <ul>
+            <li><a href="#1创建集群">1.创建集群</a></li>
+            <li><a href="#2扩容">2.扩容</a></li>
+            <li><a href="#3创建文件系统">3.创建文件系统</a></li>
+            <li><a href="#4对象存储">4.对象存储</a></li>
+            <li><a href="#5块设备">5.块设备</a></li>
+            <li><a href="#6dashboard安装及配置">6.dashboard安装及配置</a></li>
+          </ul>
+        </li>
+        <li><a href="#四常见问题及解决">四、常见问题及解决</a>
+          <ul>
+            <li><a href="#1osd故障">1.osd故障</a></li>
+            <li><a href="#2error-erange--pg_num-128-size-3-would-mean-1088-total-pgs-which-exceeds-max-750-mon_max_pg_per_osd-250--num_in_osds-3">2.Error ERANGE:  pg_num 128 size 3 would mean 1088 total pgs, which exceeds max 750 (mon_max_pg_per_osd 250 * num_in_osds 3)</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="ceph集群安装记录">ceph集群安装记录</h1>
+<h2 id="一准备工作">一、准备工作</h2>
+<h3 id="1参考文档">1.参考文档</h3>
+<ul>
+<li>ceph官方文档：https://docs.ceph.com/en/latest/install/</li>
+<li>ceph中文文档：http://docs.ceph.org.cn/start/</li>
+<li>ceph看云：https://www.kancloud.cn/willseecloud/ceph/1788233</li>
+</ul>
+<h3 id="2配置说明">2.配置说明</h3>
+<ul>
+<li>主机：3台主机node1~ node3，node1为管理节点</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>操作系统</th>
+<th>内核版本</th>
+<th>主机名</th>
+<th>网段IP</th>
+<th>磁盘</th>
+<th>服务</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>centos 7.9</td>
+<td>3.10.0</td>
+<td>node1</td>
+<td>10.0.8.116</td>
+<td>系统盘: sda；osd盘: sdb</td>
+<td>mon1,osd0,rgw1,mds1,mgr1,dashboard,smb-server</td>
+</tr>
+<tr>
+<td>centos 7.9</td>
+<td>3.10.0</td>
+<td>node2</td>
+<td>10.0.8.159</td>
+<td>系统盘: sda；osd盘: sdb</td>
+<td>mon2,osd1,rgw2</td>
+</tr>
+<tr>
+<td>centos 7.9</td>
+<td>3.10.0</td>
+<td>node3</td>
+<td>10.0.8.122</td>
+<td>系统盘: sda；osd盘: sdb</td>
+<td>mon3,osd2,rgw3,fs-client,block-client</td>
+</tr>
+<tr>
+<td>windows10</td>
+<td>-</td>
+<td>-</td>
+<td>10.0.6.229</td>
+<td>-</td>
+<td>smb-client(fs-client)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>操作系统版本：centos 7.9 内核版本：3.10.0</li>
+<li>ceph版本：Nautilus 14.2.22</li>
+<li>服务IP及端口</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>服务</th>
+<th>访问IP</th>
+<th>端口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>对象存储</td>
+<td>10.0.8.116</td>
+<td>7480</td>
+</tr>
+<tr>
+<td>文件系统</td>
+<td>10.0.8.116</td>
+<td>6789</td>
+</tr>
+<tr>
+<td>块存储</td>
+<td>10.0.8.116</td>
+<td>3260</td>
+</tr>
+<tr>
+<td>仪表盘</td>
+<td>10.0.8.116</td>
+<td>8443</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3服务器配置">3.服务器配置</h3>
+<ul>
+<li>安装操作系统，设置网络</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">vim /etc/sysconfig/network-scripts/ifcfg-<span class="o">{</span>iface<span class="o">}</span>
+【内容】【修改】
+<span class="nv">ONBOOT</span><span class="o">=</span>yes
+
+service network restart
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>设置主机名，配置hosts支持主机名互访</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#设置主机名</span>
+sudo hostnamectl set-hostname node1
+sudo hostnamectl set-hostname node2
+sudo hostnamectl set-hostname node3
+
+<span class="c1">#设置host</span>
+vim /etc/hosts
+【内容】
+10.0.8.116 node1
+10.0.8.159 node2
+10.0.8.122 node3
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>关闭firewalle,iptables和selinux</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">service iptables stop
+service iptables status
+
+systemctl stop firewalld
+systemctl disable firewalld
+systemctl status firewalld
+
+setenforce 0
+sed -i &#39;s/SELINUX=enforcing/SELINUX=disabled/&#39; /etc/selinux/config
+sed -i &#39;s/SELINUX=enforcing/SELINUX=disabled/&#39; /etc/sysconfig/selinux
+reboot
+/usr/sbin/sestatus -v
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>时钟同步（https://www.cnblogs.com/quchunhui/p/7658853.html）</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#安装服务</span>
+sudo yum -y install ntp ntpdate ntp-doc
+
+//同步阿里云
+ntpdate ntp1.aliyun.com
+
+//clock -w把当前系统时间写入到CMOS中
+clock -w
+
+<span class="c1">#修改配置文件</span>
+vim /etc/ntp.conf
+【内容】
+restrict 10.0.8.116 nomodify notrap nopeer noquery     //当前节点IP地址
+restrict 10.0.8.116 mask 10.0.8.1 nomodify notrap  //集群所在网段的网关（Gateway），子网掩码（Genmask）
+【内容】主节点  ，在server部分添加如下部分，并注释掉server <span class="m">0</span> ~ n
+server 127.127.1.0
+Fudge 127.127.1.0 stratum <span class="m">10</span>
+【内容】其他节点，在server部分添加如下语句，并注释掉server <span class="m">0</span> ~ n，将server指向主节点。
+server 10.0.8.116
+Fudge 10.0.8.116 stratum <span class="m">10</span>
+
+<span class="c1">#启动服务</span>
+service ntpd start 或 systemctl start ntpd
+
+<span class="c1">#设置开机启动</span>
+chkconfig ntpd on 或 systemctl <span class="nb">enable</span> ntpd
+
+<span class="c1">#查看</span>
+ntpstat //查看ntp服务器有无和上层ntp连通
+ntpq -p  //查看ntp服务器与上层ntp的状态
+watch <span class="s2">&#34;ntpq -p&#34;</span> //查看ntpd进程的状态
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>设置所有ceph节点为无需密码ssh互访（不要用 sudo 或 root 用户）</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#添加新用户</span>
+sudo useradd -d /home/cephnode -m cephnode
+sudo passwd cephnode
+<span class="c1">#新用户权限</span>
+<span class="nb">echo</span> <span class="s2">&#34;cephnode ALL = (root) NOPASSWD:ALL&#34;</span> <span class="p">|</span> sudo tee /etc/sudoers.d/cephnode
+sudo chmod <span class="m">0440</span> /etc/sudoers.d/cephnode
+
+<span class="c1">#设置 ~/.ssh/config</span>
+vim  ~/.ssh/config
+sudo chmod <span class="m">600</span> config
+【内容】
+Host node1
+   Hostname node1
+   User cephnode
+Host node2
+   Hostname node2
+   User cephnode
+Host node3
+   Hostname node3
+   User cephnode
+   
+<span class="c1">#生成ssh密钥对</span>
+ssh-keygen
+
+<span class="c1">#把公钥拷贝到各 Ceph 节点</span>
+ssh-copy-id cephnode@node1
+ssh-copy-id cephnode@node2
+ssh-copy-id cephnode@node3
+
+<span class="c1">#设置authorized_keys权限(视情况处理)</span>
+$ chmod <span class="m">600</span> authorized_keys
+<span class="c1">#设置.ssh目录权限</span>
+$ chmod <span class="m">700</span> -R .ssh
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>requiretty检查（ceph-deploy 命令时可能会报错）</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sudo visudo
+找到 Defaults requiretty 选项，把它改为 Defaults:ceph !requiretty 或者直接注释掉
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>优先级/首选项</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sudo yum install yum-plugin-priorities
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>必要软件安装</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">yum install python2-pip* -y
+yum install python-setuptools -y 
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4部署工具cpeh-deploy安装">4.部署工具（cpeh-deploy）安装</h3>
+<ul>
+<li>yum源配置</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@ceph01 ~<span class="o">]</span><span class="c1"># vim /etc/yum.conf</span>
+<span class="nv">keepcache</span><span class="o">=</span>1	//开启缓存 三个节点都改
+
+<span class="o">[</span>root@ceph01 ~<span class="o">]</span><span class="c1"># yum -y install wget curl net-tools bash-completion   	//安装wget curl net-tools bash-completion </span>
+
+<span class="o">[</span>root@ceph01 ~<span class="o">]</span><span class="c1"># cd /etc/yum.repos.d/</span>
+<span class="o">[</span>root@ceph01 yum.repos.d<span class="o">]</span><span class="c1"># mkdir backup</span>
+<span class="o">[</span>root@ceph01 yum.repos.d<span class="o">]</span><span class="c1"># mv C* backup</span>
+
+<span class="o">[</span>root@ceph01 yum.repos.d<span class="o">]</span><span class="c1"># wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span>
+<span class="o">[</span>root@ceph01 yum.repos.d<span class="o">]</span><span class="c1"># wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo</span>
+
+<span class="o">[</span>root@ceph01 yum.repos.d<span class="o">]</span><span class="c1"># cat &lt;&lt; EOF &gt; /etc/yum.repos.d/ceph.repo</span>
+<span class="o">[</span>ceph<span class="o">]</span>
+<span class="nv">name</span><span class="o">=</span>Ceph packages <span class="k">for</span>
+<span class="nv">baseurl</span><span class="o">=</span>https://mirrors.aliyun.com/ceph/rpm-nautilus/el7/x86_64
+<span class="nv">enabled</span><span class="o">=</span><span class="m">1</span>
+<span class="nv">gpgcheck</span><span class="o">=</span><span class="m">1</span>
+<span class="nv">type</span><span class="o">=</span>rpm-md
+<span class="nv">gpgkey</span><span class="o">=</span>https://mirrors.aliyun.com/ceph/keys/release.asc
+<span class="nv">priority</span><span class="o">=</span><span class="m">1</span>
+<span class="o">[</span>ceph-noarch<span class="o">]</span>
+<span class="nv">name</span><span class="o">=</span>Ceph noarch packages 
+<span class="nv">baseurl</span><span class="o">=</span>https://mirrors.aliyun.com/ceph/rpm-nautilus/el7/noarch/
+<span class="nv">enabled</span><span class="o">=</span><span class="m">1</span>
+<span class="nv">gpgcheck</span><span class="o">=</span><span class="m">1</span>
+<span class="nv">type</span><span class="o">=</span>rpm-md
+<span class="nv">gpgkey</span><span class="o">=</span>https://mirrors.aliyun.com/ceph/keys/release.asc
+<span class="nv">priority</span><span class="o">=</span><span class="m">1</span>
+<span class="o">[</span>ceph-source<span class="o">]</span>
+<span class="nv">name</span><span class="o">=</span>Ceph <span class="nb">source</span> packages 
+<span class="nv">baseurl</span><span class="o">=</span>https://mirrors.aliyun.com/ceph/rpm-nautilus/el7/SRPMS/
+<span class="nv">enabled</span><span class="o">=</span><span class="m">1</span>
+<span class="nv">gpgcheck</span><span class="o">=</span><span class="m">1</span>
+<span class="nv">type</span><span class="o">=</span>rpm-md
+<span class="nv">gpgkey</span><span class="o">=</span>https://mirrors.aliyun.com/ceph/keys/release.asc
+<span class="nv">priority</span><span class="o">=</span><span class="m">1</span>
+EOF
+
+<span class="o">[</span>root@ceph03 yum.repos.d<span class="o">]</span><span class="c1"># cat ceph.repo</span>
+<span class="o">[</span>root@ceph03 yum.repos.d<span class="o">]</span><span class="c1"># yum update -y	//升级yum源</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>yum安装cpeh-deploy</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sudo yum install ceph-deploy
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="二常用命令">二、常用命令</h2>
+<h3 id="1安装命令">1.安装命令</h3>
+<ul>
+<li>清除命令</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#下列命令清除配置:</span>
+ceph-deploy purgedata <span class="o">{</span>ceph-node<span class="o">}</span> <span class="o">[{</span>ceph-node<span class="o">}]</span>
+ceph-deploy forgetkeys
+
+<span class="c1">#用下列命令可以连 Ceph 安装包一起清除</span>
+ceph-deploy purge <span class="o">{</span>ceph-node<span class="o">}</span> <span class="o">[{</span>ceph-node<span class="o">}]</span>
+
+<span class="c1">#停止所有进程</span>
+stop ceph-all
+
+<span class="c1">#卸载所有ceph程序</span>
+ceph-deploy uninstall <span class="o">[{</span>ceph-node<span class="o">}]</span>
+
+<span class="c1">#卸载ceph-deploy管理</span>
+yum -y remove ceph-deploy
+
+<span class="c1">#如果想要重新部署，执行以下清除Ceph软件包，并清除其所有数据和配置</span>
+<span class="nb">cd</span> /etc/ceph
+ceph-deploy purge node1 node2 node3
+ceph-deploy purgedata node1 node2 node3
+ceph-deploy forgetkeys
+rm -rf ceph.*
+
+<span class="c1">#如果已经添加osd，需要先删除lvm然后zap磁盘</span>
+<span class="c1"># lvs</span>
+<span class="c1"># lvremove osd-xxx ceph-xxx</span>
+<span class="c1"># ceph-deploy disk zap node1 /dev/sdb</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2集群命令">2.集群命令</h3>
+<ul>
+<li>查看集群状态</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">ceph -s
+ceph -w
+ceph health
+ceph df //集群使用情况
+tailf /var/log/ceph/ceph.log
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>常用命令</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">ceph mon dump  //mon运行图，集群运行图之一
+ceph osd dump  //osd运行图，集群运行图之一
+ceph fs dump  //mds运行图，集群运行图之一
+ceph pg dump  //pg运行图，集群运行图之一
+ceph mds stat
+ceph osd stat
+ceph osd tree
+ceph osd lspools
+rados lspools
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>对象存储操作</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">rados lspools
+rados -p <span class="o">{</span>poolname<span class="o">}</span> ls
+ceph osd map <span class="o">{</span>poolname<span class="o">}</span> <span class="o">{</span>object-name<span class="o">}</span>
+rados put <span class="o">{</span>object-name<span class="o">}</span> <span class="o">{</span>file-path<span class="o">}</span> --pool<span class="o">={</span>poolname<span class="o">}</span>
+rados rm <span class="o">{</span>object-name<span class="o">}</span> --pool<span class="o">={</span>poolname<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>下发配置、分发配置至各个节点</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#拉取某节点的配置</span>
+ceph-deploy --overwrite-conf config pull <span class="o">{</span>hostname<span class="o">}</span>
+<span class="c1">#将配置文件下发给所有节点</span>
+ceph-deploy --overwrite-conf config push node1 node2 node3
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>服务管理</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sudo start ceph-all  //启动所有守护进程
+sudo stop ceph-all   //停止所有守护进程
+sudo start ceph-osd-all
+sudo start ceph-mon-all
+sudo start ceph-mds-all
+sudo stop ceph-osd-all 
+sudo stop ceph-mon-all 
+sudo stop ceph-mds-all
+sudo start ceph-osd <span class="nv">id</span><span class="o">={</span>id<span class="o">}</span>
+sudo start ceph-mon <span class="nv">id</span><span class="o">={</span>hostname<span class="o">}</span>
+sudo start ceph-mds <span class="nv">id</span><span class="o">={</span>hostname<span class="o">}</span>
+sudo stop ceph-osd <span class="nv">id</span><span class="o">={</span>id<span class="o">}</span>
+sudo stop ceph-mon <span class="nv">id</span><span class="o">={</span>hostname<span class="o">}</span>
+sudo stop ceph-mds <span class="nv">id</span><span class="o">={</span>hostname<span class="o">}</span>
+systemctl restart ceph-mon.target	//将各个节点的mon服务重启下
+systemctl restart ceph-osd.target	//将各个节点的osd服务重启下
+systemctl restart ceph-radosgw.service //重启 Ceph 对象网关
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="三部署集群环境">三、部署集群环境</h2>
+<h3 id="1创建集群">1.创建集群</h3>
+<ul>
+<li>创建集群目录</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#su - cephnode (有问题，在root账户下成功)</span>
+mkdir /etc/ceph
+<span class="nb">cd</span> /etc/ceph
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>安装 Ceph</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">ceph-deploy install node1 node2 node3
+
+手动安装时，需安装相关依赖包：
+yum install ceph-mon ceph-radosgw ceph-mds ceph-mgr ceph-osd ceph-common -y
+
+如果批量安装错误，可通过手动安装方式安装，命令如下：
+yum -y install epel-release <span class="o">&amp;&amp;</span> yum -y install ceph-release <span class="o">&amp;&amp;</span> yum -y install ceph ceph-radosgw
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>创建 monitor</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">ceph-deploy new <span class="o">{</span>initial-monitor-node<span class="o">(</span>s<span class="o">)}</span>
+
+em:
+ceph-deploy new node1 node2
+
+ceph-deploy new <span class="se">\
+</span><span class="se"></span>--public-network 10.0.8.0/24 <span class="se">\
+</span><span class="se"></span>--cluster-network 10.0.8.0/24 <span class="se">\
+</span><span class="se"></span>node1 node2 node3
+
+tips:
+<span class="c1">#1.报错ImportError: No module named pkg_resources解决方法</span>
+yum install python2-pip* -y
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>修改ceph配置</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">vim ceph.conf
+
+【内容】
+osd pool default <span class="nv">size</span> <span class="o">=</span> <span class="m">2</span>
+<span class="nv">public_network</span> <span class="o">=</span> 10.0.8.0/24
+<span class="nv">cluster_network</span> <span class="o">=</span> 10.0.8.0/24
+<span class="nv">mon_allow_pool_delete</span> <span class="o">=</span> <span class="nb">true</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>配置初始 monitor(s)、并收集所有密钥</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">ceph-deploy mon create-initial
+
+ceph -s	<span class="c1">##查看状态</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>创建osd</p>
+<ul>
+<li>创建osd（create 命令是依次执行 prepare 和 activate 命令的捷径）</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#空间使用率达到 near full 比率后， OSD 失败可能导致集群空间占满</span>
+ceph-deploy osd create <span class="o">[</span>--data DATA<span class="o">]</span> <span class="o">[</span>HOST<span class="o">]</span>
+ceph-deploy osd create --data /dev/vdb node1
+ceph-deploy osd create --data /dev/vdb node2
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>查看osd状态</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@node1 /etc/ceph<span class="o">]</span><span class="c1"># ceph osd tree</span>
+<span class="o">[</span>root@node1 /etc/ceph<span class="o">]</span><span class="c1"># ceph osd stat</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>删除osd</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#踢出集群</span>
+ceph osd out <span class="o">{</span>osd-num<span class="o">}</span>
+<span class="c1">#停止osd</span>
+sudo /etc/init.d/ceph stop osd.<span class="o">{</span>osd-num<span class="o">}</span>
+<span class="c1">#删除osd</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>用 ceph-deploy 把配置文件和 admin 密钥拷贝到管理节点和 Ceph 节点</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">ceph-deploy admin <span class="o">{</span>admin-node<span class="o">}</span> <span class="o">{</span>ceph-node<span class="o">}</span>
+ceph-deploy admin node1 node2 node3
+
+sudo chmod +r /etc/ceph/ceph.client.admin.keyring
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="2扩容">2.扩容</h3>
+<ul>
+<li>新增osd到集群</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">ceph-deploy osd create --data /dev/vdb node3
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>添加mds到集群</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">ceph-deploy mds create <span class="o">{</span>ceph-node<span class="o">}</span>
+ceph-deploy mds create node1
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>新增mon到集群</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#修改配置</span>
+mon_initial <span class="nv">members</span> <span class="o">=</span> ceph01,ceph02,ceph03	//新增ceph03
+<span class="nv">mon_host</span> <span class="o">=</span> 10.0.8.116,10.0.8.159,10.0.8.122	//新增10.0.8.122
+public <span class="nv">network</span> <span class="o">=</span> 10.0.8.0/24 
+
+<span class="c1">#将配置文件下发给所有节点</span>
+ceph-deploy --overwrite-conf config push node1 node2 node3
+
+<span class="c1">#添加mon</span>
+ceph-deploy mon add <span class="o">{</span>ceph-node<span class="o">}</span>
+ceph-deploy mon add node3
+
+<span class="c1">#三个节点重启mon服务</span>
+systemctl restart ceph-mon.target
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>创建mgr服务</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">ceph-deploy mgr create node1
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>添加 RGW 例程</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">ceph-deploy rgw create <span class="o">{</span>gateway-node<span class="o">}</span>
+ceph-deploy rgw create node1
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3创建文件系统">3.创建文件系统</h3>
+<ul>
+<li>创建pool</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">ceph osd pool create <span class="o">{</span>poll-name<span class="o">}</span> &lt;pg_num&gt;
+ceph osd pool ls
+ceph osd pool rename <span class="o">{</span>poll-name<span class="o">}</span> <span class="o">{</span>new-poll-name<span class="o">}</span>
+ceph osd pool rm <span class="o">{</span>poll-name<span class="o">}</span> <span class="o">{</span>poll-name<span class="o">}</span> --yes-i-really-really-mean-it
+
+em:
+ceph osd pool create cephfs_data <span class="m">64</span>
+ceph osd pool create cephfs_metadata <span class="m">64</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>创建文件系统</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">ceph fs new &lt;fs_name&gt; cephfs_metadata cephfs_data
+
+em：
+ceph fs new cephfs cephfs_metadata cephfs_data
+ceph fs ls
+ceph mds stat
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>把 Ceph FS 挂载为内核驱动（node3操作）</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sudo mkdir /cephfs
+<span class="nb">cd</span> /etc/ceph
+cp ceph.client.admin.keyring admin.secret
+vim admin.secret
+
+【内容】
+<span class="nv">AQD7FbNhhDvhBBAAD1abMfsh8hXlPtqVqDQMKQ</span><span class="o">==</span>
+
+chmod +r /etc/ceph/admin.secret
+<span class="c1">#直接挂在</span>
+sudo mount -t ceph 10.0.8.116:6789:/ /cephfs
+<span class="c1">#带认证信息挂在</span>
+sudo mount -t ceph 10.0.8.116:6789:/ /cephfs -o <span class="nv">name</span><span class="o">=</span>admin,secretfile<span class="o">=</span>/etc/ceph/admin.secret
+<span class="c1">#取消挂在</span>
+umount /cephfs
+<span class="c1">#查看挂载</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>把 Ceph FS 挂载为用户空间文件系统（ FUSE ）（node3操作）</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#安装ceph-fuse</span>
+yum -y install ceph-fuse
+<span class="c1">#需先取消之前内核驱动挂载的盘</span>
+umount /cephfs
+<span class="c1">#直接挂载</span>
+ceph-fuse -m 10.0.8.116:6789 /cephfs
+<span class="c1">#带认证信息挂在，除非它在默认位置（即 /etc/ceph ）：</span>
+sudo ceph-fuse -k ./ceph.client.admin.keyring -m 10.0.8.116:6789 ~/cephfs
+<span class="c1">#取消挂载</span>
+fusermount -u /cephfs
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>Cephfs+Samba构建基于Ceph的文件共享服务</p>
+<ul>
+<li>安装Samba</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#安装Samba包</span>
+yum -y install smaba samba-client samba-common
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>创建samba用户</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">groupadd samba
+useradd samba -d /home/samba -g samba -s /sbin/nologin
+touch /etc/samba/smbpasswd
+smbpasswd -a samba -c /etc/samba/smb.conf
+
+&gt;samba   //账号:samba 密码:samba
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>配置共享目录</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">mkdir -p /cephfs
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>配置ceph</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> /etc/ceph
+cp ceph.client.admin.keyring admin.secret
+vim admin.secret
+
+【内容】
+<span class="nv">AQD7FbNhhDvhBBAAD1abMfsh8hXlPtqVqDQMKQ</span><span class="o">==</span>
+
+<span class="c1">#带认证信息挂在</span>
+sudo mount -t ceph 10.0.8.116:6789:/ /cephfs -o <span class="nv">name</span><span class="o">=</span>admin,secretfile<span class="o">=</span>/etc/ceph/admin.secret
+
+<span class="c1">#设置文件夹权限,非777客户端无法写入数据</span>
+chmod -R <span class="m">777</span> /cephfs
+sudo chown -R nobody:nobody /smb
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>配置smb</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">vim /etc/samba/smb.conf
+
+<span class="o">[</span>global<span class="o">]</span>
+        <span class="nv">workgroup</span> <span class="o">=</span> WORKGROUP
+        netbios <span class="nv">name</span> <span class="o">=</span> WINDOWS-6VQ5K0D
+        server <span class="nv">string</span> <span class="o">=</span> this is a <span class="nb">test</span> samba server
+        log <span class="nv">file</span> <span class="o">=</span> /var/log/samba/log.%m
+        max log <span class="nv">size</span> <span class="o">=</span> <span class="m">500000</span>
+        <span class="nv">security</span> <span class="o">=</span> user
+        passdb <span class="nv">backend</span> <span class="o">=</span> tdbsam
+        load <span class="nv">printing</span> <span class="o">=</span> no
+
+<span class="o">[</span>cephfs<span class="o">]</span>
+        <span class="nv">comment</span> <span class="o">=</span> CephFs Home Directories
+        <span class="nv">path</span> <span class="o">=</span> /cephfs
+        <span class="nv">writable</span> <span class="o">=</span> yes
+        <span class="nv">browseable</span> <span class="o">=</span> yes
+        guest <span class="nv">ok</span> <span class="o">=</span> no
+<span class="o">[</span>linuxfs<span class="o">]</span>
+        <span class="nv">comment</span> <span class="o">=</span> Linux Home Directories
+        <span class="nv">path</span> <span class="o">=</span> /
+        <span class="nv">writable</span> <span class="o">=</span> yes
+        <span class="nv">browseable</span> <span class="o">=</span> yes
+        guest <span class="nv">ok</span> <span class="o">=</span> no
+
+<span class="c1">#检查配置文件正确性</span>
+testparm
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>启动服务</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sudo systemctl <span class="nb">enable</span> smb
+sudo systemctl start smb
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>windows客户端挂载</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#账号:samba 密码:samba</span>
+<span class="se">\\</span>10.0.8.116<span class="se">\
+</span><span class="se">\\</span>10.0.8.116<span class="se">\c</span>ephfs
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="4对象存储">4.对象存储</h3>
+<ul>
+<li>新建 CEPH 对象网关实例</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">ceph-deploy rgw create <span class="o">{</span>gateway-node<span class="o">}</span>
+ceph-deploy rgw create node1 node2 node3
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>访问:http://<client-node>:7480</p>
+</li>
+<li>
+<p>配置 CEPH 对象网关</p>
+<ul>
+<li>s3风格接口</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#创建用户</span>
+radosgw-admin user create --uid<span class="o">=</span><span class="s2">&#34;ceph-s3-user&#34;</span> --display-name<span class="o">=</span><span class="s2">&#34;ceph s3 user demo&#34;</span>
+<span class="c1">#获取到用户信息</span>
+<span class="s2">&#34;user&#34;</span>: <span class="s2">&#34;ceph-s3-user&#34;</span>,
+<span class="s2">&#34;access_key&#34;</span>: <span class="s2">&#34;A3NNVXFRGGBNVWQU72SJ&#34;</span>,
+<span class="s2">&#34;secret_key&#34;</span>: <span class="s2">&#34;sbtEd2g1Q7FXN7GCf2N25CauxXTMDAzS37xOKfoG&#34;</span>
+<span class="c1">#查看用户</span>
+radosgw-admin user list
+radosgw-admin user info --uid ceph-s3-user
+<span class="c1">#命令行操作</span>
+yum install -y s3cmd //安装
+s3cmd --configure //配置
+vim /root/.s3cfg  //signature_v2 <span class="o">=</span> True//启用signature_v2
+s3cmd ls    //查看bucket
+s3cmd mb s3://my-new-bucket //创建bucket
+s3cmd ls s3://my-new-bucket //查看bucket中的文件
+<span class="c1">#软件操作（S3 Browser）</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>swift风格接口</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#创建swift用户</span>
+radosgw-admin subuser create --uid<span class="o">=</span>ceph-s3-user --subuser<span class="o">=</span>ceph-s3-user:swift --access<span class="o">=</span>full
+<span class="c1">#Create the secret key</span>
+radosgw-admin key create --subuser<span class="o">=</span>ceph-s3-user:swift --key-type<span class="o">=</span>swift --gen-secret
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>新建用户和KEYRING</p>
+<ul>
+<li>为每一个实例生成一个 Ceph 对象网关用户名和key. 举一个典型实例, 我们将使用 client.radosgw 后使用 gateway 作为用户名</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sudo ceph auth get-or-create client.radosgw.gateway osd <span class="s1">&#39;allow rwx&#39;</span> mon <span class="s1">&#39;allow rwx&#39;</span> -o /etc/ceph/ceph.client.radosgw.keyring
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>分发生成的keyring到网关实例所在节点</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sudo scp /etc/ceph/ceph.client.radosgw.keyring  root@node2:/etc/ceph/ceph.client.radosgw.keyring
+sudo scp /etc/ceph/ceph.client.radosgw.keyring  root@node3:/etc/ceph/ceph.client.radosgw.keyring
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>apache和网关配置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">vim ceph.config
+【内容】
+<span class="o">[</span>client.radosgw.gateway<span class="o">]</span>
+<span class="nv">host</span> <span class="o">=</span> node1
+<span class="nv">keyring</span> <span class="o">=</span> /etc/ceph/ceph.client.radosgw.keyring
+rgw socket <span class="nv">path</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+log <span class="nv">file</span> <span class="o">=</span> /var/log/radosgw/client.radosgw.gateway.log
+rgw <span class="nv">frontends</span> <span class="o">=</span> fastcgi <span class="nv">socket_port</span><span class="o">=</span><span class="m">9000</span> <span class="nv">socket_host</span><span class="o">=</span>0.0.0.0
+rgw print <span class="k">continue</span> <span class="o">=</span> <span class="nb">false</span>
+
+sudo mkdir -p /var/lib/ceph/radosgw/ceph-radosgw.gateway
+sudo chown apache:apache /var/run/ceph
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="5块设备">5.块设备</h3>
+<ul>
+<li>创建pool及初始化pool(服务节点)</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#创建存储池</span>
+ceph osd pool create rbd <span class="m">128</span>
+<span class="c1">#初始化存储池</span>
+rbd pool init rbd
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>创建设备镜像并映射块设备(客户端操作)</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#创建1G块设备镜像</span>
+sudo rbd create foo --size <span class="m">1024</span> --image-feature layering -p rbd
+<span class="c1">#列出块设备镜像</span>
+sudo rbd ls
+<span class="c1">#设备镜像映射块设备</span>
+sudo rbd map foo --name client.admin -p rbd
+<span class="c1">#挂载</span>
+mkfs.xfs /dev/rbd0
+mkdir -p /cephblock
+mount /dev/rbd0 /cephblock
+<span class="c1">#查看</span>
+df -Th
+<span class="c1">#查看已映射块设备</span>
+rbd showmapped
+rbd device list
+<span class="c1">#取消块设备映射</span>
+sudo rbd device unmap /dev/rbd/<span class="o">{</span>poolname<span class="o">}</span>/<span class="o">{</span>imagename<span class="o">}</span>
+sudo rbd device unmap /dev/rbd/rbd/foo
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>扩容/缩容(客户端操作)</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#客户端操作 扩容/缩容的本质就是调整设备镜像大小</span>
+sudo rbd resize --size <span class="m">2048</span> foo <span class="c1"># 扩容至2G</span>
+sudo rbd resize --size <span class="m">1024</span> foo --allow-shrink <span class="c1"># 减少至1G</span>
+<span class="c1">#然后使用扩展工具刷新生效</span>
+sudo xfs_growfs /dev/rbd0  <span class="c1"># xfs文件系统格式使用xfs_growfs，其它ext4等使用resize2fs</span>
+<span class="c1">#查看</span>
+df -Th
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="6dashboard安装及配置">6.dashboard安装及配置</h3>
+<ul>
+<li>启用dashboard</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#在所有dashboard节点上安装插件包</span>
+yum install -y ceph-mgr-dashboard
+<span class="c1">#开启插件</span>
+ceph mgr module <span class="nb">enable</span> dashboard --force
+ceph mgr module ls <span class="p">|</span> grep dashboard
+<span class="c1">#创建自签证书</span>
+ceph dashboard create-self-signed-cert
+<span class="c1">#禁用SSL</span>
+ceph dashboard set-rgw-api-ssl-verify False
+<span class="c1">#配置监听IP</span>
+ceph config <span class="nb">set</span> mgr mgr/dashboard/server_addr 0.0.0.0
+<span class="c1">#配置监听端口</span>
+ceph config <span class="nb">set</span> mgr mgr/dashboard/server_port <span class="m">8443</span>
+<span class="c1">#新增用户</span>
+vim /etc/ceph/ceph_dashboard_admin_passard.txt
+【内容】
+<span class="m">123456</span>
+
+ceph dashboard ac-user-create <span class="o">[</span>--enabled<span class="o">]</span> <span class="o">[</span>--force-password<span class="o">]</span> <span class="o">[</span>--pwd_update_required<span class="o">]</span> &lt;username&gt; -i &lt;file-containing-password&gt; <span class="o">[</span>&lt;rolename&gt;<span class="o">]</span> <span class="o">[</span>&lt;name&gt;<span class="o">]</span> <span class="o">[</span>&lt;email&gt;<span class="o">]</span> <span class="o">[</span>&lt;pwd_expiration_date&gt;<span class="o">]</span>
+ceph dashboard ac-user-create admin -i /etc/ceph/ceph_dashboard_admin_passard.txt administrator
+【输出】
+<span class="o">{</span><span class="s2">&#34;username&#34;</span>: <span class="s2">&#34;admin&#34;</span>, <span class="s2">&#34;lastUpdate&#34;</span>: 1639444868, <span class="s2">&#34;name&#34;</span>: null, <span class="s2">&#34;roles&#34;</span>: <span class="o">[</span><span class="s2">&#34;administrator&#34;</span><span class="o">]</span>, <span class="s2">&#34;password&#34;</span>: <span class="s2">&#34;</span><span class="nv">$2</span><span class="s2">b</span><span class="nv">$12$eYx1APRQuQrKCBnHEo6YquHGKnmNItyyX4jWYylWt2rU3KIFI0hxi</span><span class="s2">&#34;</span>, <span class="s2">&#34;email&#34;</span>: null<span class="o">}</span>
+生成好角色为administrator，账号为admin，密码为123456的用户
+<span class="c1">#使用配置生效</span>
+ceph mgr module disable dashboard
+ceph mgr module <span class="nb">enable</span> dashboard
+<span class="c1">#查看已开启模块信息</span>
+ceph mgr services
+<span class="c1">#web访问</span>
+http://10.0.8.116:8443/
+<span class="c1">#为Dashboard设置access_key 和 secret_key</span>
+radosgw-admin user create --uid<span class="o">=</span>dashboard-rgw --display-name<span class="o">=</span>dashboard-rgw --system
+radosgw-admin user info --uid<span class="o">=</span>dashboard-rgw
+vim /etc/ceph/ceph_dashboard_rgw_access.txt
+【内容】
+N0N1O1683KPQPAJD8ED7
+
+vim /etc/ceph/ceph_dashboard_rgw_secret.txt
+【内容】
+MKMsGEOQBZ7LFPDaBjUxoH3R5uGyytucCeWa6AOn
+
+ceph dashboard set-rgw-api-ssl-verify False
+ceph dashboard set-rgw-api-host 10.0.8.116
+ceph dashboard set-rgw-api-port <span class="m">7480</span>
+ceph dashboard set-rgw-api-user-id dashboard-rgw
+ceph dashboard set-rgw-api-access-key -i /etc/ceph/ceph_dashboard_rgw_access.txt
+ceph dashboard set-rgw-api-secret-key -i /etc/ceph/ceph_dashboard_rgw_secret.txt
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="四常见问题及解决">四、常见问题及解决</h2>
+<h3 id="1osd故障">1.osd故障</h3>
+<ul>
+<li>发现node3的服务osd为down状态</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@node3 /var/lib/ceph/osd/ceph-2<span class="o">]</span><span class="c1"># ceph osd tree //出现故障，osd2，down</span>
+-7       0.00980     host node3                         
+ <span class="m">2</span>   hdd 0.00980         osd.2      down  <span class="m">0</span> 1.00000 
+<span class="o">[</span>root@node3 ~<span class="o">]</span><span class="c1"># df -hT   //查看ceph信息</span>
+文件系统	类型      容量  已用  可用 已用% 挂载点
+tmpfs  tmpfs    3.8G   52K  3.8G    1% /var/lib/ceph/osd/ceph-2
+<span class="o">[</span>root@node3 ~<span class="o">]</span><span class="nb">cd</span> /var/lib/ceph/osd/ceph-2
+<span class="o">[</span>root@node3 /var/lib/ceph/osd/ceph-2<span class="o">]</span><span class="c1"># more fsid //查看fsid</span>
+338dc846-e848-4067-9dd1-66213cbc0ba7
+<span class="o">[</span>root@node3 /var/lib/ceph/osd/ceph-2<span class="o">]</span><span class="c1"># ceph osd create 338dc846-e848-4067-9dd1-66213cbc0ba7   //ceph osd create uuid</span>
+<span class="o">[</span>root@node3 /var/lib/ceph/osd/ceph-2<span class="o">]</span><span class="c1"># ceph auth add osd.2 osd &#39;allow *&#39; mon &#39;allow rwx&#39; -i /var/lib/ceph/osd/ceph-2/keyring	//增加权限</span>
+<span class="o">[</span>root@node3 /var/lib/ceph/osd/ceph-2<span class="o">]</span><span class="c1"># ceph osd crush add 2 0.99899 host=node3	 //0.99899是权重，host=主机名称</span>
+<span class="o">[</span>root@node3 /var/lib/ceph/osd/ceph-2<span class="o">]</span><span class="c1"># ceph osd in osd.2</span>
+<span class="o">[</span>root@node3 /var/lib/ceph/osd/ceph-2<span class="o">]</span><span class="c1"># systemctl restart ceph-osd.target</span>
+<span class="o">[</span>root@node3 /var/lib/ceph/osd/ceph-2<span class="o">]</span><span class="c1"># ceph osd tree //恢复正常</span>
+-7       0.00980     host node3                         
+ <span class="m">2</span>   hdd 0.00980         osd.2      up  1.00000 1.00000 
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>mon is allowing insecure global_id reclaim</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#禁用不安全模式</span>
+ceph config <span class="nb">set</span> mon auth_allow_insecure_global_id_reclaim <span class="nb">false</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2error-erange--pg_num-128-size-3-would-mean-1088-total-pgs-which-exceeds-max-750-mon_max_pg_per_osd-250--num_in_osds-3">2.Error ERANGE:  pg_num 128 size 3 would mean 1088 total pgs, which exceeds max 750 (mon_max_pg_per_osd 250 * num_in_osds 3)</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">官网有人说是BUG<span class="o">(</span>https://tracker.ceph.com/issues/22735<span class="o">)</span>,有两种解决方式，一种覆盖配置，另一种减小创建pool时的pg数。
+我选择的是覆盖配置。
+$ vim /etc/ceph/ceph.conf
+<span class="o">[</span>global<span class="o">]</span>
+<span class="nv">mon_max_pg_per_osd</span> <span class="o">=</span> <span class="m">3000</span>
+<span class="nv">mon_pg_warn_max_per_osd</span> <span class="o">=</span> <span class="m">3000</span>
+
+ceph-deploy --overwrite-conf config push node2 node3
+systemctl restart ceph-mon.target
+systemctl restart ceph-mgr.target
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-01-08
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/ceph/">ceph</a>
+          <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a>
+          <a href="/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">文件系统</a>
+          <a href="/tags/%E9%9B%86%E7%BE%A4/">集群</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/ceph/ceph%E7%90%86%E8%A7%A3%E5%8F%8A%E6%80%BB%E7%BB%93/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[ceph] ceph理解及总结</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/ceph/ceph%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/">
+            <span class="next-text nav-default">[ceph] ceph入门学习</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
