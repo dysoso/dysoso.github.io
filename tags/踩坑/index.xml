@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>踩坑 on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/tags/%E8%B8%A9%E5%9D%91/</link>
+    <description>Recent content in 踩坑 on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Wed, 14 Oct 2020 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/%E8%B8%A9%E5%9D%91/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[go] golang踩坑记录</title>
+      <link>https://blog.nevergiveup.tech/post/golang/golang%E7%9A%84json%E8%A7%A3%E6%9E%90%E8%87%B3%E7%BB%93%E6%9E%84%E4%BD%93%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3/</link>
+      <pubDate>Wed, 14 Oct 2020 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/golang/golang%E7%9A%84json%E8%A7%A3%E6%9E%90%E8%87%B3%E7%BB%93%E6%9E%84%E4%BD%93%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3/</guid>
+      <description>golang踩坑记录 一.json问题 1.json中存在单引号,json.Unmarshal解析至结构体报错 正常的解析过程 1 2 3 4 5 6 7 8 9 10</description>
+    </item>
+    
+  </channel>
+</rss>
