@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>[redis]Redis持久化-数据备份恢复 - Never Give Up</title>
+  <title>[redis]Redis磁盘化-数据备份恢复 - Never Give Up</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="ZhangKQ" /><meta name="description" content="一、RDB 详解 RDB 是 Redis 默认的持久化方案。 就是在配置文件里面设置多久时间之内,执行了多少次写操作, 就生成一份数据快照dump.rdb文件,备份到" /><meta name="keywords" content="redis, 持久化, 数据备份, 数据恢复" />
+<meta name="author" content="ZhangKQ" /><meta name="description" content="一、RDB 详解 RDB 是 Redis 默认的磁盘化方案。 就是在配置文件里面设置多久时间之内,执行了多少次写操作, 就生成一份数据快照dump.rdb文件,备份到" /><meta name="keywords" content="redis, 持久化, 数据备份, 数据恢复" />
 
 
 
@@ -39,20 +39,20 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="[redis]Redis持久化-数据备份恢复" />
-<meta property="og:description" content="一、RDB 详解 RDB 是 Redis 默认的持久化方案。 就是在配置文件里面设置多久时间之内,执行了多少次写操作, 就生成一份数据快照dump.rdb文件,备份到" />
+<meta property="og:title" content="[redis]Redis磁盘化-数据备份恢复" />
+<meta property="og:description" content="一、RDB 详解 RDB 是 Redis 默认的磁盘化方案。 就是在配置文件里面设置多久时间之内,执行了多少次写操作, 就生成一份数据快照dump.rdb文件,备份到" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog.nevergiveup.tech/post/cache/redis%E6%8C%81%E4%B9%85%E5%8C%96-%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2021-07-15T16:37:56+08:00" />
-<meta property="article:modified_time" content="2021-07-15T16:37:56+08:00" />
+<meta property="article:modified_time" content="2022-02-10T16:37:56+08:00" />
 
-<meta itemprop="name" content="[redis]Redis持久化-数据备份恢复">
-<meta itemprop="description" content="一、RDB 详解 RDB 是 Redis 默认的持久化方案。 就是在配置文件里面设置多久时间之内,执行了多少次写操作, 就生成一份数据快照dump.rdb文件,备份到"><meta itemprop="datePublished" content="2021-07-15T16:37:56+08:00" />
-<meta itemprop="dateModified" content="2021-07-15T16:37:56+08:00" />
+<meta itemprop="name" content="[redis]Redis磁盘化-数据备份恢复">
+<meta itemprop="description" content="一、RDB 详解 RDB 是 Redis 默认的磁盘化方案。 就是在配置文件里面设置多久时间之内,执行了多少次写操作, 就生成一份数据快照dump.rdb文件,备份到"><meta itemprop="datePublished" content="2021-07-15T16:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-02-10T16:37:56+08:00" />
 <meta itemprop="wordCount" content="1608">
 <meta itemprop="keywords" content="redis,持久化,数据备份,数据恢复," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="[redis]Redis持久化-数据备份恢复"/>
-<meta name="twitter:description" content="一、RDB 详解 RDB 是 Redis 默认的持久化方案。 就是在配置文件里面设置多久时间之内,执行了多少次写操作, 就生成一份数据快照dump.rdb文件,备份到"/>
+<meta name="twitter:title" content="[redis]Redis磁盘化-数据备份恢复"/>
+<meta name="twitter:description" content="一、RDB 详解 RDB 是 Redis 默认的磁盘化方案。 就是在配置文件里面设置多久时间之内,执行了多少次写操作, 就生成一份数据快照dump.rdb文件,备份到"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -129,7 +129,7 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">[redis]Redis持久化-数据备份恢复</h1>
+      <h1 class="post-title">[redis]Redis磁盘化-数据备份恢复</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2021-07-15 </span>
@@ -174,7 +174,7 @@
     <div class="post-content">
       <h2 id="一rdb-详解">一、RDB 详解</h2>
 <blockquote>
-<p>RDB 是 Redis 默认的持久化方案。
+<p>RDB 是 Redis 默认的磁盘化方案。
 就是在配置文件里面设置多久时间之内,执行了多少次写操作,
 就生成一份数据快照dump.rdb文件,备份到指定是目录下。</p>
 </blockquote>
@@ -292,7 +292,7 @@ Redis 针对 AOF文件大的问题，提供重写的瘦身机制。
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2021-07-15
+        2022-02-10
         
     </span>
   </p>

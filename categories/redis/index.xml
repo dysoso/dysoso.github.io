@@ -9,12 +9,12 @@
     <copyright>蜀ICP备2021005948号-1</copyright>
     <lastBuildDate>Thu, 15 Jul 2021 16:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/categories/redis/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>[redis]Redis持久化-数据备份恢复</title>
+      <title>[redis]Redis磁盘化-数据备份恢复</title>
       <link>https://blog.nevergiveup.tech/post/cache/redis%E6%8C%81%E4%B9%85%E5%8C%96-%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/</link>
       <pubDate>Thu, 15 Jul 2021 16:37:56 +0800</pubDate>
       
       <guid>https://blog.nevergiveup.tech/post/cache/redis%E6%8C%81%E4%B9%85%E5%8C%96-%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/</guid>
-      <description>一、RDB 详解 RDB 是 Redis 默认的持久化方案。 就是在配置文件里面设置多久时间之内,执行了多少次写操作, 就生成一份数据快照dump.rdb文件,备份到</description>
+      <description>一、RDB 详解 RDB 是 Redis 默认的磁盘化方案。 就是在配置文件里面设置多久时间之内,执行了多少次写操作, 就生成一份数据快照dump.rdb文件,备份到</description>
     </item>
     
     <item>
