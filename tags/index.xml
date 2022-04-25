@@ -7,13 +7,310 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh_CN</language>
     <copyright>蜀ICP备2021005948号-1</copyright>
-    <lastBuildDate>Fri, 28 Jan 2022 16:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 20 Apr 2022 09:45:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>github</title>
-      <link>https://blog.nevergiveup.tech/tags/github/</link>
+      <title>centos</title>
+      <link>https://blog.nevergiveup.tech/tags/centos/</link>
+      <pubDate>Wed, 20 Apr 2022 09:45:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/centos/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>initrd.img</title>
+      <link>https://blog.nevergiveup.tech/tags/initrd.img/</link>
+      <pubDate>Wed, 20 Apr 2022 09:45:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/initrd.img/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>iso</title>
+      <link>https://blog.nevergiveup.tech/tags/iso/</link>
+      <pubDate>Wed, 20 Apr 2022 09:45:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/iso/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linux</title>
+      <link>https://blog.nevergiveup.tech/tags/linux/</link>
+      <pubDate>Wed, 20 Apr 2022 09:45:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>squashfs.img</title>
+      <link>https://blog.nevergiveup.tech/tags/squashfs.img/</link>
+      <pubDate>Wed, 20 Apr 2022 09:45:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/squashfs.img/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>打包</title>
+      <link>https://blog.nevergiveup.tech/tags/%E6%89%93%E5%8C%85/</link>
+      <pubDate>Wed, 20 Apr 2022 09:45:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E6%89%93%E5%8C%85/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>打包iso</title>
+      <link>https://blog.nevergiveup.tech/tags/%E6%89%93%E5%8C%85iso/</link>
+      <pubDate>Wed, 20 Apr 2022 09:45:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E6%89%93%E5%8C%85iso/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>生成iso</title>
+      <link>https://blog.nevergiveup.tech/tags/%E7%94%9F%E6%88%90iso/</link>
+      <pubDate>Wed, 20 Apr 2022 09:45:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E7%94%9F%E6%88%90iso/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>解压</title>
+      <link>https://blog.nevergiveup.tech/tags/%E8%A7%A3%E5%8E%8B/</link>
+      <pubDate>Wed, 20 Apr 2022 09:45:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E8%A7%A3%E5%8E%8B/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>解压iso</title>
+      <link>https://blog.nevergiveup.tech/tags/%E8%A7%A3%E5%8E%8Biso/</link>
+      <pubDate>Wed, 20 Apr 2022 09:45:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E8%A7%A3%E5%8E%8Biso/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>logrotate</title>
+      <link>https://blog.nevergiveup.tech/tags/logrotate/</link>
+      <pubDate>Fri, 18 Mar 2022 14:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/logrotate/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>日志管理</title>
+      <link>https://blog.nevergiveup.tech/tags/%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/</link>
+      <pubDate>Fri, 18 Mar 2022 14:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>arcconf</title>
+      <link>https://blog.nevergiveup.tech/tags/arcconf/</link>
+      <pubDate>Fri, 11 Mar 2022 09:38:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/arcconf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>RAID</title>
+      <link>https://blog.nevergiveup.tech/tags/raid/</link>
+      <pubDate>Fri, 11 Mar 2022 09:38:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/raid/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SQLite</title>
+      <link>https://blog.nevergiveup.tech/tags/sqlite/</link>
+      <pubDate>Thu, 10 Mar 2022 10:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/sqlite/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>入门</title>
+      <link>https://blog.nevergiveup.tech/tags/%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Thu, 10 Mar 2022 10:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E5%85%A5%E9%97%A8/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>数据库</title>
+      <link>https://blog.nevergiveup.tech/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+      <pubDate>Thu, 10 Mar 2022 10:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>build</title>
+      <link>https://blog.nevergiveup.tech/tags/build/</link>
+      <pubDate>Fri, 04 Mar 2022 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/build/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>makefile</title>
+      <link>https://blog.nevergiveup.tech/tags/makefile/</link>
+      <pubDate>Fri, 04 Mar 2022 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/makefile/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>rpm</title>
+      <link>https://blog.nevergiveup.tech/tags/rpm/</link>
+      <pubDate>Fri, 04 Mar 2022 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/rpm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>spec</title>
+      <link>https://blog.nevergiveup.tech/tags/spec/</link>
+      <pubDate>Fri, 04 Mar 2022 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/spec/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>configure</title>
+      <link>https://blog.nevergiveup.tech/tags/configure/</link>
+      <pubDate>Fri, 04 Mar 2022 11:31:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/configure/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>install</title>
+      <link>https://blog.nevergiveup.tech/tags/install/</link>
+      <pubDate>Fri, 04 Mar 2022 11:31:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/install/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>make</title>
+      <link>https://blog.nevergiveup.tech/tags/make/</link>
+      <pubDate>Fri, 04 Mar 2022 11:31:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/make/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>源码包</title>
+      <link>https://blog.nevergiveup.tech/tags/%E6%BA%90%E7%A0%81%E5%8C%85/</link>
+      <pubDate>Fri, 04 Mar 2022 11:31:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E6%BA%90%E7%A0%81%E5%8C%85/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>corosync</title>
+      <link>https://blog.nevergiveup.tech/tags/corosync/</link>
+      <pubDate>Fri, 18 Feb 2022 09:45:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/corosync/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pacemaker</title>
+      <link>https://blog.nevergiveup.tech/tags/pacemaker/</link>
+      <pubDate>Fri, 18 Feb 2022 09:45:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/pacemaker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pcsd</title>
+      <link>https://blog.nevergiveup.tech/tags/pcsd/</link>
+      <pubDate>Fri, 18 Feb 2022 09:45:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/pcsd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>分布式</title>
+      <link>https://blog.nevergiveup.tech/tags/%E5%88%86%E5%B8%83%E5%BC%8F/</link>
+      <pubDate>Fri, 18 Feb 2022 09:45:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E5%88%86%E5%B8%83%E5%BC%8F/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>开源</title>
+      <link>https://blog.nevergiveup.tech/tags/%E5%BC%80%E6%BA%90/</link>
+      <pubDate>Fri, 18 Feb 2022 09:45:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E5%BC%80%E6%BA%90/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>资源管理器</title>
+      <link>https://blog.nevergiveup.tech/tags/%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%99%A8/</link>
+      <pubDate>Fri, 18 Feb 2022 09:45:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%99%A8/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>集群</title>
+      <link>https://blog.nevergiveup.tech/tags/%E9%9B%86%E7%BE%A4/</link>
+      <pubDate>Fri, 18 Feb 2022 09:45:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E9%9B%86%E7%BE%A4/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>golang</title>
+      <link>https://blog.nevergiveup.tech/tags/golang/</link>
       <pubDate>Fri, 28 Jan 2022 16:37:56 +0800</pubDate>
       
-      <guid>https://blog.nevergiveup.tech/tags/github/</guid>
+      <guid>https://blog.nevergiveup.tech/tags/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>go语言</title>
+      <link>https://blog.nevergiveup.tech/tags/go%E8%AF%AD%E8%A8%80/</link>
+      <pubDate>Fri, 28 Jan 2022 16:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/go%E8%AF%AD%E8%A8%80/</guid>
       <description></description>
     </item>
     
@@ -27,20 +324,11 @@
     </item>
     
     <item>
-      <title>star</title>
-      <link>https://blog.nevergiveup.tech/tags/star/</link>
+      <title>静态网站生成器</title>
+      <link>https://blog.nevergiveup.tech/tags/%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99%E7%94%9F%E6%88%90%E5%99%A8/</link>
       <pubDate>Fri, 28 Jan 2022 16:37:56 +0800</pubDate>
       
-      <guid>https://blog.nevergiveup.tech/tags/star/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>排行榜</title>
-      <link>https://blog.nevergiveup.tech/tags/%E6%8E%92%E8%A1%8C%E6%A6%9C/</link>
-      <pubDate>Fri, 28 Jan 2022 16:37:56 +0800</pubDate>
-      
-      <guid>https://blog.nevergiveup.tech/tags/%E6%8E%92%E8%A1%8C%E6%A6%9C/</guid>
+      <guid>https://blog.nevergiveup.tech/tags/%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99%E7%94%9F%E6%88%90%E5%99%A8/</guid>
       <description></description>
     </item>
     
@@ -54,11 +342,56 @@
     </item>
     
     <item>
-      <title>分布式</title>
-      <link>https://blog.nevergiveup.tech/tags/%E5%88%86%E5%B8%83%E5%BC%8F/</link>
+      <title>filesystem</title>
+      <link>https://blog.nevergiveup.tech/tags/filesystem/</link>
       <pubDate>Sat, 08 Jan 2022 15:37:56 +0800</pubDate>
       
-      <guid>https://blog.nevergiveup.tech/tags/%E5%88%86%E5%B8%83%E5%BC%8F/</guid>
+      <guid>https://blog.nevergiveup.tech/tags/filesystem/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>iscsi</title>
+      <link>https://blog.nevergiveup.tech/tags/iscsi/</link>
+      <pubDate>Sat, 08 Jan 2022 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/iscsi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>objectstore</title>
+      <link>https://blog.nevergiveup.tech/tags/objectstore/</link>
+      <pubDate>Sat, 08 Jan 2022 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/objectstore/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>分布式文件系统</title>
+      <link>https://blog.nevergiveup.tech/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/</link>
+      <pubDate>Sat, 08 Jan 2022 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>块存储</title>
+      <link>https://blog.nevergiveup.tech/tags/%E5%9D%97%E5%AD%98%E5%82%A8/</link>
+      <pubDate>Sat, 08 Jan 2022 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E5%9D%97%E5%AD%98%E5%82%A8/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>对象存储</title>
+      <link>https://blog.nevergiveup.tech/tags/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8/</link>
+      <pubDate>Sat, 08 Jan 2022 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8/</guid>
       <description></description>
     </item>
     
@@ -72,16 +405,7 @@
     </item>
     
     <item>
-      <title>集群</title>
-      <link>https://blog.nevergiveup.tech/tags/%E9%9B%86%E7%BE%A4/</link>
-      <pubDate>Thu, 06 Jan 2022 15:37:56 +0800</pubDate>
-      
-      <guid>https://blog.nevergiveup.tech/tags/%E9%9B%86%E7%BE%A4/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>CentOS7</title>
+      <title>centos7</title>
       <link>https://blog.nevergiveup.tech/tags/centos7/</link>
       <pubDate>Sun, 26 Dec 2021 15:37:56 +0800</pubDate>
       
@@ -108,11 +432,11 @@
     </item>
     
     <item>
-      <title>linux</title>
-      <link>https://blog.nevergiveup.tech/tags/linux/</link>
+      <title>middleware</title>
+      <link>https://blog.nevergiveup.tech/tags/middleware/</link>
       <pubDate>Sun, 26 Dec 2021 15:37:56 +0800</pubDate>
       
-      <guid>https://blog.nevergiveup.tech/tags/linux/</guid>
+      <guid>https://blog.nevergiveup.tech/tags/middleware/</guid>
       <description></description>
     </item>
     
@@ -135,6 +459,15 @@
     </item>
     
     <item>
+      <title>开发语言</title>
+      <link>https://blog.nevergiveup.tech/tags/%E5%BC%80%E5%8F%91%E8%AF%AD%E8%A8%80/</link>
+      <pubDate>Thu, 23 Dec 2021 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E5%BC%80%E5%8F%91%E8%AF%AD%E8%A8%80/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>配置文件</title>
       <link>https://blog.nevergiveup.tech/tags/%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</link>
       <pubDate>Thu, 23 Dec 2021 15:37:56 +0800</pubDate>
@@ -149,6 +482,15 @@
       <pubDate>Thu, 11 Nov 2021 15:37:56 +0800</pubDate>
       
       <guid>https://blog.nevergiveup.tech/tags/%E4%BA%91%E5%AD%98%E5%82%A8/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>云应用</title>
+      <link>https://blog.nevergiveup.tech/tags/%E4%BA%91%E5%BA%94%E7%94%A8/</link>
+      <pubDate>Thu, 11 Nov 2021 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E4%BA%91%E5%BA%94%E7%94%A8/</guid>
       <description></description>
     </item>
     
@@ -176,6 +518,51 @@
       <pubDate>Thu, 11 Nov 2021 15:37:56 +0800</pubDate>
       
       <guid>https://blog.nevergiveup.tech/tags/%E9%98%BF%E9%87%8C%E4%BA%91/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ext4</title>
+      <link>https://blog.nevergiveup.tech/tags/ext4/</link>
+      <pubDate>Mon, 13 Sep 2021 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/ext4/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>本地文件系统</title>
+      <link>https://blog.nevergiveup.tech/tags/%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/</link>
+      <pubDate>Mon, 13 Sep 2021 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>磁盘分区</title>
+      <link>https://blog.nevergiveup.tech/tags/%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA/</link>
+      <pubDate>Mon, 13 Sep 2021 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>磁盘挂载</title>
+      <link>https://blog.nevergiveup.tech/tags/%E7%A3%81%E7%9B%98%E6%8C%82%E8%BD%BD/</link>
+      <pubDate>Mon, 13 Sep 2021 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E7%A3%81%E7%9B%98%E6%8C%82%E8%BD%BD/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>磁盘管理</title>
+      <link>https://blog.nevergiveup.tech/tags/%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/</link>
+      <pubDate>Mon, 13 Sep 2021 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/</guid>
       <description></description>
     </item>
     
@@ -216,20 +603,65 @@
     </item>
     
     <item>
+      <title>编码方式</title>
+      <link>https://blog.nevergiveup.tech/tags/%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F/</link>
+      <pubDate>Sun, 15 Aug 2021 16:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Jenkins</title>
+      <link>https://blog.nevergiveup.tech/tags/jenkins/</link>
+      <pubDate>Fri, 23 Jul 2021 10:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/jenkins/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>工具</title>
       <link>https://blog.nevergiveup.tech/tags/%E5%B7%A5%E5%85%B7/</link>
-      <pubDate>Sun, 15 Aug 2021 16:37:56 +0800</pubDate>
+      <pubDate>Fri, 23 Jul 2021 10:37:56 +0800</pubDate>
       
       <guid>https://blog.nevergiveup.tech/tags/%E5%B7%A5%E5%85%B7/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>编码方式</title>
-      <link>https://blog.nevergiveup.tech/tags/%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F/</link>
-      <pubDate>Sun, 15 Aug 2021 16:37:56 +0800</pubDate>
+      <title>流水线</title>
+      <link>https://blog.nevergiveup.tech/tags/%E6%B5%81%E6%B0%B4%E7%BA%BF/</link>
+      <pubDate>Fri, 23 Jul 2021 10:37:56 +0800</pubDate>
       
-      <guid>https://blog.nevergiveup.tech/tags/%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F/</guid>
+      <guid>https://blog.nevergiveup.tech/tags/%E6%B5%81%E6%B0%B4%E7%BA%BF/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>集成工具</title>
+      <link>https://blog.nevergiveup.tech/tags/%E9%9B%86%E6%88%90%E5%B7%A5%E5%85%B7/</link>
+      <pubDate>Fri, 23 Jul 2021 10:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E9%9B%86%E6%88%90%E5%B7%A5%E5%85%B7/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cache</title>
+      <link>https://blog.nevergiveup.tech/tags/cache/</link>
+      <pubDate>Thu, 15 Jul 2021 16:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/cache/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>no sql</title>
+      <link>https://blog.nevergiveup.tech/tags/no-sql/</link>
+      <pubDate>Thu, 15 Jul 2021 16:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/no-sql/</guid>
       <description></description>
     </item>
     
@@ -270,20 +702,56 @@
     </item>
     
     <item>
-      <title>golang</title>
-      <link>https://blog.nevergiveup.tech/tags/golang/</link>
-      <pubDate>Sat, 15 May 2021 15:37:56 +0800</pubDate>
+      <title>缓存</title>
+      <link>https://blog.nevergiveup.tech/tags/%E7%BC%93%E5%AD%98/</link>
+      <pubDate>Thu, 15 Jul 2021 16:37:56 +0800</pubDate>
       
-      <guid>https://blog.nevergiveup.tech/tags/golang/</guid>
+      <guid>https://blog.nevergiveup.tech/tags/%E7%BC%93%E5%AD%98/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>go语言</title>
-      <link>https://blog.nevergiveup.tech/tags/go%E8%AF%AD%E8%A8%80/</link>
-      <pubDate>Sat, 15 May 2021 15:37:56 +0800</pubDate>
+      <title>git</title>
+      <link>https://blog.nevergiveup.tech/tags/git/</link>
+      <pubDate>Thu, 20 May 2021 16:37:56 +0800</pubDate>
       
-      <guid>https://blog.nevergiveup.tech/tags/go%E8%AF%AD%E8%A8%80/</guid>
+      <guid>https://blog.nevergiveup.tech/tags/git/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gitlab</title>
+      <link>https://blog.nevergiveup.tech/tags/gitlab/</link>
+      <pubDate>Thu, 20 May 2021 16:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/gitlab/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>版本控制器</title>
+      <link>https://blog.nevergiveup.tech/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%99%A8/</link>
+      <pubDate>Thu, 20 May 2021 16:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%99%A8/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Golang开发规范</title>
+      <link>https://blog.nevergiveup.tech/tags/golang%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/</link>
+      <pubDate>Sun, 16 May 2021 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/golang%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>后端</title>
+      <link>https://blog.nevergiveup.tech/tags/%E5%90%8E%E7%AB%AF/</link>
+      <pubDate>Sun, 16 May 2021 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E5%90%8E%E7%AB%AF/</guid>
       <description></description>
     </item>
     
@@ -293,15 +761,6 @@
       <pubDate>Sat, 15 May 2021 15:37:56 +0800</pubDate>
       
       <guid>https://blog.nevergiveup.tech/tags/uber/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>后端</title>
-      <link>https://blog.nevergiveup.tech/tags/%E5%90%8E%E7%AB%AF/</link>
-      <pubDate>Sat, 15 May 2021 15:37:56 +0800</pubDate>
-      
-      <guid>https://blog.nevergiveup.tech/tags/%E5%90%8E%E7%AB%AF/</guid>
       <description></description>
     </item>
     
@@ -333,11 +792,11 @@
     </item>
     
     <item>
-      <title>git</title>
-      <link>https://blog.nevergiveup.tech/tags/git/</link>
+      <title>github</title>
+      <link>https://blog.nevergiveup.tech/tags/github/</link>
       <pubDate>Thu, 22 Apr 2021 16:37:56 +0800</pubDate>
       
-      <guid>https://blog.nevergiveup.tech/tags/git/</guid>
+      <guid>https://blog.nevergiveup.tech/tags/github/</guid>
       <description></description>
     </item>
     
@@ -356,6 +815,60 @@
       <pubDate>Fri, 12 Mar 2021 16:37:56 +0800</pubDate>
       
       <guid>https://blog.nevergiveup.tech/tags/%E9%94%81/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>samba</title>
+      <link>https://blog.nevergiveup.tech/tags/samba/</link>
+      <pubDate>Thu, 11 Mar 2021 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/samba/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>smb</title>
+      <link>https://blog.nevergiveup.tech/tags/smb/</link>
+      <pubDate>Thu, 11 Mar 2021 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/smb/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>goland</title>
+      <link>https://blog.nevergiveup.tech/tags/goland/</link>
+      <pubDate>Sun, 13 Dec 2020 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/goland/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ide</title>
+      <link>https://blog.nevergiveup.tech/tags/ide/</link>
+      <pubDate>Sun, 13 Dec 2020 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/ide/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PlatUml</title>
+      <link>https://blog.nevergiveup.tech/tags/platuml/</link>
+      <pubDate>Sun, 13 Dec 2020 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/platuml/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>submit text</title>
+      <link>https://blog.nevergiveup.tech/tags/submit-text/</link>
+      <pubDate>Sun, 13 Dec 2020 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/submit-text/</guid>
       <description></description>
     </item>
     
@@ -396,6 +909,15 @@
     </item>
     
     <item>
+      <title>编辑器</title>
+      <link>https://blog.nevergiveup.tech/tags/%E7%BC%96%E8%BE%91%E5%99%A8/</link>
+      <pubDate>Sun, 13 Dec 2020 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E7%BC%96%E8%BE%91%E5%99%A8/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>mermaid</title>
       <link>https://blog.nevergiveup.tech/tags/mermaid/</link>
       <pubDate>Sun, 13 Dec 2020 10:37:56 +0800</pubDate>
@@ -419,6 +941,24 @@
       <pubDate>Wed, 14 Oct 2020 15:37:56 +0800</pubDate>
       
       <guid>https://blog.nevergiveup.tech/tags/%E8%B8%A9%E5%9D%91/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>开发环境</title>
+      <link>https://blog.nevergiveup.tech/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</link>
+      <pubDate>Tue, 22 Sep 2020 16:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>虚拟机</title>
+      <link>https://blog.nevergiveup.tech/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/</link>
+      <pubDate>Tue, 22 Sep 2020 16:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/</guid>
       <description></description>
     </item>
     
@@ -455,15 +995,6 @@
       <pubDate>Thu, 13 Aug 2020 16:37:56 +0800</pubDate>
       
       <guid>https://blog.nevergiveup.tech/tags/%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>虚拟机</title>
-      <link>https://blog.nevergiveup.tech/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/</link>
-      <pubDate>Thu, 13 Aug 2020 16:37:56 +0800</pubDate>
-      
-      <guid>https://blog.nevergiveup.tech/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/</guid>
       <description></description>
     </item>
     
@@ -531,15 +1062,6 @@
     </item>
     
     <item>
-      <title>cache</title>
-      <link>https://blog.nevergiveup.tech/tags/cache/</link>
-      <pubDate>Sat, 07 Sep 2019 15:37:56 +0800</pubDate>
-      
-      <guid>https://blog.nevergiveup.tech/tags/cache/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>docker</title>
       <link>https://blog.nevergiveup.tech/tags/docker/</link>
       <pubDate>Sat, 07 Sep 2019 15:37:56 +0800</pubDate>
@@ -549,29 +1071,11 @@
     </item>
     
     <item>
-      <title>no sql</title>
-      <link>https://blog.nevergiveup.tech/tags/no-sql/</link>
-      <pubDate>Sat, 07 Sep 2019 15:37:56 +0800</pubDate>
-      
-      <guid>https://blog.nevergiveup.tech/tags/no-sql/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>主从复制</title>
       <link>https://blog.nevergiveup.tech/tags/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/</link>
       <pubDate>Sat, 07 Sep 2019 15:37:56 +0800</pubDate>
       
       <guid>https://blog.nevergiveup.tech/tags/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>数据库</title>
-      <link>https://blog.nevergiveup.tech/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
-      <pubDate>Sat, 07 Sep 2019 15:37:56 +0800</pubDate>
-      
-      <guid>https://blog.nevergiveup.tech/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</guid>
       <description></description>
     </item>
     
@@ -639,11 +1143,38 @@
     </item>
     
     <item>
+      <title>应用容器引擎</title>
+      <link>https://blog.nevergiveup.tech/tags/%E5%BA%94%E7%94%A8%E5%AE%B9%E5%99%A8%E5%BC%95%E6%93%8E/</link>
+      <pubDate>Mon, 12 Nov 2018 16:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E5%BA%94%E7%94%A8%E5%AE%B9%E5%99%A8%E5%BC%95%E6%93%8E/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>swoft</title>
+      <link>https://blog.nevergiveup.tech/tags/swoft/</link>
+      <pubDate>Tue, 11 Sep 2018 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/swoft/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>规范</title>
       <link>https://blog.nevergiveup.tech/tags/%E8%A7%84%E8%8C%83/</link>
       <pubDate>Sat, 16 Jun 2018 15:37:56 +0800</pubDate>
       
       <guid>https://blog.nevergiveup.tech/tags/%E8%A7%84%E8%8C%83/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>常用命令</title>
+      <link>https://blog.nevergiveup.tech/tags/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
+      <pubDate>Tue, 12 Jun 2018 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
       <description></description>
     </item>
     
@@ -657,6 +1188,87 @@
     </item>
     
     <item>
+      <title>shell</title>
+      <link>https://blog.nevergiveup.tech/tags/shell/</link>
+      <pubDate>Mon, 13 Nov 2017 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/shell/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>正则</title>
+      <link>https://blog.nevergiveup.tech/tags/%E6%AD%A3%E5%88%99/</link>
+      <pubDate>Fri, 03 Nov 2017 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E6%AD%A3%E5%88%99/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>正则表达式</title>
+      <link>https://blog.nevergiveup.tech/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+      <pubDate>Fri, 03 Nov 2017 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mysql-proxy</title>
+      <link>https://blog.nevergiveup.tech/tags/mysql-proxy/</link>
+      <pubDate>Fri, 12 May 2017 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/mysql-proxy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>MyCat</title>
+      <link>https://blog.nevergiveup.tech/tags/mycat/</link>
+      <pubDate>Thu, 11 May 2017 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/mycat/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>主从分离</title>
+      <link>https://blog.nevergiveup.tech/tags/%E4%B8%BB%E4%BB%8E%E5%88%86%E7%A6%BB/</link>
+      <pubDate>Wed, 10 May 2017 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E4%B8%BB%E4%BB%8E%E5%88%86%E7%A6%BB/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>负载均衡</title>
+      <link>https://blog.nevergiveup.tech/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/</link>
+      <pubDate>Wed, 10 May 2017 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>phpstrom</title>
+      <link>https://blog.nevergiveup.tech/tags/phpstrom/</link>
+      <pubDate>Wed, 11 Jan 2017 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/phpstrom/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>快捷键</title>
+      <link>https://blog.nevergiveup.tech/tags/%E5%BF%AB%E6%8D%B7%E9%94%AE/</link>
+      <pubDate>Wed, 11 Jan 2017 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/%E5%BF%AB%E6%8D%B7%E9%94%AE/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>submit</title>
       <link>https://blog.nevergiveup.tech/tags/submit/</link>
       <pubDate>Tue, 13 Sep 2016 15:37:56 +0800</pubDate>
@@ -666,20 +1278,29 @@
     </item>
     
     <item>
-      <title>快捷键</title>
-      <link>https://blog.nevergiveup.tech/tags/%E5%BF%AB%E6%8D%B7%E9%94%AE/</link>
-      <pubDate>Tue, 13 Sep 2016 15:37:56 +0800</pubDate>
+      <title>crontab</title>
+      <link>https://blog.nevergiveup.tech/tags/crontab/</link>
+      <pubDate>Tue, 12 Apr 2016 15:37:56 +0800</pubDate>
       
-      <guid>https://blog.nevergiveup.tech/tags/%E5%BF%AB%E6%8D%B7%E9%94%AE/</guid>
+      <guid>https://blog.nevergiveup.tech/tags/crontab/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>编辑器</title>
-      <link>https://blog.nevergiveup.tech/tags/%E7%BC%96%E8%BE%91%E5%99%A8/</link>
-      <pubDate>Tue, 13 Sep 2016 15:37:56 +0800</pubDate>
+      <title>定时器</title>
+      <link>https://blog.nevergiveup.tech/tags/%E5%AE%9A%E6%97%B6%E5%99%A8/</link>
+      <pubDate>Tue, 12 Apr 2016 15:37:56 +0800</pubDate>
       
-      <guid>https://blog.nevergiveup.tech/tags/%E7%BC%96%E8%BE%91%E5%99%A8/</guid>
+      <guid>https://blog.nevergiveup.tech/tags/%E5%AE%9A%E6%97%B6%E5%99%A8/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>lnmp</title>
+      <link>https://blog.nevergiveup.tech/tags/lnmp/</link>
+      <pubDate>Mon, 15 Feb 2016 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/tags/lnmp/</guid>
       <description></description>
     </item>
     

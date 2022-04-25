@@ -10,10 +10,10 @@
     <lastBuildDate>Sun, 13 Dec 2020 10:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/mermaid/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[typora] Typora画图-Mermaid流程图</title>
-      <link>https://blog.nevergiveup.tech/post/%E5%B7%A5%E5%85%B7/typora%E7%94%BB%E5%9B%BEmermaid/</link>
+      <link>https://blog.nevergiveup.tech/post/editor/typora%E7%94%BB%E5%9B%BEmermaid/</link>
       <pubDate>Sun, 13 Dec 2020 10:37:56 +0800</pubDate>
       
-      <guid>https://blog.nevergiveup.tech/post/%E5%B7%A5%E5%85%B7/typora%E7%94%BB%E5%9B%BEmermaid/</guid>
+      <guid>https://blog.nevergiveup.tech/post/editor/typora%E7%94%BB%E5%9B%BEmermaid/</guid>
       <description>Typora画图-Mermaid流程图 一.介绍 Mermaid 是一个用于画流程图.状态图.时序图.甘特图的库，使用 JS 进行本地渲染，广泛集成于许多 Markdown 编辑器中</description>
     </item>
     

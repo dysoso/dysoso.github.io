@@ -1,0 +1,2383 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[php]lnmp开发环境配置及常用软件安装 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="lnmp开发环境配置及常用软件安装 一.nginx安装 0.准备工作 yum update yum install -y gcc gcc-c&#43;&#43; yum install -y pcre pcre-devel openssl openssl-devel zlib zlib-devel psmisc 1.添加专用分组和用户 1 2 3 4 5 6 7 groupadd www useradd" /><meta name="keywords" content="linux, php, lnmp, 开发环境" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/linux/lnmp%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%8F%8A%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[php]lnmp开发环境配置及常用软件安装" />
+<meta property="og:description" content="lnmp开发环境配置及常用软件安装 一.nginx安装 0.准备工作 yum update yum install -y gcc gcc-c&#43;&#43; yum install -y pcre pcre-devel openssl openssl-devel zlib zlib-devel psmisc 1.添加专用分组和用户 1 2 3 4 5 6 7 groupadd www useradd" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/linux/lnmp%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%8F%8A%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2016-02-15T15:37:56+08:00" />
+<meta property="article:modified_time" content="2022-02-10T16:37:56+08:00" />
+
+<meta itemprop="name" content="[php]lnmp开发环境配置及常用软件安装">
+<meta itemprop="description" content="lnmp开发环境配置及常用软件安装 一.nginx安装 0.准备工作 yum update yum install -y gcc gcc-c&#43;&#43; yum install -y pcre pcre-devel openssl openssl-devel zlib zlib-devel psmisc 1.添加专用分组和用户 1 2 3 4 5 6 7 groupadd www useradd"><meta itemprop="datePublished" content="2016-02-15T15:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-02-10T16:37:56+08:00" />
+<meta itemprop="wordCount" content="8311">
+<meta itemprop="keywords" content="linux,php,lnmp,开发环境," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[php]lnmp开发环境配置及常用软件安装"/>
+<meta name="twitter:description" content="lnmp开发环境配置及常用软件安装 一.nginx安装 0.准备工作 yum update yum install -y gcc gcc-c&#43;&#43; yum install -y pcre pcre-devel openssl openssl-devel zlib zlib-devel psmisc 1.添加专用分组和用户 1 2 3 4 5 6 7 groupadd www useradd"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[php]lnmp开发环境配置及常用软件安装</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2016-02-15 </span>
+        <div class="post-category">
+            <a href="/categories/linux/"> linux </a>
+            </div>
+          <span class="more-meta"> 约 8311 字 </span>
+          <span class="more-meta"> 预计阅读 17 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#lnmp开发环境配置及常用软件安装">lnmp开发环境配置及常用软件安装</a>
+      <ul>
+        <li><a href="#一nginx安装">一.nginx安装</a>
+          <ul>
+            <li><a href="#0准备工作">0.准备工作</a></li>
+            <li><a href="#1添加专用分组和用户">1.添加专用分组和用户</a></li>
+            <li><a href="#2选择目录下载编译文件解压编译安装">2.选择目录下载编译文件,解压,编译,安装</a></li>
+            <li><a href="#3配置nginx">3.配置nginx</a></li>
+            <li><a href="#4手动启动服务">4.手动启动服务</a></li>
+            <li><a href="#5开机启动添加">5.开机启动添加</a></li>
+            <li><a href="#6查看nginx版本测试">6.查看nginx版本,测试</a></li>
+            <li><a href="#7查看进程">7.查看进程</a></li>
+            <li><a href="#8开启对外端口centos7以上">8.开启对外端口(centos7以上)</a></li>
+            <li><a href="#9配置虚拟域名添加host">9.配置虚拟域名,添加host</a></li>
+            <li><a href="#10添加环境变量">10.添加环境变量</a></li>
+            <li><a href="#11nginx管理的几种方式">11.nginx管理的几种方式</a></li>
+          </ul>
+        </li>
+        <li><a href="#二php安装">二.php安装</a>
+          <ul>
+            <li><a href="#0准备工作-1">0.准备工作</a></li>
+            <li><a href="#1选择目录下载编译文件解压编译安装">1.选择目录下载编译文件,解压,编译,安装</a></li>
+            <li><a href="#2查看版本">2.查看版本</a></li>
+            <li><a href="#3查看修改配置">3.查看,修改配置</a></li>
+            <li><a href="#4安装php-fpm启动">4.安装php-fpm,启动</a></li>
+            <li><a href="#5查看进程">5.查看进程</a></li>
+            <li><a href="#6php-fpm管理">6.php-fpm管理</a></li>
+            <li><a href="#7安装扩展">7.安装扩展</a></li>
+          </ul>
+        </li>
+        <li><a href="#三mysql安装">三.mysql安装</a>
+          <ul>
+            <li><a href="#0准备工作-2">0.准备工作</a></li>
+            <li><a href="#1添加专用分组和用户-1">1.添加专用分组和用户</a></li>
+            <li><a href="#2选择目录下载编译文件解压编译安装-1">2.选择目录下载编译文件,解压,编译,安装</a></li>
+            <li><a href="#3初始化">3.初始化</a></li>
+            <li><a href="#4修改配置">4.修改配置</a></li>
+            <li><a href="#5启动">5.启动</a></li>
+            <li><a href="#6查找当前配置路径">6.查找当前配置路径</a></li>
+            <li><a href="#7设置默认密码">7.设置默认密码</a></li>
+            <li><a href="#8初始化密码报错">8.初始化密码报错</a></li>
+            <li><a href="#9开启远程登陆">9.开启远程登陆</a></li>
+            <li><a href="#10开启对外端口centos7以上">10.开启对外端口(centos7以上)</a></li>
+            <li><a href="#11mysql管理">11.mysql管理</a></li>
+            <li><a href="#12报错">12.报错</a></li>
+          </ul>
+        </li>
+        <li><a href="#四常用软件安装">四.常用软件安装</a>
+          <ul>
+            <li><a href="#1安装svn">1.安装svn</a></li>
+            <li><a href="#2安装git">2.安装git</a></li>
+            <li><a href="#3安装redis">3.安装redis</a></li>
+            <li><a href="#4安装memcached">4.安装memcached</a></li>
+          </ul>
+        </li>
+        <li><a href="#五参考文档">五.参考文档</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="lnmp开发环境配置及常用软件安装">lnmp开发环境配置及常用软件安装</h1>
+<h2 id="一nginx安装">一.nginx安装</h2>
+<h3 id="0准备工作">0.准备工作</h3>
+<pre><code>yum update
+yum install -y gcc gcc-c++
+yum install -y pcre pcre-devel openssl openssl-devel zlib zlib-devel psmisc
+</code></pre>
+<h3 id="1添加专用分组和用户">1.添加专用分组和用户</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">groupadd www
+
+useradd -g www www
+
+vim /etc/passwd
+
+然后找到有 www 那一行，把它修改为<span class="o">(</span>后面由/bin/bash改为/sbin/nologin<span class="o">)</span>：
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2选择目录下载编译文件解压编译安装">2.选择目录下载编译文件,解压,编译,安装</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">官网下载<span class="o">(</span>http://nginx.org/en/download.html<span class="o">)</span> 或 wget http://182.150.63.148:8090/LNMP/nginx-1.12.2.tar.gz
+
+tar zxf  nginx-1.12.2.tar.gz
+
+<span class="nb">cd</span> nginx-1.12.2
+
+./configure --user<span class="o">=</span>www --group<span class="o">=</span>www --prefix<span class="o">=</span>安装目录/nginx --with-http_stub_status_module --with-http_ssl_module --with-http_v2_module --with-http_gzip_static_module --with-ipv6 --with-http_sub_module --sbin-path<span class="o">=</span>安装目录/nginx/sbin/nginx
+
+make
+
+make install
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3配置nginx">3.配置nginx</h3>
+<pre><code>mv 安装目录/nginx/conf/nginx.conf{,.bak}
+
+wget http://182.150.63.148:8090/tars/config/nginx.conf  -P 安装目录/nginx/conf/
+
+wget http://182.150.63.148:8090/tars/config/enable-php.conf -P 安装目录/nginx/conf/
+
+mkdir -pv 安装目录/nginx/conf/vhosts
+
+支持php,在启动php-fpm之后修改
+######################################
+location / {
+    index  index.html index.htm index.php;
+    #autoindex  on;
+}
+location ~ \.php(.*)$ {
+    fastcgi_pass   127.0.0.1:9000;
+    fastcgi_index  index.php;
+    fastcgi_split_path_info  ^((?U.+\.php)(/?.+)$;
+    fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+    fastcgi_param  PATH_INFO  $fastcgi_path_info;
+    fastcgi_param  PATH_TRANSLATED  $document_root$fastcgi_path_info;
+    include        fastcgi_params;
+}
+######################################
+</code></pre>
+<h3 id="4手动启动服务">4.手动启动服务</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">安装目录/nginx/sbin/nginx
+
+安装目录/nginx/sbin/nginx -s reload
+
+安装目录/nginx/sbin/nginx -t
+
+安装目录/nginx/sbin/nginx -t -s reload
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="5开机启动添加">5.开机启动添加</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">Centos 系统服务脚本目录：
+
+用户（user）
+
+用户登录后才能运行的程序，存在用户（user）
+
+/usr/lib/systemd/
+
+系统（system）
+
+如需要开机没有登陆情况下就能运行的程序，存在系统服务（system）里
+
+/lib/systemd/system/
+
+服务以.service结尾。
+
+vim /lib/systemd/system/nginx.service
+
+<span class="c1">####################内容 start####################</span>
+
+<span class="o">[</span>Unit<span class="o">]</span>
+
+<span class="nv">Description</span><span class="o">=</span>nginx
+
+<span class="nv">After</span><span class="o">=</span>network.target
+
+<span class="o">[</span>Service<span class="o">]</span>
+
+<span class="nv">Type</span><span class="o">=</span>forking
+
+<span class="nv">ExecStart</span><span class="o">=</span>/usr/local/nginx/sbin/nginx
+
+<span class="nv">ExecReload</span><span class="o">=</span>/usr/local/nginx/sbin/nginx -s reload
+
+<span class="nv">ExecStop</span><span class="o">=</span>/usr/local/nginx/sbin/nginx -s stop
+
+<span class="nv">PrivateTmp</span><span class="o">=</span><span class="nb">true</span>
+
+<span class="o">[</span>Install<span class="o">]</span>
+
+<span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
+
+<span class="c1">######################内容 end#####################</span>
+
+设置开机启动
+
+systemctl <span class="nb">enable</span> nginx.service
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="6查看nginx版本测试">6.查看nginx版本,测试</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">安装目录/nginx/sbin/nginx -v
+
+curl localhost
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="7查看进程">7.查看进程</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">ps -ef <span class="p">|</span> grep nginx
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="8开启对外端口centos7以上">8.开启对外端口(centos7以上)</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">开启端口：
+
+firewall-cmd --zone<span class="o">=</span>public --add-port<span class="o">=</span>80/tcp --permanent    （--permanent永久生效，没有此参数重启后失效）
+
+重新载入
+
+firewall-cmd --reload
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="9配置虚拟域名添加host">9.配置虚拟域名,添加host</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">配置虚拟域名
+
+<span class="c1">#####################################################</span>
+
+server <span class="o">{</span>
+
+listen       80<span class="p">;</span>
+
+server_name  www.dy.cn dy.cn<span class="p">;</span>
+
+root   /data/website<span class="p">;</span>
+
+location / <span class="o">{</span>
+
+index  index.html index.htm index.php<span class="p">;</span>
+
+autoindex  on<span class="p">;</span>
+
+<span class="o">}</span>
+
+location ~ .php<span class="o">(</span>.*<span class="o">)</span>$ <span class="o">{</span>
+
+fastcgi_pass   127.0.0.1:9000<span class="p">;</span>
+
+fastcgi_index  index.php<span class="p">;</span>
+
+fastcgi_split_path_info  ^<span class="o">((</span>?U.+.php<span class="o">)(</span>/?.+<span class="o">)</span>$<span class="p">;</span>
+
+fastcgi_param  SCRIPT_FILENAME  document_rootfastcgi_script_name<span class="p">;</span>
+
+fastcgi_param  PATH_INFO  <span class="nv">$fastcgi_path_info</span><span class="p">;</span>
+
+fastcgi_param  PATH_TRANSLATED  document_rootfastcgi_path_info<span class="p">;</span>
+
+include        fastcgi_params<span class="p">;</span>
+
+<span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="c1">#####################################################</span>
+
+添加host:vim /etc/hosts即可编辑
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="10添加环境变量">10.添加环境变量</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># vim /etc/profile</span>
+
+在最后，添加:
+
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&#34;/data/webserver/nginx/sbin:</span><span class="nv">$PATH</span><span class="s2">&#34;</span> <span class="c1">#添加的路径</span>
+
+保存，退出，然后运行：
+
+<span class="c1">#source /etc/profile</span>
+
+不报错则成功。
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="11nginx管理的几种方式">11.nginx管理的几种方式</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 启动Nginx</span>
+
+/usr/local/nginx/sbin/nginx
+
+<span class="c1"># 从容停止Nginx：</span>
+
+<span class="nb">kill</span> -QUIT 主进程号 <span class="c1"># 如上一步中的 ps 命令输出的 29151，就是 Nginx的主进程号</span>
+
+<span class="c1"># 快速停止Nginx：</span>
+
+<span class="nb">kill</span> -TERM 主进程号
+
+<span class="c1"># 强制停止Nginx：</span>
+
+pkill -9 nginx
+
+<span class="c1"># 平滑重启nginx</span>
+
+/usr/nginx/sbin/nginx -s reload
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="二php安装">二.php安装</h2>
+<h3 id="0准备工作-1">0.准备工作</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">yum -y install composer libjpeg-devel libxml2-devel libpng-devel freetype-devel curl-devel libicu-devel epel-release libmcrypt-devel libxslt libxslt-devel autoconf git supervisor openssh-clients  lftp lrzsz lftp telnet
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="1选择目录下载编译文件解压编译安装">1.选择目录下载编译文件,解压,编译,安装</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">A.wget -c http://cn2.php.net/distributions/php-7.1.3.tar.gz 或 http://cn2.php.net/distributions/php-7.2.9.tar.gz
+B.tar zxf php-7.2.9.tar.gz
+C.cd php-7.2.9
+D.  ./configure    --prefix<span class="o">=</span>安装目录/php   --with-config-file-path<span class="o">=</span>安装目录/php/etc   --with-config-file-scan-dir<span class="o">=</span>安装目录/php/conf.d   --enable-fpm   --with-fpm-user<span class="o">=</span>www   --with-fpm-group<span class="o">=</span>www   --enable-mysqlnd   --with-mysqli<span class="o">=</span>mysqlnd   --with-pdo-mysql<span class="o">=</span>mysqlnd   --with-iconv-dir   --with-freetype-dir<span class="o">=</span>安装目录/freetype   --with-jpeg-dir   --with-png-dir   --with-zlib   --with-libxml-dir<span class="o">=</span>/usr   --enable-xml   --disable-rpath   --enable-bcmath   --enable-shmop   --enable-sysvsem   --enable-inline-optimization   --with-curl   --enable-mbregex   --enable-mbstring   --enable-intl   --with-mcrypt   --enable-ftp   --with-gd   --enable-gd-native-ttf   --with-openssl   --with-mhash   --enable-pcntl   --enable-sockets   --with-xmlrpc   --enable-zip   --enable-soap   --with-gettext   --disable-fileinfo   --enable-opcache   --with-xsl
+E.make <span class="o">&amp;&amp;</span> make install
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2查看版本">2.查看版本</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">/usr/local/php7/bin/php -v
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3查看修改配置">3.查看,修改配置</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">查看配置
+/usr/local/php7/bin/php -i <span class="p">|</span> grep php.ini
+从解压缩文件夹复制
+cp 安装目录/php/etc/php-fpm.conf.default 安装目录/php/etc/php-fpm.conf
+cp 安装目录/php/etc/php-fpm.d/www.conf.default 安装目录/php/etc/php-fpm.d/www.conf
+sed -i <span class="s1">&#39;s/user = nobody group = nobody/user = www group = www/&#39;</span> 安装目录/php/etc/php-fpm.d/www.conf
+sed -i <span class="s1">&#39;s/;pid = run/pid = run/&#39;</span> 安装目录/php/etc/php-fpm.conf
+cp 解压文件夹/php-7.2.9/php.ini-production 安装目录/php/etc/php.ini
+cp 解压文件夹/php-7.2.9/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
+mv 安装目录/php/etc/php-fpm.conf<span class="o">{</span>,.bak<span class="o">}</span>
+wget http://182.150.63.148:8090/tars/config/php-fpm.conf -P 安装目录/php/etc/
+chmod <span class="m">755</span> /etc/init.d/php-fpm
+/etc/init.d/php-fpm start
+rm -rf /usr/bin/php
+cp 安装目录/php/bin/php /usr/bin/
+安装目录/nginx/sbin/nginx -s reload
+修改composer为国内源:composer config -g repo.packagist composer https://packagist.phpcomposer.com
+
+nginx打开php文件报错:access denied解决
+php.ini文件修改cgi.fix_pathinfo从0改为1<span class="o">(</span>让php可以解析路径<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4安装php-fpm启动">4.安装php-fpm,启动</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">chmod <span class="m">755</span> /etc/init.d/php-fpm
+/etc/init.d/php-fpm start
+chkconfig --add php-fpm
+chkconfig php-fpm on
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="5查看进程">5.查看进程</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"> ps -ef <span class="p">|</span> grep php-fpm
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="6php-fpm管理">6.php-fpm管理</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">/etc/init.d/php-fpm start
+/etc/init.d/php-fpm restart
+/etc/init.d/php-fpm stop
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="7安装扩展">7.安装扩展</h3>
+<ul>
+<li>
+<p>PECL</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">//php版本 &gt; <span class="m">7</span>
+$ wget http://pear.php.net/go-pear.phar
+$ php go-pear.phar
+
+//php版本 &lt; <span class="m">7</span>
+$ yum install php-pear
+//否则会报错PHP Parse error:  syntax error, unexpected //<span class="s1">&#39;new&#39;</span> <span class="o">(</span>T_NEW<span class="o">)</span> in /usr/share/pear/PEAR/Frontend.php on //line <span class="m">91</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>redis</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">a.进入预定目录,下载,解压,进入文件夹
+wget https://pecl.php.net/get/redis-5.1.1.tgz
+tar zxf redis-5.1.1.tgz
+<span class="nb">cd</span> redis-5.1.1
+b.生成configure配置文件
+php安装目录/bin/phpize
+c.编译安装
+./configure --with-php-config<span class="o">=</span>php安装目录/bin/php-config<span class="o">(</span>如果找不见php-config,则使用 find / -name <span class="s1">&#39;php-config&#39;</span><span class="o">)</span>
+make <span class="o">&amp;&amp;</span> make install
+d.配置php.ini
+配置php.ini
+在extension后添加
+<span class="nv">extension</span><span class="o">=</span>redis.so
+e.查看结果
+重启php:/etc/init.d/php-fpm restart
+检查:
+<span class="o">[</span>root@test etc<span class="o">]</span><span class="c1"># /usr/local/php-7.1/bin/php -m|grep redis</span>
+redis
+或直接看phpinfo.php查找redis
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>libxls</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">wget http://182.150.63.148:8090/tars/libxlsxwriter.tar.gz -P 解压目录
+tar zxf 解压目录/libxlsxwriter.tar.gz -C 解压目录
+<span class="nb">cd</span> 解压目录/libxlsxwriter
+make <span class="o">&amp;&amp;</span> make install
+C.php-excel#
+wget http://182.150.63.148:8090/tars/php-ext-excel-export.tar.gz -P 解压目录
+tar zxf 解压目录/php-ext-excel-export.tar.gz -C 解压目录
+<span class="nb">cd</span> 解压目录/php-ext-excel-export
+php安装目录/php/bin/phpize
+./configure --with-php-config<span class="o">=</span>php安装目录/php/bin/php-config
+make <span class="o">&amp;&amp;</span> make install
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>php-fileinfo</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> 解压目录/php-7.2.9/ext/fileinfo/
+php安装目录/php/bin/phpize
+./configure --with-php-config<span class="o">=</span>php安装目录/php/bin/php-config
+make <span class="o">&amp;&amp;</span> make install
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>mongo</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">wget https://pecl.php.net/get/mongodb-1.5.3.tgz -P 解压目录
+tar zxf 解压目录/mongodb-1.5.3.tgz  -C 解压目录
+<span class="nb">cd</span> 解压目录/mongodb-1.5.3.tgz
+php安装目录/php/bin/phpize
+./configure --with-php-config<span class="o">=</span>php安装目录/php/bin/php-config
+make <span class="o">&amp;&amp;</span> make install
+F.ImageMagick
+wget http://182.150.63.148:8090/tars/ImageMagick-7.0.7-21.tar.gz -P 解压目录
+tar zxf 解压目录/ImageMagick-7.0.7-21.tar.gz -C 解压目录
+<span class="nb">cd</span> 解压目录/ImageMagick-7.0.7-21
+./configure --prefix<span class="o">=</span><span class="nv">$APPDIR</span>/imagemagick
+make <span class="o">&amp;&amp;</span> make install
+wget http://182.150.63.148:8090/tars/imagick-3.4.3.tgz -P 解压目录
+tar zxf 解压目录/imagick-3.4.3.tgz -C 解压目录
+<span class="nb">cd</span> 解压目录/imagick-3.4.3
+php安装目录/php/bin/phpize
+./configure --with-php-config<span class="o">=</span>php安装目录/php/bin/php-config --with-imagick<span class="o">=</span><span class="nv">$APPDIR</span>/imagemagick
+make <span class="o">&amp;&amp;</span> make install
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>swoole</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">A.方法一
+pecl install swoole 或 /data/webserver/php/bin/pecl install swoole
+B.方法二
+自行创建/data/tools目录
+<span class="nb">cd</span> /data/tools <span class="o">&amp;&amp;</span> <span class="se">\
+</span><span class="se"></span>curl -o swoole.tar.gz https://codeload.github.com/swoole/swoole-src/tar.gz/v4.4.3 -L <span class="o">&amp;&amp;</span> <span class="se">\
+</span><span class="se"></span>tar zxvf swoole.tar.gz <span class="o">&amp;&amp;</span> <span class="se">\
+</span><span class="se"></span>mv swoole-src-* swoole-src <span class="o">&amp;&amp;</span> <span class="se">\
+</span><span class="se"></span><span class="nb">cd</span> swoole-src <span class="o">&amp;&amp;</span> <span class="se">\
+</span><span class="se"></span>/data/webserver/php/bin/phpize <span class="o">&amp;&amp;</span> <span class="se">\
+</span><span class="se"></span>./configure <span class="se">\
+</span><span class="se"></span>--with-php-config<span class="o">=</span>/data/webserver/php/bin/php-config <span class="se">\
+</span><span class="se"></span>--enable-openssl  <span class="se">\
+</span><span class="se"></span>--enable-http2  <span class="se">\
+</span><span class="se"></span>--enable-sockets <span class="se">\
+</span><span class="se"></span>--enable-mysqlnd <span class="o">&amp;&amp;</span> <span class="se">\
+</span><span class="se"></span>make clean <span class="o">&amp;&amp;</span> make <span class="o">&amp;&amp;</span> sudo make install
+C.添加扩展
+php.ini添加extension<span class="o">=</span>swoole.so
+D.重启php-fpm
+/etc/init.d/php-fpm restart
+H.hiredis
+wget https://github.com/redis/hiredis/archive/v0.13.3.zip 或 wget -O hiredis-0.13.3 https://github.com/redis/hiredis/releases
+yum -y install unzip
+unzip v0.13.3.zip
+<span class="nb">cd</span> hiredis-0.13.3/
+make <span class="o">&amp;&amp;</span> make install
+ldconfig
+<span class="c1">#加php-fpm环境变量</span>
+vim /etc/profile
+<span class="c1">#最后一行加入</span>
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$PATH</span><span class="s2">:/data/webserver/php/sbin/:/data/webserver/php/bin/&#34;</span>
+<span class="c1">#重新设置环境变量</span>
+<span class="nb">source</span> /etc/profile
+<span class="c1">#查看环境变量是否成功</span>
+<span class="nb">export</span>
+<span class="c1">#启动异步redis客户端</span>
+重新编译安装swoole，在configure指令中加入--enable-async-redis
+<span class="c1">#重新安装swoole可能遇到的问题</span>
+php-m 发现swoole消失或者是通过php --ri swoole没有显示async redis client 或 redis client
+vi ~/.bash_profile
+在最后一行添加 <span class="nb">export</span> <span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$LD_LIBRARY_PATH</span>:/usr/local/lib
+<span class="nb">source</span> ~/.bash_profile
+重新编译安装swoole即可
+/etc/init.d/php-fpm restart
+最好是重启一下服务器
+
+mv php安装目录/php/etc/php.ini<span class="o">{</span>,.bak<span class="o">}</span>
+wget http://182.150.63.148:8090/tars/config/php.ini -P  php安装目录/php/etc/
+/etc/init.d/php-fpm restart
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h2 id="三mysql安装">三.mysql安装</h2>
+<h3 id="0准备工作-2">0.准备工作</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">yum -y install sysstat cmake flex bison autoconf gcc-c++ automake bzip2-devel ncurses-devel zlib-devel libjpeg-devel libpng-devel libtiff-devel freetype-devel libXpm-devel gettext-devel pam-devel libtool libtool-ltdl openssl openssl-devel fontconfig-devel libxml2-devel curl-devel libicu libicu-devel
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="1添加专用分组和用户-1">1.添加专用分组和用户</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">groupadd mysql
+/usr/sbin/useradd -r -g mysql -s /bin/false mysql
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2选择目录下载编译文件解压编译安装-1">2.选择目录下载编译文件,解压,编译,安装</h3>
+<ul>
+<li>
+<p>A.下载</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">官网下载<span class="o">(</span>https://dev.mysql.com/downloads/mysql/5.7.html#downloads<span class="o">)(</span>选择RedHat Enterprise Linux <span class="m">7</span> / Oracle Linux <span class="m">7</span> <span class="o">(</span>Architecture Independent<span class="o">)</span>, RPM Package<span class="o">)</span>
+或 wget http://182.150.63.148:8090/LNMP/mysql-5.7.20.tar.gz -P 解压缩文件夹
+或 wget http://repo.mysql.com//mysql57-community-release-el7-7.noarch.rpm
+或 wget http://cdn.mysql.com//Downloads/MySQL-5.7/mysql-community-server-5.7.18-1.el7.x86_64.rpm
+wget http://182.150.63.148:8090/LNMP/boost_1_59_0.tar.gz -P 解压缩文件夹
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>B.解压</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">tar zxf mysql-5.7.20.tar.gz -C 解压缩文件夹
+
+tar zxf boost_1_59_0.tar.gz -C 解压缩文件夹
+
+mkdir -pv 安装目录/<span class="o">{</span>mysql,tmp_db,database<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>C.编译&amp;安装</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">mkdir -pv /var/lib/mysql
+
+chown -R mysql:mysql /var/lib/mysql
+
+chown -R mysql:mysql 安装目录/
+
+<span class="nb">cd</span> 解压缩文件夹/mysql-5.7.20
+
+cmake -DCMAKE_INSTALL_PREFIX<span class="o">=</span>安装目录/mysql  -DMYSQL_DATADIR<span class="o">=</span>安装目录/database -DMYSQL_UNIX_ADDR<span class="o">=</span>/var/lib/mysql/mysql.sock -DDEFAULT_CHARSET<span class="o">=</span>utf8 -DDEFAULT_COLLATION<span class="o">=</span>utf8_general_ci -DMYSQL_TCP_PORT<span class="o">=</span><span class="m">3306</span> -DMYSQL_USER<span class="o">=</span>mysql -DWITH_MYISAM_STORAGE_ENGINE<span class="o">=</span><span class="m">1</span> -DWITH_INNOBASE_STORAGE_ENGINE<span class="o">=</span><span class="m">1</span> -DWITH_ARCHIVE_STORAGE_ENGINE<span class="o">=</span><span class="m">1</span> -DWITH_BLACKHOLE_STORAGE_ENGINE<span class="o">=</span><span class="m">1</span> -DWITH_MEMORY_STORAGE_ENGINE<span class="o">=</span><span class="m">1</span> -DENABLE_DOWNLOADS<span class="o">=</span><span class="m">1</span> -DDOWNLOAD_BOOST<span class="o">=</span><span class="m">0</span> -DWITH_BOOST<span class="o">=</span>解压缩文件夹/boost_1_59_0 -DSYSTEMD_PID_DIR<span class="o">=</span>/var/run/mysql.pid -DSYSCONFDIR<span class="o">=</span>/etc/my.cnf
+
+make <span class="o">&amp;&amp;</span> make install
+
+chmod <span class="m">750</span> 安装目录/database
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="3初始化">3.初始化</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">安装目录/mysql/bin/mysqld --initialize --user<span class="o">=</span>mysql
+
+注意此处或给出默认登陆密码
+
+cp 安装目录/mysql/bin/mysql /usr/sbin/
+
+cp 解压缩文件夹/mysql-5.7.20/support-files/mysql.server /etc/init.d/mysqld
+
+chmod +x /etc/init.d/mysqld
+
+chkconfig --add mysqld
+
+chkconfig mysqld on
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4修改配置">4.修改配置</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">在安装目录下添加配置文件
+
+<span class="c1">###############################################</span>
+
+<span class="o">[</span>mysql<span class="o">]</span>
+
+<span class="c1"># 设置mysql客户端默认字符集</span>
+
+default-character-set<span class="o">=</span>utf8
+
+<span class="o">[</span>mysqld<span class="o">]</span>
+
+<span class="c1">#设置3306端口</span>
+
+<span class="nv">port</span> <span class="o">=</span> <span class="m">3306</span>
+
+<span class="c1"># 设置mysql的安装目录</span>
+
+<span class="nv">basedir</span><span class="o">=</span>/data/LPDB/mysql/
+
+<span class="c1"># 设置mysql数据库的数据的存放目录</span>
+
+<span class="nv">datadir</span><span class="o">=</span>/data/LPDB/database/
+
+<span class="c1"># 允许最大连接数</span>
+
+<span class="nv">max_connections</span><span class="o">=</span><span class="m">200</span>
+
+<span class="c1"># 服务端使用的字符集默认为8比特编码的latin1字符集</span>
+
+character-set-server<span class="o">=</span>utf8
+
+<span class="c1"># 创建新表时将使用的默认存储引擎</span>
+
+default-storage-engine<span class="o">=</span>INNODB
+
+<span class="c1">###############################################</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="5启动">5.启动</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">/etc/init.d/mysqld start
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="6查找当前配置路径">6.查找当前配置路径</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># which mysqld</span>
+
+/usr/local/mysql/bin/mysqld
+
+<span class="c1"># /usr/local/mysql/bin/mysqld --verbose --help |grep -A 1 &#39;Default options&#39;</span>
+
+2016-06-02 16:49:39 <span class="m">0</span> <span class="o">[</span>Note<span class="o">]</span> /usr/local/mysql/bin/mysqld <span class="o">(</span>mysqld 5.6.25-log<span class="o">)</span> starting as process <span class="m">8253</span> ...
+
+2016-06-02 16:49:41 <span class="m">8253</span> <span class="o">[</span>Note<span class="o">]</span> Plugin <span class="s1">&#39;FEDERATED&#39;</span> is disabled.
+
+Default options are <span class="nb">read</span> from the following files in the given order: 默认的选项是按照给定的顺序读取从以下文件:
+
+/etc/mysql/my.cnf /etc/my.cnf ~/.my.cnf
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="7设置默认密码">7.设置默认密码</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">在配置文件中添加配置项:skip-grant-tables<span class="o">(</span>没有配置文件则在安装目录下创建my.cnf
+
+<span class="c1">###############################################</span>
+
+<span class="o">[</span>mysql<span class="o">]</span>
+
+<span class="c1"># 设置mysql客户端默认字符集</span>
+
+default-character-set<span class="o">=</span>utf8
+
+<span class="o">[</span>mysqld<span class="o">]</span>
+
+<span class="c1">#设置3306端口</span>
+
+<span class="nv">port</span> <span class="o">=</span> <span class="m">3306</span>
+
+<span class="c1"># 设置mysql的安装目录</span>
+
+<span class="nv">basedir</span><span class="o">=</span>/data/LPDB/mysql/
+
+<span class="c1"># 设置mysql数据库的数据的存放目录</span>
+
+<span class="nv">datadir</span><span class="o">=</span>/data/LPDB/database/
+
+<span class="c1"># 允许最大连接数</span>
+
+<span class="nv">max_connections</span><span class="o">=</span><span class="m">200</span>
+
+<span class="c1"># 服务端使用的字符集默认为8比特编码的latin1字符集</span>
+
+character-set-server<span class="o">=</span>utf8
+
+<span class="c1"># 创建新表时将使用的默认存储引擎</span>
+
+default-storage-engine<span class="o">=</span>INNODB
+skip-grant-tables
+<span class="c1">###############################################</span>
+
+update mysql.user <span class="nb">set</span> <span class="nv">authentication_string</span><span class="o">=</span>password<span class="o">(</span><span class="s1">&#39;root&#39;</span><span class="o">)</span> where <span class="nv">User</span><span class="o">=</span><span class="s1">&#39;root&#39;</span> and <span class="nv">Host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">;</span>
+flush privileges<span class="p">;</span>
+去掉skip-grant-tables配置项
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="8初始化密码报错">8.初始化密码报错</h3>
+<blockquote>
+<p>mac mysql error You must reset your password using ALTER USER statement before executing this statement.</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">step 1: SET <span class="nv">PASSWORD</span> <span class="o">=</span> PASSWORD<span class="o">(</span><span class="s1">&#39;your new password&#39;</span><span class="o">)</span><span class="p">;</span>
+
+step 2: ALTER USER <span class="s1">&#39;root&#39;</span>@<span class="s1">&#39;localhost&#39;</span> PASSWORD EXPIRE NEVER<span class="p">;</span>
+
+step 3: flush privileges<span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="9开启远程登陆">9.开启远程登陆</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">1. 打开/etc/mysql/mysql.conf.d/mysqld.cnf, 注掉 <span class="s2">&#34;bind-address = 127.0.0.1&#34;</span>,
+
+2. 重启mysql service <span class="s2">&#34;/etc/init.d/mysql restart&#34;</span>
+
+3. 执行: mysql&gt; GRANT ALL PRIVILEGES ON . TO <span class="s1">&#39;USERNAME&#39;</span>@<span class="s1">&#39;%&#39;</span> IDENTIFIED BY <span class="s1">&#39;PASSWORD&#39;</span> WITH GRANT OPTION<span class="p">;</span>
+
+注意: 这里的USERNAME是你的数据库账户，PASSWORD是你的数据库密码
+
+例如: mysql&gt; GRANT ALL PRIVILEGES ON . TO <span class="s1">&#39;root&#39;</span>@<span class="s1">&#39;%&#39;</span> IDENTIFIED BY <span class="s1">&#39;root&#39;</span> WITH GRANT OPTION<span class="p">;</span>
+
+4. 执行: mysql&gt; flush privileges<span class="p">;</span>
+
+5. 退出mysql命令行，执行：　mysql -u root -h 192.168.0.1 -p
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="10开启对外端口centos7以上">10.开启对外端口(centos7以上)</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">开启端口：
+
+firewall-cmd --zone<span class="o">=</span>public --add-port<span class="o">=</span>3306/tcp --permanent    （--permanent永久生效，没有此参数重启后失效）
+
+重新载入
+
+firewall-cmd --reload
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="11mysql管理">11.mysql管理</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">/etc/init.d/mysqld start
+
+/etc/init.d/mysqld restart
+
+/etc/init.d/mysqld stop
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="12报错">12.报错</h3>
+<ul>
+<li>
+<p>c++: internal compiler error: Killed (program cc1plus),Please submit a full bug report,原因是内存不足</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#查看当前内存使用情况</span>
+
+free -h
+
+<span class="c1">#使用swap创建临时分区</span>
+
+dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>/var/swapfile <span class="nv">bs</span><span class="o">=</span><span class="m">1024</span> <span class="nv">count</span><span class="o">=</span>2048k
+
+<span class="c1">#count的大小就是增加的swap空间的大小，1024是块大小，所以空间大小是bs*count=2GB</span>
+
+sudo mkswap /var/swapfile
+
+<span class="c1">#把刚才空间格式化成swap格式</span>
+
+chmod <span class="m">0600</span> /var/swapfile
+
+<span class="c1">#该目录权限，不改的话，在下一步启动时会报“swapon: /swapfile: insecure permissions 0644, 0600 suggested.”错误</span>
+
+sudo swapon /var/swapfile
+
+<span class="c1">#使用刚才创建的swap空间</span>
+
+<span class="nb">echo</span>  <span class="s2">&#34;/var/swapfile   swap  swap  defaults  0  0&#34;</span> &gt;&gt;  /etc/fstab
+
+<span class="c1">#修改 fstab 配置，设置开机自动挂载该分区</span>
+
+swapoff /var/swapfile
+
+<span class="c1">#停止正在使用swap分区</span>
+
+rm -rf /var/swapfile
+
+<span class="c1">#删除swap分区文件</span>
+
+/var/swapfile swap swap defaults <span class="m">0</span> <span class="m">0</span>
+
+<span class="c1">#删除或注释掉我们之前在fstab文件里追加的开机自动挂载配置内容</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h2 id="四常用软件安装">四.常用软件安装</h2>
+<h3 id="1安装svn">1.安装svn</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">编译安装:http://www.iitshare.com/linux-svn-installation-and-configuration.html
+yum安装:http://www.cnblogs.com/davidgu/archive/2013/02/01/2889457.html
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="1查看是否安装了svn工具">1).查看是否安装了svn工具</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">命令：rpm -qa <span class="p">|</span> grep subversion //如果服务器已经安装了则不需要进行安装，如果没有安装可以进行全新的安装
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2安装svn">2).安装svn</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">yum -y install subversion
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3svn命令">3).svn命令</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt;//path是服务器上的目录,http://www.jb51.net/os/RedHat/2461.html
+&gt;A.将文件checkout到本地目录
+svn checkout path
+svn co                            //简写
+&gt;B.将改动的文件commit到版本库
+svn commit -m “LogMessage“ <span class="o">[</span>-N<span class="o">]</span> <span class="o">[</span>--no-unlock<span class="o">]</span> PATH
+&gt;//如果在提交的时候提示过期的话，是因为冲突，需要先update，修改文件，然后清除svn resolved，最后再提交commit<span class="o">)</span>
+svn ci                            //简写
+&gt;C.更update到某个版本
+svn update -r m path
+svn up                            //简写
+svn update                        //如果后面没有目录，默认将当前目录以及子目录下的所有文件都更新到最新版本。
+svn update -r <span class="m">200</span> test.php        //将版本库中的文件test.php还原到版本200
+svn update test.php               //更新，于版本库同步。
+&gt;D.解决冲突
+svn resolved PATH                 //移除工作副本的目录或文件的“冲突”状态
+&gt;E.查看文件或目录的状态
+svn status path                   //目录下的文件和子目录的状态，正常状态不显示
+svn status -v path                //显示文件和子目录状态
+&gt;F.修改远程url地址
+svn switch --relocate svn://101.201.49.72/repos/web  svn://svn.ruthout.com/repos/web
+&gt;G.查看svn信息
+svn info
+&gt;4<span class="o">)</span>.版本库维护
+&gt;1.环境
+&gt;centos5.5
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2安装svn-1">2).安装svn</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">yum -y install subversion
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3配置">3).配置</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">建立版本库目录
+mkdir /www/svndata
+
+svnserve -d -r /www/svndata
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="4建立版本库">4).建立版本库</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">创建一个新的Subversion项目
+svnadmin create /www/svndata/oplinux
+
+配置允许用户rsync访问
+<span class="nb">cd</span> /www/svndata/oplinux/conf
+
+vi svnserve.conf
+anon-access<span class="o">=</span>none
+auth-access<span class="o">=</span>write
+password-db<span class="o">=</span>passwd
+
+注：修改的文件前面不能有空格，否则启动svn server出错
+
+vi passwd
+<span class="o">[</span>users<span class="o">]</span>
+<span class="c1">#&lt;用户1&gt; = &lt;密码1&gt;</span>
+<span class="c1">#&lt;用户2&gt; = &lt;密码2&gt;</span>
+<span class="nv">david</span><span class="o">=</span><span class="m">123456</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="5客户端连接">5).客户端连接</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">svn co svn://ip/oplinux
+用户名密码:123456
+
+<span class="o">===============================================================</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="6实现svn与web同步">6).实现SVN与WEB同步</h4>
+<p>可以CO一个出来,也可以直接配在仓库中</p>
+<ul>
+<li>
+<p>1)设置WEB服务器根目录为/www/webroot</p>
+</li>
+<li>
+<p>2)checkout一份SVN</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">svn co svn://localhost/oplinux /data/www/webroot
+
+修改权限为WEB用户
+
+chown -R apache:apache /www/webroot/oplinux
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>3)建立同步脚本</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> /data/www/svndata/dykind/hooks/
+
+cp post-commit.tmpl post-commit
+
+编辑post-commit,在文件最后添加以下内容
+
+<span class="nb">export</span> <span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8
+<span class="nv">SVN</span><span class="o">=</span>/usr/bin/svn
+<span class="nv">WEB</span><span class="o">=</span>/www/webroot/
+<span class="nv">$SVN</span> update <span class="nv">$WEB</span> –username rsync –password rsync
+chown -R apache:apache <span class="nv">$WEB</span>
+
+增加脚本执行权限
+
+chmod +x post-commit
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2安装git">2.安装git</h3>
+<h4 id="a安装">A.安装</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">yum git
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="b常用命令">B.常用命令</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">git init  <span class="c1">#在本地新建一个repo,进入一个项目目录,执行git init,会初始化一个repo,并在当前文件夹下创建一个.git文件夹.</span>
+
+git clone url newname <span class="c1">#clone下来的repo会以url最后一个斜线后面的名称命名,创建一个文件夹,如果想要指定特定的名称</span>
+
+git status: <span class="c1">#查询repo的状态</span>
+
+git status -s: <span class="c1">#-s表示short, -s的输出标记会有两列,第一列是对staging区域而言,第二列是对working目录而言.</span>
+
+git add#在提交之前,Git有一个暂存区<span class="o">(</span>staging area<span class="o">)</span>,可以放入新添加的文件或者加入新的改动. commit时提交的改动是上一次加入到staging area中的改动,而不是我们disk上的改动.
+
+git add .#会递归地添加当前工作目录中的所有文件.
+
+git commit#提交已经被add进来的改动.
+
+git commit -m <span class="c1">#&#34;the commit message&#34;</span>
+
+git commit -a <span class="c1">#会先把所有已经track的文件的改动add进来,然后提交(有点像svn的一次提交,不用先暂存). 对于没有track的文件,还是需要git add一下.</span>
+
+git commit --amend <span class="c1">#增补提交. 会使用与当前提交节点相同的父节点进行一次新的提交,旧的提交将会被取消.</span>
+
+git push alias#将会把当前分支merge到alias上的<span class="o">[</span>branch<span class="o">]</span>分支.如果分支已经存在,将会更新,如果不存在,将会添加这个分支
+
+git pull origin 分支#会首先执行git fetch,然后执行git merge,把取来的分支的head merge到当前分支.这个merge操作会产生一个新的commit
+
+git log#show commit <span class="nb">history</span> of a branch
+
+git diff#此命令比较的是工作目录中当前文件和暂存区域快照之间的差异,也就是修改之后还没有暂存起来的变化内容.
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="c生成ssh-key">C.生成ssh-key</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">ssh-keygen -t rsa -C <span class="s2">&#34;wdyxzkq@163.com&#34;</span> -b <span class="m">4096</span>
+
+回车知道看到图案
+
+vim /root/.ssh/id_rsa.pub
+
+复制公钥添加至账户sshkey
+
+使用Tortoisegit生成key,查看地址:https://blog.csdn.net/m0_37727560/article/details/79408251
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3安装redis">3.安装redis</h3>
+<h4 id="0链接">0)链接</h4>
+<p><a href="https://blog.csdn.net/yjqyyjw/article/details/73293455">https://blog.csdn.net/yjqyyjw/article/details/73293455</a></p>
+<h4 id="1下载安装">1)下载安装</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">$.wget http://download.redis.io/releases/redis-4.0.6.tar.gz 或 wget http://182.150.63.148:8090/redis/redis-stable.tar.gz
+$.tar -zxvf redis-4.0.6.tar.gz
+$.cd redis-4.0.6
+$.make
+$.cd src
+$.make install <span class="nv">PREFIX</span><span class="o">=</span>/usr/local/redis
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2配置">2)配置</h4>
+<h5 id="a复制配置">A.复制配置</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">$.cp redis.conf /usr/local/redis/etc/redis.conf
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="b启动服务">B.启动服务</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">$./usr/local/redis/bin/redis-server /usr/local/redis/etc/redis.conf
+第一个是启动redis服务器
+第二个是启动服务器所需的配置
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="c修改配置">C.修改配置</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">$.vim /usr/local/redis/etc/redis.conf
+将daemonize的值改为yes
+pidfile默认值是pidfile /var/run/redis_6379.pid
+添加密码
+requirepass dy123456
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="d复制服务启动脚本">D.复制服务启动脚本</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">复制服务启动脚本
+$.cp redis_init_script /etc/init.d/redis
+<span class="c1">#### 3)服务(centos7以下)</span>
+A.开机启动
+$.vim /etc/rc.local 加入 usr/local/redis/bin/redis-server /usr/local/redis/etc/redis-conf
+B.停止服务
+$./usr/local/redis/bin/redis-cli shutdown或者pkill redis-server
+C.客户端连接
+/usr/local/redis/bin/redis-cli
+</code></pre></td></tr></table>
+</div>
+</div><p>4)服务(centos7以上)</p>
+<h5 id="a添加服务开机启动">A.添加服务,开机启动</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">vim /etc/init.d/redis <span class="c1">#查看脚本内容(注意添加密码授权)</span>
+<span class="c1">#################编辑内容 start############################</span>
+<span class="c1">#!/bin/bash</span>
+<span class="c1"># chkconfig:   2345 90 10</span>
+
+<span class="c1"># description:  Redis is a persistent key-value database</span>
+<span class="nv">PATH</span><span class="o">=</span>/usr/local/bin:/sbin:/usr/bin:/bin
+<span class="nv">REDISPORT</span><span class="o">=</span><span class="m">6379</span>
+<span class="nv">EXEC</span><span class="o">=</span>/usr/local/redis/bin/redis-server
+<span class="nv">RESDISPASSWORD</span><span class="o">=</span>dy123456
+<span class="nv">REDIS_CLI</span><span class="o">=</span>/usr/local/redis/bin/redis-cli
+<span class="nv">PIDFILE</span><span class="o">=</span>/var/run/redis_6379.pid
+<span class="nv">CONF</span><span class="o">=</span><span class="s2">&#34;/usr/local/redis/etc/redis.conf&#34;</span>
+<span class="k">case</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> in
+    start<span class="o">)</span>
+        <span class="k">if</span> <span class="o">[</span> -f <span class="nv">$PIDFILE</span> <span class="o">]</span>
+        <span class="k">then</span>
+            <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$PIDFILE</span><span class="s2"> exists, process is already running or crashed&#34;</span>
+        <span class="k">else</span>
+            <span class="nb">echo</span> <span class="s2">&#34;Starting Redis server...&#34;</span>
+            <span class="nv">$EXEC</span> <span class="nv">$CONF</span>
+        <span class="k">fi</span>
+        <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$?</span><span class="s2">&#34;</span><span class="o">=</span><span class="s2">&#34;0&#34;</span> <span class="o">]</span>
+        <span class="k">then</span>
+            <span class="nb">echo</span> <span class="s2">&#34;Redis is running...&#34;</span>
+        <span class="k">fi</span>
+        <span class="p">;;</span>
+    stop<span class="o">)</span>
+        <span class="k">if</span> <span class="o">[</span> ! -f <span class="nv">$PIDFILE</span> <span class="o">]</span>
+        <span class="k">then</span>
+            <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$PIDFILE</span><span class="s2"> does not exist, process is not running&#34;</span>
+        <span class="k">else</span>
+            <span class="nv">PID</span><span class="o">=</span><span class="k">$(</span>cat <span class="nv">$PIDFILE</span><span class="k">)</span>
+            <span class="nb">echo</span> <span class="s2">&#34;Stopping ...&#34;</span>
+            <span class="nv">$REDIS_CLI</span> -a <span class="nv">$RESDISPASSWORD</span>  -p <span class="nv">$REDISPORT</span> shutdown
+            <span class="k">while</span> <span class="o">[</span> -x <span class="si">${</span><span class="nv">PIDFILE</span><span class="si">}</span> <span class="o">]</span>
+            <span class="k">do</span>
+            <span class="nb">echo</span> <span class="s2">&#34;Waiting for Redis to shutdown ...&#34;</span>
+            sleep <span class="m">1</span>
+            <span class="k">done</span>
+            <span class="nb">echo</span> <span class="s2">&#34;Redis stopped&#34;</span>
+        <span class="k">fi</span>
+        <span class="p">;;</span>
+    restart<span class="p">|</span>force-reload<span class="o">)</span>
+        <span class="si">${</span><span class="nv">0</span><span class="si">}</span> stop
+        <span class="si">${</span><span class="nv">0</span><span class="si">}</span> start
+        <span class="p">;;</span>
+    *<span class="o">)</span>
+        <span class="nb">echo</span> <span class="s2">&#34;Usage: /etc/init.d/redis {start|stop|restart|force-reload}&#34;</span> &gt;<span class="p">&amp;</span><span class="m">2</span>
+        <span class="nb">exit</span> <span class="m">1</span>
+<span class="k">esac</span>
+<span class="c1">#################编辑内容 end  ############################</span>
+chmod a+x /etc/init.d/redis
+chkconfig --add redis
+chkconfig redis on
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="b操作">B.操作</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">/etc/init.d/redis start
+/etc/init.d/redis restart
+/etc/init.d/redis stop
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4安装memcached">4.安装memcached</h3>
+<p>详细文章:http://blog.sina.com.cn/s/blog_4829b9400101piil.html</p>
+<h4 id="1下载最新版memcached">1).下载最新版memcached</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">wget http://memcached.org/files/memcached-1.4.20.tar.gz
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2下载libevent">2).下载libevent</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">wget https://github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3安装libevent">3).安装libevent</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">rpm -qa<span class="p">|</span>grep libevent//查看系统是否带有该安装软件，如果有执行命令:
+
+rpm -e libevent-1.4.13-4.el6.x86_64 --nodeps//（由于系统自带的版本旧，忽略依赖删除）
+
+tar zxvf libevent-2.0.21-stable.tar.gz
+
+<span class="nb">cd</span> libevent-2.0.21-stable
+
+./configure --prefix<span class="o">=</span>/usr/local/libevent
+
+make <span class="o">&amp;&amp;</span> make install
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="4安装memcached-1">4).安装memcached</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">tar zxvf memcached-1.4.2.tar.gz
+
+<span class="nb">cd</span> memcached-memcached-1.4.2
+
+./configure --prefix<span class="o">=</span>/usr/local/memcached --with-libevent<span class="o">=</span>/usr/local/libevent/
+
+make <span class="o">&amp;&amp;</span> make install
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="5启动配置memcache">5).启动&amp;配置memcache</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">/usr/local/memcached/bin/memcached -d -m <span class="m">256</span> -u root -l 127.0.0.1 -p <span class="m">11211</span> -c <span class="m">1024</span> –P /tmp/memcached.pid
+
+<span class="nb">kill</span> cat /tmp/memcached.pid //停止服务
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="6将memchace添加到启动项中">6).将memchace添加到启动项中</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">在/etc/rc.d/rc.local中加入一行
+
+/usr/local/memcached/bin/memcached -d -m <span class="m">256</span> -u apache -l 127.0.0.1 -p <span class="m">11211</span> -c <span class="m">1024</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="7php扩展安装">7).php扩展安装</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">wget http://blog.s135.com/soft/linux/nginx_php/memcache/memcache-2.2.5.tgz  //编译安装需下载
+
+//安装依赖软件
+
+wget http://ftp.gnu.org/gnu/m4/m4-1.4.9.tar.gz
+
+tar -zvxf m4-1.4.9.tar.gz
+
+<span class="nb">cd</span> m4-1.4.9/
+
+./configure <span class="o">&amp;&amp;</span> make <span class="o">&amp;&amp;</span> make install
+
+<span class="nb">cd</span> ../
+
+wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.62.tar.gz
+
+tar -zvxf autoconf-2.62.tar.gz
+
+<span class="nb">cd</span> autoconf-2.62/
+
+./configure <span class="o">&amp;&amp;</span> make <span class="o">&amp;&amp;</span> make install
+
+//使用php自带pecl安装扩展
+
+/usr/local/servers/php5/bin/pecl install memcache
+
+//在php.ini中添加extension<span class="o">=</span>memcache.so,重启apache <span class="c1">#/usr/local/http2/bin/apachectl restart</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="五参考文档">五.参考文档</h2>
+<blockquote>
+<p>nginx11+php5.6+mysql5.6   <a href="https://blog.csdn.net/sturdygrass/article/details/51750108">https://blog.csdn.net/sturdygrass/article/details/51750108</a></p>
+<p>nginx12+php7.2+mysql5.7   <a href="https://blog.csdn.net/linyunping/article/details/79738324">https://blog.csdn.net/linyunping/article/details/79738324</a></p>
+<p>init.sh</p>
+</blockquote>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-02-10
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/linux/">linux</a>
+          <a href="/tags/php/">php</a>
+          <a href="/tags/lnmp/">lnmp</a>
+          <a href="/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">开发环境</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/linux/linux%E5%AE%9A%E6%97%B6%E5%99%A8crontab%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[crontab]定时器crontab安装与使用</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/other/%E7%AC%94%E8%AE%B0%E6%9C%AC%E8%A7%A6%E6%91%B8%E6%9D%BF/">
+            <span class="next-text nav-default">笔记本触摸板使用说明</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>make on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/tags/make/</link>
+    <description>Recent content in make on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Fri, 04 Mar 2022 11:31:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/make/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[linux] Linux源码包的安装步骤</title>
+      <link>https://blog.nevergiveup.tech/post/linux/linux%E6%BA%90%E7%A0%81%E5%8C%85%E7%9A%84%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4/</link>
+      <pubDate>Fri, 04 Mar 2022 11:31:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/linux/linux%E6%BA%90%E7%A0%81%E5%8C%85%E7%9A%84%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4/</guid>
+      <description>Linux源码包的安装步骤 1.下载源码包并解压 1 2 3 4 5 6 7 8 #可使用 wget 命令“http:\\”直接下载到主机 或者其他方式上传源码包 #根据源码</description>
+    </item>
+    
+  </channel>
+</rss>

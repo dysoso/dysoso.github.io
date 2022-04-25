@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mysql-proxy on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/tags/mysql-proxy/</link>
+    <description>Recent content in mysql-proxy on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Fri, 12 May 2017 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/mysql-proxy/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[mysql] mysql中间件mysql-proxy</title>
+      <link>https://blog.nevergiveup.tech/post/db/mysql/mysql%E4%B8%AD%E9%97%B4%E4%BB%B6mysql-proxy/</link>
+      <pubDate>Fri, 12 May 2017 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/db/mysql/mysql%E4%B8%AD%E9%97%B4%E4%BB%B6mysql-proxy/</guid>
+      <description>mysql中间件mysql-proxy mysql-proxy负责mysql数据库的主从分离和负载均衡 1.读写分离是由lua实现的,即lua是</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[rabbitmq]RabbitMQ在Docker安装及使用 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="RabbitMQ在Docker安装及使用 1.安装部署RabbitMQ 1).查看所有的RabbitMQ镜像 1 docker search RabbitMQ 2).拉取你中意的es镜像（" /><meta name="keywords" content="中间件, middleware, rabbitmq, docker" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/middleware/rabbitmq%E5%9C%A8docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[rabbitmq]RabbitMQ在Docker安装及使用" />
+<meta property="og:description" content="RabbitMQ在Docker安装及使用 1.安装部署RabbitMQ 1).查看所有的RabbitMQ镜像 1 docker search RabbitMQ 2).拉取你中意的es镜像（" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/middleware/rabbitmq%E5%9C%A8docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2018-04-13T16:37:56+08:00" />
+<meta property="article:modified_time" content="2022-02-10T16:37:56+08:00" />
+
+<meta itemprop="name" content="[rabbitmq]RabbitMQ在Docker安装及使用">
+<meta itemprop="description" content="RabbitMQ在Docker安装及使用 1.安装部署RabbitMQ 1).查看所有的RabbitMQ镜像 1 docker search RabbitMQ 2).拉取你中意的es镜像（"><meta itemprop="datePublished" content="2018-04-13T16:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-02-10T16:37:56+08:00" />
+<meta itemprop="wordCount" content="1024">
+<meta itemprop="keywords" content="中间件,middleware,rabbitmq,docker," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[rabbitmq]RabbitMQ在Docker安装及使用"/>
+<meta name="twitter:description" content="RabbitMQ在Docker安装及使用 1.安装部署RabbitMQ 1).查看所有的RabbitMQ镜像 1 docker search RabbitMQ 2).拉取你中意的es镜像（"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[rabbitmq]RabbitMQ在Docker安装及使用</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-04-13 </span>
+        <div class="post-category">
+            <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/"> 中间件 </a>
+            </div>
+          <span class="more-meta"> 约 1024 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#rabbitmq在docker安装及使用">RabbitMQ在Docker安装及使用</a>
+      <ul>
+        <li><a href="#1安装部署rabbitmq"><strong>1.安装部署RabbitMQ</strong></a>
+          <ul>
+            <li><a href="#1查看所有的rabbitmq镜像"><strong>1).查看所有的RabbitMQ镜像</strong></a></li>
+            <li><a href="#2拉取你中意的es镜像推荐star高的"><strong>2).拉取你中意的es镜像（推荐star高的）</strong></a></li>
+            <li><a href="#3创建挂载的目录"><strong>3).创建挂载的目录</strong></a></li>
+            <li><a href="#4创建容器并启动"><strong>4).创建容器并启动</strong></a></li>
+            <li><a href="#2拉取镜像并创建容器并启动不挂载目录并从默认配置">2.拉取镜像并创建容器并启动(不挂载目录并从默认配置)</a></li>
+            <li><a href="#3说明">3.说明</a></li>
+            <li><a href="#4进入容器">4.进入容器:</a></li>
+            <li><a href="#5使用-httpip地址15672-访问rabbit控制台账号密码admindy123456">5.使用 http://IP地址:15672 访问rabbit控制台,账号密码:admin/dy123456</a></li>
+            <li><a href="#6配置文件">6.配置文件**</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="rabbitmq在docker安装及使用">RabbitMQ在Docker安装及使用</h1>
+<h2 id="1安装部署rabbitmq"><strong>1.安装部署RabbitMQ</strong></h2>
+<h3 id="1查看所有的rabbitmq镜像"><strong>1).查看所有的RabbitMQ镜像</strong></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">docker search RabbitMQ
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2拉取你中意的es镜像推荐star高的"><strong>2).拉取你中意的es镜像（推荐star高的）</strong></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">docker pull &lt;rabbitmq images&gt;   
+
+<span class="o">(</span>如果拉取过程中报错在镜像后面加上版本，比如3.8.3-management<span class="o">)</span>
+
+<span class="o">(</span>management版本（带有web页面的）的rabbitMq镜像<span class="o">)</span>
+
+em:
+
+docker pull rabbitmq:management
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3创建挂载的目录"><strong>3).创建挂载的目录</strong></h3>
+<p>宿主机创建目录</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">mkdir -p /data/LPAPP/docker_rabbitmq/etc
+
+mkdir -p /data/LPAPP/docker_rabbitmq/lib
+
+mkdir -p /data/LPAPP/docker_rabbitmq/log
+
+chmod -R <span class="m">777</span> /data/LPAPP/docker_rabbitmq/etc
+
+chmod -R <span class="m">777</span> /data/LPAPP/docker_rabbitmq/lib
+
+chmod -R <span class="m">777</span> /data/LPAPP/docker_rabbitmq/log
+</code></pre></td></tr></table>
+</div>
+</div><p>(不用处理,会自动生成)复制docker文件(先创建没有目录映射的docker并启动)至宿主目录</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">docker cp -a 容器ID:/var/lib/rabbitmq /data/LPAPP/docker_rabbitmq/lib/
+
+docker cp -a 容器ID:/etc/rabbitmq /data/LPAPP/docker_rabbitmq/etc/
+
+docker cp -a 容器ID:/var/log/rabbitmq /data/LPAPP/docker_rabbitmq/log/
+
+em:
+
+docker cp -a 809deedd7b0f:/var/lib/rabbitmq /data/LPAPP/docker_rabbitmq/lib/
+
+docker cp -a 809deedd7b0f:/etc/rabbitmq /data/LPAPP/docker_rabbitmq/etc/
+
+docker cp -a 809deedd7b0f:/var/log/rabbitmq /data/LPAPP/docker_rabbitmq/log/
+</code></pre></td></tr></table>
+</div>
+</div><p>宿主机上创建rabbitmq用户</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">useradd rabbitmq
+
+<span class="nb">cd</span> /data/LPAPP
+
+chown -Rf rabbitmq:rabbitmq docker_rabbitmq
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4创建容器并启动"><strong>4).创建容器并启动</strong></h3>
+<h4 id="1拉取镜像并创建容器并启动挂载目录并从配置启动推荐">1.拉取镜像并创建容器并启动(挂载目录并从配置启动)(推荐)</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">在/data/LPAPP/docker_rabbitmq/etc/目录中按<span class="o">(</span>5<span class="o">)</span>.配置文件<span class="o">)</span>步奏生成配置文件
+
+docker run --name rabbitmq <span class="se">\
+</span><span class="se"></span>
+-p 5672:5672 -p 15672:15672 <span class="se">\
+</span><span class="se"></span>
+-v /data/LPAPP/docker_rabbitmq/etc:/etc/rabbitmq <span class="se">\
+</span><span class="se"></span>
+-v /data/LPAPP/docker_rabbitmq/lib:/var/lib/rabbitmq <span class="se">\
+</span><span class="se"></span>
+-v /data/LPAPP/docker_rabbitmq/log:/var/log/rabbitmq <span class="se">\
+</span><span class="se"></span>
+--hostname myRabbit <span class="se">\
+</span><span class="se"></span>
+-itd rabbitmq:management
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2拉取镜像并创建容器并启动不挂载目录并从默认配置">2.拉取镜像并创建容器并启动(不挂载目录并从默认配置)</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">docker run --name rabbitmq <span class="se">\
+</span><span class="se"></span>
+-p 5672:5672 -p 15672:15672 <span class="se">\
+</span><span class="se"></span>
+--hostname myRabbit <span class="se">\
+</span><span class="se"></span>
+-e <span class="nv">RABBITMQ_DEFAULT_VHOST</span><span class="o">=</span>my_vhost <span class="se">\
+</span><span class="se"></span>
+-e <span class="nv">RABBITMQ_DEFAULT_USER</span><span class="o">=</span>admin <span class="se">\
+</span><span class="se"></span>
+-e <span class="nv">RABBITMQ_DEFAULT_PASS</span><span class="o">=</span>dy123456 <span class="se">\
+</span><span class="se"></span>
+-itd rabbitmq:management
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3说明">3.说明</h3>
+<blockquote>
+<p>说明：</p>
+<p>-d 后台运行容器；</p>
+<p>&ndash;name 指定容器名；</p>
+<p>-p 指定服务运行的端口（5672：应用访问端口；15672：控制台Web端口号）；</p>
+<p>-v 映射目录或文件；</p>
+<p>&ndash;hostname  主机名（RabbitMQ的一个重要注意事项是它根据所谓的 “节点名称” 存储数据，默认为主机名）；</p>
+<p>-e 指定环境变量；（RABBITMQ_DEFAULT_VHOST：默认虚拟机名；</p>
+<p>RABBITMQ_DEFAULT_USER：默认的用户名；</p>
+<p>RABBITMQ_DEFAULT_PASS：默认用户名的密码）</p>
+<p>配置文件目录：/etc/rabbitmq</p>
+<p>数据存储目录：/var/lib/rabbitmq</p>
+<p>日志目录：/var/log/rabbitmq</p>
+</blockquote>
+<h3 id="4进入容器">4.进入容器:</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">docker <span class="nb">exec</span> -it rabbitmq /bin/bash
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="5使用-httpip地址15672-访问rabbit控制台账号密码admindy123456">5.使用 http://IP地址:15672 访问rabbit控制台,账号密码:admin/dy123456</h3>
+<h3 id="6配置文件">6.配置文件**</h3>
+<h4 id="arabbitmqconf配置文件"><strong>A.rabbitmq.conf配置文件</strong></h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">loopback_users.guest <span class="o">=</span> <span class="nb">false</span>
+
+listeners.tcp.default <span class="o">=</span> <span class="m">5672</span>
+
+<span class="nv">default_pass</span> <span class="o">=</span> dy123456
+
+<span class="nv">default_user</span> <span class="o">=</span> admin
+
+<span class="nv">default_vhost</span> <span class="o">=</span> my_vhost
+
+management.tcp.port <span class="o">=</span> <span class="m">15672</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="benabled_plugins配置文件"><strong>B.enabled_plugins配置文件</strong></h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>rabbitmq_management,rabbitmq_prometheus<span class="o">]</span>.
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-02-10
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a>
+          <a href="/tags/middleware/">middleware</a>
+          <a href="/tags/rabbitmq/">rabbitmq</a>
+          <a href="/tags/docker/">docker</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/middleware/elasticsearch%E5%8E%9F%E7%90%86%E5%92%8C%E8%AF%AD%E6%B3%95/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[elasticsearch]Elasticsearch原理和语法</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/middleware/rabbitmq%E5%8E%9F%E7%90%86%E5%8F%8Alinux%E5%AE%89%E8%A3%85/">
+            <span class="next-text nav-default">[rabbitmq]RabbitMQ原理及Linux安装</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

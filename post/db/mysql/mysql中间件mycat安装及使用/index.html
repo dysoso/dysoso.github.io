@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[mysql] mysql中间件MyCat安装及使用 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="mysql中间件MyCat安装及使用 MyCat负责分库分表;MyCat负责mysql数据库的主从分离和负载均衡 1.下载安装 1 2 3 4 http://www.mycat.org.cn/ 选择1." /><meta name="keywords" content="数据库, mysql, MyCat" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/db/mysql/mysql%E4%B8%AD%E9%97%B4%E4%BB%B6mycat%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[mysql] mysql中间件MyCat安装及使用" />
+<meta property="og:description" content="mysql中间件MyCat安装及使用 MyCat负责分库分表;MyCat负责mysql数据库的主从分离和负载均衡 1.下载安装 1 2 3 4 http://www.mycat.org.cn/ 选择1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/db/mysql/mysql%E4%B8%AD%E9%97%B4%E4%BB%B6mycat%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2017-05-11T15:37:56+08:00" />
+<meta property="article:modified_time" content="2022-02-10T16:37:56+08:00" />
+
+<meta itemprop="name" content="[mysql] mysql中间件MyCat安装及使用">
+<meta itemprop="description" content="mysql中间件MyCat安装及使用 MyCat负责分库分表;MyCat负责mysql数据库的主从分离和负载均衡 1.下载安装 1 2 3 4 http://www.mycat.org.cn/ 选择1."><meta itemprop="datePublished" content="2017-05-11T15:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-02-10T16:37:56+08:00" />
+<meta itemprop="wordCount" content="1778">
+<meta itemprop="keywords" content="数据库,mysql,MyCat," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[mysql] mysql中间件MyCat安装及使用"/>
+<meta name="twitter:description" content="mysql中间件MyCat安装及使用 MyCat负责分库分表;MyCat负责mysql数据库的主从分离和负载均衡 1.下载安装 1 2 3 4 http://www.mycat.org.cn/ 选择1."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[mysql] mysql中间件MyCat安装及使用</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017-05-11 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"> 数据库 </a>
+            <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/"> 中间件 </a>
+            </div>
+          <span class="more-meta"> 约 1778 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#mysql中间件mycat安装及使用">mysql中间件MyCat安装及使用</a>
+          <ul>
+            <li><a href="#1下载安装">1.下载安装</a></li>
+            <li><a href="#2配置环境变量">2.配置环境变量</a></li>
+            <li><a href="#3创建一个新的group">3.创建一个新的group</a></li>
+            <li><a href="#4修改mycat配置">4.修改mycat配置</a></li>
+            <li><a href="#5启动停止">5.启动&amp;停止</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="mysql中间件mycat安装及使用">mysql中间件MyCat安装及使用</h2>
+<p>MyCat负责分库分表;MyCat负责mysql数据库的主从分离和负载均衡</p>
+<h3 id="1下载安装">1.下载安装</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">http://www.mycat.org.cn/ 选择1.6linux版本
+<span class="c1">#tar zxvf Mycat-server-1.6-RELEASE-20161028204710-linux.tar.gz</span>
+<span class="c1">#mv mycat /usr/local/mycat  //将解压得到的文件夹移动到某个位置,这个位置需要自己创建</span>
+<span class="c1">#cd /usr/local/mycat</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2配置环境变量">2.配置环境变量</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#export MYCAT_HOME=/usr/local/mycat</span>
+<span class="c1">#PATH=$PATH:$MYCAT_HOME/bin</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3创建一个新的group">3.创建一个新的group</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#groupadd mycat</span>
+创建一个新的用户,并加入group
+<span class="c1">#useradd -g mycat mycat</span>
+给新用户设置密码,
+<span class="c1">#passwd mycat</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4修改mycat配置">4.修改mycat配置</h3>
+<h4 id="1编辑schema文件">1).编辑schema文件</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#cp $MYCAT_HOME/conf/schema.xml MYCAT_HOME/conf/schema.xml.tmp</span>
+<span class="c1">#vim $MYCAT_HOME/conf/schema.xml</span>
+删除第三行开始的所有内容,只保留第一行和第一行,然后粘贴下列内容
+<span class="c1">############################# 主从分离,负载均衡 #####################################</span>
+&lt;mycat:schema xmlns:mycat<span class="o">=</span><span class="s2">&#34;http://io.mycat/&#34;</span>&gt;
+    &lt;schema <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;MYCAT&#34;</span> <span class="nv">checkSQLschema</span><span class="o">=</span><span class="s2">&#34;true&#34;</span> <span class="nv">sqlMaxLimit</span><span class="o">=</span><span class="s2">&#34;100&#34;</span> <span class="nv">dataNode</span><span class="o">=</span><span class="s2">&#34;dn1&#34;</span>&gt;&lt;/schema&gt;
+    &lt;dataNode <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;dn1&#34;</span> <span class="nv">dataHost</span><span class="o">=</span><span class="s2">&#34;localhost1&#34;</span> <span class="nv">database</span><span class="o">=</span><span class="s2">&#34;test_sys&#34;</span> /&gt;
+    &lt;dataHost <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;localhost1&#34;</span> <span class="nv">maxCon</span><span class="o">=</span><span class="s2">&#34;1000&#34;</span> <span class="nv">minCon</span><span class="o">=</span><span class="s2">&#34;10&#34;</span> <span class="nv">balance</span><span class="o">=</span><span class="s2">&#34;1&#34;</span> <span class="nv">writeType</span><span class="o">=</span><span class="s2">&#34;0&#34;</span> <span class="nv">dbType</span><span class="o">=</span><span class="s2">&#34;mysql&#34;</span> <span class="nv">dbDriver</span><span class="o">=</span><span class="s2">&#34;native&#34;</span> <span class="nv">switchType</span><span class="o">=</span><span class="s2">&#34;2&#34;</span>  <span class="nv">slaveThreshold</span><span class="o">=</span><span class="s2">&#34;100&#34;</span>&gt;
+        &lt;heartbeat&gt;show slave status&lt;/heartbeat&gt;
+        &lt;writeHost <span class="nv">host</span><span class="o">=</span><span class="s2">&#34;hostM1&#34;</span> <span class="nv">url</span><span class="o">=</span><span class="s2">&#34;192.168.20.44:3306&#34;</span> <span class="nv">user</span><span class="o">=</span><span class="s2">&#34;root&#34;</span> <span class="nv">password</span><span class="o">=</span><span class="s2">&#34;root&#34;</span>&gt;
+            &lt;readHost <span class="nv">host</span><span class="o">=</span><span class="s2">&#34;hostS1&#34;</span> <span class="nv">url</span><span class="o">=</span><span class="s2">&#34;127.0.0.1:3306&#34;</span> <span class="nv">user</span><span class="o">=</span><span class="s2">&#34;root&#34;</span> <span class="nv">password</span><span class="o">=</span><span class="s2">&#34;root&#34;</span> /&gt;
+        &lt;/writeHost&gt;
+    &lt;/dataHost&gt;
+&lt;/mycat:schema&gt;
+<span class="c1">############################## 主从分离,负载均衡 ####################################</span>
+配置说明
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="a设置-balance1与writetype0">A.设置 balance=&ldquo;1&quot;与writeType=&ldquo;0&rdquo;</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">Balance参数设置:
+<span class="nv">balance</span><span class="o">=</span>“0”, 所有读操作都发送到当前可用的writeHost上。
+<span class="nv">balance</span><span class="o">=</span>“1”，所有读操作都随机的发送到readHost
+<span class="nv">balance</span><span class="o">=</span>“2”，所有读操作都随机的在writeHost、readhost上分发
+WriteType参数设置:
+<span class="nv">writeType</span><span class="o">=</span>“0”, 所有写操作都发送到可用的writeHost上。
+<span class="nv">writeType</span><span class="o">=</span>“1”，所有写操作都随机的发送到readHost。
+<span class="nv">writeType</span><span class="o">=</span>“2”，所有写操作都随机的在writeHost、readhost分上发。
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="b设置-switchtype2-与slavethreshold100">B.设置 switchType=&ldquo;2&rdquo; 与slaveThreshold=&ldquo;100&rdquo;</h5>
+<p>switchType 目前有三种选择:</p>
+<ul>
+<li>-1:表示不自动切换</li>
+<li>1 :默认值，自动切换</li>
+<li>2 :基于MySQL主从同步的状态决定是否切换
+“Mycat心跳检查语句配置为 show slave status ，dataHost 上定义两个新属性: switchType=&ldquo;2&rdquo; 与slaveThreshold=&ldquo;100&rdquo;，此时意味着开启MySQL主从复制状态绑定的读写分离与切换机制。Mycat心跳机制通过检测 show slave status 中的 &ldquo;Seconds_Behind_Master&rdquo;, &ldquo;Slave_IO_Running&rdquo;, &ldquo;Slave_SQL_Running&quot;三个字段来确定当前主从同步的状态以及Seconds_Behind_Master主从复制时延。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">############################# 分库分表 #####################################</span>
+&lt;mycat:schema xmlns:mycat<span class="o">=</span><span class="s2">&#34;http://io.mycat/&#34;</span>&gt;
+    &lt;schema <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;MYCAT&#34;</span> <span class="nv">checkSQLschema</span><span class="o">=</span><span class="s2">&#34;true&#34;</span> <span class="nv">sqlMaxLimit</span><span class="o">=</span><span class="s2">&#34;100&#34;</span> <span class="nv">dataNode</span><span class="o">=</span><span class="s2">&#34;dn1&#34;</span>&gt;
+        &lt;table <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;sp_user&#34;</span> <span class="nv">primaryKey</span><span class="o">=</span><span class="s2">&#34;id&#34;</span> <span class="nv">type</span><span class="o">=</span><span class="s2">&#34;global&#34;</span> <span class="nv">dataNode</span><span class="o">=</span><span class="s2">&#34;dn1,dn2&#34;</span>/&gt;
+        &lt;table <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;sp_user_olny&#34;</span> <span class="nv">primaryKey</span><span class="o">=</span><span class="s2">&#34;id&#34;</span> <span class="nv">type</span><span class="o">=</span><span class="s2">&#34;global&#34;</span> <span class="nv">dataNode</span><span class="o">=</span><span class="s2">&#34;dn1&#34;</span> /&gt;
+        &lt;table <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;sp_user_all&#34;</span> <span class="nv">primaryKey</span><span class="o">=</span><span class="s2">&#34;id&#34;</span> <span class="nv">autoIncrement</span><span class="o">=</span><span class="s2">&#34;true&#34;</span> <span class="nv">dataNode</span><span class="o">=</span><span class="s2">&#34;dn1,dn2&#34;</span> <span class="nv">rule</span><span class="o">=</span><span class="s2">&#34;mod-long&#34;</span> /&gt;
+    &lt;/schema&gt;
+    &lt;dataNode <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;dn1&#34;</span> <span class="nv">dataHost</span><span class="o">=</span><span class="s2">&#34;localhost1&#34;</span> <span class="nv">database</span><span class="o">=</span><span class="s2">&#34;test_sys1&#34;</span> /&gt;
+    &lt;dataNode <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;dn2&#34;</span> <span class="nv">dataHost</span><span class="o">=</span><span class="s2">&#34;localhost1&#34;</span> <span class="nv">database</span><span class="o">=</span><span class="s2">&#34;test_sys2&#34;</span> /&gt;
+    &lt;dataHost <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;localhost1&#34;</span> <span class="nv">maxCon</span><span class="o">=</span><span class="s2">&#34;1000&#34;</span> <span class="nv">minCon</span><span class="o">=</span><span class="s2">&#34;10&#34;</span> <span class="nv">balance</span><span class="o">=</span><span class="s2">&#34;1&#34;</span> <span class="nv">writeType</span><span class="o">=</span><span class="s2">&#34;0&#34;</span> <span class="nv">dbType</span><span class="o">=</span><span class="s2">&#34;mysql&#34;</span> <span class="nv">dbDriver</span><span class="o">=</span><span class="s2">&#34;native&#34;</span> <span class="nv">switchType</span><span class="o">=</span><span class="s2">&#34;2&#34;</span>  <span class="nv">slaveThreshold</span><span class="o">=</span><span class="s2">&#34;100&#34;</span>&gt;
+        &lt;heartbeat&gt;show slave status&lt;/heartbeat&gt;
+        &lt;writeHost <span class="nv">host</span><span class="o">=</span><span class="s2">&#34;hostM1&#34;</span> <span class="nv">url</span><span class="o">=</span><span class="s2">&#34;192.168.20.44:3306&#34;</span> <span class="nv">user</span><span class="o">=</span><span class="s2">&#34;root&#34;</span> <span class="nv">password</span><span class="o">=</span><span class="s2">&#34;root&#34;</span>&gt;
+            &lt;readHost <span class="nv">host</span><span class="o">=</span><span class="s2">&#34;hostS1&#34;</span> <span class="nv">url</span><span class="o">=</span><span class="s2">&#34;127.0.0.1:3306&#34;</span> <span class="nv">user</span><span class="o">=</span><span class="s2">&#34;root&#34;</span> <span class="nv">password</span><span class="o">=</span><span class="s2">&#34;root&#34;</span> /&gt;
+        &lt;/writeHost&gt;
+    &lt;/dataHost&gt;
+&lt;/mycat:schema&gt;
+
+<span class="c1">############################## 分库分表 ####################################</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2配置rulexml">2).配置rule.xml</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">添加如下配置：水平切分，数据按Id取模均匀划分到两个数据库中
+<span class="c1">############################## 先检查是否有mod-long,没有则添加下列代码 ####################################</span>
+&lt;tableRule <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;mod-long&#34;</span>&gt; &lt;!-- 对应表的分片规则 --&gt;
+    &lt;rule&gt;
+        &lt;columns&gt;id&lt;/columns&gt;&lt;!-- 对应数据表要取模的字段名称 --&gt;
+        &lt;algorithm&gt;mod-long&lt;/algorithm&gt;&lt;!-- 对应function的名称 --&gt;
+    &lt;/rule&gt;
+&lt;/tableRule&gt;
+&lt;<span class="k">function</span> <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;mod-long&#34;</span> <span class="nv">class</span><span class="o">=</span><span class="s2">&#34;io.mycat.route.function.PartitionByMod&#34;</span>&gt;&lt;!-- name：对应tableRule的名称；class：切分规则对应的切分类 --&gt;
+    &lt;!--  scheme.xml中有多少个dataNode就改成多少个 --&gt;
+    &lt;property <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;count&#34;</span>&gt;2&lt;/property&gt;
+&lt;/function&gt;
+<span class="c1">############################## 先检查是否有mod-long,没有则添加下列代码 ####################################</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3配置serverxml">3).配置server.xml</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#vim $MYCAT_HOME/conf/server.xml</span>
+将目录下无效的用户全部删掉或者注释掉,添加可用的用户
+<span class="c1">##################################################################</span>
+&lt;user <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;mycat&#34;</span>&gt;
+    &lt;property <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;password&#34;</span>&gt;123456&lt;/property&gt;
+    &lt;property <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;schemas&#34;</span>&gt;MYCAT&lt;/property&gt;
+&lt;/user&gt;
+<span class="c1">##################################################################</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3修改conf下的partition-hash-inttxt文件暂不处理">3).修改conf下的partition-hash-int.txt文件,暂不处理</h4>
+<p>在下面添加10020=2,原本默认的是分两个就是10000和10010,现在我们三个就要三个分类id了,添加一个即可</p>
+<h4 id="4全局序列号配置">4.)全局序列号配置</h4>
+<h5 id="a默认时间戳方式property-namesequncehandlertype2property">A.默认时间戳方式(<property name="sequnceHandlerType">2</property>)</h5>
+<p>设置mysql数据表主键自增长,为bigint(20)</p>
+<h5 id="b本地文件方式property-namesequncehandlertype0property">B.本地文件方式(<property name="sequnceHandlerType">0</property>)</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">设置sequence_conf.properties
+SP_USER_ALL.HISIDS<span class="o">=</span>
+SP_USER_ALL.MINID<span class="o">=</span>1#最小
+SP_USER_ALL.MAXID<span class="o">=</span>1000000000#最大
+SP_USER_ALL.CURID<span class="o">=</span>1#当前
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="5启动停止">5.启动&amp;停止</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">mycat支持的命令<span class="o">{</span> console <span class="p">|</span> start <span class="p">|</span> stop <span class="p">|</span> restart <span class="p">|</span> status <span class="p">|</span> dump <span class="o">}</span>
+Mycat的默认端口号为:8066
+启动:/usr/local/mycat/bin/mycat start
+重启:/usr/local/mycat/bin/mycat restart
+停止:/usr/local/mycat/bin/mycat stop
+状态:/usr/local/mycat/bin/mycat status
+日志:/usr/local/mycat/bin/mycat console
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-02-10
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+          <a href="/tags/mysql/">mysql</a>
+          <a href="/tags/mycat/">MyCat</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/db/mysql/mysql%E4%B8%AD%E9%97%B4%E4%BB%B6mysql-proxy/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[mysql] mysql中间件mysql-proxy</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/db/mysql/mysql%E4%B8%BB%E4%BB%8E%E5%88%86%E7%A6%BB%E5%8F%8A%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E9%85%8D%E7%BD%AE/">
+            <span class="next-text nav-default">[mysql] mysql主从分离及负载均衡配置</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

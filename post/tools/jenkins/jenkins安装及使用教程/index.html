@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[jenkins]Jenkins安装及使用教程 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="Jenkins安装及使用教程 一、jenkins是什么？ ​ Jenkins是一个开源的、提供友好操作界面的持续集成(CI)工具，起源于Hudso" /><meta name="keywords" content="工具, Jenkins, 流水线, 集成工具" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/tools/jenkins/jenkins%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[jenkins]Jenkins安装及使用教程" />
+<meta property="og:description" content="Jenkins安装及使用教程 一、jenkins是什么？ ​ Jenkins是一个开源的、提供友好操作界面的持续集成(CI)工具，起源于Hudso" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/tools/jenkins/jenkins%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-07-23T10:37:56+08:00" />
+<meta property="article:modified_time" content="2022-02-10T16:37:56+08:00" />
+
+<meta itemprop="name" content="[jenkins]Jenkins安装及使用教程">
+<meta itemprop="description" content="Jenkins安装及使用教程 一、jenkins是什么？ ​ Jenkins是一个开源的、提供友好操作界面的持续集成(CI)工具，起源于Hudso"><meta itemprop="datePublished" content="2021-07-23T10:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-02-10T16:37:56+08:00" />
+<meta itemprop="wordCount" content="2423">
+<meta itemprop="keywords" content="工具,Jenkins,流水线,集成工具," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[jenkins]Jenkins安装及使用教程"/>
+<meta name="twitter:description" content="Jenkins安装及使用教程 一、jenkins是什么？ ​ Jenkins是一个开源的、提供友好操作界面的持续集成(CI)工具，起源于Hudso"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[jenkins]Jenkins安装及使用教程</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-07-23 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%B7%A5%E5%85%B7/"> 工具 </a>
+            </div>
+          <span class="more-meta"> 约 2423 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#jenkins安装及使用教程">Jenkins安装及使用教程</a>
+      <ul>
+        <li><a href="#一jenkins是什么">一、jenkins是什么？</a></li>
+        <li><a href="#二jenkins安装">二、jenkins安装</a>
+          <ul>
+            <li><a href="#1源码安装jenkins推荐">1.源码安装jenkins(推荐)</a></li>
+            <li><a href="#2docker安装jenkins">2.docker安装jenkins</a></li>
+            <li><a href="#3初始化jenkins">3.初始化jenkins</a></li>
+          </ul>
+        </li>
+        <li><a href="#三jenkins配置">三、jenkins配置</a>
+          <ul>
+            <li><a href="#1管理系统配置">1.管理系统配置</a></li>
+            <li><a href="#2流水线配置">2.流水线配置</a></li>
+            <li><a href="#3设置自定义风格工程配置">3.设置自定义风格工程配置</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="jenkins安装及使用教程">Jenkins安装及使用教程</h1>
+<h2 id="一jenkins是什么">一、jenkins是什么？</h2>
+<p>​	Jenkins是一个开源的、提供友好操作界面的持续集成(CI)工具，起源于Hudson（Hudson是商用的），主要用于持续、自动的构建/测试软件项目、监控外部任务的运行（这个比较抽象，暂且写上，不做解释）。Jenkins用Java语言编写，可在Tomcat等流行的servlet容器中运行，也可独立运行。通常与版本管理工具(SCM)、构建工具结合使用。常用的版本控制工具有SVN、GIT，构建工具有Maven、Ant、Gradle。</p>
+<h2 id="二jenkins安装">二、jenkins安装</h2>
+<h3 id="1源码安装jenkins推荐">1.源码安装jenkins(推荐)</h3>
+<h4 id="1-安装java">1) 安装java</h4>
+<blockquote>
+<p><a href="https://blog.nevergiveup.tech/post/dev_language/java/java%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/">https://blog.nevergiveup.tech/post/dev_language/java/java%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/</a></p>
+</blockquote>
+<h4 id="2-war安装">2) war安装</h4>
+<ul>
+<li>
+<p><a href="http://mirrors.jenkins.io/war-stable/latest/jenkins.war">下载 Jenkins</a>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">mkdir -p /root/jenkins-data <span class="o">&amp;&amp;</span> <span class="nb">cd</span> /root/jenkins-data
+wget https://mirrors.tuna.tsinghua.edu.cn/jenkins/war/latest/jenkins.war
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>配置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">vim /etc/profile
+<span class="o">[</span>添加内容<span class="o">]</span>
+<span class="nb">export</span> <span class="nv">JENKINS_HOME</span><span class="o">=</span>/root/jenkins-data
+<span class="nb">export</span> <span class="nv">JENKINS_LOGFILE</span><span class="o">=</span>/root/jenkins-data/jenkins.log
+
+<span class="nb">source</span> /etc/profile
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>运行命令jenkins</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">java -Xms128m -Xmx256m -jar /root/jenkins-data/jenkins.war --httpPort<span class="o">=</span><span class="m">9090</span>
+
+nohup java -Xms128m -Xmx256m -jar /root/jenkins-data/jenkins.war --httpPort<span class="o">=</span><span class="m">9090</span> &gt; /root/jenkins-data/jenkins.log 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">&amp;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>提供一个jenkins启动脚本,可以自行修改</p>
+<p>脚本保存至/root/jenkins.sh,使用方法:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">vim /root/jenkins.sh <span class="c1">#新建文件保存脚本内容</span>
+chmod <span class="m">777</span> /root/jenkins.sh
+sh jenkins.sh start<span class="p">|</span>stop<span class="p">|</span>restart
+</code></pre></td></tr></table>
+</div>
+</div><p>脚本内容如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/bin/bash
+</span><span class="cp"></span>
+<span class="c1"># 在执行过程中若遇到使用了未定义的变量或命令返回值为非零，将直接报错退出</span>
+<span class="nb">set</span> -eu
+
+<span class="c1"># 检查参数个数</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="si">${#}</span><span class="s2">&#34;</span> -lt <span class="m">1</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+	<span class="nb">echo</span> <span class="s2">&#34; 脚本使用示例: sh jenkins.sh start|stop|restart &#34;</span>
+	<span class="nb">exit</span>
+<span class="k">fi</span>
+
+<span class="c1"># 获取脚本第一个参数</span>
+<span class="nv">APP_OPT</span><span class="o">=</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span>
+<span class="c1"># 端口</span>
+<span class="nv">APP_PORT</span><span class="o">=</span><span class="m">9090</span>
+<span class="c1"># 名称</span>
+<span class="nv">APP_NAME</span><span class="o">=</span>jenkins
+<span class="c1"># jar名 | war名</span>
+<span class="nv">APP_JAR</span><span class="o">=</span><span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span>.war
+<span class="c1"># 程序根目录</span>
+<span class="nv">APP_JAR_HOME</span><span class="o">=</span>/root/jenkins-data
+<span class="c1"># 日志名</span>
+<span class="nv">APP_LOG_NAME</span><span class="o">=</span>jenkins-run
+<span class="c1"># 日志根目录</span>
+<span class="nv">APP_LOG_HOME</span><span class="o">=</span>/root/jenkins-data
+<span class="c1"># 程序运行参数</span>
+<span class="nv">JAVA_OPTS</span><span class="o">=</span><span class="s2">&#34;--httpPort=</span><span class="si">${</span><span class="nv">APP_PORT</span><span class="si">}</span><span class="s2">&#34;</span>
+
+<span class="nb">echo</span> <span class="s2">&#34;本次操作服务名：[</span><span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span><span class="s2">]&#34;</span>
+<span class="nb">echo</span> <span class="s2">&#34;本次操作选择：[</span><span class="si">${</span><span class="nv">APP_OPT</span><span class="si">}</span><span class="s2">]&#34;</span>
+
+<span class="c1"># 停止</span>
+<span class="k">function</span> stop<span class="o">(){</span>
+  <span class="nb">echo</span> <span class="s2">&#34;&lt;--------------------------------------&gt;&#34;</span>
+  <span class="nb">echo</span> <span class="s2">&#34;[</span><span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span><span class="s2">] ... stop ...&#34;</span>
+  <span class="c1"># 查看该jar进程</span>
+  <span class="nv">pid</span><span class="o">=</span><span class="sb">`</span>ps -ef <span class="p">|</span> grep <span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span> <span class="p">|</span> grep -v <span class="s1">&#39;grep&#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="sb">`</span>
+  <span class="nb">echo</span> <span class="s2">&#34;[</span><span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span><span class="s2">] pid=&#34;</span><span class="si">${</span><span class="nv">pid</span><span class="si">}</span>
+  <span class="c1"># 存在则kill,不存在打印一下吧</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pid</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">kill</span> -9 <span class="si">${</span><span class="nv">pid</span><span class="si">}</span>
+    <span class="c1"># 检查kill是否成功</span>
+    <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$?</span><span class="s2">&#34;</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> <span class="s2">&#34;[</span><span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span><span class="s2">] stop success&#34;</span>
+    <span class="k">else</span>
+        <span class="nb">echo</span> <span class="s2">&#34;[</span><span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span><span class="s2">] stop fail&#34;</span>
+    <span class="k">fi</span>
+  <span class="k">else</span>
+    <span class="nb">echo</span> <span class="s2">&#34;[</span><span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span><span class="s2">] 进程不存在&#34;</span>
+  <span class="k">fi</span>
+<span class="o">}</span>
+
+
+<span class="c1"># 运行</span>
+<span class="k">function</span> start<span class="o">(){</span>
+  <span class="nb">echo</span> <span class="s2">&#34;&lt;--------------------------------------&gt;&#34;</span>
+  <span class="nb">echo</span> <span class="s2">&#34;[</span><span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span><span class="s2">] ... start ...&#34;</span>
+  <span class="nb">cd</span> <span class="si">${</span><span class="nv">APP_JAR_HOME</span><span class="si">}</span>
+  <span class="nb">echo</span> <span class="s2">&#34;当前路径:`pwd`&#34;</span>
+  <span class="c1"># 赋予可读可写可执行权限</span>
+  chmod <span class="m">777</span> <span class="si">${</span><span class="nv">APP_JAR</span><span class="si">}</span>
+  <span class="nb">echo</span> <span class="s2">&#34;启动命令: nohup java -jar </span><span class="si">${</span><span class="nv">APP_JAR</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">JAVA_OPTS</span><span class="si">}</span><span class="s2"> &gt;&gt; </span><span class="si">${</span><span class="nv">APP_LOG_HOME</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">APP_LOG_NAME</span><span class="si">}</span><span class="s2">.log 2&gt;&amp;1 &amp;&#34;</span>
+  nohup java -jar <span class="si">${</span><span class="nv">APP_JAR</span><span class="si">}</span> <span class="si">${</span><span class="nv">JAVA_OPTS</span><span class="si">}</span> &gt;&gt; <span class="si">${</span><span class="nv">APP_LOG_HOME</span><span class="si">}</span>/<span class="si">${</span><span class="nv">APP_LOG_NAME</span><span class="si">}</span>.log 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">&amp;</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$?</span><span class="s2">&#34;</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&#34;[</span><span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span><span class="s2">] start success&#34;</span>
+  <span class="k">else</span>
+    <span class="nb">echo</span> <span class="s2">&#34;[</span><span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span><span class="s2">] start fail&#34;</span>
+  <span class="k">fi</span>
+<span class="o">}</span>
+
+
+<span class="c1"># 重启</span>
+<span class="k">function</span> restart<span class="o">(){</span>
+  <span class="nb">echo</span> <span class="s2">&#34;&lt;--------------------------------------&gt;&#34;</span>
+  <span class="nb">echo</span> <span class="s2">&#34;[</span><span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span><span class="s2">] ... restart ...&#34;</span>
+	stop
+	start
+<span class="o">}</span>
+
+
+<span class="c1"># 多分支条件判断执行参数</span>
+<span class="k">case</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">APP_OPT</span><span class="si">}</span><span class="s2">&#34;</span> in
+	<span class="s2">&#34;stop&#34;</span><span class="o">)</span>
+		stop
+		<span class="p">;;</span>
+	<span class="s2">&#34;start&#34;</span><span class="o">)</span>
+		start
+		<span class="p">;;</span>
+	<span class="s2">&#34;restart&#34;</span><span class="o">)</span>
+		restart
+		<span class="p">;;</span>
+	*<span class="o">)</span>
+	<span class="nb">echo</span> <span class="s2">&#34; 提示:不支持参数 命令 -&gt; </span><span class="si">${</span><span class="nv">APP_OPT</span><span class="si">}</span><span class="s2">&#34;</span>
+	<span class="p">;;</span>
+<span class="k">esac</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="3-rpm安装">3) rpm安装</h4>
+<ul>
+<li>
+<p>下载安装</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> /data/tools
+wget https://mirrors.tuna.tsinghua.edu.cn/jenkins/redhat-stable/jenkins-2.332.1-1.1.noarch.rpm
+rpm -ivh jenkins-2.332.1-1.1.noarch.rpm
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>默认配置文件位置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">JENKINS_WAR</span><span class="o">=</span><span class="s2">&#34;/usr/share/java/jenkins.war&#34;</span>
+<span class="nv">JENKINS_CONFIG</span><span class="o">=</span><span class="s2">&#34;/etc/sysconfig/jenkins&#34;</span>
+<span class="nv">JENKINS_PID_FILE</span><span class="o">=</span><span class="s2">&#34;/var/run/jenkins.pid&#34;</span>
+<span class="nv">JENKINS_LOCKFILE</span><span class="o">=</span><span class="s2">&#34;/var/lock/subsys/jenkins&#34;</span>
+<span class="nv">JENKINS_DAEMON</span><span class="o">=</span><span class="s2">&#34;/etc/init.d/jenkins&#34;</span>
+<span class="nv">JENKINS_LOGFILE</span><span class="o">=</span><span class="s2">&#34;/var/log/jenkins/jenkins.log&#34;</span>   
+
+<span class="o">[</span>root@node1 /data<span class="o">]</span><span class="c1"># rpm -ql jenkins</span>
+/etc/init.d/jenkins
+/etc/logrotate.d/jenkins
+/etc/sysconfig/jenkins
+/usr/bin/jenkins
+/usr/lib/systemd/system/jenkins.service
+/usr/sbin/rcjenkins
+/usr/share/java/jenkins.war
+/usr/share/jenkins
+/usr/share/jenkins/migrate
+/var/cache/jenkins
+/var/lib/jenkins
+/var/log/jenkins
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>配置修改</p>
+<p>修改jenkins本身配置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">cp /etc/sysconfig/jenkins /etc/sysconfig/jenkins.bak
+vim /etc/sysconfig/jenkins
+<span class="o">[</span>修改内容<span class="o">]</span>
+<span class="nv">JENKINS_HOME</span><span class="o">=</span><span class="s2">&#34;/root/jenkins-data&#34;</span> <span class="c1">#设置工作目录</span>
+<span class="nv">JENKINS_USER</span><span class="o">=</span><span class="s2">&#34;root&#34;</span> <span class="c1">#设置jenkins用户为root</span>
+<span class="nv">JENKINS_PORT</span><span class="o">=</span><span class="s2">&#34;9090&#34;</span> <span class="c1">#设置访问端口为9090</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>修改jenkins启动文件配置,修改java命令路径</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@node1 /data/tools<span class="o">]</span><span class="c1"># which java</span>
+/usr/local/java/bin/java
+
+<span class="o">[</span>root@node1 /data/tools<span class="o">]</span><span class="c1"># vim /etc/init.d/jenkins</span>
+<span class="o">[</span>root@node1 /data/tools<span class="o">]</span><span class="c1"># vim /etc/rc.d/init.d/jenkins</span>
+<span class="o">[</span>修改内容<span class="o">]</span>
+<span class="nv">candidates</span><span class="o">=</span><span class="s2">&#34;
+</span><span class="s2">/etc/alternatives/java
+</span><span class="s2">/usr/lib/jvm/java-1.8.0/bin/java
+</span><span class="s2">/usr/lib/jvm/jre-1.8.0/bin/java
+</span><span class="s2">/usr/lib/jvm/java-11.0/bin/java
+</span><span class="s2">/usr/lib/jvm/jre-11.0/bin/java
+</span><span class="s2">/usr/lib/jvm/java-11-openjdk-amd64
+</span><span class="s2">/usr/bin/java
+</span><span class="s2">/usr/local/java/bin/java   #新增行
+</span><span class="s2">&#34;</span>
+
+systemctl daemon-reload 
+service jenkins start
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>设置开机启动</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">systemctl <span class="nb">enable</span> jenkins
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>开启关闭jenkins服务</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">systemctl start/stop/restart jenkins
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="4-yum安装推荐">4) yum安装(推荐)</h4>
+<ul>
+<li>
+<p>下载安装</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo</span>
+<span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key</span>
+<span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># yum -y install jenkins</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>默认配置文件位置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># WAR包 </span>
+/usr/lib/jenkins/jenkins.war    
+<span class="c1"># 配置文件, 修改用户为:root</span>
+/etc/sysconfig/jenkins      
+<span class="c1"># 默认的JENKINS_HOME目录</span>
+/var/lib/jenkins/       
+<span class="c1"># Jenkins日志文件</span>
+/var/log/jenkins/jenkins.log   
+
+<span class="o">[</span>root@node1 /data<span class="o">]</span><span class="c1"># rpm -ql jenkins</span>
+/etc/init.d/jenkins
+/etc/logrotate.d/jenkins
+/etc/sysconfig/jenkins
+/usr/bin/jenkins
+/usr/lib/systemd/system/jenkins.service
+/usr/sbin/rcjenkins
+/usr/share/java/jenkins.war
+/usr/share/jenkins
+/usr/share/jenkins/migrate
+/var/cache/jenkins
+/var/lib/jenkins
+/var/log/jenkins
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>配置修改</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">cp /etc/sysconfig/jenkins /etc/sysconfig/jenkins.bak
+vim /etc/sysconfig/jenkins
+<span class="o">[</span>修改内容<span class="o">]</span>
+<span class="nv">JENKINS_HOME</span><span class="o">=</span><span class="s2">&#34;/root/jenkins-data&#34;</span> <span class="c1">#设置工作目录</span>
+<span class="nv">JENKINS_USER</span><span class="o">=</span><span class="s2">&#34;root&#34;</span> <span class="c1">#设置jenkins用户为root</span>
+<span class="nv">JENKINS_PORT</span><span class="o">=</span><span class="s2">&#34;9090&#34;</span> <span class="c1">#设置访问端口为9090</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>启动并设置开机启动</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">service jenkins start
+chkconfig jenkins on
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="2docker安装jenkins">2.docker安装jenkins</h3>
+<h4 id="1-拉取镜像">1) 拉取镜像</h4>
+<p>建议使用的Docker映像是<a href="https://hub.docker.com/r/jenkinsci/blueocean/"><code>jenkinsci/blueocean</code> image</a>(来自 the <a href="https://hub.docker.com/">Docker Hub repository</a>)。 该镜像包含当前的<a href="https://www.jenkins.io/download">长期支持 (LTS) 的Jenkins版本</a> （可以投入使用） ，捆绑了所有Blue Ocean插件和功能。这意味着你不需要单独安装Blue Ocean插件。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">docker pull jenkinsci/blueocean
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2-运行容器">2) 运行容器</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">docker run <span class="se">\
+</span><span class="se"></span>-u root <span class="se">\
+</span><span class="se"></span>-d <span class="se">\
+</span><span class="se"></span>-p 9090:8080 <span class="se">\
+</span><span class="se"></span>-p 50000:50000 <span class="se">\
+</span><span class="se"></span>--privileged<span class="o">=</span><span class="nb">true</span> -e <span class="nv">TZ</span><span class="o">=</span><span class="s2">&#34;Asia/Shanghai&#34;</span> <span class="se">\
+</span><span class="se"></span>-v /root/docker/jenkins-data:/var/jenkins_home <span class="se">\
+</span><span class="se"></span>-v /var/run/docker.sock:/var/run/docker.sock <span class="se">\
+</span><span class="se"></span>--name jenkins-blueocean <span class="se">\
+</span><span class="se"></span>jenkinsci/blueocean
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3-容器操作">3) 容器操作</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#访问Jenkins / Blue Ocean Docker容器</span>
+docker <span class="nb">exec</span> -it jenkins-blueocean bash
+<span class="c1">#通过Docker日志访问Jenkins控制台日志</span>
+docker logs jenkins-blueocean
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="4-容器内安装软件">4) 容器内安装软件</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#进入容器</span>
+docker <span class="nb">exec</span> -it jenkins-blueocean bash
+<span class="c1">#安装软件</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3初始化jenkins">3.初始化jenkins</h3>
+<p>访问 http://{主机ip}:8080 进行<a href="https://www.jenkins.io/zh/doc/book/installing/#setup-wizard">Post-installation setup wizard</a>安装</p>
+<ul>
+<li>
+<p>修改jenkins的插件下载源</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@node1 ~<span class="o">]</span><span class="c1"># cd /root/docker/jenkins-data/updates/</span>
+<span class="o">[</span>root@node1 ~/jenkins-data/updates<span class="o">]</span><span class="c1"># ls</span>
+default.json  hudson.tasks.Maven.MavenInstaller
+<span class="o">[</span>root@node1 ~/jenkins-data/updates<span class="o">]</span><span class="c1"># cp default.json default.json.bak</span>
+<span class="o">[</span>root@node1 ~/jenkins-data/updates<span class="o">]</span><span class="c1"># sudo sed -i &#39;s#updates.jenkins.io/download/plugins#mirrors.tuna.tsinghua.edu.cn/jenkins/plugins#g&#39; default.json &amp;&amp; sudo sed -i &#39;s#www.google.com#www.baidu.com#g&#39; default.json</span>
+<span class="o">[</span>root@node1 ~/jenkins-data/updates<span class="o">]</span><span class="c1">#</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>重启jenkins</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">systemctl restart jenkins
+<span class="c1">#docker 安装：</span>
+docker restart jenkins-blueocean
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>解锁 Jenkins</p>
+<p>页面上显示的密码文件路径是容器内的,因为做了文件夹映射,替换为主机地址即可</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@node1 ~<span class="o">]</span><span class="c1"># cd /root/docker/jenkins-data</span>
+<span class="o">[</span>root@node1 ~/jenkins-data<span class="o">]</span><span class="c1"># cat secrets/initialAdminPassword</span>
+12889e7f0fa94aafbcc2f83081ec0475
+<span class="o">[</span>root@node1 ~/jenkins-data<span class="o">]</span><span class="c1">#</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>选择“Install suggested plugins”安装默认的插件</p>
+<p>等待系统安装插件完成</p>
+</li>
+<li>
+<p>下载完成之后会进入一个创建账号的界面，这里自己创建一个就行，后续登录就用这个账号。</p>
+</li>
+</ul>
+<h2 id="三jenkins配置">三、jenkins配置</h2>
+<h3 id="1管理系统配置">1.管理系统配置</h3>
+<p>进入管理Jenkins&ndash;&gt;系统配置</p>
+<h3 id="2流水线配置">2.流水线配置</h3>
+<ul>
+<li>
+<p>创建流水线job,配置名称</p>
+</li>
+<li>
+<p>设置流水线代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pipeline <span class="o">{</span>
+    agent any
+    stages <span class="o">{</span>
+        stage<span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span> <span class="o">{</span>
+            steps <span class="o">{</span>
+                sh <span class="s1">&#39;cd /workspace/srv-gw-infinity/build&#39;</span>
+                sh <span class="s1">&#39;sh build.sh&#39;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    post <span class="o">{</span>
+        always <span class="o">{</span>
+            <span class="nb">echo</span> <span class="s1">&#39;This will always run&#39;</span>
+        <span class="o">}</span>
+        success <span class="o">{</span>
+            <span class="nb">echo</span> <span class="s1">&#39;This will run only if successful&#39;</span>
+        <span class="o">}</span>
+        failure <span class="o">{</span>
+            <span class="nb">echo</span> <span class="s1">&#39;This will run only if failed&#39;</span>
+        <span class="o">}</span>
+        unstable <span class="o">{</span>
+            <span class="nb">echo</span> <span class="s1">&#39;This will run only if the run was marked as unstable&#39;</span>
+        <span class="o">}</span>
+        changed <span class="o">{</span>
+            <span class="nb">echo</span> <span class="s1">&#39;This will run only if the state of the Pipeline has changed&#39;</span>
+            <span class="nb">echo</span> <span class="s1">&#39;For example, if the Pipeline was previously failing but is now successful&#39;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="3设置自定义风格工程配置">3.设置自定义风格工程配置</h3>
+<ul>
+<li>
+<p>设置git</p>
+</li>
+<li>
+<p>设置构建ssh</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#局部变量(执行文件名称)</span>
+<span class="nv">project_name</span><span class="o">=</span><span class="s2">&#34;infi-srv-gw&#34;</span>
+<span class="c1">#1.杀掉之前正在运行的程序</span>
+<span class="nv">go_id</span><span class="o">=</span><span class="sb">`</span>ps -ef<span class="p">|</span>grep <span class="s2">&#34;./</span><span class="si">${</span><span class="nv">project_name</span><span class="si">}</span><span class="s2">&#34;</span> <span class="p">|</span>grep -v <span class="s2">&#34;grep&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="sb">`</span>
+<span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$go_id</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span>
+<span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&#34;[go pid not found]&#34;</span>
+<span class="k">else</span>
+	<span class="c1">#杀掉进程</span>
+    <span class="nb">kill</span> -9 <span class="nv">$go_id</span>
+    <span class="nb">echo</span> <span class="s2">&#34;killed </span><span class="nv">$go_id</span><span class="s2">&#34;</span>
+<span class="k">fi</span>
+<span class="c1">#2.清除旧的编译文件</span>
+<span class="nb">echo</span> <span class="s2">&#34;clean old file&#34;</span>
+rm -rf <span class="si">${</span><span class="nv">WORKSPACE</span><span class="si">}</span>/build/bin/<span class="si">${</span><span class="nv">project_name</span><span class="si">}</span>
+rm -rf <span class="si">${</span><span class="nv">WORKSPACE</span><span class="si">}</span>/build/bin/<span class="si">${</span><span class="nv">project_name</span><span class="si">}</span>.log
+<span class="c1">#3.进入工作目录,构建工作</span>
+<span class="nb">cd</span>  <span class="si">${</span><span class="nv">WORKSPACE</span><span class="si">}</span>
+<span class="nb">pwd</span>
+go version
+go mod tidy
+<span class="nb">cd</span> build
+sh build.sh
+ls bin
+<span class="c1">#4.运行构建后的文件</span>
+<span class="nb">cd</span>  <span class="si">${</span><span class="nv">WORKSPACE</span><span class="si">}</span>/build/bin
+<span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">project_name</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&#34;strat new process&#34;</span>
+    chmod <span class="m">777</span> <span class="si">${</span><span class="nv">project_name</span><span class="si">}</span>
+    <span class="c1">#这里要防止nohup不执行，添加了一个BUILD_ID</span>
+    <span class="nv">BUILD_ID</span><span class="o">=</span>DONTKILLME nohup ./<span class="si">${</span><span class="nv">project_name</span><span class="si">}</span> &gt;<span class="si">${</span><span class="nv">project_name</span><span class="si">}</span>.log 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">&amp;</span>
+<span class="k">else</span>
+<span class="nb">echo</span> <span class="s2">&#34;executable file not found,quit&#34;</span>
+<span class="k">fi</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-02-10
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="/tags/jenkins/">Jenkins</a>
+          <a href="/tags/%E6%B5%81%E6%B0%B4%E7%BA%BF/">流水线</a>
+          <a href="/tags/%E9%9B%86%E6%88%90%E5%B7%A5%E5%85%B7/">集成工具</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/other/windows10%E4%B8%8B%E4%BF%AE%E6%94%B9cmd%E5%92%8Cpower-shell%E7%9A%84%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">windows10下修改cmd和power shell的编码方式(解决中文乱码)</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/cache/redis/redis%E6%8C%81%E4%B9%85%E5%8C%96-%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/">
+            <span class="next-text nav-default">[redis]Redis磁盘化-数据备份恢复</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>开发语言 on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/categories/%E5%BC%80%E5%8F%91%E8%AF%AD%E8%A8%80/</link>
+    <description>Recent content in 开发语言 on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Thu, 23 Dec 2021 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/categories/%E5%BC%80%E5%8F%91%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[配置文件] toml配置和使用</title>
+      <link>https://blog.nevergiveup.tech/post/dev_language/conf/toml%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Thu, 23 Dec 2021 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dev_language/conf/toml%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BD%BF%E7%94%A8/</guid>
+      <description>toml配置和使用 一.简介 TOML是前GitHub CEO， Tom Preston-Werner，于2013年创建的语言，其目标是成为一个小规模的易</description>
+    </item>
+    
+    <item>
+      <title>[go] Golang开发规范</title>
+      <link>https://blog.nevergiveup.tech/post/dev_language/golang/golang%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/</link>
+      <pubDate>Sun, 16 May 2021 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dev_language/golang/golang%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/</guid>
+      <description>[TOC] Golang开发规范 一致性的代码更容易维护、是更合理的、需要更少的学习成本、并且随着新的约定出现或者出现错误后更容易迁移、更新、修复 bug</description>
+    </item>
+    
+    <item>
+      <title>[go] Go语言编码规范</title>
+      <link>https://blog.nevergiveup.tech/post/dev_language/golang/go%E8%AF%AD%E8%A8%80%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83uber/</link>
+      <pubDate>Sat, 15 May 2021 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dev_language/golang/go%E8%AF%AD%E8%A8%80%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83uber/</guid>
+      <description>Go语言编码规范[Uber] Uber 是一家美国硅谷的科技公司，也是 Go 语言的早期 adopter。其开源了很多 golang 项目，诸如被 Gopher 圈熟知的 zap、jaeg</description>
+    </item>
+    
+    <item>
+      <title>[go] golang安装和配置</title>
+      <link>https://blog.nevergiveup.tech/post/dev_language/golang/golang%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Thu, 13 May 2021 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dev_language/golang/golang%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/</guid>
+      <description>Golang 一.Windows安装 1.下载Golang 访问Go国内镜像站下载页面 https://golang.google.cn/dl/ 并在页面最上方的版本中选择你当前的系统版本，会下载最新版本的Go开发</description>
+    </item>
+    
+    <item>
+      <title>[go] golang踩坑记录</title>
+      <link>https://blog.nevergiveup.tech/post/dev_language/golang/golang%E7%9A%84json%E8%A7%A3%E6%9E%90%E8%87%B3%E7%BB%93%E6%9E%84%E4%BD%93%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3/</link>
+      <pubDate>Wed, 14 Oct 2020 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dev_language/golang/golang%E7%9A%84json%E8%A7%A3%E6%9E%90%E8%87%B3%E7%BB%93%E6%9E%84%E4%BD%93%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3/</guid>
+      <description>golang踩坑记录 一.json问题 1.json中存在单引号,json.Unmarshal解析至结构体报错 正常的解析过程 1 2 3 4 5 6 7 8 9 10</description>
+    </item>
+    
+    <item>
+      <title>[hyperf]hyperf安装及入门</title>
+      <link>https://blog.nevergiveup.tech/post/dev_language/php/swoole/hyperf%E5%AE%89%E8%A3%85%E4%B8%8E%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Mon, 21 Sep 2020 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dev_language/php/swoole/hyperf%E5%AE%89%E8%A3%85%E4%B8%8E%E5%85%A5%E9%97%A8/</guid>
+      <description>hyperf安装及入门 一.docker开发环境 1.开启9501 1 2 3 4 5 firewall-cmd --add-port=9501/tcp --permanent firewall-cmd --reload firewall-cmd --list-all 2.创建宿主目录 1 mkdir hypef &amp;amp;&amp;amp; cd hypef 3.下载并运行 hyperf/hyperf 镜像，并将</description>
+    </item>
+    
+    <item>
+      <title>[lua]Lua脚本安装</title>
+      <link>https://blog.nevergiveup.tech/post/dev_language/lua/lua%E8%84%9A%E6%9C%AC%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Sat, 23 May 2020 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dev_language/lua/lua%E8%84%9A%E6%9C%AC%E5%85%A5%E9%97%A8/</guid>
+      <description>[lua]Lua脚本安装 一、安装Lua环境 1.Linux 系统上安装 1 2 3 4 5 6 7 8 9 10 11 cd/data/tools curl-R-Ohttp://www.lua.org/ftp/lua-5.4.3.tar.gz tarzxflua-5.4.3.tar.gz cdlua-5.4.3 makelinuxtest makeinstall 2.Window 系统上安装 Lua window下你可以使用一个叫&amp;quo</description>
+    </item>
+    
+    <item>
+      <title>[java]Spring boot学习笔记</title>
+      <link>https://blog.nevergiveup.tech/post/dev_language/java/spring-boot%E5%AD%A6%E4%B9%A0%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Tue, 17 Sep 2019 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dev_language/java/spring-boot%E5%AD%A6%E4%B9%A0%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
+      <description>Spring boot学习笔记 一.Spring Boot 概述 Spring Boot 是所有基于 Spring 开发的项目的起点。Spring Boot 的设计是为了让你尽可能快的跑起来 Spring 应用程序并且尽可能</description>
+    </item>
+    
+    <item>
+      <title>[MongoDB]MongoDB之PHP的使用(GridFs)</title>
+      <link>https://blog.nevergiveup.tech/post/dev_language/php/mongodb/mongodb%E4%B9%8Bphp%E7%9A%84%E4%BD%BF%E7%94%A8gridfs/</link>
+      <pubDate>Sat, 27 Jul 2019 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dev_language/php/mongodb/mongodb%E4%B9%8Bphp%E7%9A%84%E4%BD%BF%E7%94%A8gridfs/</guid>
+      <description>MongoDB之PHP的使用(GridFs) 一：第一种方法，直接调Driver的方式: 一个简单上传例子: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18</description>
+    </item>
+    
+    <item>
+      <title>[laravel]在线聊天系统(laravel swoole redis vue)</title>
+      <link>https://blog.nevergiveup.tech/post/dev_language/php/laravel/%E5%9C%A8%E7%BA%BF%E8%81%8A%E5%A4%A9%E7%B3%BB%E7%BB%9Flaravel-swoole-redis-vue/</link>
+      <pubDate>Tue, 11 Jun 2019 17:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dev_language/php/laravel/%E5%9C%A8%E7%BA%BF%E8%81%8A%E5%A4%A9%E7%B3%BB%E7%BB%9Flaravel-swoole-redis-vue/</guid>
+      <description>在线聊天系统(laravel swoole redis vue) 一.前端页面完成 1.安装准备 安装前必须保证系统已经安装了下列软件 PHP &amp;gt;= 7.1.3 PHP OpenSSL 扩展 PHP PDO 扩展 PHP Mbstring 扩展 PHP Tokenizer 扩展 PHP XML</description>
+    </item>
+    
+    <item>
+      <title>[laravel]基于 Laravel &#43; Swoole &#43; Vue 组件实现支持高并发的实时弹幕功能</title>
+      <link>https://blog.nevergiveup.tech/post/dev_language/php/laravel/%E5%AE%9E%E6%97%B6%E5%BC%B9%E5%B9%95%E5%8A%9F%E8%83%BDlaravel-swoole-vue/</link>
+      <pubDate>Tue, 11 Jun 2019 16:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dev_language/php/laravel/%E5%AE%9E%E6%97%B6%E5%BC%B9%E5%B9%95%E5%8A%9F%E8%83%BDlaravel-swoole-vue/</guid>
+      <description>基于 Laravel + Swoole + Vue 组件实现支持高并发的实时弹幕功能 一.前端页面完成 1.安装准备 安装前必须保证系统已经安装了下列软件 PHP &amp;gt;= 7.1.3 PHP OpenSSL 扩展 PHP PDO 扩展 PHP Mbstring 扩展</description>
+    </item>
+    
+    <item>
+      <title>[laravel]laravelS安装及使用</title>
+      <link>https://blog.nevergiveup.tech/post/dev_language/php/laravel/laravels%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Tue, 11 Jun 2019 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dev_language/php/laravel/laravels%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
+      <description>一.安装laravel 1.安装准备 安装前必须保证系统已经安装了下列软件 PHP &amp;gt;= 7.1.3 PHP OpenSSL 扩展 PHP PDO 扩展 PHP Mbstring 扩展 PHP Tokenizer 扩展 PHP XML 扩展 PHP Ctype 扩展 PHP JSON 扩展 PHP BCMath 扩展</description>
+    </item>
+    
+    <item>
+      <title>[java] java学习笔记</title>
+      <link>https://blog.nevergiveup.tech/post/dev_language/java/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Wed, 17 Apr 2019 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dev_language/java/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+      <description>学习目标及进程 1.工具的统一 mysql，idea 2019.2 ，tomcat 8 ，jdk 1.8 2.学习内容 java基础语法（变量，结构化，oop） java内存</description>
+    </item>
+    
+    <item>
+      <title>[java] java安装和配置</title>
+      <link>https://blog.nevergiveup.tech/post/dev_language/java/java%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Tue, 16 Apr 2019 17:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dev_language/java/java%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/</guid>
+      <description>Java 一.Windows安装 1.下载Java 访问Java官方站下载页面 https://www.oracle.com/java/technologies/downloads/#java8-windows 搜索: &amp;ldquo;Java 8&amp;rdquo; 2.安装Java JDK 的安装根据提示进行，还有安装 JDK 的时候也会安装</description>
+    </item>
+    
+    <item>
+      <title>[swoole]安装swoole及入门</title>
+      <link>https://blog.nevergiveup.tech/post/dev_language/php/swoole/swoole%E5%AE%89%E8%A3%85%E4%B8%8E%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Sun, 21 Oct 2018 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dev_language/php/swoole/swoole%E5%AE%89%E8%A3%85%E4%B8%8E%E5%85%A5%E9%97%A8/</guid>
+      <description>一.安装swoole及入门 1.安装准备 安装前必须保证系统已经安装了下列软件 php-7.0 或更高版本 gcc-4.8 或更高版本 make autoconf pcre (CentOS系统可以执行命令：yu</description>
+    </item>
+    
+    <item>
+      <title>[swoole]swoft安装与入门</title>
+      <link>https://blog.nevergiveup.tech/post/dev_language/php/swoole/swoft%E5%AE%89%E8%A3%85%E4%B8%8E%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Tue, 11 Sep 2018 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dev_language/php/swoole/swoft%E5%AE%89%E8%A3%85%E4%B8%8E%E5%85%A5%E9%97%A8/</guid>
+      <description>swoft安装与入门 A.安装 a.composer安装 1 2 3 composer create-project swoft/swoft swoft cd swoft composer install --no-dev # 不安装 dev 依赖会更快一些 b.手动安装 1 2 3 4 5 git clone https://github.com/swoft-cloud/swoft cd swoft composer install --no-dev #</description>
+    </item>
+    
+    <item>
+      <title>[shell]shell脚本入门教程</title>
+      <link>https://blog.nevergiveup.tech/post/dev_language/shell/shell%E8%84%9A%E6%9C%AC%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/</link>
+      <pubDate>Mon, 13 Nov 2017 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dev_language/shell/shell%E8%84%9A%E6%9C%AC%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/</guid>
+      <description>shell脚本入门教程 1.变量 1).定义 使用一个定义过的变量，只要在变量名前面加美元符号即. 变量名外面的花括号是可选的，加不加都行，加花括号</description>
+    </item>
+    
+    <item>
+      <title>正则表达式学习</title>
+      <link>https://blog.nevergiveup.tech/post/dev_language/regular/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Fri, 03 Nov 2017 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dev_language/regular/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AD%A6%E4%B9%A0/</guid>
+      <description>正则表达式学习 正则表达式(Regular Expression)是一种文本模式，包括普通字符（例如，a 到 z 之间的字母）和特殊字符（称为&amp;quo</description>
+    </item>
+    
+  </channel>
+</rss>

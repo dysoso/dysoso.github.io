@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[linux]Linux日志管理工具logrotate - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="Linux日志管理工具logrotate logrotate是linux系统上的一个日志管理工具，可以对日志文件自动切割或截断。 一、介绍 ​ li" /><meta name="keywords" content="linux, logrotate, 日志管理, 切割, 截断, 删除" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/linux/linux%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86%E5%99%A8logrotate/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[linux]Linux日志管理工具logrotate" />
+<meta property="og:description" content="Linux日志管理工具logrotate logrotate是linux系统上的一个日志管理工具，可以对日志文件自动切割或截断。 一、介绍 ​ li" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/linux/linux%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86%E5%99%A8logrotate/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-03-18T14:37:56+08:00" />
+<meta property="article:modified_time" content="2022-03-18T14:37:56+08:00" />
+
+<meta itemprop="name" content="[linux]Linux日志管理工具logrotate">
+<meta itemprop="description" content="Linux日志管理工具logrotate logrotate是linux系统上的一个日志管理工具，可以对日志文件自动切割或截断。 一、介绍 ​ li"><meta itemprop="datePublished" content="2022-03-18T14:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-03-18T14:37:56+08:00" />
+<meta itemprop="wordCount" content="1763">
+<meta itemprop="keywords" content="linux,logrotate,日志管理," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[linux]Linux日志管理工具logrotate"/>
+<meta name="twitter:description" content="Linux日志管理工具logrotate logrotate是linux系统上的一个日志管理工具，可以对日志文件自动切割或截断。 一、介绍 ​ li"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[linux]Linux日志管理工具logrotate</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-03-18 </span>
+        <div class="post-category">
+            <a href="/categories/linux/"> linux </a>
+            </div>
+          <span class="more-meta"> 约 1763 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#linux日志管理工具logrotate">Linux日志管理工具logrotate</a>
+      <ul>
+        <li><a href="#一介绍">一、介绍</a></li>
+        <li><a href="#二安装logrotate">二、安装logrotate</a></li>
+        <li><a href="#三配置logrotate">三、配置logrotate</a>
+          <ul>
+            <li><a href="#1logrotate的配置">1.logrotate的配置</a></li>
+            <li><a href="#2logrotate本身的日志">2.logrotate本身的日志</a></li>
+            <li><a href="#3日志文件的配置">3.日志文件的配置</a></li>
+            <li><a href="#4示例">4.示例</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="linux日志管理工具logrotate">Linux日志管理工具logrotate</h1>
+<blockquote>
+<p>logrotate是linux系统上的一个日志管理工具，可以对日志文件自动切割或截断。</p>
+</blockquote>
+<h2 id="一介绍">一、介绍</h2>
+<p>​	linux日志文件记录了应用程序各种报错信息及debug信息，在排障过程中或者系统性能分析时经常被用到。对于高访问的服务器，日志文件大小会增长极快，会造成日志膨胀问题。除此之外，处理一个单个的庞大日志文件也常常是件十分棘手的事。</p>
+<p>​	logrotate是个十分强大的日志管理工具，它可以自动对日志进行截断、切割、压缩以及删除旧的日志文件。例如，你可以设置logrotate，让/var/log/app_run.log日志文件每30天轮循，并删除超过6个月的日志。配置完后，logrotate的运作完全自动化，不必进行任何进一步的人为干预。</p>
+<h2 id="二安装logrotate">二、安装logrotate</h2>
+<p>主流Linux发行版上都默认安装有logrotate包 ，检查是否安装</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@node1 /etc/logrotate.d<span class="o">]</span><span class="c1"># logrotate --version</span>
+logrotate 3.8.6
+</code></pre></td></tr></table>
+</div>
+</div><p>如果系统未默认安装,则进行安装操作</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">yum -y install logrotate 
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="三配置logrotate">三、配置logrotate</h2>
+<h3 id="1logrotate的配置">1.logrotate的配置</h3>
+<p>logrotate的配置文件是/etc/logrotate.conf ，通常不需要对它进行修改。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@node1 /etc/logrotate.d<span class="o">]</span><span class="c1"># cat /etc/logrotate.conf</span>
+<span class="c1"># see &#34;man logrotate&#34; for details</span>
+<span class="c1"># rotate log files weekly</span>
+weekly
+<span class="c1"># keep 4 weeks worth of backlogs</span>
+rotate <span class="m">8</span>
+
+<span class="c1"># create new (empty) log files after rotating old ones</span>
+create
+
+<span class="c1"># use date as a suffix of the rotated file</span>
+dateext
+
+<span class="c1"># uncomment this if you want your log files compressed</span>
+compress
+
+<span class="c1"># RPM packages drop log rotation information into this directory</span>
+include /etc/logrotate.d
+
+<span class="c1"># no packages own wtmp and btmp -- we&#39;ll rotate them here</span>
+/var/log/wtmp <span class="o">{</span>
+    monthly
+    create <span class="m">0664</span> root utmp
+        minsize 1M
+    rotate <span class="m">1</span>
+<span class="o">}</span>
+
+/var/log/btmp <span class="o">{</span>
+    missingok
+    monthly
+    create <span class="m">0600</span> root utmp
+    rotate <span class="m">1</span>
+<span class="o">}</span>
+
+<span class="c1"># system-specific logs may be also be configured here.</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2logrotate本身的日志">2.logrotate本身的日志</h3>
+<p>logrotate自身的日志存放于/var/lib/logrotate/status目录</p>
+<h3 id="3日志文件的配置">3.日志文件的配置</h3>
+<p>日志文件的轮循设置在独立的配置文件中，它（们）放在/etc/logrotate.d/目录下。</p>
+<h4 id="1-通用模板">1) 通用模板</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">vim /etc/logrotate.d/run.logrotate 
+
+<span class="o">[</span>内容<span class="o">]</span>
+/var/log/run.log  <span class="o">{</span>
+	<span class="nv">size</span><span class="o">=</span>50M
+	minsize 20M
+    monthly
+    rotate <span class="m">5</span>
+    compress
+    delaycompress
+    missingok
+    notifempty
+    create <span class="m">644</span> root root
+    postrotate
+        /usr/bin/killall -HUP rsyslogd
+    endscript
+    dateext
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2-参数说明">2) 参数说明</h4>
+<ul>
+<li><strong>size</strong>: 日志文件大小可以增长到50MB</li>
+<li><strong>minsize</strong>: 日志最小切割大小</li>
+<li><strong>monthly</strong>: 日志文件将按月轮循。其它可用值为‘daily’，‘weekly’或者‘yearly’。</li>
+<li><strong>rotate 5</strong>: 一次将存储5个归档日志。对于第六个归档，时间最久的归档将被删除。</li>
+<li><strong>compress</strong>: 在轮循任务完成后，已轮循的归档将使用gzip进行压缩。</li>
+<li><strong>delaycompress</strong>: 总是与compress选项一起用，delaycompress选项指示logrotate不要将最近的归档压缩，压缩将在下一次轮循周期进行。这在你或任何软件仍然需要读取最新归档时很有用。</li>
+<li><strong>missingok</strong>: 在日志轮循期间，任何错误将被忽略，例如“文件无法找到”之类的错误。</li>
+<li><strong>notifempty</strong>: 如果日志文件为空，轮循不会进行。</li>
+<li><strong>create 644 root root</strong>: 以指定的权限创建全新的日志文件，同时logrotate也会重命名原始日志文件。</li>
+<li><strong>postrotate/endscript</strong>: 在所有其它指令完成后，postrotate和endscript里面指定的命令将被执行。在这种情况下，rsyslogd 进程将立即再次读取其配置并继续运行。</li>
+<li><strong>dateext</strong>: 让旧日志文件以创建日期命名</li>
+</ul>
+<h4 id="3-logrotate命令">3) logrotate命令</h4>
+<ul>
+<li>
+<p>语法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">logrotate <span class="o">[</span>-?dfv<span class="o">][</span>-s &lt;状态文件&gt;<span class="o">][</span>--usage<span class="o">][</span>配置文件<span class="o">]</span>
+
+参数说明：
+
+-?或--help 　在线帮助。
+-d或--debug 　详细显示指令执行过程，便于排错或了解程序执行的情况。
+-f或--force 　强行启动记录文件维护操作，纵使logrotate指令认为没有需要亦然。
+-s&lt;状态文件&gt;或--state<span class="o">=</span>&lt;状态文件&gt; 　使用指定的状态文件。
+-v或--version 　显示指令执行过程。
+-usage 　显示指令基本用法。
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>手动调用为/etc/lograte.d/下配置的所有日志</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">logrotate /etc/logrotate.conf
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>手动调用某个特定的配置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">logrotate /etc/logrotate.d/run.logrotate
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>预演方式运行logrotate</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">logrotate -d /etc/logrotate.d/run.logrotate
+
+<span class="c1">#排障过程中的最佳选择是使用‘-d’选项以预演方式运行logrotate。要进行验证，不用实际轮循任何日志文件，可以模拟演练日志轮循并显示其输出。</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>强制轮询日志</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">logrotate -vf /etc/logrotate.d/run.logrotate
+<span class="c1">#-f’选项来强制logrotate轮循日志文件，‘-v’参数提供了详细的输出</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="4示例">4.示例</h3>
+<h4 id="1-创建日志文件">1) 创建日志文件</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#创建日志文件</span>
+touch /var/log/test-logrotate.log
+<span class="c1">#填入一个10MB的随机比特流数据</span>
+head -c 10M &lt; /dev/urandom &gt; /var/log/test-logrotate.log
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2-创建配置文件">2) 创建配置文件</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">vim /etc/logrotate.d/test-logrotate.logrotate
+<span class="o">[</span>内容<span class="o">]</span>
+/var/log/test-logrotate*.log <span class="o">{</span>
+    daily
+    rotate <span class="m">5</span>
+    copytruncate
+    dateext
+    compress
+    missingok
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3-使用命令强制轮询">3) 使用命令强制轮询</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">logrotate -vf /etc/logrotate.d/test-logrotate.logrotate
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="4-查看生成的文件">4) 查看生成的文件</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@node1 /var/log<span class="o">]</span><span class="c1"># ll test-logrotate*</span>
+-rw-r--r-- <span class="m">1</span> root root        <span class="m">0</span> 3月  <span class="m">18</span> 16:30 test-logrotate.log
+-rw-r--r-- <span class="m">1</span> root root <span class="m">10487378</span> 3月  <span class="m">18</span> 16:29 test-logrotate.log-20220318.gz
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-03-18
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/linux/">linux</a>
+          <a href="/tags/logrotate/">logrotate</a>
+          <a href="/tags/%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/">日志管理</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/linux/%E6%9B%BF%E6%8D%A2iso%E5%86%85%E6%A0%B8%E5%B9%B6%E7%94%9F%E6%88%90%E8%87%AA%E5%AE%9A%E4%B9%89iso%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[linux] 替换ISO内核并生成自定义iso镜像文件</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/linux/arcconf-raid-%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/">
+            <span class="next-text nav-default">[linux] arcconf RAID 管理工具</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

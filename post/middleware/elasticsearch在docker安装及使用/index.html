@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[elasticsearch]Elasticsearch在docker安装及使用 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="Elasticsearch在docker安装及使用 1.安装docker ①安装依赖 yum install -y yum-utils device-mapper-persistent-data lvm2 ②添加阿里云的docker部署仓库 yum-config-manager &amp;ndash;add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo ③安装d" /><meta name="keywords" content="中间件, middleware, elasticsearch" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/middleware/elasticsearch%E5%9C%A8docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[elasticsearch]Elasticsearch在docker安装及使用" />
+<meta property="og:description" content="Elasticsearch在docker安装及使用 1.安装docker ①安装依赖 yum install -y yum-utils device-mapper-persistent-data lvm2 ②添加阿里云的docker部署仓库 yum-config-manager &ndash;add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo ③安装d" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/middleware/elasticsearch%E5%9C%A8docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2018-05-14T16:37:56+08:00" />
+<meta property="article:modified_time" content="2022-02-10T16:37:56+08:00" />
+
+<meta itemprop="name" content="[elasticsearch]Elasticsearch在docker安装及使用">
+<meta itemprop="description" content="Elasticsearch在docker安装及使用 1.安装docker ①安装依赖 yum install -y yum-utils device-mapper-persistent-data lvm2 ②添加阿里云的docker部署仓库 yum-config-manager &ndash;add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo ③安装d"><meta itemprop="datePublished" content="2018-05-14T16:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-02-10T16:37:56+08:00" />
+<meta itemprop="wordCount" content="3358">
+<meta itemprop="keywords" content="中间件,middleware,elasticsearch," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[elasticsearch]Elasticsearch在docker安装及使用"/>
+<meta name="twitter:description" content="Elasticsearch在docker安装及使用 1.安装docker ①安装依赖 yum install -y yum-utils device-mapper-persistent-data lvm2 ②添加阿里云的docker部署仓库 yum-config-manager &ndash;add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo ③安装d"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[elasticsearch]Elasticsearch在docker安装及使用</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-05-14 </span>
+        <div class="post-category">
+            <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/"> 中间件 </a>
+            </div>
+          <span class="more-meta"> 约 3358 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#elasticsearch在docker安装及使用">Elasticsearch在docker安装及使用</a>
+      <ul>
+        <li><a href="#1安装docker"><strong>1.安装docker</strong></a>
+          <ul>
+            <li><a href="#安装依赖"><strong>①安装依赖</strong></a></li>
+            <li><a href="#添加阿里云的docker部署仓库"><strong>②添加阿里云的docker部署仓库</strong></a></li>
+            <li><a href="#安装docker"><strong>③安装docker</strong></a></li>
+            <li><a href="#启动docker"><strong>④启动docke</strong>r</a></li>
+          </ul>
+        </li>
+        <li><a href="#2安装部署es"><strong>2.安装部署es</strong></a>
+          <ul>
+            <li><a href="#查看所有的es镜像"><strong>①查看所有的es镜像</strong></a></li>
+            <li><a href="#拉取你中意的es镜像推荐star高的"><strong>②拉取你中意的es镜像（推荐star高的）</strong></a></li>
+            <li><a href="#添加镜像加速docker-默认去官网下载速度感人所以添加国内进行加速服务"><strong>③添加镜像加速（docker 默认去官网下载，速度感人，所以添加国内进行加速服务）</strong></a></li>
+            <li><a href="#创建挂载的目录"><strong>④创建挂载的目录</strong></a></li>
+            <li><a href="#创建容器并启动"><strong>⑤创建容器并启动</strong></a></li>
+            <li><a href="#验证是否运行es成功"><strong>⑤验证是否运行es成功</strong></a></li>
+            <li><a href="#开启9200端口"><strong>⑤开启9200端口</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#3-安装ik分词器"><strong>3</strong> <strong>.安装ik分词器</strong></a>
+          <ul>
+            <li><a href="#0下载">0.下载</a></li>
+            <li><a href="#1已挂载插件目录执行">1).已挂载插件目录(执行):</a></li>
+            <li><a href="#2未挂载插件目录执行">2).未挂载插件目录(执行):</a></li>
+            <li><a href="#3重启es容器">3).重启ES容器</a></li>
+            <li><a href="#4验证ik分词器">4).验证ik分词器</a></li>
+            <li><a href="#5总结">5).总结</a></li>
+          </ul>
+        </li>
+        <li><a href="#4备份与恢复"><strong>4.备份与恢复</strong></a>
+          <ul>
+            <li><a href="#1前期准备"><strong>1).前期准备</strong></a></li>
+            <li><a href="#2配置elasticsearch"><strong>2).配置elasticsearch</strong></a></li>
+            <li><a href="#3创建了共享目录后在共享目录下为集群创建共享仓库"><strong>3).创建了共享目录后在共享目录下为集群创建共享仓库</strong></a></li>
+            <li><a href="#4备份索引数据"><strong>4).备份索引数据</strong></a></li>
+            <li><a href="#5查看备份状态"><strong>5).查看备份状态</strong></a></li>
+            <li><a href="#6查看备份列表"><strong>6).查看备份列表</strong></a></li>
+            <li><a href="#7删除备份"><strong>7).删除备份</strong></a></li>
+            <li><a href="#8恢复数据"><strong>8).恢复数据</strong></a></li>
+            <li><a href="#9查看恢复状态"><strong>9).查看恢复状态</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#5安装视图工具"><strong>5.安装视图工具</strong></a>
+          <ul>
+            <li><a href="#1浏览器扩展安装elasticsearch-head推荐"><strong>1).浏览器扩展安装(<strong><strong>ElasticSearch-head</strong></strong>)(推荐)</strong></a></li>
+            <li><a href="#2dejavu安装"><strong>2).Dejavu安装</strong></a></li>
+            <li><a href="#3kibana安装"><strong>3).Kibana安装</strong></a></li>
+            <li><a href="#4安装elasticsearch-head"><strong>4).安装elasticsearch-head</strong></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="elasticsearch在docker安装及使用">Elasticsearch在docker安装及使用</h1>
+<h2 id="1安装docker"><strong>1.安装docker</strong></h2>
+<h3 id="安装依赖"><strong>①安装依赖</strong></h3>
+<p>yum install -y yum-utils device-mapper-persistent-data lvm2</p>
+<h3 id="添加阿里云的docker部署仓库"><strong>②添加阿里云的docker部署仓库</strong></h3>
+<p>yum-config-manager &ndash;add-repo <a href="http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo">http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</a></p>
+<h3 id="安装docker"><strong>③安装docker</strong></h3>
+<p>yum install docker-ce docker-ce-cli containerd.io</p>
+<h3 id="启动docker"><strong>④启动docke</strong>r</h3>
+<p>systemctl start docker</p>
+<h2 id="2安装部署es"><strong>2.安装部署es</strong></h2>
+<h3 id="查看所有的es镜像"><strong>①查看所有的es镜像</strong></h3>
+<p>docker search elasticsearch</p>
+<h3 id="拉取你中意的es镜像推荐star高的"><strong>②拉取你中意的es镜像（推荐star高的）</strong></h3>
+<p>docker pull <elasticsearch images></p>
+<p>(如果拉取过程中报错在镜像后面加上版本，比如elasticsearch:6.7.2)</p>
+<p>em:</p>
+<p>docker pull elasticsearch:6.7.2</p>
+<h3 id="添加镜像加速docker-默认去官网下载速度感人所以添加国内进行加速服务"><strong>③添加镜像加速（docker 默认去官网下载，速度感人，所以添加国内进行加速服务）</strong></h3>
+<p>vi /etc/docker/daemon.json(文件不存在创建文件)</p>
+<p>{&ldquo;registry-mirrors&rdquo;:[&ldquo;https://reg-mirror.qiniu.com/&quot;]}</p>
+<p>systemctl daemon-reload</p>
+<p>systemctl restart docker</p>
+<h3 id="创建挂载的目录"><strong>④创建挂载的目录</strong></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span><span class="lnt">97
+</span><span class="lnt">98
+</span><span class="lnt">99
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">mkdir -p /data/LPAPP/docker_elasticsearch-6.7.2/config
+
+mkdir -p /data/LPAPP/docker_elasticsearch-6.7.2/data
+
+mkdir -p /data/LPAPP/docker_elasticsearch-6.7.2/logs
+
+mkdir -p /data/LPAPP/docker_elasticsearch-6.7.2/plugins 
+
+chmod -R <span class="m">777</span> /data/LPAPP/docker_elasticsearch-6.7.2/data
+
+chmod -R <span class="m">777</span> /data/LPAPP/docker_elasticsearch-6.7.2/logs
+
+ 
+
+<span class="nb">echo</span> <span class="s2">&#34;http.host: 0.0.0.0&#34;</span> &gt;&gt; /data/LPAPP/docker_elasticsearch-6.7.2/config/elasticsearch.yml
+
+或者 vim /data/LPAPP/docker_elasticsearch-6.7.2/config/elasticsearch.yml 写入以下内容
+
+ 
+
+可选:
+
+/usr/share/elasticsearch/config/jvm.options 配置修改:
+
+-Xms200m
+
+-Xmx200m
+
+修改后可去除容器启动配置:
+
+-e <span class="nv">ES_JAVA_OPTS</span><span class="o">=</span><span class="s2">&#34;-Xms64m -Xmx128m&#34;</span> <span class="se">\
+</span><span class="se"></span>
+elasticsearch.yml文件内容：
+
+<span class="c1"># 集群名称</span>
+
+cluster.name: docker-es-app
+
+ 
+
+<span class="c1"># 本节点名称</span>
+
+node.name: ES-Node01
+
+ 
+
+<span class="c1"># 是否允许该节点存储数据</span>
+
+node.data: <span class="nb">true</span>
+
+ 
+
+<span class="c1"># 监听IP</span>
+
+<span class="c1">#network.host: 0.0.0.0</span>
+
+network.host: <span class="o">[</span><span class="s2">&#34;0.0.0.0&#34;</span><span class="o">]</span>
+
+ 
+
+<span class="c1"># 对外服务的端口</span>
+
+http.port: <span class="m">9200</span>
+
+ 
+
+<span class="c1"># 支持跨域访问</span>
+
+http.cors.enabled: <span class="nb">true</span>
+
+http.cors.allow-origin: <span class="s2">&#34;*&#34;</span>
+
+ 
+
+<span class="c1"># 数据目录</span>
+
+<span class="c1">#path.data: /data/LPAPP/es/data</span>
+
+ 
+
+<span class="c1"># 日志目录</span>
+
+<span class="c1">#path.logs: /data/LPAPP/es/logs</span>
+
+ 
+
+<span class="c1"># 单节点</span>
+
+<span class="c1">#discovery.type: single-node</span>
+
+如果没有挂载配置目录,则需要在容器中修改配置:
+
+进入容器
+
+ps -ef <span class="p">|</span>grep elasticsearch
+
+<span class="nb">cd</span> /data/LPAPP/es/config <span class="o">(</span><span class="nb">cd</span> /usr/share/elasticsearch/config<span class="o">)</span>
+
+vim elasticsearch.yml
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="创建容器并启动"><strong>⑤创建容器并启动</strong></h3>
+<h4 id="1拉取镜像并创建容器并启动">1.拉取镜像并创建容器并启动</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">docker run --name elasticsearch-6.7.2 -p 9200:9200 -p 9300:9300 <span class="se">\
+</span><span class="se"></span>
+-e <span class="s2">&#34;discovery.type=single-node&#34;</span> <span class="se">\
+</span><span class="se"></span>
+-e <span class="nv">ES_JAVA_OPTS</span><span class="o">=</span><span class="s2">&#34;-Xms64m -Xmx128m&#34;</span> <span class="se">\
+</span><span class="se"></span>
+-v /data/LPAPP/docker_elasticsearch-6.7.2/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml <span class="se">\
+</span><span class="se"></span>
+-v /data/LPAPP/docker_elasticsearch-6.7.2/data:/usr/share/elasticsearch/data <span class="se">\
+</span><span class="se"></span>
+-v /data/LPAPP/docker_elasticsearch-6.7.2/logs:/usr/share/elasticsearch/logs <span class="se">\
+</span><span class="se"></span>
+-v /data/LPAPP/docker_elasticsearch-6.7.2/plugins:/usr/share/elasticsearch/plugins <span class="se">\
+</span><span class="se"></span>
+-itd elasticsearch:6.7.2
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2创建容器并启动">2.创建容器并启动</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">docker run --name elasticsearch-6.7.2 -p 9200:9200 -p 9300:9300 <span class="se">\
+</span><span class="se"></span>
+-e <span class="s2">&#34;discovery.type=single-node&#34;</span> <span class="se">\
+</span><span class="se"></span>
+-e <span class="nv">ES_JAVA_OPTS</span><span class="o">=</span><span class="s2">&#34;-Xms64m -Xmx128m&#34;</span> <span class="se">\
+</span><span class="se"></span>
+-v /data/LPAPP/docker_elasticsearch-6.7.2/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml <span class="se">\
+</span><span class="se"></span>
+-v /data/LPAPP/docker_elasticsearch-6.7.2/data:/usr/share/elasticsearch/data <span class="se">\
+</span><span class="se"></span>
+-v /data/LPAPP/docker_elasticsearch-6.7.2/logs:/usr/share/elasticsearch/logs<span class="se">\
+</span><span class="se"></span>
+-v /data/LPAPP/docker_elasticsearch-6.7.2/plugins:/usr/share/elasticsearch/plugins <span class="se">\
+</span><span class="se"></span>
+-itd 2982ba071059
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3说明">3.说明</h4>
+<h5 id="1其中elasticsearchyml是挂载的配置文件data是挂载的数据plugins是es的插件如ik">1).其中elasticsearch.yml是挂载的配置文件，data是挂载的数据，plugins是es的插件，如ik。</h5>
+<p>而数据挂载需要权限，需要设置data文件的权限为可读可写,需要下边的指令：</p>
+<p>chmod -R 777 要修改的路径</p>
+<h5 id="2命令解释">2）命令解释：</h5>
+<p>-e &ldquo;discovery.type=single-node&rdquo; 设置为单节点</p>
+<p>特别注意：</p>
+<p>-e ES_JAVA_OPTS=&quot;-Xms256m -Xmx256m&rdquo; \ 测试环境下，设置ES的初始内存和最大内存，否则导致过大启动不了ES</p>
+<h3 id="验证是否运行es成功"><strong>⑤验证是否运行es成功</strong></h3>
+<p>ip addr</p>
+<p>curl -v http://1<a href="http://127.0.0.1:9200">27.0.0.1:9200</a></p>
+<h3 id="开启9200端口"><strong>⑤开启9200端口</strong></h3>
+<p>firewall-cmd &ndash;add-port=9200/tcp &ndash;permanent</p>
+<p>firewall-cmd &ndash;reload</p>
+<p>firewall-cmd &ndash;list-all</p>
+<h2 id="3-安装ik分词器"><strong>3</strong> <strong>.安装ik分词器</strong></h2>
+<h3 id="0下载">0.下载</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">wget https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v6.7.2/elasticsearch-analysis-ik-6.7.2.zip \
+
+-P /data/tools
+
+sudo yum install unzip
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="1已挂载插件目录执行">1).已挂载插件目录(执行):</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">\#创建目录:
+
+mkdir -p /data/LPAPP/docker_elasticsearch-6.7.2/plugins/ik 
+
+\#解压
+
+unzip /data/tools/elasticsearch-analysis-ik-6.7.2.zip -d /data/LPAPP/docker_elasticsearch-6.7.2/plugins/ik
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2未挂载插件目录执行">2).未挂载插件目录(执行):</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">\#将压缩包移动到容器中
+
+docker cp /data/tools/elasticsearch-analysis-ik-6.7.2.zip elasticsearch:/usr/share/elasticsearch/plugins
+
+
+\#进入容器
+
+docker exec -it elasticsearch /bin/bash  
+
+
+\#创建目录
+
+mkdir /usr/share/elasticsearch/plugins/ik
+
+ 
+
+\#将文件压缩包移动到ik中
+
+mv /usr/share/elasticsearch/plugins/elasticsearch-analysis-ik-7.7.0.zip /usr/share/elasticsearch/plugins/ik
+
+
+\#进入目录
+
+cd /usr/share/elasticsearch/plugins/ik
+
+
+\#解压
+
+unzip elasticsearch-analysis-ik-7.7.0.zip
+
+
+\#删除压缩包
+
+rm -rf elasticsearch-analysis-ik-7.7.0.zip
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3重启es容器">3).重启ES容器</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">docker restart elasticsearch-6.7.2
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4验证ik分词器">4).验证ik分词器</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">POST /_analyze {&#34;text&#34;:&#34;我是中国人&#34;}
+
+POST /_analyze {&#34;analyzer&#34;:&#34;ik_max_word&#34;,&#34;text&#34;:&#34;我是中国人&#34;}
+
+POST /_analyze {&#34;analyzer&#34;:&#34;ik_smart&#34;,&#34;text&#34;:&#34;我是中国人&#34;}
+
+POST /_analyze {&#34;text&#34;:&#34;中华人民共和国国歌&#34;}
+
+POST /_analyze {&#34;analyzer&#34;:&#34;ik_max_word&#34;,&#34;text&#34;:&#34;中华人民共和国国歌&#34;}
+
+POST /_analyze {&#34;analyzer&#34;:&#34;ik_smart&#34;,&#34;text&#34;:&#34;中华人民共和国国歌&#34;}
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="5总结">5).总结</h3>
+<p>给大家个建议，这玩意装与不装都挺好，不装查到的东西也很精确够使，装上会查出一些没有用的</p>
+<h2 id="4备份与恢复"><strong>4.备份与恢复</strong></h2>
+<h3 id="1前期准备"><strong>1).前期准备</strong></h3>
+<p>架设NFS服务器，并将其挂在至所有elasticsearch节点，挂载点为/data/backup/elasticsearch</p>
+<p>mkdir -p /data/backup/elasticsearch</p>
+<p>注意如果是容器启动服务的话,必须是容器内路径</p>
+<p>参考文档:</p>
+<p><a href="https://www.jixian.io/article/Elasticsearch%20%E6%9C%AC%E5%9C%B0%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%98%E5%8E%9F/">https://www.jixian.io/article/Elasticsearch%20%E6%9C%AC%E5%9C%B0%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%98%E5%8E%9F/</a></p>
+<h3 id="2配置elasticsearch"><strong>2).配置elasticsearch</strong></h3>
+<h4 id="a修改所有节点的elasticsearchyml文件">A.修改所有节点的elasticsearch.yml文件</h4>
+<p>vim es目录/config/elasticsearch.yml</p>
+<p># 添加path.repo配置共享仓库的位置</p>
+<p>path.repo: [&quot;/usr/share/elasticsearch/data&quot;]</p>
+<p># 保存后重启es</p>
+<p>docker restart elasticsearch-6.7.2</p>
+<h3 id="3创建了共享目录后在共享目录下为集群创建共享仓库"><strong>3).创建了共享目录后在共享目录下为集群创建共享仓库</strong></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">PUT http://192.168.20.116:9200/_snapshot/backup 
+
+{
+
+​    &#34;type&#34;: &#34;fs&#34;, 
+
+​    &#34;settings&#34;: {
+
+​        &#34;location&#34;: &#34;/usr/share/elasticsearch/data/backup&#34;,
+
+​        &#34;compress&#34;: true, // 是否压缩，可选
+
+​        &#34;max_snapshot_bytes_per_sec&#34; : &#34;50mb&#34;,  // 速度限制，默认为20mb，可选
+
+​        &#34;max_restore_bytes_per_sec&#34; : &#34;50mb&#34;
+
+​    }
+
+}
+
+ 
+
+curl -XPUT 192.168.20.116:9200/_snapshot/backup -H &#39;Content-Type:application/json&#39; -d &#39;
+
+{
+
+​    &#34;type&#34;: &#34;fs&#34;,
+
+​    &#34;settings&#34;: {
+
+​        &#34;location&#34;: &#34;/usr/share/elasticsearch/data/backup&#34;,
+
+​        &#34;max_snapshot_bytes_per_sec&#34;: &#34;50mb&#34;,
+
+​        &#34;max_restore_bytes_per_sec&#34;: &#34;50mb&#34;,
+
+​        &#34;compress&#34;: &#34;true&#34;
+
+​    }
+
+}
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4备份索引数据"><strong>4).备份索引数据</strong></h3>
+<h4 id="-所有索引备份"># 所有索引备份</h4>
+<p>PUT http://192.168.20.116:9200/_snapshot/backup/备份名</p>
+<p># 指定索引备份</p>
+<p>{</p>
+<p>​    &ldquo;indices&rdquo;: &ldquo;index1, index2&rdquo;</p>
+<p>}</p>
+<h4 id="-全量备份"># 全量备份</h4>
+<p>curl -XPOST http://192.168.20.116:9200/_snapshot/backup/backup-2021-06-05?wait_for_completion=true</p>
+<p>TIPS: 如果不希望快照作为后台进程运行，可以通过添加wait_for_completion=true参数，</p>
+<p>使其在前台运行，知道备份完成。</p>
+<h4 id="-终止备份"># 终止备份</h4>
+<p>curl -XDELETE http://192.168.20.116:9200/_snapshot/backup/backup-2021-06-05</p>
+<h3 id="5查看备份状态"><strong>5).查看备份状态</strong></h3>
+<p>GET http://192.168.20.116:9200/_snapshot/backup/备份名/_status</p>
+<p>GET http://192.168.20.116:9200/_snapshot/backup/backup-2021-06-05/_status</p>
+<h3 id="6查看备份列表"><strong>6).查看备份列表</strong></h3>
+<p>GET http://192.168.20.116:9200/_snapshot/backup/_all</p>
+<h3 id="7删除备份"><strong>7).删除备份</strong></h3>
+<p>DELETE http://192.168.20.116:9200/_snapshot/backup/备份名</p>
+<h3 id="8恢复数据"><strong>8).恢复数据</strong></h3>
+<p>如果是在新的集群恢复数据，需要先将NFS挂载至elasticsearch节点，</p>
+<p>并修改配置文件path.repo:[&quot;/data/backup/elasticsearch&quot;],</p>
+<p>并创建备份仓库，而后执行如下命令：</p>
+<p>curl -XPOST http://192.168.20.116:9200/_snapshot/backup/backup-2021-06-05/_restore?wait_for_completion=true</p>
+<p>如果，不在新的集群恢复，那么只需要执行上述命令即可。</p>
+<p>备注： 使用快照并不会备份templates</p>
+<h4 id="-全部恢复"># 全部恢复</h4>
+<p># wait_for_completion=true 为阻塞运行，可选</p>
+<p>POST http://192.168.20.116:9200/_snapshot/backup/备份名/_restore?wait_for_completion=true</p>
+<h4 id="-指定恢复index1索引"># 指定恢复index1索引</h4>
+<p>{</p>
+<p>​    &ldquo;indices&rdquo;: &ldquo;index1&rdquo;,</p>
+<p>​    // 如需重命名，则增加</p>
+<p>​    &ldquo;rename_pattern&rdquo;: &ldquo;index1&rdquo;, // 需改名的原索引名</p>
+<p>​    &ldquo;rename_replacement&rdquo;: &ldquo;index2&rdquo; // 改名后索引名</p>
+<p>}</p>
+<h3 id="9查看恢复状态"><strong>9).查看恢复状态</strong></h3>
+<p>GET http://192.168.20.116:9200/_recovery/</p>
+<p># percent字段为恢复百分比</p>
+<p># 如需取消一个恢复</p>
+<p>DELETE http://192.168.20.116:9200/恢复后的索引名</p>
+<h2 id="5安装视图工具"><strong>5.安装视图工具</strong></h2>
+<h3 id="1浏览器扩展安装elasticsearch-head推荐"><strong>1).浏览器扩展安装(<strong><strong>ElasticSearch-head</strong></strong>)(推荐)</strong></h3>
+<h4 id="下载扩展"><strong>①下载扩展</strong></h4>
+<p><a href="https://codeload.github.com/mobz/elasticsearch-head/zip/refs/heads/master"><strong>https://codeload.github.com/mobz/elasticsearch-head/zip/refs/heads/master</strong></a></p>
+<h4 id="安装扩展"><strong>②安装扩展</strong></h4>
+<p>1.下载得到压缩包:elasticsearch-head-master.zip</p>
+<p>2.解压进入目录,进入crx目录</p>
+<p>3.复制文件:es-head.crx 到桌面并修改后缀为zip</p>
+<p>4.解压zip文件到es-head目录</p>
+<p>5.浏览器打开扩展管理,打开开发者模式</p>
+<p>6.加载已解压的扩展程序-&gt;选择es-head目录</p>
+<h3 id="2dejavu安装"><strong>2).Dejavu安装</strong></h3>
+<p>$ docker run -p 1358:1358 -d appbaseio/dejavu</p>
+<p>open http://localhost:1358/</p>
+<h3 id="3kibana安装"><strong>3).Kibana安装</strong></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">docker pull kibana:6.7.2
+
+ 
+
+docker run --name kibana -e ELASTICSEARCH_HOSTS=http://自己的IP地址:9200 \
+
+-p 5601:5601 -d kibana:6.7.2
+
+ 
+
+实例:
+
+docker run --name kibana -e ELASTICSEARCH_HOSTS=http://192.168.20.92:9200 \
+
+-p 5601:5601 -d kibana:6.7.2
+
+ 
+
+进入容器修改相应内容
+
+docker exec -it kibana /bin/bash
+
+cd /usr/share/kibana/config
+
+vi kibana.yml 添加以下:
+
+server.port: 5601
+
+server.host: 0.0.0.0
+
+elasticsearch.hosts: [ &#34;http://自己的IP地址:9200&#34; ]
+
+i18n.locale: &#34;zh-CN&#34;
+
+ 
+
+重启容器
+
+docker restart kibana
+</code></pre></td></tr></table>
+</div>
+</div><p>然后访问页面</p>
+<p>http://自己的IP地址:5601/app/kibana</p>
+<p>http://192.168.20.92:5601/app/kibana</p>
+<p>tips:</p>
+<p>1.索引管理</p>
+<p>2.设置查询时间</p>
+<h3 id="4安装elasticsearch-head"><strong>4).安装elasticsearch-head</strong></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">\#拉取镜像
+
+docker pull mobz/elasticsearch-head:5
+
+ 
+
+\#创建容器
+
+docker create --name elasticsearch-head -p 9100:9100 mobz/elasticsearch-head:5
+
+ 
+
+\#启动容器
+
+docker start elasticsearch-head
+
+or
+
+docker start 容器id （docker ps -a 查看容器id ）
+</code></pre></td></tr></table>
+</div>
+</div><p>#浏览器打开</p>
+<p>浏览器打开: http://IP:9100</p>
+<p><strong>ElasticSearch-head 操作时不修改配置，默认会报 406错误码，无法查看数据</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">\#复制vendor.js到外部
+
+docker cp 容器id:/usr/src/app/_site/vendor.js /data/conf/
+
+docker cp 6130115b8ebd:/usr/src/app/_site/vendor.js /data/conf/
+
+ 
+
+\#修改vendor.js
+
+vim /data/conf/vendor.js
+
+ 
+
+修改内容：
+
+6886行
+
+//contentType: &#34;application/x-www-form-urlencoded&#34;,
+
+contentType: &#34;application/json;charset=UTF-8&#34;,
+
+ 
+
+7574行
+
+//var inspectData = s.contentType === &#34;application/x-www-form-urlencoded&#34; &amp;&amp;
+
+var inspectData = s.contentType === &#34;application/json;charset=UTF-8&#34; &amp;&amp;
+
+ 
+
+docker cp /data/conf/vendor.js  容器id:/usr/src/app/_site
+
+docker cp /data/conf/vendor.js  6130115b8ebd:/usr/src/app/_site
+
+docker restart 容器id
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-02-10
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a>
+          <a href="/tags/middleware/">middleware</a>
+          <a href="/tags/elasticsearch/">elasticsearch</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/linux/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[linux]linux常用命令</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/middleware/elasticsearch%E5%9C%A8linux%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/">
+            <span class="next-text nav-default">[elasticsearch]Elasticsearch在linux安装及使用</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

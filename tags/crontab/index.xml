@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>crontab on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/tags/crontab/</link>
+    <description>Recent content in crontab on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Tue, 12 Apr 2016 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/crontab/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[crontab]定时器crontab安装与使用</title>
+      <link>https://blog.nevergiveup.tech/post/linux/linux%E5%AE%9A%E6%97%B6%E5%99%A8crontab%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Tue, 12 Apr 2016 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/linux/linux%E5%AE%9A%E6%97%B6%E5%99%A8crontab%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/</guid>
+      <description>定时器crontab安装与使用 1.crontab说明 所有用户定义的 crontab 都被保存在/var/spool/cron 目录中 首先说说cron,它是一个</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -10,10 +10,10 @@
     <lastBuildDate>Tue, 17 Sep 2019 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/spring-boot/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[java]Spring boot学习笔记</title>
-      <link>https://blog.nevergiveup.tech/post/java/spring-boot%E5%AD%A6%E4%B9%A0%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
+      <link>https://blog.nevergiveup.tech/post/dev_language/java/spring-boot%E5%AD%A6%E4%B9%A0%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
       <pubDate>Tue, 17 Sep 2019 15:37:56 +0800</pubDate>
       
-      <guid>https://blog.nevergiveup.tech/post/java/spring-boot%E5%AD%A6%E4%B9%A0%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
+      <guid>https://blog.nevergiveup.tech/post/dev_language/java/spring-boot%E5%AD%A6%E4%B9%A0%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
       <description>Spring boot学习笔记 一.Spring Boot 概述 Spring Boot 是所有基于 Spring 开发的项目的起点。Spring Boot 的设计是为了让你尽可能快的跑起来 Spring 应用程序并且尽可能</description>
     </item>
     

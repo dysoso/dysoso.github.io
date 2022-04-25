@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[etcd] confd&#43;etcd配置同步 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="confd&#43;etcd配置同步 一、etcd集群安装配置 参考 etcd集群部署与使用.md 二、confd介绍与资料 confd是一个轻量级的配置管理" /><meta name="keywords" content="中间件, middleware, linux, centos7, confd, etcd" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/middleware/confd&#43;etcd%E9%85%8D%E7%BD%AE%E5%90%8C%E6%AD%A5/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[etcd] confd&#43;etcd配置同步" />
+<meta property="og:description" content="confd&#43;etcd配置同步 一、etcd集群安装配置 参考 etcd集群部署与使用.md 二、confd介绍与资料 confd是一个轻量级的配置管理" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/middleware/confd&#43;etcd%E9%85%8D%E7%BD%AE%E5%90%8C%E6%AD%A5/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-12-26T15:37:56+08:00" />
+<meta property="article:modified_time" content="2022-02-10T16:37:56+08:00" />
+
+<meta itemprop="name" content="[etcd] confd&#43;etcd配置同步">
+<meta itemprop="description" content="confd&#43;etcd配置同步 一、etcd集群安装配置 参考 etcd集群部署与使用.md 二、confd介绍与资料 confd是一个轻量级的配置管理"><meta itemprop="datePublished" content="2021-12-26T15:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-02-10T16:37:56+08:00" />
+<meta itemprop="wordCount" content="3381">
+<meta itemprop="keywords" content="中间件,middleware,linux,centos7,confd,etcd," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[etcd] confd&#43;etcd配置同步"/>
+<meta name="twitter:description" content="confd&#43;etcd配置同步 一、etcd集群安装配置 参考 etcd集群部署与使用.md 二、confd介绍与资料 confd是一个轻量级的配置管理"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[etcd] confd&#43;etcd配置同步</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-12-26 </span>
+        <div class="post-category">
+            <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/"> 中间件 </a>
+            </div>
+          <span class="more-meta"> 约 3381 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#confdetcd配置同步">confd+etcd配置同步</a>
+      <ul>
+        <li><a href="#一etcd集群安装配置">一、etcd集群安装配置</a></li>
+        <li><a href="#二confd介绍与资料">二、confd介绍与资料</a></li>
+        <li><a href="#三confd安装与配置">三、confd安装与配置</a>
+          <ul>
+            <li><a href="#1confd安装">1.confd安装</a></li>
+            <li><a href="#2confd配置">2.confd配置</a></li>
+            <li><a href="#3在etcd中创建数据">3.在etcd中创建数据</a></li>
+            <li><a href="#4启动confd服务">4.启动confd服务</a></li>
+            <li><a href="#5测试">5.测试</a></li>
+          </ul>
+        </li>
+        <li><a href="#四思考扩展-confd能做些什么">四.思考扩展-confd能做些什么</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="confdetcd配置同步">confd+etcd配置同步</h1>
+<h2 id="一etcd集群安装配置">一、etcd集群安装配置</h2>
+<blockquote>
+<p>参考 etcd集群部署与使用.md</p>
+</blockquote>
+<h2 id="二confd介绍与资料">二、confd介绍与资料</h2>
+<blockquote>
+<p>confd是一个轻量级的配置管理工具。通过查询后端存储，结合配置模板引擎，保持本地配置最新，同时具备定期探测机制，配置变更自动reload。</p>
+<p>对应的后端存储可以是etcd，redis、zookeeper等等。我们使用etcd v3作为后端存储。</p>
+<p>github文档：https://github.com/kelseyhightower/confd/tree/master/docs</p>
+<p>confd的使用：https://blog.csdn.net/huwh_/article/details/82286934</p>
+<p>confd+etcd实现高可用自动发现: <a href="https://www.cnblogs.com/chenqionghe/p/10503949.html">https://www.cnblogs.com/chenqionghe/p/10503949.html</a></p>
+<p>中文版confd模板语法详解：https://wandouduoduo.github.io/articles/9d4187fa.html#%E7%94%A8%E6%B3%95</p>
+</blockquote>
+<h2 id="三confd安装与配置">三、confd安装与配置</h2>
+<h3 id="1confd安装">1.confd安装</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 下载编译好的进程或者下载源码自己编译，示例直接下载了编译好的进程。</span>
+wget https://github.com/kelseyhightower/confd/releases/download/v0.16.0/confd-0.16.0-linux-amd64
+
+<span class="c1"># 重命名二进制文件，并移动到PATH的目录下</span>
+mv confd-0.16.0-linux-amd64 /usr/local/bin/confd
+chmod +x /usr/local/bin/confd
+
+<span class="c1"># 验证是否安装成功</span>
+confd --version
+confd --help
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2confd配置">2.confd配置</h3>
+<h4 id="21创建配置文件目录">2.1创建配置文件目录</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">mkdir -p /etc/confd/{conf.d,templates}
+</code></pre></td></tr></table>
+</div>
+</div><p>confd配置文件默认在/etc/confd中，可以通过参数-confdir指定。</p>
+<p>目录中包含两个子目录，分别是：conf.d templates。</p>
+<ul>
+<li><code>conf.d</code>:confd的配置文件，主要包含配置的生成逻辑，例如模板源，后端存储对应的keys，命令执行等。</li>
+<li><code>templates</code>:配置模板Template，即基于不同组件的配置，修改为符合 <a href="http://golang.org/pkg/text/template/#pkg-overview">Golang text templates</a>的模板文件。</li>
+</ul>
+<p>confd会先读取conf.d目录中的配置文件(toml格式)，然后根据文件指定的模板路径去渲染模板，再执行&lt;reload_cmd&gt;，也可以配置check_cmd等。</p>
+<h4 id="22confdtoml配置">2.2.confd.toml配置</h4>
+<blockquote>
+<p>confd.toml为confd服务本身的配置文件，主要记录了使用的存储后端、协议、confdir等参数。是进程启动时读取的参数。</p>
+<p>默认路径：/etc/confd/confd.toml</p>
+<p>其中watch参数表示实时监听后端存储的变化，如有变化则更新confd管理的配置。<br>
+如果没有启动watch参数，则会依据interval参数定期去存储后端拿取数据，并比较与当前配置数据是否有变化（主要比较md5值），如果有变化则更新配置，没有变化则定期再去拿取数据，以此循环</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">vim /etc/confd/confd.toml
+
+backend = &#34;etcdv3&#34;
+confdir = &#34;/etc/confd&#34;
+log-level = &#34;info&#34;
+#interval = 5
+nodes = [&#34;http://10.0.8.116:2379&#34;,&#34;http://10.0.8.159:2379&#34;,&#34;http://10.0.8.122:2379&#34;]
+scheme = &#34;http&#34;
+watch = true
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="23模板源配置文件">2.3.模板源配置文件</h4>
+<p>模板源配置文件是TOML格式的文件，主要包含配置的生成逻辑，例如模板源，后端存储对应的keys，命令执行等。</p>
+<p>默认目录在/etc/confd/conf.d。
+示例配置文件：/etc/confd/conf.d/test-samba.toml</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[template]
+# 模板文件路径
+src = &#34;test-samba.tmpl&#34;
+# 生成最终文件路径
+dest = &#34;/root/test/test-samba.conf&#34;
+keys = [
+        &#34;/nas_001/samba_global&#34;,
+        &#34;/nas_001/samba/&#34;,
+]
+# 生成文件后执行的命令
+check_cmd = &#34;echo &#39;run check_cmd&#39; &gt;&gt; /root/test/confd-reload-samba.txt&#34;
+reload_cmd = &#34;echo &#39;run reload_cmd&#39; &gt;&gt; /root/test/confd-reload-samba.txt&#34;
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>关键字描述：<br>
+src：The relative path of a configuration template.  模块文件路径。 confd是根据模板文件生成配置文件的。</p>
+<p>dest：The target file. 最终生成的配置文件，测试使用的是/root/drx/test/samba.conf 。实际应用应该是/etc/samba/smb.conf。</p>
+<p>keys：An array of keys. 实际应用就是etcd中的键值。confd需要从这些key值中更新数据。</p>
+<p>reload_cmd：The command to reload config. 修改配置后，配置对相关服务实现重载。</p>
+<p>还有部分可选参数没有列出，以下列出，某些应用可能会用到。<br>
+gid (int) - The gid that should own the file. Defaults to the effective gid.</p>
+<p>mode (string) - The permission mode of the file.</p>
+<p>uid (int) - The uid that should own the file. Defaults to the effective uid.</p>
+<p>reload_cmd (string) - The command to reload config.</p>
+<p>check_cmd (string) - The command to check config. Use {{.src}} to reference the rendered source template.</p>
+<p>prefix (string) - The string to prefix to keys.</p>
+</blockquote>
+<h4 id="24创建模板文件">2.4.创建模板文件</h4>
+<p><code>Template</code>定义了单一应用配置的模板，默认存储在<code>/etc/confd/templates</code>目录下。</p>
+<p>模板文件常用函数有<code>base</code>，<code>get</code>，<code>gets</code>，<code>lsdir</code>，<code>json</code>等。具体可参考https://github.com/kelseyhightower/confd/blob/master/docs/templates.md。</p>
+<p>例子 /etc/confd/templates/test-samba.tmpl</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">{{range gets &#34;/nas_001/samba_global&#34;}}[global]{{$value := json .Value}}
+        workgroup = {{$value.workgroup}}
+        netbios name = {{$value.netbios_name}}
+        server string = {{$value.server_string}}
+        {{if $value.unix_charset}}unix charset = {{$value.unix_charset}}{{else}}charset = UTF8 {{end}}
+{{end}}
+{{range gets &#34;/nas_001/samba/*&#34;}}[{{base .Key}}]{{$value := json .Value}}
+        path = {{$value.path}}
+        create mask = {{$value.create_mask }}
+{{end}}
+</code></pre></td></tr></table>
+</div>
+</div><p>samba配置文件相对来说比较复杂的配置，因为配置项目较多。以下进行详细说明：<br>
+<strong>语法</strong>：Go标准库template语法，用go标准库应该会更加容易。</p>
+<p><strong>说明</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">{{range gets &#34;/nas_001/samba_global&#34;}}[global]{{$value := json .Value}}
+</code></pre></td></tr></table>
+</div>
+</div><p>其中：range gets 表示获取/nas_001/samba_global的值<br>
+&ldquo;[global]&ldquo;表示输出固定字符串global。<br>
+{{$value := json .Value}}表示获取json字符串并传给value。json表示将获取的key内容转换为json。</p>
+<p>workgroup = {{$value.workgroup}} 表示：输出固定字符串&quot;workgroup = &ldquo;，{{$value.workgroup}}表示输出获取到json子串中的workgroup对应的值。</p>
+<p>netbios name/server string同上。</p>
+<p>{{if $value.unix_charset}}unix charset = {{$value.unix_charset}}{{else}}charset = UTF8 {{end}}</p>
+<p>如果value.unix_charset存在，执行：unix charset = {{$value.unix_charset}}，否则输出固定字符串：charset = UTF8。</p>
+<p>以上是global部分的打印（global部分实际不止这么多的配置，测试用例只是书写了一部分！）。</p>
+<p>共享逻辑配置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">{{range gets &#34;/nas_001/samba/*&#34;}}[{{base .Key}}]{{$value := json .Value}}
+        path = {{$value.path}}
+        create mask = {{$value.create_mask }}
+{{end}}
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>说明</strong>：{{range gets &ldquo;/nas_001/samba/*&quot;}} 表示获取/nas_001/samba/*下所有key！也可以所有共享使用一个key，但是考虑到samba共享配置可能较多，因此，每个共享使用一个key，前缀都是相同的。<br>
+其余语法与global完全一样。当然也只写了部分配置。</p>
+<p>/nas_001/samba/中，nas_001是表示NAS集群id，如果有多个NAS集群，可以建立多个key。</p>
+<h3 id="3在etcd中创建数据">3.在etcd中创建数据</h3>
+<p>（如果使用其他backend，这里肯定会不同）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">etcdctl put /nas_001/samba_global &#39;{&#34;workgroup&#34;:&#34;WORKGROUP&#34;, &#34;netbios_name&#34;: &#34;INFINITY&#34;, &#34;server_string&#34;: &#34;yes&#34;}&#39;
+etcdctl put /nas_001/samba/drxtest1 &#39;{&#34;path&#34;: &#34;/infinityfs1/drxtest1&#34;, &#34;create_mask&#34;: &#34;0777&#34;}&#39;
+etcdctl put /nas_001/samba/drxtest2 &#39;{&#34;path&#34;: &#34;/infinityfs1/drxtest2&#34;, &#34;create_mask&#34;: &#34;0777&#34;}&#39;
+</code></pre></td></tr></table>
+</div>
+</div><p>示例中使用json存储samba相关的配置，例如：'{&ldquo;workgroup&rdquo;:&ldquo;WORKGROUP&rdquo;, &ldquo;netbios_name&rdquo;: &ldquo;INFINITY&rdquo;, &ldquo;server_string&rdquo;: &ldquo;yes&rdquo;}'。<br>
+其中不同的字段表示不同的值。</p>
+<h3 id="4启动confd服务">4.启动confd服务</h3>
+<ol>
+<li>confd启动模式</li>
+</ol>
+<p>confd支持以<code>daemon</code>或者<code>onetime</code>两种模式运行，当以<code>daemon</code>模式运行时，confd会监听后端存储的配置变化，并根据配置模板动态生成目标配置文件。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">#onetime模式：只会生成一次配置，之后key无论变化不会再生成
+confd -onetime -backend etcd -node http://127.0.0.1:2379
+
+#daemon模式：confd会监听后端存储的配置变化，根据配置模板动态生成目标配置文件。
+confd -watch -backend etcd -node http://127.0.0.1:2379 &amp;
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>设置系统服务并开机启动</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">vim /etc/systemd/system/confd.service 
+
+<span class="o">[</span>Unit<span class="o">]</span>
+<span class="nv">Description</span><span class="o">=</span>confd
+<span class="nv">After</span><span class="o">=</span>network.target
+
+<span class="o">[</span>Service<span class="o">]</span>
+<span class="nv">Type</span><span class="o">=</span>simple
+<span class="nv">PIDFile</span><span class="o">=</span>/var/run/confd.pid
+<span class="nv">ExecStart</span><span class="o">=</span>/usr/local/bin/confd
+<span class="nv">ExecStop</span><span class="o">=</span>/bin/kill -WINCH <span class="si">${</span><span class="nv">MAINPID</span><span class="si">}</span>
+<span class="nv">Restart</span><span class="o">=</span>always
+<span class="nv">PrivateTmp</span><span class="o">=</span><span class="nb">true</span>
+<span class="nv">Restart</span><span class="o">=</span>always
+<span class="nv">RestartSec</span><span class="o">=</span>5s
+
+<span class="o">[</span>Install<span class="o">]</span>
+<span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">systemctl daemon-reload
+systemctl <span class="nb">enable</span> confd
+systemctl start confd
+systemctl status confd
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>执行后，cat 输出的测试文件如下：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[root@node1 /etc/confd]# cat /root/test/test-samba.conf
+[global]
+        workgroup = WORKGROUP
+        netbios name = INFINITY
+        server string = yes
+        charset = UTF8 
+
+[drxtest1]
+        path = /infinityfs1/drxtest1
+        create mask = 0777
+[drxtest2]
+        path = /infinityfs1/drxtest2
+        create mask = 0777
+
+
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到已经生成了我们需求的测试文件了。</p>
+<p>3）修改完成配置后重启confd服务</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">systemctl restart confd
+</code></pre></td></tr></table>
+</div>
+</div><p>4）查看confd日志</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">journalctl -u confd
+</code></pre></td></tr></table>
+</div>
+</div><p>/usr/lib/systemd/system/confd.service</p>
+<h3 id="5测试">5.测试</h3>
+<p>1） 修改etcd中key值：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">etcdctl put /nas_001/samba/drxtest1 &#39;{&#34;path&#34;: &#34;/infinityfs1/drxtest1&#34;, &#34;create_mask&#34;: &#34;0555&#34;}&#39;
+</code></pre></td></tr></table>
+</div>
+</div><p>查看控制日志：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[root@node1 /etc/confd]# etcdctl put /nas_001/samba/drxtest1 &#39;{&#34;path&#34;: &#34;/infinityfs1/drxtest1&#34;, &#34;create_mask&#34;: &#34;0555&#34;}&#39;
+OK
+2022-01-27T15:46:36+08:00 node1 confd[4185]: INFO /root/test/test-samba.conf has md5sum e46f2b98e112032be87b230472a95ff4 should be 432a956f145c5d613e3736c5d8ed34ce
+2022-01-27T15:46:36+08:00 node1 confd[4185]: INFO Target config /root/test/test-samba.conf out of sync
+[root@node1 /etc/confd]# 2022-01-27T15:46:36+08:00 node1 confd[4185]: INFO Target config /root/test/test-samba.conf has been updated
+</code></pre></td></tr></table>
+</div>
+</div><p>检查是否同步：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[root@node1 /etc/confd]# cat /root/test/test-samba.conf
+[global]
+        workgroup = WORKGROUP
+        netbios name = INFINITY
+        server string = yes
+        charset = UTF8 
+
+[drxtest1]
+        path = /infinityfs1/drxtest1
+        create mask = 0555
+[drxtest2]
+        path = /infinityfs1/drxtest2
+        create mask = 0777
+</code></pre></td></tr></table>
+</div>
+</div><p>检查reload是否完成：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[root@node20 templates]# tailf /root/test/confd-reload-samba.txt
+run check_cmd 
+
+run reload_cmd 
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="四思考扩展-confd能做些什么">四.思考扩展-confd能做些什么</h2>
+<p>我们大概知道了confd的原理
+1.读取配置文件 -&gt; 2.使用模板生成指定文件 -&gt; 3.运行重载命令(可选)</p>
+<p>所以基本使用配置和reload命令的地方都可以使用confd，比如下边的需求</p>
+<ul>
+<li>nginx动态生成upstream实现服务发现</li>
+<li>prometheus动态生成prometheus.yml实现自动报警</li>
+<li>php-fpm动态生成php.ini文件实现动态性能调参</li>
+<li>动态生成报表文件再发送通知</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-02-10
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" target="_blank">Creative Commons Attribution-ShareAlike License</a></span>
+  </p>
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a>
+          <a href="/tags/middleware/">middleware</a>
+          <a href="/tags/linux/">linux</a>
+          <a href="/tags/centos7/">centos7</a>
+          <a href="/tags/confd/">confd</a>
+          <a href="/tags/etcd/">etcd</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/dfs/ceph/ceph%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[ceph] ceph入门学习</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/middleware/etcd%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2%E4%B8%8E%E4%BD%BF%E7%94%A8/">
+            <span class="next-text nav-default">[etcd] etcd集群配置与使用</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

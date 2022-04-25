@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>swoft on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/tags/swoft/</link>
+    <description>Recent content in swoft on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Tue, 11 Sep 2018 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/swoft/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[swoole]swoft安装与入门</title>
+      <link>https://blog.nevergiveup.tech/post/dev_language/php/swoole/swoft%E5%AE%89%E8%A3%85%E4%B8%8E%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Tue, 11 Sep 2018 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dev_language/php/swoole/swoft%E5%AE%89%E8%A3%85%E4%B8%8E%E5%85%A5%E9%97%A8/</guid>
+      <description>swoft安装与入门 A.安装 a.composer安装 1 2 3 composer create-project swoft/swoft swoft cd swoft composer install --no-dev # 不安装 dev 依赖会更快一些 b.手动安装 1 2 3 4 5 git clone https://github.com/swoft-cloud/swoft cd swoft composer install --no-dev #</description>
+    </item>
+    
+  </channel>
+</rss>

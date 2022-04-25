@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[git]优化github打开速度(解决无法打开或者打开慢的问题) - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="一.代理访问 自行购买相关代理并配置 二.使用DevSidecar辅助工具(推荐) DevSidecar辅助工具是一个开源工具 开发者边车，命名取自" /><meta name="keywords" content="版本控制器, git, 分布式, github" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/version_controller/git/%E4%BC%98%E5%8C%96github%E6%89%93%E5%BC%80%E9%80%9F%E5%BA%A6-%E5%89%AF%E6%9C%AC/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[git]优化github打开速度(解决无法打开或者打开慢的问题)" />
+<meta property="og:description" content="一.代理访问 自行购买相关代理并配置 二.使用DevSidecar辅助工具(推荐) DevSidecar辅助工具是一个开源工具 开发者边车，命名取自" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/version_controller/git/%E4%BC%98%E5%8C%96github%E6%89%93%E5%BC%80%E9%80%9F%E5%BA%A6-%E5%89%AF%E6%9C%AC/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-04-22T16:37:56+08:00" />
+<meta property="article:modified_time" content="2022-02-10T16:37:56+08:00" />
+
+<meta itemprop="name" content="[git]优化github打开速度(解决无法打开或者打开慢的问题)">
+<meta itemprop="description" content="一.代理访问 自行购买相关代理并配置 二.使用DevSidecar辅助工具(推荐) DevSidecar辅助工具是一个开源工具 开发者边车，命名取自"><meta itemprop="datePublished" content="2021-04-22T16:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-02-10T16:37:56+08:00" />
+<meta itemprop="wordCount" content="456">
+<meta itemprop="keywords" content="版本控制器,git,分布式,github," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[git]优化github打开速度(解决无法打开或者打开慢的问题)"/>
+<meta name="twitter:description" content="一.代理访问 自行购买相关代理并配置 二.使用DevSidecar辅助工具(推荐) DevSidecar辅助工具是一个开源工具 开发者边车，命名取自"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[git]优化github打开速度(解决无法打开或者打开慢的问题)</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-04-22 </span>
+        <div class="post-category">
+            <a href="/categories/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%99%A8/"> 版本控制器 </a>
+            </div>
+          <span class="more-meta"> 约 456 字 </span>
+          <span class="more-meta"> 预计阅读 1 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#一代理访问">一.代理访问</a></li>
+        <li><a href="#二使用devsidecar辅助工具推荐">二.使用DevSidecar辅助工具(推荐)</a></li>
+        <li><a href="#三使用国内镜像网站">三.使用国内镜像网站</a>
+          <ul>
+            <li><a href="#1releasecodezip-文件加速">1.Release、Code(ZIP) 文件加速</a></li>
+            <li><a href="#2git-clone-加速">2.Git Clone 加速：</a></li>
+            <li><a href="#3github文件加速">3.GitHub文件加速</a></li>
+          </ul>
+        </li>
+        <li><a href="#四使用浏览器油猴插件推荐">四.使用浏览器油猴插件(推荐)</a>
+          <ul>
+            <li><a href="#1安装油猴">1.安装油猴</a></li>
+            <li><a href="#2安装插件">2.安装插件</a></li>
+          </ul>
+        </li>
+        <li><a href="#五自行修改dns很不稳定不推荐">五.自行修改dns(很不稳定,不推荐)</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="一代理访问">一.代理访问</h2>
+<blockquote>
+<p>自行购买相关代理并配置</p>
+</blockquote>
+<h2 id="二使用devsidecar辅助工具推荐">二.使用DevSidecar辅助工具(推荐)</h2>
+<blockquote>
+<p>DevSidecar辅助工具是一个开源工具</p>
+<p>开发者边车，命名取自service-mesh的service-sidecar，意为为开发者打辅助的边车工具 通过本地代理的方式将https请求代理到一些国内的加速通道上</p>
+<p>具体看链接:</p>
+<p>github: <a href="https://github.com/docmirror/dev-sidecar">https://github.com/docmirror/dev-sidecar</a></p>
+<p>gitee : <a href="https://gitee.com/docmirror/dev-sidecar">https://gitee.com/docmirror/dev-sidecar</a></p>
+</blockquote>
+<h2 id="三使用国内镜像网站">三.使用国内镜像网站</h2>
+<h3 id="1releasecodezip-文件加速">1.Release、Code(ZIP) 文件加速</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">https://gh.xiu2.xyz    美国（自建
+https://gh.api.99988866.xyz    美国
+https://github.rc1844.workers.dev    美国
+https://download.fastgit.org    日本
+https://ghproxy.com    韩国
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2git-clone-加速">2.Git Clone 加速：</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">https://github.com.cnpmjs.org/
+https://hub.fastgit.org/
+https://gitclone.com
+https://github.com.cnpmjs.org    
+https://github.wuyanzheshui.workers.dev/
+https://github-dotcom.gateway.web.tr/
+https://git.sdut.me/
+https://api.git.sdut.me/
+https://v2.kkpp.cc/
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3github文件加速">3.GitHub文件加速</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">http://gh.msx.workers.dev/
+
+https://toolwa.com/github/
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="四使用浏览器油猴插件推荐">四.使用浏览器油猴插件(推荐)</h2>
+<h3 id="1安装油猴">1.安装油猴</h3>
+<blockquote>
+<p>安装攻略: <a href="https://www.cnplugins.com/zhuanti/266366.html">https://www.cnplugins.com/zhuanti/266366.html</a></p>
+</blockquote>
+<h3 id="2安装插件">2.安装插件</h3>
+<blockquote>
+<p>插件市场链接: <a href="https://greasyfork.org/zh-CN/scripts">https://greasyfork.org/zh-CN/scripts</a><br>
+github提速插件链接: <a href="https://greasyfork.org/zh-CN/scripts/412245-github-%E5%A2%9E%E5%BC%BA-%E9%AB%98%E9%80%9F%E4%B8%8B%E8%BD%BD">https://greasyfork.org/zh-CN/scripts/412245-github-%E5%A2%9E%E5%BC%BA-%E9%AB%98%E9%80%9F%E4%B8%8B%E8%BD%BD</a></p>
+</blockquote>
+<h2 id="五自行修改dns很不稳定不推荐">五.自行修改dns(很不稳定,不推荐)</h2>
+<p>###1、配置dbs</p>
+<p>配置本地连接的dns地址为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">223.6.6.6
+8.8.8.8
+</code></pre></td></tr></table>
+</div>
+</div><p>###2.刷新DNS</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">windows：
+ipconfig /flushdns
+
+MAC：
+https://zhidao.baidu.com/question/327224289.html
+
+安卓或者苹果：
+打开手机 &gt; 设置 &gt; wifi &gt; 点击感叹号 或者 详情 就可以看到 DNS 位置了
+</code></pre></td></tr></table>
+</div>
+</div><p>###3.测试
+更改完成后依然显示正在连接中，可以重启一下，基本上就会搞定</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-02-10
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%99%A8/">版本控制器</a>
+          <a href="/tags/git/">git</a>
+          <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a>
+          <a href="/tags/github/">github</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/dev_language/golang/golang%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[go] golang安装和配置</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/db/mysql/mysql%E9%94%81%E8%A1%A8%E5%A4%84%E7%90%86%E5%91%BD%E4%BB%A4%E5%BD%92%E7%BA%B3/">
+            <span class="next-text nav-default">[mysql]mysql锁表处理命令归纳</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

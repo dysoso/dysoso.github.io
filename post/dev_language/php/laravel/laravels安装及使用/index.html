@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[laravel]laravelS安装及使用 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="一.安装laravel 1.安装准备 安装前必须保证系统已经安装了下列软件 PHP &amp;gt;= 7.1.3 PHP OpenSSL 扩展 PHP PDO 扩展 PHP Mbstring 扩展 PHP Tokenizer 扩展 PHP XML 扩展 PHP Ctype 扩展 PHP JSON 扩展 PHP BCMath 扩展" /><meta name="keywords" content="开发语言, php, laravel, laravels, swoole" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/dev_language/php/laravel/laravels%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[laravel]laravelS安装及使用" />
+<meta property="og:description" content="一.安装laravel 1.安装准备 安装前必须保证系统已经安装了下列软件 PHP &gt;= 7.1.3 PHP OpenSSL 扩展 PHP PDO 扩展 PHP Mbstring 扩展 PHP Tokenizer 扩展 PHP XML 扩展 PHP Ctype 扩展 PHP JSON 扩展 PHP BCMath 扩展" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/dev_language/php/laravel/laravels%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-06-11T15:37:56+08:00" />
+<meta property="article:modified_time" content="2022-02-10T16:37:56+08:00" />
+
+<meta itemprop="name" content="[laravel]laravelS安装及使用">
+<meta itemprop="description" content="一.安装laravel 1.安装准备 安装前必须保证系统已经安装了下列软件 PHP &gt;= 7.1.3 PHP OpenSSL 扩展 PHP PDO 扩展 PHP Mbstring 扩展 PHP Tokenizer 扩展 PHP XML 扩展 PHP Ctype 扩展 PHP JSON 扩展 PHP BCMath 扩展"><meta itemprop="datePublished" content="2019-06-11T15:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-02-10T16:37:56+08:00" />
+<meta itemprop="wordCount" content="3423">
+<meta itemprop="keywords" content="开发语言,php,laravel,laravels,swoole," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[laravel]laravelS安装及使用"/>
+<meta name="twitter:description" content="一.安装laravel 1.安装准备 安装前必须保证系统已经安装了下列软件 PHP &gt;= 7.1.3 PHP OpenSSL 扩展 PHP PDO 扩展 PHP Mbstring 扩展 PHP Tokenizer 扩展 PHP XML 扩展 PHP Ctype 扩展 PHP JSON 扩展 PHP BCMath 扩展"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[laravel]laravelS安装及使用</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-06-11 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%BC%80%E5%8F%91%E8%AF%AD%E8%A8%80/"> 开发语言 </a>
+            <a href="/categories/php/"> php </a>
+            </div>
+          <span class="more-meta"> 约 3423 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#一安装laravel">一.安装laravel</a>
+          <ul>
+            <li><a href="#1安装准备">1.安装准备</a></li>
+            <li><a href="#2composer安装">2.composer安装</a></li>
+            <li><a href="#3laravel配置">3.laravel配置</a></li>
+          </ul>
+        </li>
+        <li><a href="#二安装swoole">二.安装swoole</a></li>
+        <li><a href="#三安装laravels">三.安装LaravelS</a>
+          <ul>
+            <li><a href="#1composer安装插件">1.composer安装插件</a></li>
+            <li><a href="#2构建-http-nginx服务器">2.构建 HTTP nginx服务器</a></li>
+          </ul>
+        </li>
+        <li><a href="#四性能测试">四.性能测试</a>
+          <ul>
+            <li><a href="#1php-fpm驱动">1.PHP-FPM驱动</a></li>
+            <li><a href="#2swoole-驱动">2. Swoole 驱动</a></li>
+          </ul>
+        </li>
+        <li><a href="#五laravel中swoole应用">五.Laravel中swoole应用</a>
+          <ul>
+            <li><a href="#1在-laravel-中集成-swoole-实现-websocket-服务器">1. 在 Laravel 中集成 Swoole 实现 WebSocket 服务器</a></li>
+            <li><a href="#2在-laravel-中集成-swoole-实现-毫秒级定时器">2. 在 Laravel 中集成 Swoole 实现 毫秒级定时器</a></li>
+            <li><a href="#3在-laravel-中集成-swoole-实现-异步任务队列">3. 在 Laravel 中集成 Swoole 实现 异步任务队列</a></li>
+            <li><a href="#4在-laravel-中实现数据库和-redis-的持久连接">4.在 Laravel 中实现数据库和 Redis 的持久连接</a></li>
+            <li><a href="#-redis-持久连接配置">// Redis 持久连接配置</a></li>
+            <li><a href="#修改websocketservice添加table处理">修改WebSocketService,添加table处理</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="一安装laravel">一.安装laravel</h2>
+<h3 id="1安装准备">1.安装准备</h3>
+<p>安装前必须保证系统已经安装了下列软件</p>
+<p>PHP &gt;= 7.1.3
+PHP OpenSSL 扩展
+PHP PDO 扩展
+PHP Mbstring 扩展
+PHP Tokenizer 扩展
+PHP XML 扩展
+PHP Ctype 扩展
+PHP JSON 扩展
+PHP BCMath 扩展</p>
+<h3 id="2composer安装">2.composer安装</h3>
+<p>composer create-project &ndash;prefer-dist laravel/laravel laravel_swoole 5.8.*</p>
+<h3 id="3laravel配置">3.laravel配置</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#swoole配置</span>
+<span class="nv">LARAVELS_LISTEN_PORT</span><span class="o">=</span><span class="m">9502</span>
+<span class="nv">LARAVELS_DAEMONIZE</span><span class="o">=</span><span class="nb">true</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="二安装swoole">二.安装swoole</h2>
+<p>见swoole学习笔记</p>
+<h2 id="三安装laravels">三.安装LaravelS</h2>
+<h3 id="1composer安装插件">1.composer安装插件</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">composer require hhxsv5/laravel-s
+php artisan laravels publish
+php bin/laravels start
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2构建-http-nginx服务器">2.构建 HTTP nginx服务器</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">gzip on<span class="p">;</span>
+gzip_min_length 1024<span class="p">;</span>
+gzip_comp_level 2<span class="p">;</span>
+gzip_types text/plain text/css text/javascript application/json application/javascript application/x-javascript application/xml application/x-httpd-php image/jpeg image/gif image/png font/ttf font/otf image/svg+xml<span class="p">;</span>
+gzip_vary on<span class="p">;</span>
+gzip_disable <span class="s2">&#34;msie6&#34;</span><span class="p">;</span>
+upstream laravels <span class="o">{</span>
+    <span class="c1"># Connect IP:Porty</span>
+    server 127.0.0.1:9502 <span class="nv">weight</span><span class="o">=</span><span class="m">5</span> <span class="nv">max_fails</span><span class="o">=</span><span class="m">3</span> <span class="nv">fail_timeout</span><span class="o">=</span>30s<span class="p">;</span>
+    keepalive 16<span class="p">;</span>
+<span class="o">}</span>
+
+server <span class="o">{</span>
+    listen 80<span class="p">;</span>
+    root /data/website/laravel_swoole/public/<span class="p">;</span>
+    server_name lavarels.dy2.cn<span class="p">;</span>
+    index index.html index.htm index.php<span class="p">;</span>
+    
+    <span class="c1"># Nginx 处理静态资源，LaravelS 处理动态资源</span>
+    location / <span class="o">{</span>
+        try_files <span class="nv">$uri</span> @laravels<span class="p">;</span>
+    <span class="o">}</span>
+
+    location @laravels <span class="o">{</span>
+        proxy_http_version 1.1<span class="p">;</span>
+        proxy_set_header Connection <span class="s2">&#34;&#34;</span><span class="p">;</span>
+        proxy_set_header X-Real-IP <span class="nv">$remote_addr</span><span class="p">;</span>
+        proxy_set_header X-Real-PORT <span class="nv">$remote_port</span><span class="p">;</span>
+        proxy_set_header X-Forwarded-For <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+        proxy_set_header Host <span class="nv">$http_host</span><span class="p">;</span>
+        proxy_set_header Scheme <span class="nv">$scheme</span><span class="p">;</span>
+        proxy_set_header Server-Protocol <span class="nv">$server_protocol</span><span class="p">;</span>
+        proxy_set_header Server-Name <span class="nv">$server_name</span><span class="p">;</span>
+        proxy_set_header Server-Addr <span class="nv">$server_addr</span><span class="p">;</span>
+        proxy_set_header Server-Port <span class="nv">$server_port</span><span class="p">;</span>
+        proxy_pass http://laravels<span class="p">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="四性能测试">四.性能测试</h2>
+<h3 id="1php-fpm驱动">1.PHP-FPM驱动</h3>
+<p>请求1000次,每次1000并发
+结果平均响应时间为24574毫秒,每秒请求数14.51
+详细结果如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">.<span class="se">\a</span>b.exe -n1000 -c1000 http://dy2.cn/laravel_swoole/public/
+
+Server Software:        nginx
+
+Server Hostname:        dy2.cn
+
+Server Port:            <span class="m">80</span>
+
+Document Path:          /laravel_swoole/public/
+
+Document Length:        <span class="m">2360</span> bytes
+
+Concurrency Level:      <span class="m">1000</span>
+
+Time taken <span class="k">for</span> tests:   68.934 seconds
+
+Complete requests:      <span class="m">1000</span>
+
+Failed requests:        <span class="m">206</span>
+
+   <span class="o">(</span>Connect: 0, Receive: 0, Length: 206, Exceptions: 0<span class="o">)</span>
+
+Non-2xx responses:      <span class="m">206</span>
+
+Total transferred:      <span class="m">2682422</span> bytes
+
+HTML transferred:       <span class="m">1908036</span> bytes
+
+Requests per second:    14.51 <span class="o">[</span><span class="c1">#/sec] (mean)</span>
+
+Time per request:       68934.064 <span class="o">[</span>ms<span class="o">]</span> <span class="o">(</span>mean<span class="o">)</span>
+
+Time per request:       68.934 <span class="o">[</span>ms<span class="o">]</span> <span class="o">(</span>mean, across all concurrent requests<span class="o">)</span>
+
+Transfer rate:          38.00 <span class="o">[</span>Kbytes/sec<span class="o">]</span> received
+
+Connection Times <span class="o">(</span>ms<span class="o">)</span>
+
+              min  mean<span class="o">[</span>+/-sd<span class="o">]</span> median   max
+
+Connect:        <span class="m">0</span>   <span class="m">16</span> 211.7      <span class="m">1</span>    <span class="m">3002</span>
+
+Processing: <span class="m">10722</span> <span class="m">28594</span> 14160.8  <span class="m">24573</span>   <span class="m">66227</span>
+
+Waiting:    <span class="m">10721</span> <span class="m">28591</span> 14161.6  <span class="m">24572</span>   <span class="m">66227</span>
+
+Total:      <span class="m">10723</span> <span class="m">28610</span> 14148.3  <span class="m">24574</span>   <span class="m">66230</span>
+
+Percentage of the requests served within a certain <span class="nb">time</span> <span class="o">(</span>ms<span class="o">)</span>
+
+  50%  <span class="m">24574</span>
+
+  66%  <span class="m">29607</span>
+
+  75%  <span class="m">36742</span>
+
+  80%  <span class="m">44639</span>
+
+  90%  <span class="m">49959</span>
+
+  95%  <span class="m">53639</span>
+
+  98%  <span class="m">64683</span>
+
+  99%  <span class="m">66110</span>
+
+ 100%  <span class="m">66230</span> <span class="o">(</span>longest request<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2swoole-驱动">2. Swoole 驱动</h3>
+<p>请求1000次,每次1000并发
+结果平均响应时间为1741毫秒,每秒请求数253.92
+详细结果如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">.<span class="se">\a</span>b.exe -n1000 -c1000 http://laravels.dy2.cn/
+
+Server Software:        nginx
+Server Hostname:        laravels.dy2.cn
+Server Port:            <span class="m">80</span>
+
+Document Path:          /
+Document Length:        <span class="m">2360</span> bytes
+
+Concurrency Level:      <span class="m">1000</span>
+Time taken <span class="k">for</span> tests:   3.938 seconds
+Complete requests:      <span class="m">1000</span>
+Failed requests:        <span class="m">1</span>
+   <span class="o">(</span>Connect: 0, Receive: 0, Length: 1, Exceptions: 0<span class="o">)</span>
+Non-2xx responses:      <span class="m">1</span>
+Total transferred:      <span class="m">3263810</span> bytes
+HTML transferred:       <span class="m">2357826</span> bytes
+Requests per second:    253.92 <span class="o">[</span><span class="c1">#/sec] (mean)</span>
+Time per request:       3938.276 <span class="o">[</span>ms<span class="o">]</span> <span class="o">(</span>mean<span class="o">)</span>
+Time per request:       3.938 <span class="o">[</span>ms<span class="o">]</span> <span class="o">(</span>mean, across all concurrent requests<span class="o">)</span>
+Transfer rate:          809.32 <span class="o">[</span>Kbytes/sec<span class="o">]</span> received
+
+Connection Times <span class="o">(</span>ms<span class="o">)</span>
+              min  mean<span class="o">[</span>+/-sd<span class="o">]</span> median   max
+Connect:        <span class="m">0</span>    <span class="m">1</span>   1.1      <span class="m">1</span>      <span class="m">11</span>
+Processing:    <span class="m">95</span> <span class="m">1842</span> 656.4   <span class="m">1739</span>    <span class="m">3065</span>
+Waiting:       <span class="m">87</span> <span class="m">1840</span> 657.7   <span class="m">1738</span>    <span class="m">3064</span>
+Total:         <span class="m">95</span> <span class="m">1843</span> 656.3   <span class="m">1741</span>    <span class="m">3065</span>
+
+Percentage of the requests served within a certain <span class="nb">time</span> <span class="o">(</span>ms<span class="o">)</span>
+  50%   <span class="m">1741</span>
+  66%   <span class="m">2201</span>
+  75%   <span class="m">2489</span>
+  80%   <span class="m">2577</span>
+  90%   <span class="m">2800</span>
+  95%   <span class="m">2881</span>
+  98%   <span class="m">2962</span>
+  99%   <span class="m">2965</span>
+ 100%   <span class="m">3065</span> <span class="o">(</span>longest request<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>###3. 测试总结</p>
+<p>swoole驱动是传统php-fpm驱动的17.5倍,优势明显</p>
+<h2 id="五laravel中swoole应用">五.Laravel中swoole应用</h2>
+<h3 id="1在-laravel-中集成-swoole-实现-websocket-服务器">1. 在 Laravel 中集成 Swoole 实现 WebSocket 服务器</h3>
+<h4 id="创建-websocketservice-类">创建 WebSocketService 类</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Services</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Hhxsv5\LaravelS\Swoole\WebSocketHandlerInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Illuminate\Support\Facades\Log</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Swoole\Http\Request</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Swoole\WebSocket\Frame</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Swoole\WebSocket\Server</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">WebSocketService</span> <span class="k">implements</span> <span class="nx">WebSocketHandlerInterface</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+
+    <span class="p">}</span>
+    
+    <span class="c1">// 连接建立时触发
+</span><span class="c1"></span>    <span class="k">public</span> <span class="k">function</span> <span class="nf">onOpen</span><span class="p">(</span><span class="nx">Server</span> <span class="nv">$server</span><span class="p">,</span> <span class="nx">Request</span> <span class="nv">$request</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// 在触发 WebSocket 连接建立事件之前，Laravel 应用初始化的生命周期已经结束，你可以在这里获取 Laravel 请求和会话数据
+</span><span class="c1"></span>        <span class="c1">// 调用 push 方法向客户端推送数据，fd 是客户端连接标识字段
+</span><span class="c1"></span>        <span class="nx">Log</span><span class="o">::</span><span class="na">info</span><span class="p">(</span><span class="s1">&#39;WebSocket 连接建立&#39;</span><span class="p">);</span>
+        <span class="nv">$server</span><span class="o">-&gt;</span><span class="na">push</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">fd</span><span class="p">,</span> <span class="s1">&#39;Welcome to WebSocket Server built on LaravelS&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// 收到消息时触发
+</span><span class="c1"></span>    <span class="k">public</span> <span class="k">function</span> <span class="nf">onMessage</span><span class="p">(</span><span class="nx">Server</span> <span class="nv">$server</span><span class="p">,</span> <span class="nx">Frame</span> <span class="nv">$frame</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// 调用 push 方法向客户端推送数据
+</span><span class="c1"></span>        <span class="nv">$server</span><span class="o">-&gt;</span><span class="na">push</span><span class="p">(</span><span class="nv">$frame</span><span class="o">-&gt;</span><span class="na">fd</span><span class="p">,</span> <span class="s1">&#39;This is a message sent from WebSocket Server at &#39;</span> <span class="o">.</span> <span class="nx">date</span><span class="p">(</span><span class="s1">&#39;Y-m-d H:i:s&#39;</span><span class="p">));</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// 关闭连接时触发
+</span><span class="c1"></span>    <span class="k">public</span> <span class="k">function</span> <span class="nf">onClose</span><span class="p">(</span><span class="nx">Server</span> <span class="nv">$server</span><span class="p">,</span> <span class="nv">$fd</span><span class="p">,</span> <span class="nv">$reactorId</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nx">Log</span><span class="o">::</span><span class="na">info</span><span class="p">(</span><span class="s1">&#39;WebSocket 连接关闭&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="修改配置文件">修改配置文件</h4>
+<p>config/laravels.php
+启用 WebSocket 通信并将刚刚创建的服务器类配置到对应的配置项</p>
+<p>&lsquo;websocket&rsquo; =&gt; [
+&lsquo;enable&rsquo; =&gt; true,
+&lsquo;handler&rsquo; =&gt; \App\Services\WebSocketService::class,
+],</p>
+<p>在 swoole 配置项中配置 WebSocket 长连接的强制关闭逻辑
+// 心跳检测,WebSocket 长连接的强制关闭逻辑,每隔 60s 检测一次所有连接，如果某个连接在 600s 内都没有发送任何数据，则关闭该连接
+&lsquo;heartbeat_idle_time&rsquo;      =&gt; 600,
+&lsquo;heartbeat_check_interval&rsquo; =&gt; 60,</p>
+<h4 id="配置-nginx-支持-websocket">配置 Nginx 支持 WebSocket</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-nginx" data-lang="nginx"><span class="k">map</span> <span class="nv">$http_upgrade</span> <span class="nv">$connection_upgrade</span> <span class="p">{</span>
+    <span class="kn">default</span> <span class="s">upgrade</span><span class="p">;</span>
+    <span class="kn">&#39;&#39;</span>      <span class="s">close</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">upstream</span> <span class="s">laravels_websocket</span> <span class="p">{</span>
+    <span class="c1"># Connect IP:Port
+</span><span class="c1"></span>    <span class="kn">server</span> <span class="n">127.0.0.1</span><span class="p">:</span><span class="mi">9502</span> <span class="s">weight=5</span> <span class="s">max_fails=3</span> <span class="s">fail_timeout=30s</span><span class="p">;</span>
+    <span class="kn">keepalive</span> <span class="mi">16</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">server</span> <span class="p">{</span>
+    <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
+    <span class="kn">root</span> <span class="s">/data/website/laravel_swoole/public/</span><span class="p">;</span>
+    <span class="kn">server_name</span> <span class="s">laravelsk.dy2.cn</span><span class="p">;</span>
+
+    <span class="kn">error_log</span> <span class="s">/data/webserver/nginx/logs/laravels_websocket_error.log</span><span class="p">;</span>
+    <span class="kn">access_log</span> <span class="s">/data/webserver/nginx/logs/laravels_websocket_access.log</span><span class="p">;</span>
+    
+    <span class="kn">index</span> <span class="s">index.php</span> <span class="s">index.html</span> <span class="s">index.htm</span><span class="p">;</span>
+    
+    <span class="c1"># Nginx handles the static resources(recommend enabling gzip), LaravelS handles the dynamic resource.
+</span><span class="c1"></span>    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+        <span class="kn">try_files</span> <span class="nv">$uri</span> <span class="s">@laravels</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="c1"># Response 404 directly when request the PHP file, to avoid exposing public/*.php
+</span><span class="c1"></span>    <span class="c1">#location ~* \.php$ {
+</span><span class="c1"></span>    <span class="c1">#    return 404;
+</span><span class="c1"></span>    <span class="c1">#}
+</span><span class="c1"></span>    
+    <span class="c1"># Http and WebSocket are concomitant, Nginx identifies them by &#34;location&#34;
+</span><span class="c1"></span>    <span class="c1"># !!! The location of WebSocket is &#34;/ws&#34;
+</span><span class="c1"></span>    <span class="c1"># Javascript: var ws = new WebSocket(&#34;ws://todo-s.test/ws&#34;);
+</span><span class="c1"></span>    <span class="c1"># 处理 WebSocket 通信
+</span><span class="c1"></span>    <span class="kn">location</span> <span class="p">=</span><span class="s">/ws</span> <span class="p">{</span>
+        <span class="c1"># proxy_connect_timeout 60s;
+</span><span class="c1"></span>        <span class="c1"># proxy_send_timeout 60s;
+</span><span class="c1"></span>        <span class="c1"># proxy_read_timeout: Nginx will close the connection if the proxied server does not send data to Nginx in 60 seconds; At the same time, this close behavior is also affected by heartbeat setting of Swoole.
+</span><span class="c1"></span>        <span class="c1"># proxy_read_timeout 60s;
+</span><span class="c1"></span>        <span class="kn">proxy_http_version</span> <span class="mi">1</span><span class="s">.1</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">X-Real-IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">X-Real-PORT</span> <span class="nv">$remote_port</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">X-Forwarded-For</span> <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">Host</span> <span class="nv">$http_host</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">Scheme</span> <span class="nv">$scheme</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">Server-Protocol</span> <span class="nv">$server_protocol</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">Server-Name</span> <span class="nv">$server_name</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">Server-Addr</span> <span class="nv">$server_addr</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">Server-Port</span> <span class="nv">$server_port</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">Upgrade</span> <span class="nv">$http_upgrade</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">Connection</span> <span class="nv">$connection_upgrade</span><span class="p">;</span>
+        <span class="kn">proxy_pass</span> <span class="s">http://laravels_websocket</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="kn">location</span> <span class="s">@laravels</span> <span class="p">{</span>
+        <span class="c1"># 如果60秒内被代理的服务器没有响应数据给Nginx，那么Nginx会关闭当前连接
+</span><span class="c1"></span>        <span class="c1"># proxy_connect_timeout 60s;
+</span><span class="c1"></span>        <span class="c1"># proxy_send_timeout 60s;
+</span><span class="c1"></span>        <span class="c1"># proxy_read_timeout 60s;
+</span><span class="c1"></span>        <span class="kn">proxy_http_version</span> <span class="mi">1</span><span class="s">.1</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">Connection</span> <span class="s">&#34;&#34;</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">X-Real-IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">X-Real-PORT</span> <span class="nv">$remote_port</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">X-Forwarded-For</span> <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">Host</span> <span class="nv">$http_host</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">Scheme</span> <span class="nv">$scheme</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">Server-Protocol</span> <span class="nv">$server_protocol</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">Server-Name</span> <span class="nv">$server_name</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">Server-Addr</span> <span class="nv">$server_addr</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">Server-Port</span> <span class="nv">$server_port</span><span class="p">;</span>
+        <span class="kn">proxy_pass</span> <span class="s">http://laravels_websocket</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="创建viewswebsocketclientbladephp视图">创建views/websocket/client.blade.php视图</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;UTF-8&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Chat Client<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>websocket客户端<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">nick</span> <span class="o">=</span> <span class="nx">prompt</span><span class="p">(</span><span class="s2">&#34;Enter your nickname&#34;</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">input</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;input&#34;</span><span class="p">);</span>
+        <span class="nx">input</span><span class="p">.</span><span class="nx">focus</span><span class="p">();</span>
+
+        <span class="c1">// 初始化客户端套接字并建立连接
+</span><span class="c1"></span>        <span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebSocket</span><span class="p">(</span><span class="s2">&#34;ws://laravelsk.dy2.cn/ws&#34;</span><span class="p">);</span>
+    
+        <span class="c1">// 连接建立时触发
+</span><span class="c1"></span>        <span class="nx">socket</span><span class="p">.</span><span class="nx">onopen</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;Connection open ...&#34;</span><span class="p">);</span>
+        <span class="p">}</span>
+    
+        <span class="c1">// 接收到服务端推送时执行
+</span><span class="c1"></span>        <span class="nx">socket</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+            <span class="kd">var</span> <span class="nx">node</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createTextNode</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+            <span class="kd">var</span> <span class="nx">div</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&#34;div&#34;</span><span class="p">);</span>
+            <span class="nx">div</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span>
+            <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span><span class="nx">div</span><span class="p">,</span> <span class="nx">input</span><span class="p">);</span>
+            <span class="nx">input</span><span class="p">.</span><span class="nx">scrollIntoView</span><span class="p">();</span>
+        <span class="p">};</span>
+    
+        <span class="c1">// 连接关闭时触发
+</span><span class="c1"></span>        <span class="nx">socket</span><span class="p">.</span><span class="nx">onclose</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;Connection closed ...&#34;</span><span class="p">);</span>
+        <span class="p">}</span>
+    
+        <span class="nx">input</span><span class="p">.</span><span class="nx">onchange</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="nx">nick</span> <span class="o">+</span> <span class="s2">&#34;: &#34;</span> <span class="o">+</span> <span class="nx">input</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+            <span class="c1">// 将输入框变更信息通过 send 方法发送到服务器
+</span><span class="c1"></span>            <span class="nx">socket</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+            <span class="nx">input</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;input&#34;</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;width: 100%;&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="添加路由">添加路由</h4>
+<p>Route::get('/websocket_client', function () {
+return view(&lsquo;websocket.client&rsquo;);
+});</p>
+<h4 id="访问httplaravelskdy2cnwebsocket_client">访问:http://laravelsk.dy2.cn/websocket_client</h4>
+<p>storage/logs下查看最新日志
+[2019-05-22 13:55:02] local.INFO: WebSocket 连接建立<br>
+[2019-05-22 13:55:10] local.INFO: WebSocket 连接关闭</p>
+<h3 id="2在-laravel-中集成-swoole-实现-毫秒级定时器">2. 在 Laravel 中集成 Swoole 实现 毫秒级定时器</h3>
+<h4 id="创建jobstimerindexcronjob执行文件">创建Jobs\Timer\IndexCronJob执行文件</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="o">&lt;?</span><span class="nx">php</span>
+<span class="sd">/**
+</span><span class="sd"> * Created by PhpStorm.
+</span><span class="sd"> * User: Administrator
+</span><span class="sd"> * Date: 2019/9/10 0010
+</span><span class="sd"> * Time: 10:13
+</span><span class="sd"> */</span>
+
+<span class="k">namespace</span> <span class="nx">App\Jobs\Timer</span><span class="p">;</span>
+
+
+<span class="k">use</span> <span class="nx">Hhxsv5\LaravelS\Swoole\Timer\CronJob</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Illuminate\Support\Facades\Log</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">IndexCronJob</span> <span class="k">extends</span> <span class="nx">CronJob</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="c1">// 该方法可类比为 Swoole 定时器中的回调方法
+</span><span class="c1"></span>    <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nx">Log</span><span class="o">::</span><span class="na">info</span><span class="p">(</span><span class="no">__METHOD__</span><span class="p">,</span> <span class="p">[</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">timerId</span><span class="p">,</span><span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">i</span><span class="p">,</span> <span class="nx">microtime</span><span class="p">(</span><span class="k">true</span><span class="p">)]);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">i</span><span class="o">++</span><span class="p">;</span>
+        <span class="nx">Log</span><span class="o">::</span><span class="na">info</span><span class="p">(</span><span class="no">__METHOD__</span><span class="p">,</span> <span class="p">[</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">timerId</span><span class="p">,</span><span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">i</span><span class="p">,</span> <span class="nx">microtime</span><span class="p">(</span><span class="k">true</span><span class="p">)]);</span>
+    
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">i</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 总共运行3次
+</span><span class="c1"></span>            <span class="nx">Log</span><span class="o">::</span><span class="na">info</span><span class="p">(</span><span class="no">__METHOD__</span><span class="p">,</span> <span class="p">[</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">timerId</span><span class="p">,</span><span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">i</span><span class="p">,</span> <span class="nx">microtime</span><span class="p">(</span><span class="k">true</span><span class="p">)]);</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">stop</span><span class="p">();</span> <span class="c1">// 清除定时器
+</span><span class="c1"></span>        <span class="p">}</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// 每隔 1000ms 执行一次任务
+</span><span class="c1"></span>    <span class="k">public</span> <span class="k">function</span> <span class="nf">interval</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">1000</span><span class="p">;</span>   <span class="c1">// 定时器间隔，单位为 ms
+</span><span class="c1"></span>    <span class="p">}</span>
+    
+    <span class="c1">// 是否在设置之后立即触发 run 方法执行
+</span><span class="c1"></span>    <span class="k">public</span> <span class="k">function</span> <span class="nf">isImmediate</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="修改configlaravelsphp配置">修改config/laravels.php 配置</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="s1">&#39;timer&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span>
+    <span class="s1">&#39;enable&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="s1">&#39;jobs&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="c1">// Enable LaravelScheduleJob to run `php artisan schedule:run` every 1 minute, replace Linux Crontab
+</span><span class="c1"></span>        <span class="c1">// \Hhxsv5\LaravelS\Illuminate\LaravelScheduleJob::class,
+</span><span class="c1"></span>        <span class="c1">// Two ways to configure parameters:
+</span><span class="c1"></span>        <span class="c1">// [\App\Jobs\XxxCronJob::class, [1000, true]], // Pass in parameters when registering
+</span><span class="c1"></span>        <span class="nx">\App\Jobs\Timer\TestCronJob</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="c1">// Override the corresponding method to return the configuration
+</span><span class="c1"></span>    <span class="p">],</span>
+    <span class="s1">&#39;max_wait_time&#39;</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span> <span class="c1">// Max waiting time of reloading
+</span><span class="c1"></span><span class="p">],</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="storagelogs下的最新日志里就可以看到上述定时任务的输出了">storage/logs 下的最新日志里就可以看到上述定时任务的输出了</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">
+<span class="o">[</span>2019-05-29 22:37:20<span class="o">]</span> local.INFO: App<span class="se">\J</span>obs<span class="se">\T</span>imer<span class="se">\T</span>estCronJob::run <span class="o">[</span><span class="s2">&#34;start&#34;</span>,0,1559140640.694025<span class="o">]</span> 
+<span class="o">[</span>2019-05-29 22:37:20<span class="o">]</span> local.INFO: App<span class="se">\J</span>obs<span class="se">\T</span>imer<span class="se">\T</span>estCronJob::run <span class="o">[</span><span class="s2">&#34;end&#34;</span>,1,1559140640.752043<span class="o">]</span> 
+<span class="o">[</span>2019-05-29 22:37:21<span class="o">]</span> local.INFO: App<span class="se">\J</span>obs<span class="se">\T</span>imer<span class="se">\T</span>estCronJob::run <span class="o">[</span><span class="s2">&#34;start&#34;</span>,1,1559140641.752905<span class="o">]</span> 
+<span class="o">[</span>2019-05-29 22:37:21<span class="o">]</span> local.INFO: App<span class="se">\J</span>obs<span class="se">\T</span>imer<span class="se">\T</span>estCronJob::run <span class="o">[</span><span class="s2">&#34;end&#34;</span>,2,1559140641.754724<span class="o">]</span> 
+<span class="o">[</span>2019-05-29 22:37:22<span class="o">]</span> local.INFO: App<span class="se">\J</span>obs<span class="se">\T</span>imer<span class="se">\T</span>estCronJob::run <span class="o">[</span><span class="s2">&#34;start&#34;</span>,2,1559140642.694884<span class="o">]</span> 
+<span class="o">[</span>2019-05-29 22:37:22<span class="o">]</span> local.INFO: App<span class="se">\J</span>obs<span class="se">\T</span>imer<span class="se">\T</span>estCronJob::run <span class="o">[</span><span class="s2">&#34;end&#34;</span>,3,1559140642.696726<span class="o">]</span> 
+<span class="o">[</span>2019-05-29 22:37:22<span class="o">]</span> local.INFO: App<span class="se">\J</span>obs<span class="se">\T</span>imer<span class="se">\T</span>estCronJob::run <span class="o">[</span><span class="s2">&#34;stop&#34;</span>,3,1559140642.698137<span class="o">]</span> 
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3在-laravel-中集成-swoole-实现-异步任务队列">3. 在 Laravel 中集成 Swoole 实现 异步任务队列</h3>
+<h4 id="创建-jobsindextask类">创建 Jobs/IndexTasK类</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">&lt;?php
+namespace App\Jobs;
+
+use Hhxsv5\LaravelS\Swoole\Task\Task;
+use Illuminate\Support\Facades\Log;
+
+class IndexTask extends Task
+{
+    // 待处理任务数据
+    private $data;
+
+    // 任务处理结果
+    private $result;
+    
+    public function __construct($data)
+    {
+        $this-&gt;data = $data;
+    }
+    
+    // 任务投递调用 task 回调时触发，等同于 Swoole 中的 onTask 逻辑
+    public function handle()
+    {
+        Log::info(__CLASS__ . &#39;: 开始处理任务&#39;, [$this-&gt;data]);
+        //  todo 耗时任务具体处理逻辑在这里编写
+        sleep(3); // 模拟任务需要3秒才能执行完毕
+        $this-&gt;result = &#39;The result of &#39; . $this-&gt;data . &#39; is balabalabala&#39;;
+    }
+    
+    // 任务完成调用 finish 回调时触发，等同于 Swoole 中的 onFinish 逻辑
+    public function finish()
+    {
+        Log::info(__CLASS__ . &#39;: 任务处理完成&#39;, [$this-&gt;result]);
+        // 可以在这里触发后续要执行的任务，或者执行其他善后逻辑
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>####创建http访问路由</p>
+<p>//分组路由
+Route::group([ &lsquo;namespace&rsquo; =&gt; &lsquo;Task&rsquo; ,&lsquo;prefix&rsquo; =&gt; &lsquo;task&rsquo;], function ($router) {
+$router-&gt;get('/test', &lsquo;TestController@test&rsquo;);
+});</p>
+<h4 id="创建异步处理控制器">创建异步处理控制器</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">namespace App\Http\Controllers\Task;
+
+
+use App\Http\Controllers\Controller;
+
+class TestController extends Controller
+{
+    public function test(){
+        $task = new \App\Jobs\IndexTask(&#39;测试异步任务&#39;);
+        $success = \Hhxsv5\LaravelS\Swoole\Task\Task::deliver($task);  // 异步投递任务，触发调用任务类的 handle 方法
+        var_dump($success);
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>修改配置文件</p>
+<p>&lsquo;swoole&rsquo; =&gt; [
+&hellip;
+&lsquo;task_worker_num&rsquo;    =&gt; function_exists(&lsquo;swoole_cpu_num&rsquo;) ? swoole_cpu_num() * 2 : 8,
+&hellip;
+]</p>
+<h4 id="测试异步任务执行">测试异步任务执行</h4>
+<p>php bin/laravels restart
+访问 <a href="http://laravelsk.dy2.cn">http://laravelsk.dy2.cn</a> 返回 bool(true)
+storage/logs 目录下查看最新的日志信息
+[2019-09-10 03:33:49] local.INFO: App\Jobs\IndexTask: 开始处理任务 [&ldquo;测试异步任务&rdquo;] 
+[2019-09-10 03:33:52] local.INFO: App\Jobs\IndexTask: 任务处理完成 [&ldquo;The result of 测试异步任务 is balabalabala&rdquo;]</p>
+<h3 id="4在-laravel-中实现数据库和-redis-的持久连接">4.在 Laravel 中实现数据库和 Redis 的持久连接</h3>
+<p>修改配置文件,设置persistent
+// 数据库持久连接配置
+&lsquo;mysql&rsquo; =&gt; [
+&lsquo;driver&rsquo; =&gt; &lsquo;mysql&rsquo;,
+&lsquo;host&rsquo; =&gt; env(&lsquo;DB_HOST&rsquo;, &lsquo;127.0.0.1&rsquo;),
+&lsquo;port&rsquo; =&gt; env(&lsquo;DB_PORT&rsquo;, &lsquo;3306&rsquo;),
+&lsquo;database&rsquo; =&gt; env(&lsquo;DB_DATABASE&rsquo;, &lsquo;forge&rsquo;),
+&lsquo;username&rsquo; =&gt; env(&lsquo;DB_USERNAME&rsquo;, &lsquo;forge&rsquo;),
+&lsquo;password&rsquo; =&gt; env(&lsquo;DB_PASSWORD&rsquo;, &lsquo;'),
+&lsquo;unix_socket&rsquo; =&gt; env(&lsquo;DB_SOCKET&rsquo;, &lsquo;'),
+&lsquo;charset&rsquo; =&gt; &lsquo;utf8mb4&rsquo;,
+&lsquo;collation&rsquo; =&gt; &lsquo;utf8mb4_unicode_ci&rsquo;,
+&lsquo;prefix&rsquo; =&gt; &lsquo;&rsquo;,
+&lsquo;prefix_indexes&rsquo; =&gt; true,
+&lsquo;strict&rsquo; =&gt; true,
+&lsquo;engine&rsquo; =&gt; null,
+&lsquo;options&rsquo; =&gt; extension_loaded(&lsquo;pdo_mysql&rsquo;) ? array_filter([
+PDO::MYSQL_ATTR_SSL_CA =&gt; env(&lsquo;MYSQL_ATTR_SSL_CA&rsquo;),
+PDO::ATTR_PERSISTENT =&gt; true
+]) : [],
+],</p>
+<h3 id="-redis-持久连接配置">// Redis 持久连接配置</h3>
+<p>&lsquo;redis&rsquo; =&gt; [
+&hellip;
+&lsquo;default&rsquo; =&gt; [
+&lsquo;host&rsquo; =&gt; env(&lsquo;REDIS_HOST&rsquo;, &lsquo;127.0.0.1&rsquo;),
+&lsquo;password&rsquo; =&gt; env(&lsquo;REDIS_PASSWORD&rsquo;, null),
+&lsquo;port&rsquo; =&gt; env(&lsquo;REDIS_PORT&rsquo;, 6379),
+&lsquo;database&rsquo; =&gt; env(&lsquo;REDIS_DB&rsquo;, 0),
+&lsquo;persistent&rsquo; =&gt; true
+],
+&hellip;
+]</p>
+<h3 id="修改websocketservice添加table处理">修改WebSocketService,添加table处理</h3>
+<p>class WebSocketService implements WebSocketHandlerInterface
+{
+public function __construct()
+{</p>
+<pre><code>}
+
+// 连接建立时触发
+public function onOpen(Server $server, Request $request)
+{
+    // 在触发 WebSocket 连接建立事件之前，Laravel 应用初始化的生命周期已经结束，你可以在这里获取 Laravel 请求和会话数据
+    // 调用 push 方法向客户端推送数据，fd 是客户端连接标识字段
+    Log::info('WebSocket 连接建立');
+
+    app('swoole')-&gt;wsTable-&gt;set('fd:' . $request-&gt;fd, ['value' =&gt; $request-&gt;fd]);
+    $server-&gt;push($request-&gt;fd, 'Welcome to WebSocket Server built on LaravelS');
+}
+
+// 收到消息时触发
+public function onMessage(Server $server, Frame $frame)
+{
+    // 调用 push 方法向客户端推送数据
+    $server-&gt;push($frame-&gt;fd, 'This is a message sent from WebSocket Server at ' . date('Y-m-d H:i:s'));
+
+    foreach (app('swoole')-&gt;wsTable as $key =&gt; $row) {
+        if (strpos($key, 'fd:') === 0 &amp;&amp; $server-&gt;exist($row['value'])) {
+            Log::info('Receive message from client: ' . $row['value']);
+            // 调用 push 方法向客户端推送数据
+            $server-&gt;push($frame-&gt;fd, 'This is a message sent from WebSocket Server at ' . date('Y-m-d H:i:s'));
+        }
+    }
+}
+
+// 关闭连接时触发
+public function onClose(Server $server, $fd, $reactorId)
+{
+    Log::info('WebSocket 连接关闭');
+}
+</code></pre>
+<p>}</p>
+<p>访问http://laravelsk.dy2.cn/websocket_client
+tail -f storage/logs/laravel-2019-09-10.log
+[2019-09-10 07:55:50] local.INFO: WebSocket 连接建立<br>
+[2019-09-10 07:55:53] local.INFO: Receive message from client: 2<br>
+[2019-09-10 07:56:08] local.INFO: WebSocket 连接关闭</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-02-10
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E5%BC%80%E5%8F%91%E8%AF%AD%E8%A8%80/">开发语言</a>
+          <a href="/tags/php/">php</a>
+          <a href="/tags/laravel/">laravel</a>
+          <a href="/tags/laravels/">laravels</a>
+          <a href="/tags/swoole/">swoole</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/dev_language/php/laravel/%E5%AE%9E%E6%97%B6%E5%BC%B9%E5%B9%95%E5%8A%9F%E8%83%BDlaravel-swoole-vue/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[laravel]基于 Laravel &#43; Swoole &#43; Vue 组件实现支持高并发的实时弹幕功能</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/dev_language/java/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+            <span class="next-text nav-default">[java] java学习笔记</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

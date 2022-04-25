@@ -1,0 +1,1998 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[linux] RPM打包教程(教程&#43;资料&#43;案例) - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="RPM打包教程(新手向)(CentOS)" /><meta name="keywords" content="linux, centos, rpm, spec, build, makefile" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/linux/rpm%E6%89%93%E5%8C%85%E6%95%99%E7%A8%8B%E6%96%B0%E6%89%8B%E5%90%91centos/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[linux] RPM打包教程(教程&#43;资料&#43;案例)" />
+<meta property="og:description" content="RPM打包教程(新手向)(CentOS)" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/linux/rpm%E6%89%93%E5%8C%85%E6%95%99%E7%A8%8B%E6%96%B0%E6%89%8B%E5%90%91centos/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-03-04T15:37:56+08:00" />
+<meta property="article:modified_time" content="2022-03-04T15:37:56+08:00" />
+
+<meta itemprop="name" content="[linux] RPM打包教程(教程&#43;资料&#43;案例)">
+<meta itemprop="description" content="RPM打包教程(新手向)(CentOS)"><meta itemprop="datePublished" content="2022-03-04T15:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-03-04T15:37:56+08:00" />
+<meta itemprop="wordCount" content="10355">
+<meta itemprop="keywords" content="linux,centos,rpm,spec,build,makefile," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[linux] RPM打包教程(教程&#43;资料&#43;案例)"/>
+<meta name="twitter:description" content="RPM打包教程(新手向)(CentOS)"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[linux] RPM打包教程(教程&#43;资料&#43;案例)</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-03-04 </span>
+        <div class="post-category">
+            <a href="/categories/linux/"> linux </a>
+            </div>
+          <span class="more-meta"> 约 10355 字 </span>
+          <span class="more-meta"> 预计阅读 21 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#rpm打包教程">RPM打包教程</a>
+      <ul>
+        <li><a href="#一准备工作">一、准备工作</a>
+          <ul>
+            <li><a href="#1安装基础软件">1.安装基础软件</a></li>
+            <li><a href="#2rpm打包软件安装">2.Rpm打包软件安装</a></li>
+          </ul>
+        </li>
+        <li><a href="#二rpm打包原理">二、RPM打包原理</a>
+          <ul>
+            <li><a href="#1工作空间">1.工作空间</a></li>
+            <li><a href="#2打包过程">2.打包过程</a></li>
+            <li><a href="#3spec文件">3.SPEC文件</a></li>
+            <li><a href="#4spec各阶段详解">4.SPEC各阶段详解</a></li>
+          </ul>
+        </li>
+        <li><a href="#三构建rpm包">三、构建RPM包</a>
+          <ul>
+            <li><a href="#1rpmbuild打包">1.rpmbuild打包</a></li>
+            <li><a href="#2rpmlint检查">2.rpmlint检查</a></li>
+            <li><a href="#3rpm安装卸载">3.rpm安装卸载</a></li>
+          </ul>
+        </li>
+        <li><a href="#四一些名称解释">四、一些名称解释</a>
+          <ul>
+            <li><a href="#1configuremakemake-install-命令的区别">1.configure、make、make install 命令的区别</a></li>
+            <li><a href="#2makefile是什么">2.Makefile是什么？</a></li>
+            <li><a href="#3cc-和-gcc-又是什么">3.cc 和 gcc 又是什么？</a></li>
+          </ul>
+        </li>
+        <li><a href="#五简单案例">五、简单案例</a>
+          <ul>
+            <li><a href="#1创建工作空间">1.创建工作空间</a></li>
+            <li><a href="#2准备spec">2.准备SPEC</a></li>
+            <li><a href="#3rpm打包">3.RPM打包</a></li>
+          </ul>
+        </li>
+        <li><a href="#六复杂案例">六、复杂案例</a>
+          <ul>
+            <li><a href="#1应用源码包">1.应用源码包</a></li>
+            <li><a href="#2创建工作空间">2.创建工作空间</a></li>
+            <li><a href="#3创建spec">3.创建SPEC</a></li>
+          </ul>
+        </li>
+        <li><a href="#七备查">七、备查</a>
+          <ul>
+            <li><a href="#1rpmbuild目录">1.rpmbuild目录</a></li>
+            <li><a href="#2spec文件阶段">2.spec文件阶段</a></li>
+            <li><a href="#3代表路径的宏列表">3.代表路径的宏列表</a></li>
+            <li><a href="#4rpm常用命令">4.rpm常用命令</a></li>
+          </ul>
+        </li>
+        <li><a href="#八参考文献">八、参考文献</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="rpm打包教程">RPM打包教程</h1>
+<blockquote>
+<p>学习rpm打包，一篇文章就够了</p>
+</blockquote>
+<p>RPM（Redhat Package Manager）是用于Redhat、CentOS、Fedora等Linux 分发版（distribution）的常见的软件包管理器。因为它允许分发已编译的软件，所以用户只用一个命令就可以安装软件。</p>
+<p>本文从配置文件到打包，从打包到安装，从安装到原理深度解析。并用案例展示详细步骤，也可供作为模板修改，也可作为打包时的资料查询。</p>
+<p>如果只是想知道怎么打包，不需要了解原理，请从“案例”直接看，并修改相应内容即可。</p>
+<h2 id="一准备工作">一、准备工作</h2>
+<p>本文基于CentOS 7.9系统，rpm版本4.11.3，理论上只要是使用rpm的发行版都适用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@node1 ~<span class="o">]</span><span class="c1"># cat /etc/redhat-release</span>
+CentOS Linux release 7.9.2009 <span class="o">(</span>Core<span class="o">)</span>
+<span class="o">[</span>root@node1 ~<span class="o">]</span><span class="c1"># uname -a</span>
+Linux node1 3.10.0-1160.49.1.el7.x86_64 <span class="c1">#1 SMP Tue Nov 30 15:51:32 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux</span>
+<span class="o">[</span>root@node1 ~<span class="o">]</span><span class="c1"># rpm --version</span>
+RPM 版本 4.11.3
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="1安装基础软件">1.安装基础软件</h3>
+<p>gcc，make 用于编译c语言源代码</p>
+<p>tree 方便查看文件夹目录</p>
+<p>dos2unix 保证文件可执行性</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">yum -y install gcc make tree dos2unix rpmlint
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2rpm打包软件安装">2.Rpm打包软件安装</h3>
+<p>RPM打包使用的是<code>rpmbuild</code>命令，这个命令来自rpm-build包，这个是必装的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">yum -y install rpm-build
+</code></pre></td></tr></table>
+</div>
+</div><p>当然也可以直接安装rpmdevtools，这个工具还包含一些其他的工具，同时它依赖rpm-build，所以直接安装的话会同时把rpm-build装上。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">yum -y install rpmdevtools
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="二rpm打包原理">二、RPM打包原理</h2>
+<h3 id="1工作空间">1.工作空间</h3>
+<p>RPM打包的时候需要编译源码，还需要把编译好的配置文件啊二进制命令文件啊之类的东西按照安装好的样子放到合适的位置，还要根据需要对RPM的包进行测试，这些都需要先有一个标准化的“工作空间”。</p>
+<h4 id="11rpmdev-setuptree工具生成目录结构">1.1.rpmdev-setuptree工具生成目录结构</h4>
+<p><code>rpmdev-setuptree</code>这个命令就是安装rpmdevtools带来的 。可以看到运行了这个命令之后，在<code>$HOME</code>家目录下多了一个叫做<code>rpmbuild</code>的文件夹  。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@node2 ~<span class="o">]</span><span class="c1"># rpmdev-setuptree</span>
+<span class="o">[</span>root@node2 ~<span class="o">]</span><span class="c1"># tree rpmbuild</span>
+rpmbuild
+├── BUILD
+├── RPMS
+├── SOURCES
+├── SPECS
+└── SRPMS
+
+<span class="m">5</span> directories, <span class="m">0</span> files
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="12mkdir命令生成目录结构">1.2.mkdir命令生成目录结构</h4>
+<p>如果没有安装rpmdevtools的话，其实用<code>mkdir</code>命令创建这些文件夹也是可以的。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">mkdir -p rpmbuild/<span class="o">{</span>BUILD,RPMS,SOURCES,SPECS,SRPMS<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="13目录结构说明">1.3.目录结构说明</h4>
+<table>
+<thead>
+<tr>
+<th>默认位置</th>
+<th>宏代码</th>
+<th>名称</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>~/rpmbuild/SPECS</td>
+<td>%_specdir</td>
+<td>Spec 文件目录</td>
+<td>保存 RPM 包配置（.spec）文件</td>
+</tr>
+<tr>
+<td>~/rpmbuild/SOURCES</td>
+<td>%_sourcedir</td>
+<td>源代码目录</td>
+<td>保存源码包（如 .tar 包）和所有 patch 补丁</td>
+</tr>
+<tr>
+<td>~/rpmbuild/BUILD</td>
+<td>%_builddir</td>
+<td>构建目录</td>
+<td>源码包被解压至此，并在该目录的子目录完成编译</td>
+</tr>
+<tr>
+<td>~/rpmbuild/RPMS</td>
+<td>%_rpmdir</td>
+<td>标准 RPM 包目录</td>
+<td>生成/保存二进制 RPM 包</td>
+</tr>
+<tr>
+<td>~/rpmbuild/SRPMS</td>
+<td>%_srcrpmdir</td>
+<td>源代码 RPM 包目录</td>
+<td>生成/保存源码 RPM 包(SRPM)</td>
+</tr>
+<tr>
+<td>~/rpmbuild/BUILDROOT</td>
+<td>%_buildrootdir</td>
+<td>最终安装目录</td>
+<td>保存 %install 阶段安装的文件</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>SPECS下是RPM包的配置文件，是RPM打包的“图纸”，这个文件会告诉rpmbuild命令如何去打包。“宏代码”这一列就可以在SPEC文件中用来代指所对应的目录，类似于编程语言中的宏或全局变量。当然~/rpmbuild这个文件夹也是有宏代码的，叫做%_topdir。</p>
+</li>
+<li>
+<p><code>rpmbuild</code> 默认工作路径的确定，通常由在 <code>/usr/lib/rpm/macros</code> 这个文件里的一个叫做 <code>%_topdir</code> 的宏变量来定义。如果用户想更改这个目录名，rpm 官方并不推荐直接更改这个目录，而是在用户家目录下建立一个名为 <code>.rpmmacros</code> 的隐藏文件(Linux下隐藏文件,前面的点不能少)，然后在里面重新定义 <code>%_topdir</code>，指向一个新的目录名。这样就可以满足某些用户的差异化需求了。<code>.rpmmacros</code> 文件里内容，比如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">michael@localhost  ~  cat .rpmmacros
+
+%_topdir %<span class="o">(</span><span class="nb">echo</span> <span class="nv">$HOME</span><span class="o">)</span>/rpmbuild
+
+%_smp_mflags %<span class="o">(</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$RPM_BUILD_NCPUS</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="se">\\\
+</span><span class="se"></span>        <span class="o">&amp;&amp;</span> <span class="nv">RPM_BUILD_NCPUS</span><span class="o">=</span><span class="s2">&#34;`/usr/bin/nproc 2&gt;/dev/null || \\\
+</span><span class="s2">                             /usr/bin/getconf _NPROCESSORS_ONLN`&#34;</span><span class="p">;</span> <span class="se">\\\
+</span><span class="se"></span>    <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$RPM_BUILD_NCPUS</span><span class="s2">&#34;</span> -gt <span class="m">16</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> <span class="se">\\\
+</span><span class="se"></span>        <span class="nb">echo</span> <span class="s2">&#34;-j16&#34;</span><span class="p">;</span> <span class="se">\\\
+</span><span class="se"></span>    <span class="k">elif</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$RPM_BUILD_NCPUS</span><span class="s2">&#34;</span> -gt <span class="m">3</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> <span class="se">\\\
+</span><span class="se"></span>        <span class="nb">echo</span> <span class="s2">&#34;-j</span><span class="nv">$RPM_BUILD_NCPUS</span><span class="s2">&#34;</span><span class="p">;</span> <span class="se">\\\
+</span><span class="se"></span>    <span class="k">else</span> <span class="se">\\\
+</span><span class="se"></span>        <span class="nb">echo</span> <span class="s2">&#34;-j3&#34;</span><span class="p">;</span> <span class="se">\\\
+</span><span class="se"></span>    <span class="k">fi</span> <span class="o">)</span>
+
+%__arch_install_post <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span> <span class="s2">&#34;%{buildarch}&#34;</span> <span class="o">=</span> <span class="s2">&#34;noarch&#34;</span> <span class="o">]</span> <span class="o">||</span> <span class="nv">QA_CHECK_RPATHS</span><span class="o">=</span><span class="m">1</span> <span class="p">;</span> <span class="se">\
+</span><span class="se"></span>    <span class="k">case</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">QA_CHECK_RPATHS</span><span class="k">:-</span><span class="si">}</span><span class="s2">&#34;</span> in <span class="o">[</span>1yY<span class="o">]</span>*<span class="o">)</span> /usr/lib/rpm/check-rpaths <span class="p">;;</span> <span class="k">esac</span> <span class="se">\
+</span><span class="se"></span>    /usr/lib/rpm/check-buildroot
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="2打包过程">2.打包过程</h3>
+<h4 id="21打包的过程有点像是流水线分好几个工序">2.1.打包的过程有点像是流水线，分好几个工序：</h4>
+<ul>
+<li>首先，需要把源代码放到%_sourcedir中；</li>
+<li>然后，进行编译，编译的过程是在%_builddir中完成的，所以需要先把源代码复制到这个目录下边，一般情况下，源代码是压缩包格式，那么就解压过来即可；</li>
+<li>第三步，进行“安装”，这里有点类似于预先组装软件包，把软件包应该包含的内容（比如二进制文件、配置文件、man文档等）复制到%_buildrootdir中，并按照实际安装后的目录结构组装，比如二进制命令可能会放在/usr/bin下，那么就在%_buildrootdir下也按照同样的目录结构放置；</li>
+<li>然后，需要配置一些必要的工作，比如在实际安装前的准备啦，安装后的清理啦，以及在卸载前后要做的工作啦等等，这样也都是通过配置在SPEC文件中来告诉rpmbuild命令；</li>
+<li>还有一步可选操作，那就是检查软件是否正常运行；</li>
+<li>最后，生成的RPM包放置到%_rpmdir，源码包放置到%_srpmdir下。</li>
+</ul>
+<h4 id="22以上这些步骤都是配置在spec文件中的具体来说各个阶段">2.2.以上这些步骤都是配置在SPEC文件中的，具体来说各个阶段</h4>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>读取的目录</th>
+<th>写入的目录</th>
+<th>具体动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%prep</td>
+<td>%_sourcedir</td>
+<td>%_builddir</td>
+<td>读取位于 %_sourcedir 目录的源代码和 patch 。之后，解压源代码至 %_builddir 的子目录并应用所有 patch。</td>
+</tr>
+<tr>
+<td>%build</td>
+<td>%_builddir</td>
+<td>%_builddir</td>
+<td>编译位于 %_builddir 构建目录下的文件。通过执行类似 ./configure &amp;&amp; make 的命令实现。</td>
+</tr>
+<tr>
+<td>%install</td>
+<td>%_builddir</td>
+<td>%_buildrootdir</td>
+<td>读取位于 %_builddir 构建目录下的文件并将其安装至 %_buildrootdir 目录。这些文件就是用户安装 RPM 后，最终得到的文件。注意一个奇怪的地方: 最终安装目录 不是 构建目录。通过执行类似 make install 的命令实现。</td>
+</tr>
+<tr>
+<td>%check</td>
+<td>%_builddir</td>
+<td>%_builddir</td>
+<td>检查软件是否正常运行。通过执行类似 make test 的命令实现。很多软件包都不需要此步。</td>
+</tr>
+<tr>
+<td>bin</td>
+<td>%_buildrootdir</td>
+<td>%_rpmdir</td>
+<td>读取位于 %_buildrootdir 最终安装目录下的文件，以便最终在 %_rpmdir 目录下创建 RPM 包。在该目录下，不同架构的 RPM 包会分别保存至不同子目录， noarch 目录保存适用于所有架构的 RPM 包。这些 RPM 文件就是用户最终安装的 RPM 包。</td>
+</tr>
+<tr>
+<td>src</td>
+<td>%_sourcedir</td>
+<td>%_srcrpmdir</td>
+<td>创建源码 RPM 包（简称 SRPM，以.src.rpm 作为后缀名），并保存至 %_srcrpmdir 目录。SRPM 包通常用于审核和升级软件包。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3spec文件">3.SPEC文件</h3>
+<p><code>SPEC</code> 文件，rpm构建包的核心文件，命名格式一般是“软件名-版本.spec”的形式，需将其拷贝到 <code>SPECS</code> 目录下</p>
+<h4 id="31rpm宏">3.1.<strong>RPM宏</strong></h4>
+<ul>
+<li>
+<p>rpm宏是直接文本替换</p>
+</li>
+<li>
+<p>查看宏对应的实际内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@node2 ~/rpmbuild/SPECS<span class="o">]</span><span class="c1"># rpm --eval %{?dist}</span>
+.el7
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="32生成-spec-文件">3.2.生成 SPEC 文件</h4>
+<ul>
+<li>
+<p>使用vim命令生成模板文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">vim myapp.spec
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>使用rpmdevtools 工具生成模板文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">rpmdev-newspec -o myapp.spec
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="33spec-配置项说明">3.3.SPEC 配置项说明</h4>
+<ul>
+<li>
+<p>spec文件序言部分</p>
+<table>
+<thead>
+<tr>
+<th><strong>SPEC指令</strong></th>
+<th><strong>定义</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>软件名 ，包基本名称，应于spec文件名匹配</td>
+</tr>
+<tr>
+<td>Version</td>
+<td>版本号</td>
+</tr>
+<tr>
+<td>Release</td>
+<td>发布编号 ，打包次数，递增。初始值为 1%{?dist}</td>
+</tr>
+<tr>
+<td>Summary</td>
+<td>简介， 简要说明，英文的话第一个字母应大写，以避免 <code>rpmlint</code> 工具警告</td>
+</tr>
+<tr>
+<td>License</td>
+<td>软件许可协议版本</td>
+</tr>
+<tr>
+<td>Group</td>
+<td>目前该标记已丢弃，vim的模板还有这一条，删掉即可*</td>
+</tr>
+<tr>
+<td>URL</td>
+<td>通常为软件官网</td>
+</tr>
+<tr>
+<td>Source0</td>
+<td>源代码压缩归档的路径或URL，多个时使用 SourceX</td>
+</tr>
+<tr>
+<td>Patch0</td>
+<td>补丁，多个时 PatchX</td>
+</tr>
+<tr>
+<td>BuildArch</td>
+<td>系统架构，如x86_64 noarch</td>
+</tr>
+<tr>
+<td>BuildRequires</td>
+<td>以逗号或空格分隔的依赖包列表，用于构建过程，可以有多个条目</td>
+</tr>
+<tr>
+<td>Requires</td>
+<td>以逗号或空格分隔的运行时依赖列表，用于安装过程，可以有多个条目</td>
+</tr>
+<tr>
+<td>ExcludeArch</td>
+<td>需要排除的系统架构</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>spec文件Body部分</p>
+<table>
+<thead>
+<tr>
+<th><strong>SPEC指令</strong></th>
+<th><strong>定义</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%description</td>
+<td>软件的完整描述，可跨多行，以空行结束</td>
+</tr>
+<tr>
+<td>%prep</td>
+<td>准备阶段，常为解压源码归档，可包含shell脚本</td>
+</tr>
+<tr>
+<td>%build</td>
+<td>构建阶段</td>
+</tr>
+<tr>
+<td>%install</td>
+<td>安装阶段，将文件从%builddir复制到%buildroot BUILD -&gt; BUILDROOT 并在其中创建必要目录</td>
+</tr>
+<tr>
+<td>%check</td>
+<td>测试阶段，通常运行单元测试</td>
+</tr>
+<tr>
+<td>%files</td>
+<td>指定最终需要安装的文件列表</td>
+</tr>
+<tr>
+<td>%changelog</td>
+<td>更新记录</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>tips:</p>
+<ul>
+<li>
+<p>%changelog 标签应包含每个 Release 所做的更改日志，尤其应包含上游的安全/漏洞补丁的说明。Changelog 日志可使用 rpm &ndash;changelog -q <packagename> 查询，通过查询可得知已安装的软件是否包含指定漏洞和安全补丁。%changelog 条目应包含版本字符串，以避免 rpmlint 工具警告</p>
+</li>
+<li>
+<p>%changelog 格式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">* Day-of-Week Month Day Year Name Surname &lt;email&gt; - Version-Release
+- XXX
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>多行的部分，如 <code>%changelog</code> 或 <code>%description</code> 由指令下一行开始，空行结束</p>
+</li>
+<li>
+<p>spec中不能有空项目和无用项目 (如 BuildRequires 和 Requires) ，可以删除无内容的项目，也可使用 ‘#’ 注释</p>
+</li>
+</ul>
+</li>
+<li>
+<p>spec文件示例</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">Name:		
+Version:	
+Release:	1%<span class="o">{</span>?dist<span class="o">}</span>
+Summary:	
+
+Group:		
+License:	
+URL:		
+Source0:	
+
+
+%description
+
+
+%prep
+%setup -q
+
+
+%build
+%configure
+make %<span class="o">{</span>?_smp_mflags<span class="o">}</span>
+
+
+%install
+make install <span class="nv">DESTDIR</span><span class="o">=</span>%<span class="o">{</span>buildroot<span class="o">}</span>
+
+
+%files
+%doc
+
+
+%changelog
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="4spec各阶段详解">4.SPEC各阶段详解</h3>
+<h4 id="41-prep阶段">4.1 %prep阶段</h4>
+<p>%prep 部分描述了解压源码包的方法。一般而言，其中包含 %autosetup 命令。另外，还可以使用 %setup 和 %patch 命令来指定操作 Source0、Patch0 等标签的文件。</p>
+<h5 id="411-autosetup-命令">4.1.1 %autosetup 命令</h5>
+<p>%autosetup 命令用于解压源码包。可用选项包括：</p>
+<ul>
+<li>-n name : 如果源码包解压后的目录名称与 RPM 名称不同，此选项用于指定正确的目录名称。例如，如果 tarball 解压目录为 FOO，则使用 “%autosetup -n FOO”。</li>
+<li>-c name : 如果源码包解压后包含多个目录，而不是单个目录时，此选项可以创建名为 name 的目录，并在其中解压。</li>
+</ul>
+<h5 id="412-setup-命令">4.1.2 %setup 命令</h5>
+<p>如果使用 %setup 命令，通常使用 -q 抑止不必要的输出。
+如果需要解压多个文件，有更多 %spec 选项可用，这对于创建子包很有用。常用选项如下：</p>
+<ul>
+<li>-a number：在切换目录后，只解压指定序号的 Source 文件（例如 “-a 0” 表示 Source0）。</li>
+<li>-b number ：在切换目录前， 只解压指定序号的 Source 文件（例如 “-b 0” 表示 Source0）。</li>
+<li>-D：解压前，不删除目录。</li>
+<li>-T：禁止自动解压归档。</li>
+</ul>
+<h5 id="413-patch-命令">4.1.3 %patch 命令</h5>
+<p>如果使用 %autosetup 命令，则不需要手动进行补丁管理。如果你的需求很复杂，或需要与 EPEL 兼容，需要用到此部分的内容。%patch0 命令用于应用 Patch0（%patch1 应用 Patch1，以此类推）。Patches 是修改源码的最佳方式。常用的 -pNUMBER 选项，向 patch 程序传递参数，表示跳过 NUM 个路径前缀。</p>
+<p>补丁文件名通常像这样 telnet-0.17-env.patch，命名格式为 %{name} - %{version} - REASON.patch（有时省略 version 版本）。补丁文件通常是 diff -u 命令的输出；如果你在 ~/rpmbuild/BUILD 子目录执行此命令，则之后便不需要指定 -p 选项。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">为一个文件制作补丁的步骤：
+
+cp foo/bar foo/bar.orig
+vim foo/bar
+diff -u foo/bar.orig foo/bar &gt; ~/rpmbuild/SOURCES/PKGNAME.REASON.patch
+
+如果需要修改多个文件，简单方法是复制 BUILD 下的整个子目录，然后在子目录执行 diff。切换至 ~rpmbuild/BUILD/NAME 目录后，执行以下命令：
+
+cp -pr ./ ../PACKAGENAME.orig/
+... 执行修改 ...
+diff -ur ../PACKAGENAME.orig . &gt; ~/rpmbuild/SOURCES/NAME.REASON.patch
+
+如果你想在一个补丁中编辑多个文件，你可以在编辑之前，使用 .orig 扩展名复制原始文件。然后，使用 gendiff（在 rpm-build 包中）创建补丁文件。
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="42-build阶段">4.2 %build阶段</h4>
+<p>%build阶段顾名思义就是对解压到%_builddir下的源码进行编译的阶段，整个过程在该目录下完成。
+许多程序使用 GNU configure 进行配置。默认情况下，文件会安装到前缀为 “/usr/local” 的路径下，对于手动安装很合理。然而，打包时需要修改前缀为 “/usr”。共享库路径视架构而定，安装至 /usr/lib 或 /usr/lib64 目录。
+由于 GNU configure 很常见，可使用 %configure 宏来自动设置正确选项（例如，设置前缀为 /usr）。一般用法如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"> %configure
+ make %<span class="o">{</span>?_smp_mflags<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>若需要覆盖 makefile 变量，请将变量作为参数传递给 make：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">make %<span class="o">{</span>?_smp_mflags<span class="o">}</span> <span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&#34;%{optflags}&#34;</span> <span class="nv">BINDIR</span><span class="o">=</span>%<span class="o">{</span>_bindir<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>你会发现SPEC中会用到很多预定义好的宏，用来通过一个简单的宏来完成一个或一系列常见的操作，比如：<code>%prep</code>阶段用于解压的<code>%setup</code>和<code>%autosetup</code>，<code>%build</code>阶段的<code>%configure</code>等。</p>
+</blockquote>
+<h4 id="43-install阶段">4.3 %install阶段</h4>
+<p>此阶段包含安装阶段需要执行的命令，即从 %{_builddir} 复制相关文件到 %{buildroot} 目录（通常表示从 ~/rpmbuild/BUILD 复制到 ~/rpmbuild/BUILDROOT/XXX) 目录，并根据需要在 %{buildroot} 中创建必要目录。</p>
+<blockquote>
+<p>容易混淆的术语：</p>
+<ul>
+<li>“build 目录”，也称为 %{_builddir}，实际上与 “build root”，又称为 %{buildroot}，是不同的目录。在前者中进行编译，并将需要打包的文件从前者复制到后者， %{buildroot}通常为 ~/rpmbuild/BUILD/%{name}-%{version}-%{release}.%{arch}。</li>
+<li>在 %build 阶段，当前目录为 %{buildsubdir}，是 %prep 阶段中在 %{_builddir} 下创建的子目录。这些目录通常名为 ~/rpmbuild/BUILD/%{name}-%{version}。</li>
+<li>%install 阶段的命令不会在用户安装 RPM 包时执行，此阶段仅在打包时执行。</li>
+</ul>
+</blockquote>
+<p>一般，这里执行 “make install” 之类的命令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">%install
+rm -rf %<span class="o">{</span>buildroot<span class="o">}</span> <span class="c1"># 仅用于 RHEL 5</span>
+%makeinstall
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>理想情况下，对于支持的程序，你应该使用 <code>%makeinstall</code>（这又是一个宏），它等同于 <code>DESTDIR=%{buildroot}</code>，它会将文件安装到 <code>%{buildroot}</code> 目录中。</p>
+<blockquote>
+<p>使用 “%makeinstall” 宏。此方法可能有效，但也可能失败。该宏会展开为 make prefix=%{buildroot}%{_prefix} bindir=%{buildroot}%{_bindir} &hellip; install，可能导致某些程序无法正常工作。请在 %{buildroot} 根据需要创建必要目录。</p>
+</blockquote>
+</li>
+<li>
+<p>使用 auto-destdir 软件包的话，需要 BuildRequires: auto-destdir，并将 make install 修改为 make-redir DESTDIR=%{buildroot} install。这仅适用于使用常用命令安装文件的情况，例如 cp 和 install。</p>
+</li>
+<li>
+<p>手动执行安装。这需要在 <code>%{buildroot}</code> 下创建必要目录，并从 <code>%{_builddir}</code> 复制文件至 <code>%{buildroot}</code> 目录。要特别注意更新，通常会包含新文件。示例如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">%install
+rm -rf %<span class="o">{</span>buildroot<span class="o">}</span>
+mkdir -p %<span class="o">{</span>buildroot<span class="o">}</span>%<span class="o">{</span>_bindir<span class="o">}</span>/
+cp -p mycommand %<span class="o">{</span>buildroot<span class="o">}</span>%<span class="o">{</span>_bindir<span class="o">}</span>/
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="44-check-阶段">4.4 %check 阶段</h4>
+<p>如果需要执行测试，使用 <code>%check</code> 是个好主意。测试代码应写入 <code>%check</code> 部分（紧接在 <code>%install</code> 之后，因为需要测试 <code>%{buildroot}</code> 中的文件），而不是写入 <code>%{build}</code> 部分，这样才能在必要时忽略测试。通常，此部分包含：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#通常使用</span>
+make <span class="nb">test</span>
+
+<span class="c1">#有时候也使用</span>
+make check
+
+<span class="c1">#请熟悉 Makefile 的用法，并选择适当的方式。</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="45-files-部分">4.5 %files 部分</h4>
+<p>此部分列出了需要被打包的文件和目录。</p>
+<h5 id="451-files-基础">4.5.1 <strong>%files 基础</strong></h5>
+<p><code>%defattr</code> 用于设置默认文件权限，通常可以在 %files 的开头看到它。注意，如果不需要修改权限，则不需要使用它。其格式为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">%defattr<span class="o">(</span>&lt;文件权限&gt;, &lt;用户&gt;, &lt;用户组&gt;, &lt;目录权限&gt;<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>第 4 个参数通常会省略。常规用法为 <code>%defattr(-,root,root,-)</code>，其中 “-” 表示默认权限。 您应该列出该软件包拥有的所有文件和目录。<strong>尽量使用宏代替目录名</strong>，具体的宏列表如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">%<span class="o">{</span>_sysconfdir<span class="o">}</span>        /etc
+%<span class="o">{</span>_prefix<span class="o">}</span>            /usr
+%<span class="o">{</span>_exec_prefix<span class="o">}</span>       %<span class="o">{</span>_prefix<span class="o">}</span>
+%<span class="o">{</span>_bindir<span class="o">}</span>            %<span class="o">{</span>_exec_prefix<span class="o">}</span>/bin
+%<span class="o">{</span>_libdir<span class="o">}</span>            %<span class="o">{</span>_exec_prefix<span class="o">}</span>/%<span class="o">{</span>_lib<span class="o">}</span>
+%<span class="o">{</span>_libexecdir<span class="o">}</span>        %<span class="o">{</span>_exec_prefix<span class="o">}</span>/libexec
+%<span class="o">{</span>_sbindir<span class="o">}</span>           %<span class="o">{</span>_exec_prefix<span class="o">}</span>/sbin
+%<span class="o">{</span>_sharedstatedir<span class="o">}</span>    /var/lib
+%<span class="o">{</span>_datarootdir<span class="o">}</span>       %<span class="o">{</span>_prefix<span class="o">}</span>/share
+%<span class="o">{</span>_datadir<span class="o">}</span>           %<span class="o">{</span>_datarootdir<span class="o">}</span>
+%<span class="o">{</span>_includedir<span class="o">}</span>        %<span class="o">{</span>_prefix<span class="o">}</span>/include
+%<span class="o">{</span>_infodir<span class="o">}</span>           /usr/share/info
+%<span class="o">{</span>_mandir<span class="o">}</span>            /usr/share/man
+%<span class="o">{</span>_localstatedir<span class="o">}</span>     /var
+%<span class="o">{</span>_initddir<span class="o">}</span>          %<span class="o">{</span>_sysconfdir<span class="o">}</span>/rc.d/init.d
+%<span class="o">{</span>_var<span class="o">}</span>               /var
+%<span class="o">{</span>_tmppath<span class="o">}</span>           %<span class="o">{</span>_var<span class="o">}</span>/tmp
+%<span class="o">{</span>_usr<span class="o">}</span>               /usr
+%<span class="o">{</span>_usrsrc<span class="o">}</span>            %<span class="o">{</span>_usr<span class="o">}</span>/src
+%<span class="o">{</span>_lib<span class="o">}</span>               lib <span class="o">(</span>lib64 on 64bit multilib systems<span class="o">)</span>
+%<span class="o">{</span>_docdir<span class="o">}</span>            %<span class="o">{</span>_datadir<span class="o">}</span>/doc
+%<span class="o">{</span>buildroot<span class="o">}</span>          %<span class="o">{</span>_buildrootdir<span class="o">}</span>/%<span class="o">{</span>name<span class="o">}</span>-%<span class="o">{</span>version<span class="o">}</span>-%<span class="o">{</span>release<span class="o">}</span>.%<span class="o">{</span>_arch<span class="o">}</span>
+<span class="nv">$RPM_BUILD_ROOT</span>       %<span class="o">{</span>buildroot<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果路径以 “/” 开头（或从宏扩展），则从 <code>%{buildroot}</code> 目录取用。否则，假设文件在当前目录中（例如：在 <code>%{_builddir}</code> 中，包含需要的文档）。如果您的包仅安装一个文件，如 <code>/usr/sbin/mycommand</code>，则 %files 部分如下所示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">%files
+%<span class="o">{</span>_sbindir<span class="o">}</span>/mycommand
+</code></pre></td></tr></table>
+</div>
+</div><p>若要使软件包不受上游改动的影响，可使用通配符匹配所有文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">%<span class="o">{</span>_bindir<span class="o">}</span>/*
+</code></pre></td></tr></table>
+</div>
+</div><p>包含一个目录：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">%<span class="o">{</span>_datadir<span class="o">}</span>/%<span class="o">{</span>name<span class="o">}</span>/
+</code></pre></td></tr></table>
+</div>
+</div><p>注意，%{_bindir}/* 不会声明此软件包拥有 /usr/bin 目录，而只包含其中的文件。如果您列出一个目录，则该软件包拥有这个目录，及该目录内的所有文件和子目录。因此，不要列出 %{_bindir}，并且要小心的处理那些可能和其他软件包共享的目录。</p>
+<p>如果存在以下情况，可能引发错误：</p>
+<p>通配符未匹配到任何文件或目录
+文件或目录被多次列出
+未列出 %{buildroot} 下的某个文件或目录
+您也可以使用 %exclude 来排除文件。这对于使用通配符来列出全部文件时会很有用，注意如果未匹配到任何文件也会造成失败。</p>
+<h5 id="452-files-前缀">4.5.2 <strong>%files 前缀</strong></h5>
+<p>上边的“hello”的示例中，%files部分还有用到%doc等宏，可能您看得一知半解，这里详细介绍一下。
+如果需要在 %files 部分添加一个或多个前缀，用空格分隔。</p>
+<p>%doc 用于列出 %{_builddir} 内，但不复制到 %{buildroot} 中的文档。通常包括 README 和 INSTALL等。它们会保存至 /usr/share/doc 下适当的目录中，不需要声明 /usr/share/doc 的所有权。</p>
+<blockquote>
+<p>注意： 如果指定 %doc 条目，rpmbuild &lt; 4.9.1 在安装前会将 %doc 目录删除。这表明已保存至其中的文档，例如，在 %install 中安装的文档会被删除，因此最终不会出现在软件包中。如果您想要在 %install 中安装一些文档，请将它们临时安装到 build 目录（不是 build root 目录）中，例如 _docs_staging，接着在 %files 中列出，如 %doc _docs_staging/* 这样。</p>
+</blockquote>
+<p>配置文件保存在 /etc 中，一般会这样指定（确保用户的修改不会在更新时被覆盖）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">%config<span class="o">(</span>noreplace<span class="o">)</span> %<span class="o">{</span>_sysconfdir<span class="o">}</span>/foo.conf
+</code></pre></td></tr></table>
+</div>
+</div><p>如果更新的配置文件无法与之前的配置兼容，则应这样指定：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">%config %<span class="o">{</span>_sysconfdir<span class="o">}</span>/foo.conf
+</code></pre></td></tr></table>
+</div>
+</div><p>“%attr(mode, user, group)” 用于对文件进行更精细的权限控制，”-” 表示使用默认值：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">%attr<span class="o">(</span>0644, root, root<span class="o">)</span> FOO.BAR
+</code></pre></td></tr></table>
+</div>
+</div><p>“%caps(capabilities)” 用于为文件分配 POSIX capabilities。例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">%caps<span class="o">(</span><span class="nv">cap_net_admin</span><span class="o">=</span>pe<span class="o">)</span> FOO.BAR
+</code></pre></td></tr></table>
+</div>
+</div><p>如果包含特定语言编写的文件，请使用 %lang 来标注：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">%lang<span class="o">(</span>de<span class="o">)</span> %<span class="o">{</span>_datadir<span class="o">}</span>/locale/de/LC_MESSAGES/tcsh*
+</code></pre></td></tr></table>
+</div>
+</div><p>使用区域语言（Locale）文件的程序应遵循 处理 i18n 文件的建议方法：</p>
+<ul>
+<li>在 %install 步骤中找出文件名： %find_lang ${name}</li>
+<li>添加必要的编译依赖： BuildRequires: gettext</li>
+<li>使用找到的文件名： %files -f ${name}.lang</li>
+</ul>
+<h4 id="46-scriptlets">4.6 Scriptlets</h4>
+<p>当用户安装或卸载 RPM 时，您可能想要执行一些命令。这可以通过 scriptlets 完成。</p>
+<p>脚本片段可以：</p>
+<ul>
+<li>在软体包安装之前 (%pre) 或之后 (%post) 执行</li>
+<li>在软体包卸载之前 (%preun) 或之后 (%postun) 执行</li>
+<li>在事务开始 (%pretrans) 或结束 (%posttrans) 时执行</li>
+</ul>
+<blockquote>
+<p>例如，每个二进制 RPM 包都会在动态链接器的默认路径中存储共享库文件，并在 %post 和 %postun 中调用 ldconfig 来更新库缓存。如果软件包有多个包含共享库的子包，则每个软体包也需要执行相同动作。</p>
+<p>%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig</p>
+<p>如果仅执行一个命令，则 “-p” 选项会直接执行，而不启用 shell。然而，若有许多命令时，不要使用此选项，按正常编写 shell 脚本即可。</p>
+</blockquote>
+<p>如果你在脚本片段中执行任何程序，就必须以 Requires(CONTEXT)（例： Requires(post)）的形式列出所有依赖。</p>
+<p>%pre、%post、%preun 和 %postun 提供 $1 参数，表示动作完成后，系统中保留的此名称的软件包数量。因此可用于检查软件安装情况，不过不要比较此参数值是否等于 2，而是比较是否大于等于 2。对于%pretrans 和 %posttrans，$1 的值恒为 0。</p>
+<p>例如，如果软件包安装了一份 info 手册，那么可以用 info 包提供的 install-info 来更新 info 手册索引。首先，我们不保证系统已安装 info 软件包，除非明确声明需要它；其次，我们不想在 install-info 执行失败时，使软件包安装失败：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">Requires<span class="o">(</span>post<span class="o">)</span>: info
+Requires<span class="o">(</span>preun<span class="o">)</span>: info
+
+...
+
+%post
+/sbin/install-info %<span class="o">{</span>_infodir<span class="o">}</span>/%<span class="o">{</span>name<span class="o">}</span>.info %<span class="o">{</span>_infodir<span class="o">}</span>/dir <span class="o">||</span> :
+
+%preun
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$1</span> <span class="o">=</span> <span class="m">0</span> <span class="o">]</span> <span class="p">;</span> <span class="k">then</span>
+/sbin/install-info --delete %<span class="o">{</span>_infodir<span class="o">}</span>/%<span class="o">{</span>name<span class="o">}</span>.info %<span class="o">{</span>_infodir<span class="o">}</span>/dir <span class="o">||</span> :
+<span class="k">fi</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上边的示例中还有一个安装 info 手册时的小问题需要解释一下。install-info 命令会更新 info 目录，所以我们应该在 <code>%install</code> 阶段删除 <code>%{buildroot}</code> 中无用的空目录：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">rm -f %<span class="o">{</span>buildroot<span class="o">}</span>%<span class="o">{</span>_infodir<span class="o">}</span>/dir
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="三构建rpm包">三、构建RPM包</h2>
+<p>RPM包文件名格式：Name-Version-Release[dist].BuildArch</p>
+<h3 id="1rpmbuild打包">1.rpmbuild打包</h3>
+<h4 id="11rpmbuild-命令选项">1.1.rpmbuild 命令选项</h4>
+<p><code>rpmbuild</code> 命令的选项 <code>rpmbuild</code> 命令有不少选项，用得比较多的有：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">-bp 只解压源码及应用补丁
+-bc 只进行编译
+-bi 只进行安装到%<span class="o">{</span>buildroot<span class="o">}</span>
+-bb 只生成二进制 rpm 包
+-bs 只生成源码 rpm 包
+-ba 生成二进制 rpm 包和源码 rpm 包
+--target 指定生成 rpm 包的平台，默认会生成 i686 和 x86_64 的 rpm 包，但一般我只需要 x86_64 的 rpm 包
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="12只生成二进制格式的-rpm-包">1.2.只生成二进制格式的 rpm 包</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">rpmbuild -bb <span class="o">{</span>路径<span class="o">}</span>软件名-版本.spec 
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="13完全打包">1.3.完全打包</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">rpmbuild -ba <span class="o">{</span>路径<span class="o">}</span>软件名-版本.spec 
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2rpmlint检查">2.rpmlint检查</h3>
+<p>为避免常见错误，请先使用 <code>rpmlint</code> 查找 SPEC 文件的错误：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">rpmlint program.spec
+</code></pre></td></tr></table>
+</div>
+</div><p>如果返回错误/警告，使用 “-i” 选项查看更详细的信息。</p>
+<p>也可以使用 <code>rpmlint</code> 测试已构建的 RPM 包，检查 SPEC/RPM/SRPM 是否存在错误。 如果你位于 SPEC 目录中，请执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">rpmlint NAME.spec ../RPMS/*/NAME*.rpm ../SRPMS/NAME*.rpm
+</code></pre></td></tr></table>
+</div>
+</div><p>进入 <code>~/rpmbuild/RPMS</code> 下的特定架构目录中，您会发现有许多二进制 RPM 包。使用以下命令快速查看 RPM 包含的文件和权限</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">rpmls *.rpm
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3rpm安装卸载">3.rpm安装卸载</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#安装</span>
+rpm -ivp package1.rpm package2.rpm package3.rpm ...
+<span class="c1">#升级</span>
+rpm -Uvp package1.rpm package2.rpm package3.rpm ...
+<span class="c1">#卸载</span>
+rpm -e package1 package2 package3
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="四一些名称解释">四、一些名称解释</h2>
+<h3 id="1configuremakemake-install-命令的区别">1.configure、make、make install 命令的区别</h3>
+<ul>
+<li><code>configure</code> 它是个 <code>shell</code> 脚本，<code>./configure</code> 那么就是运行这个 shell 脚本啦！<code>./configure</code> 是用来检测你的安装平台的目标特征的。比如它会检测你是不是有 <code>CC</code> 或 <code>GCC</code>，
+并不是需要 <code>CC</code>或 <code>GCC</code>。这一步一般用来生成 <code>Makefile</code>，为下一步的编译做准备。 可以通过在 <code>configure</code> 后加上参数来对安装进行控制。例如，<code>./configure --prefix=/usr</code>。意思是将该软件安装在 <code>/usr</code> 下面，执行文件就会安装在 <code>/usr/bin</code> （如果不指定，默认的路径是 <code>/usr/local/bin</code>),
+资源文件就会安装在 <code>/usr/share</code>（而不是默认的 <code>/usr/local/share</code>）。可以通过 <code>./configure --help</code> 察看详细的说明帮助。之前就写过一篇文章 <a href="https://www.cnblogs.com/michael-xiang/p/10466819.html">CentOS 源码编译安装 Python3</a></li>
+<li><code>make</code> 是用来编译的，它从 <code>Makefile</code> 中读取指令，然后编译。如果 在 make 过程中出现 error ，你就要记下错误代码（注意不仅仅是最后一行），然后你可以向开发者提交 bugreport（一般在 INSTALL 里有提交地址），或者你的系统少了一些依赖库等，这些需要自己仔细研究错误代码。</li>
+<li><code>make install</code> 就是把编译出来的二进制文件,库,配置文件等等放到相应目录下</li>
+<li><code>make uninstal</code> 是卸载，不加参数就是默认的进行源代码编译。</li>
+<li><code>make clean</code> 清除编译结果</li>
+</ul>
+<p><code>make</code> 是 Linux 开发套件里面自动化编译的一个控制程序，他通过借助 Makefile 里面编写的编译规范（语法很多，类似一个可以运行的脚本程序。反正我是看不懂，所以你也别问我怎么编写）。进行自动化的调用 gcc 、ld 以及运行某些需要的程序进行编译的程序。</p>
+<p>一般情况下，他所使用的 Makefile 控制代码，由 configure 这个设置脚本根据给定的参数和系统环境生成。</p>
+<h3 id="2makefile是什么">2.Makefile是什么？</h3>
+<p>makefile 是用于自动编译和链接的，一个工程有很多文件组成，每一个文件的改变都会导致工程的重新链接&ndash;但是不是所有的文件都需要重新编译，makefile 能够纪录文件的信息，决定在链接的时候需要重新编译哪些文件。</p>
+<h3 id="3cc-和-gcc-又是什么">3.cc 和 gcc 又是什么？</h3>
+<p>从名字上看，老的 Unix 系统的 CC 程序叫做 <code>C Compiler</code> 。但 GCC 这个名字按 GNU 的说法叫做 <code>Gnu Compiler Collection</code> ，注意这是一个编译器集合，不仅仅是 c 或 c++。gcc 包含很多编译器(C, C++, Objective-C, Ada, Fortran,and Java) 。所以它们是不一样的，一个是一个古老的 C 编译器，一个是编译器的 Gnu 的编译器的集合(Gcc里的 C 编译器比 CC 强大太多了，所以你没必要用 CC)。</p>
+<p>cc 是 gcc 的连接。cc 来自于昂贵的 Unix 系统，cc 是商业软件，gcc 是编译器。</p>
+<p>GCC 可以用来编译 C/C++、FORTRAN、JAVA、OBJC、ADA等语言的程序，可根据需要选择安装支持的语言。</p>
+<h2 id="五简单案例">五、简单案例</h2>
+<h3 id="1创建工作空间">1.创建工作空间</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[root@node2 ~]# rpmdev-setuptree
+[root@node2 ~]# tree rpmbuild
+rpmbuild
+├── BUILD
+├── RPMS
+├── SOURCES
+├── SPECS
+└── SRPMS
+
+5 directories, 0 files
+
+#或者用mkdir命令也可以,二选一
+mkdir -p rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2准备spec">2.准备SPEC</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> ~/rpmbuild
+vim SPECS/hello-world.spec
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">Name: hello-world
+Version: 1.0.0
+Release: 1.el7
+Summary: A <span class="nb">test</span> demo
+License: FIXME
+ 
+%description
+This is a <span class="nb">test</span> demo
+ 
+%prep
+<span class="c1"># nothing</span>
+ 
+%build
+cat &gt; hello-world.sh <span class="s">&lt;&lt;EOF
+</span><span class="s">#!/bin/bash
+</span><span class="s">echo Hello World
+</span><span class="s">EOF</span>
+ 
+%install
+mkdir -p %<span class="o">{</span>buildroot<span class="o">}</span>/usr/bin/
+install -m <span class="m">755</span> hello-world.sh %<span class="o">{</span>buildroot<span class="o">}</span>/usr/bin/hello-world.sh
+ 
+%files
+/usr/bin/hello-world.sh
+ 
+%changelog
+<span class="c1"># nothing</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3rpm打包">3.RPM打包</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">rpmbuild -ba SPECS/hello-world.spec
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="4安装rpm包">4.安装RPM包</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">rpm -ivh /root/rpmbuild/RPMS/x86_64/hello-world-1.0.0-1.el7.x86_64.rpm
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="5验证安装">5.验证安装</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@node2 ~/rpmbuild<span class="o">]</span><span class="c1"># rpm -q hello-world</span>
+hello-world-1.0.0-1.el7.x86_64
+<span class="o">[</span>root@node2 ~/rpmbuild<span class="o">]</span><span class="c1"># hello-world.sh </span>
+Hello World
+<span class="o">[</span>root@node2 ~/rpmbuild<span class="o">]</span><span class="c1">#</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="6卸载rpm包">6.卸载rpm包</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@node2 ~/rpmbuild<span class="o">]</span><span class="c1"># rpm -e hello-world</span>
+<span class="o">[</span>root@node2 ~/rpmbuild<span class="o">]</span><span class="c1"># rpm -q hello-world</span>
+未安装软件包 hello-world 
+<span class="o">[</span>root@node2 ~/rpmbuild<span class="o">]</span><span class="c1"># hello-world.sh </span>
+-bash: /usr/bin/hello-world.sh: 没有那个文件或目录
+<span class="o">[</span>root@node2 ~/rpmbuild<span class="o">]</span><span class="c1"># </span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="六复杂案例">六、复杂案例</h2>
+<h3 id="1应用源码包">1.应用源码包</h3>
+<p>本步骤用于生成创建RPM包所需的源码包，本示例使用golang代码,其他语言类似，生成源码包需要以下文件:</p>
+<ul>
+<li>应用源代码 : hello_world.go</li>
+<li>应用二进制文件 : hello_world , 由hello_world.go生成</li>
+<li>应用配置文件 : global.conf</li>
+<li>应用日志文件 : go-gin-startup.log</li>
+<li>应用编译文件 : Makefile</li>
+<li>源码包生成文件 :  configure</li>
+</ul>
+<h4 id="11编译应用源码生成二进制文件">1.1.编译应用源码生成二进制文件</h4>
+<ul>
+<li>
+<p>源代码内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">vim hello_world.go
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;io&#34;</span>
+	<span class="s">&#34;log&#34;</span>
+	<span class="s">&#34;net/http&#34;</span>
+	<span class="s">&#34;os&#34;</span>
+
+	<span class="s">&#34;github.com/Unknwon/goconfig&#34;</span>
+	<span class="s">&#34;github.com/gin-gonic/gin&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">var</span> <span class="p">(</span>
+	<span class="nx">StartupLogPath</span>     <span class="p">=</span> <span class="s">&#34;/var/log/hello-world/&#34;</span>
+	<span class="nx">StartupLogFileName</span> <span class="p">=</span> <span class="s">&#34;go-gin-startup.log&#34;</span>
+	<span class="nx">GlobalConfPath</span>     <span class="p">=</span> <span class="s">&#34;/etc/hello-world/&#34;</span>
+	<span class="nx">GlobalConfFileName</span> <span class="p">=</span> <span class="s">&#34;global.conf&#34;</span>
+	<span class="nx">Port</span>               <span class="p">=</span> <span class="s">&#34;80&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c1">//1.控制台及启动日志配置
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">yes</span> <span class="o">:=</span> <span class="nf">IsPathExist</span><span class="p">(</span><span class="nx">StartupLogPath</span><span class="p">);</span> <span class="p">!</span><span class="nx">yes</span> <span class="p">{</span>
+		<span class="nx">os</span><span class="p">.</span><span class="nf">MkdirAll</span><span class="p">(</span><span class="nx">StartupLogPath</span><span class="p">,</span> <span class="nx">os</span><span class="p">.</span><span class="nx">ModePerm</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">logFile</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">OpenFile</span><span class="p">(</span><span class="nx">StartupLogPath</span><span class="o">+</span><span class="nx">StartupLogFileName</span><span class="p">,</span> <span class="nx">os</span><span class="p">.</span><span class="nx">O_APPEND</span><span class="p">|</span><span class="nx">os</span><span class="p">.</span><span class="nx">O_WRONLY</span><span class="p">|</span><span class="nx">os</span><span class="p">.</span><span class="nx">O_CREATE</span><span class="p">,</span> <span class="nx">os</span><span class="p">.</span><span class="nx">ModePerm</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="s">&#34;OpenFile[err]: &#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">.</span><span class="nf">Error</span><span class="p">())</span>
+	<span class="p">}</span>
+	<span class="nx">gin</span><span class="p">.</span><span class="nx">DefaultWriter</span> <span class="p">=</span> <span class="nx">io</span><span class="p">.</span><span class="nf">MultiWriter</span><span class="p">(</span><span class="nx">logFile</span><span class="p">,</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Stdout</span><span class="p">)</span>
+
+	<span class="c1">// 2.创建路由
+</span><span class="c1"></span>	<span class="nx">Router</span> <span class="o">:=</span> <span class="nx">gin</span><span class="p">.</span><span class="nf">Default</span><span class="p">()</span>
+
+	<span class="c1">// 3.绑定路由规则，执行的函数
+</span><span class="c1"></span>	<span class="nx">Router</span><span class="p">.</span><span class="nf">GET</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">c</span><span class="p">.</span><span class="nf">String</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusOK</span><span class="p">,</span> <span class="s">&#34;hello Go-Gin!&#34;</span><span class="p">)</span>
+	<span class="p">})</span>
+	<span class="nx">Router</span><span class="p">.</span><span class="nf">GET</span><span class="p">(</span><span class="s">&#34;/favicon.ico&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">c</span><span class="p">.</span><span class="nf">String</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusNoContent</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
+	<span class="p">})</span>
+
+	<span class="c1">// 4.从配置获取端口号
+</span><span class="c1"></span>	<span class="nx">port</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nf">GetConfPort</span><span class="p">(</span><span class="nx">GlobalConfPath</span><span class="p">,</span> <span class="nx">GlobalConfFileName</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">port</span> <span class="o">!=</span> <span class="s">&#34;&#34;</span> <span class="p">{</span>
+		<span class="nx">Port</span> <span class="p">=</span> <span class="nx">port</span>
+	<span class="p">}</span>
+
+	<span class="c1">// 5.监听端口
+</span><span class="c1"></span>	<span class="nx">err</span> <span class="p">=</span> <span class="nx">Router</span><span class="p">.</span><span class="nf">Run</span><span class="p">(</span><span class="s">&#34;:&#34;</span> <span class="o">+</span> <span class="nx">Port</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="s">&#34;ListenAndServe[err]: &#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">.</span><span class="nf">Error</span><span class="p">())</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// GetConfPort 获取配置文件中端口号
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">GetConfPort</span><span class="p">(</span><span class="nx">confPath</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">confFileName</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">yes</span> <span class="o">:=</span> <span class="nf">IsPathExist</span><span class="p">(</span><span class="nx">confPath</span><span class="p">);</span> <span class="p">!</span><span class="nx">yes</span> <span class="p">{</span>
+		<span class="nx">os</span><span class="p">.</span><span class="nf">MkdirAll</span><span class="p">(</span><span class="nx">confPath</span><span class="p">,</span> <span class="nx">os</span><span class="p">.</span><span class="nx">ModePerm</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="nx">confFile</span> <span class="o">:=</span> <span class="nx">confPath</span> <span class="o">+</span> <span class="nx">confFileName</span>
+
+	<span class="nx">cfg</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">goconfig</span><span class="p">.</span><span class="nf">LoadConfigFile</span><span class="p">(</span><span class="nx">confFile</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">err</span>
+	<span class="p">}</span>
+
+	<span class="nx">val</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">cfg</span><span class="p">.</span><span class="nf">GetValue</span><span class="p">(</span><span class="s">&#34;global&#34;</span><span class="p">,</span> <span class="s">&#34;port&#34;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">err</span>
+	<span class="p">}</span>
+
+	<span class="k">return</span> <span class="nx">val</span><span class="p">,</span> <span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="c1">// IsPathExist 判断path是否存在
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">IsPathExist</span><span class="p">(</span><span class="nx">path</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+	<span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Stat</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="kc">true</span>
+	<span class="p">}</span>
+	<span class="k">if</span> <span class="nx">os</span><span class="p">.</span><span class="nf">IsNotExist</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="kc">false</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="kc">false</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>编译生成二进制文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">go build -o hello-world ./hello_world.go
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="12配置文件内容">1.2.配置文件内容</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">vim global.conf
+
+[global]
+port=8080
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="13日志文件">1.3.日志文件</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">hello-world-startup.log
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2创建工作空间">2.创建工作空间</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">rpmdev-setuptree
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3创建spec">3.创建SPEC</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@node2 ~/rpmbuild/SPECS<span class="o">]</span><span class="c1"># vim infi-srv-gw-1.0.1.spec</span>
+【文件内容】
+Name:		
+Version:	1.0.1
+Release:	1.el7
+Summary:	srv-gw-infinity utils
+
+Group:		System Environment/Daemons
+License:	Commercial
+URL:		https://blog.nevergiveup.tech/
+Source0:	%<span class="o">{</span>name<span class="o">}</span>-%<span class="o">{</span>version<span class="o">}</span>.tar.gz
+
+
+%description
+srv-gw-infinity utils
+
+%prep
+%setup -q
+
+
+%build
+%configure
+make %<span class="o">{</span>?_smp_mflags<span class="o">}</span>
+
+
+%install
+make install <span class="nv">DESTDIR</span><span class="o">=</span>%<span class="o">{</span>buildroot<span class="o">}</span>
+
+
+%files
+%doc
+
+
+%changelog
+* Sun March <span class="m">4</span> <span class="m">2022</span> Dy &lt;wdyxzkq@163.com&gt; - 1.0.1
+- Update to 1.0.1
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="七备查">七、备查</h2>
+<h3 id="1rpmbuild目录">1.rpmbuild目录</h3>
+<table>
+<thead>
+<tr>
+<th>默认位置</th>
+<th>宏代码</th>
+<th>名称</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>~/rpmbuild/SPECS</td>
+<td>%_specdir</td>
+<td>Spec 文件目录</td>
+<td>保存 RPM 包配置（.spec）文件</td>
+</tr>
+<tr>
+<td>~/rpmbuild/SOURCES</td>
+<td>%_sourcedir</td>
+<td>源代码目录</td>
+<td>保存源码包（如 .tar 包）和所有 patch 补丁</td>
+</tr>
+<tr>
+<td>~/rpmbuild/BUILD</td>
+<td>%_builddir</td>
+<td>构建目录</td>
+<td>源码包被解压至此，并在该目录的子目录完成编译</td>
+</tr>
+<tr>
+<td>~/rpmbuild/BUILDROOT</td>
+<td>%_buildrootdir</td>
+<td>最终安装目录</td>
+<td>保存 %install 阶段安装的文件</td>
+</tr>
+<tr>
+<td>~/rpmbuild/RPMS</td>
+<td>%_rpmdir</td>
+<td>标准 RPM 包目录</td>
+<td>生成/保存二进制 RPM 包</td>
+</tr>
+<tr>
+<td>~/rpmbuild/SRPMS</td>
+<td>%_srcrpmdir</td>
+<td>源代码 RPM 包目录</td>
+<td>生成/保存源码 RPM 包(SRPM)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2spec文件阶段">2.spec文件阶段</h3>
+<table>
+<thead>
+<tr>
+<th>阶段d</th>
+<th>读取的目录d</th>
+<th>写入的目录d</th>
+<th>具体动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%prepd</td>
+<td>%_sourcedird</td>
+<td>%_builddird</td>
+<td>读取位于 %_sourcedir 目录的源代码和 patch 。之后，解压源代码至 %_builddir 的子目录并应用所有 patch。</td>
+</tr>
+<tr>
+<td>%buildd</td>
+<td>%_builddird</td>
+<td>%_builddird</td>
+<td>编译位于 %_builddir 构建目录下的文件。通过执行类似 ./configure &amp;&amp; make 的命令实现。</td>
+</tr>
+<tr>
+<td>%installd</td>
+<td>%_builddird</td>
+<td>%_buildrootdird</td>
+<td>读取位于 %_builddir 构建目录下的文件并将其安装至 %_buildrootdir 目录。这些文件就是用户安装 RPM 后，最终得到的文件。注意一个奇怪的地方: 最终安装目录 不是 构建目录。通过执行类似 make install 的命令实现。</td>
+</tr>
+<tr>
+<td>%checkd</td>
+<td>%_builddird</td>
+<td>%_builddird</td>
+<td>检查软件是否正常运行。通过执行类似 make test 的命令实现。很多软件包都不需要此步。</td>
+</tr>
+<tr>
+<td>bind</td>
+<td>%_buildrootdird</td>
+<td>%_rpmdird</td>
+<td>读取位于 %_buildrootdir 最终安装目录下的文件，以便最终在 %_rpmdir 目录下创建 RPM 包。在该目录下，不同架构的 RPM 包会分别保存至不同子目录， noarch 目录保存适用于所有架构的 RPM 包。这些 RPM 文件就是用户最终安装的 RPM 包。</td>
+</tr>
+<tr>
+<td>srcd</td>
+<td>%_sourcedird</td>
+<td>%_srcrpmdird</td>
+<td>创建源码 RPM 包（简称 SRPM，以.src.rpm 作为后缀名），并保存至 %_srcrpmdir 目录。SRPM 包通常用于审核和升级软件包。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3代表路径的宏列表">3.代表路径的宏列表</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">%<span class="o">{</span>_sysconfdir<span class="o">}</span>        /etc
+%<span class="o">{</span>_prefix<span class="o">}</span>            /usr
+%<span class="o">{</span>_exec_prefix<span class="o">}</span>       %<span class="o">{</span>_prefix<span class="o">}</span>
+%<span class="o">{</span>_bindir<span class="o">}</span>            %<span class="o">{</span>_exec_prefix<span class="o">}</span>/bin
+%<span class="o">{</span>_libdir<span class="o">}</span>            %<span class="o">{</span>_exec_prefix<span class="o">}</span>/%<span class="o">{</span>_lib<span class="o">}</span>
+%<span class="o">{</span>_libexecdir<span class="o">}</span>        %<span class="o">{</span>_exec_prefix<span class="o">}</span>/libexec
+%<span class="o">{</span>_sbindir<span class="o">}</span>           %<span class="o">{</span>_exec_prefix<span class="o">}</span>/sbin
+%<span class="o">{</span>_sharedstatedir<span class="o">}</span>    /var/lib
+%<span class="o">{</span>_datarootdir<span class="o">}</span>       %<span class="o">{</span>_prefix<span class="o">}</span>/share
+%<span class="o">{</span>_datadir<span class="o">}</span>           %<span class="o">{</span>_datarootdir<span class="o">}</span>
+%<span class="o">{</span>_includedir<span class="o">}</span>        %<span class="o">{</span>_prefix<span class="o">}</span>/include
+%<span class="o">{</span>_infodir<span class="o">}</span>           /usr/share/info
+%<span class="o">{</span>_mandir<span class="o">}</span>            /usr/share/man
+%<span class="o">{</span>_localstatedir<span class="o">}</span>     /var
+%<span class="o">{</span>_initddir<span class="o">}</span>          %<span class="o">{</span>_sysconfdir<span class="o">}</span>/rc.d/init.d
+%<span class="o">{</span>_var<span class="o">}</span>               /var
+%<span class="o">{</span>_tmppath<span class="o">}</span>           %<span class="o">{</span>_var<span class="o">}</span>/tmp
+%<span class="o">{</span>_usr<span class="o">}</span>               /usr
+%<span class="o">{</span>_usrsrc<span class="o">}</span>            %<span class="o">{</span>_usr<span class="o">}</span>/src
+%<span class="o">{</span>_lib<span class="o">}</span>               lib <span class="o">(</span>lib64 on 64bit multilib systems<span class="o">)</span>
+%<span class="o">{</span>_docdir<span class="o">}</span>            %<span class="o">{</span>_datadir<span class="o">}</span>/doc
+%<span class="o">{</span>buildroot<span class="o">}</span>          %<span class="o">{</span>_buildrootdir<span class="o">}</span>/%<span class="o">{</span>name<span class="o">}</span>-%<span class="o">{</span>version<span class="o">}</span>-%<span class="o">{</span>release<span class="o">}</span>.%<span class="o">{</span>_arch<span class="o">}</span>
+<span class="nv">$RPM_BUILD_ROOT</span>       %<span class="o">{</span>buildroot<span class="o">}</span>	
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4rpm常用命令">4.rpm常用命令</h3>
+<ul>
+<li>手动安装 rpm 包 <code>rpm-ivh xxxxx.rpm</code></li>
+<li>查看 rpm 包信息 <code>rpm-qpi xxxxx.rpm</code></li>
+<li>查看 rpm 包依赖 <code>rpm -qpR xxxxx.rpm</code></li>
+<li>查看 rpm 包中包含那些文件 <code>rpm -qlp xxxxx.rpm</code>   可以加grep搜索 <code>rpm -qlp xxxxx.rpm|grep spec</code></li>
+<li>使用工具rpm2cpio提取文件：  <code>rpm2cpio xxxxx.rpm |cpio -ivd xxx.jpg</code></li>
+<li>用rpm2cpio将rpm文件转换成cpio文件 <code>rpm2cpio xxxxxx.rpm &gt;xxxxx.cpio</code></li>
+<li>用cpio解压cpio文件 <code>cpio -i  --make-directories</code></li>
+<li>提取所有文件： <code>rpm2cpio xxx.rpm | cpio -vi</code> <code>rpm2cpio xxx.rpm | cpio -idmv</code> <code>rpm2cpio xxx.rpm | cpio --extract --make-directories</code></li>
+<li>cpio 参数说明:    <strong>i</strong> 和 <strong>extract</strong> 表示提取文件 <strong>v</strong> 表示指示执行进程 <strong>d</strong> 和 <strong>make-directory</strong> 表示根据包中文件原来的路径建立目录     <strong>m</strong> 表示保持文件的更新时间</li>
+<li>查看rpm包里的pre和post install脚本： <code>rpm -qp --scripts xxxxx.rpm</code></li>
+<li>查看安装的过程中，代码的执行过程： <code>rpm -ih -vv xxxxx.rpm</code></li>
+</ul>
+<h2 id="八参考文献">八、参考文献</h2>
+<ul>
+<li><a href="https://my.oschina.net/u/913265/blog/892889">开源中国-RPM包的制作</a> 对构建目录介绍的比较仔细</li>
+<li><a href="https://blog.csdn.net/get_set/article/details/53453320">RPM打包原理、示例、详解及备查</a> 很详细，有示例</li>
+<li><a href="https://linux.cn/article-10164-1.html">如何构建 RPM 包</a> Linux 中国的文章，赞</li>
+<li><a href="https://fedoraproject.org/wiki/How_to_create_an_RPM_package/zh-cn#.E6.96.B0.E5.BB.BA.E4.B8.80.E4.B8.AA_.spec_.E6.96.87.E4.BB.B6">Fedora-WIKI-How to create an RPM package/zh-cn</a> 中文介绍</li>
+<li><a href="https://jin-yang.github.io/post/linux-create-rpm-package.html">JIN-YANG-RPM 包制作</a> 总结很全，还介绍了签名</li>
+<li><a href="https://blog.csdn.net/younger_china/article/details/53131128">CSDN-RPM构建 - RPM构建 - 简单实例</a> 该博主，总共围绕 RPM 构建写了几篇文章的</li>
+<li><a href="https://www.zhukun.net/archives/7263">月与灯依旧-linux rpm包编译过程（spec文件和spec宏 ）</a> 这个博主的文章看到过不止一次，赞</li>
+<li><a href="https://www.cnblogs.com/michael-xiang/p/10500704.html#588903147">Michael翔-RPM 包的构建 - 实例 </a> 文章简介明了</li>
+<li><a href="https://pdf.us/2019/04/01/3191.html">清风博客-RPM打包指南【CentOS】</a></li>
+<li><a href="https://blog.csdn.net/get_set/article/details/53453320">RPM打包原理、示例、详解及备查</a> 文章说明很详细</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-03-04
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/linux/">linux</a>
+          <a href="/tags/centos/">centos</a>
+          <a href="/tags/rpm/">rpm</a>
+          <a href="/tags/spec/">spec</a>
+          <a href="/tags/build/">build</a>
+          <a href="/tags/makefile/">makefile</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/db/sqlite/sqlite%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%A5%E9%97%A8/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[SQLite] SQLite数据库入门</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/linux/linux%E6%BA%90%E7%A0%81%E5%8C%85%E7%9A%84%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4/">
+            <span class="next-text nav-default">[linux] Linux源码包的安装步骤</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

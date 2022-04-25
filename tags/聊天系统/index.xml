@@ -10,10 +10,10 @@
     <lastBuildDate>Tue, 11 Jun 2019 17:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/%E8%81%8A%E5%A4%A9%E7%B3%BB%E7%BB%9F/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[laravel]在线聊天系统(laravel swoole redis vue)</title>
-      <link>https://blog.nevergiveup.tech/post/php/laravel/%E5%9C%A8%E7%BA%BF%E8%81%8A%E5%A4%A9%E7%B3%BB%E7%BB%9Flaravel-swoole-redis-vue/</link>
+      <link>https://blog.nevergiveup.tech/post/dev_language/php/laravel/%E5%9C%A8%E7%BA%BF%E8%81%8A%E5%A4%A9%E7%B3%BB%E7%BB%9Flaravel-swoole-redis-vue/</link>
       <pubDate>Tue, 11 Jun 2019 17:37:56 +0800</pubDate>
       
-      <guid>https://blog.nevergiveup.tech/post/php/laravel/%E5%9C%A8%E7%BA%BF%E8%81%8A%E5%A4%A9%E7%B3%BB%E7%BB%9Flaravel-swoole-redis-vue/</guid>
+      <guid>https://blog.nevergiveup.tech/post/dev_language/php/laravel/%E5%9C%A8%E7%BA%BF%E8%81%8A%E5%A4%A9%E7%B3%BB%E7%BB%9Flaravel-swoole-redis-vue/</guid>
       <description>在线聊天系统(laravel swoole redis vue) 一.前端页面完成 1.安装准备 安装前必须保证系统已经安装了下列软件 PHP &amp;gt;= 7.1.3 PHP OpenSSL 扩展 PHP PDO 扩展 PHP Mbstring 扩展 PHP Tokenizer 扩展 PHP XML</description>
     </item>
     

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>编辑器 on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/categories/%E7%BC%96%E8%BE%91%E5%99%A8/</link>
+    <description>Recent content in 编辑器 on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Sun, 13 Dec 2020 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/categories/%E7%BC%96%E8%BE%91%E5%99%A8/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[PlatUml] PlatUml的基本用法及如何在ide中使用</title>
+      <link>https://blog.nevergiveup.tech/post/editor/platuml%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%E5%8F%8A%E5%A6%82%E4%BD%95%E5%9C%A8ide%E4%B8%AD%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Sun, 13 Dec 2020 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/editor/platuml%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%E5%8F%8A%E5%A6%82%E4%BD%95%E5%9C%A8ide%E4%B8%AD%E4%BD%BF%E7%94%A8/</guid>
+      <description>PlatUml的基本用法及如何在ide中使用 介绍 ​ PlantUML是一个可以快速编写的组件，可以通过编码快速实现时序图，类图等。它有很多优点</description>
+    </item>
+    
+    <item>
+      <title>[typora] Typora画图-UML时序图</title>
+      <link>https://blog.nevergiveup.tech/post/editor/typora%E7%94%BB%E5%9B%BEuml/</link>
+      <pubDate>Sun, 13 Dec 2020 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/editor/typora%E7%94%BB%E5%9B%BEuml/</guid>
+      <description>Typora画图-UML时序图 一、介绍 PlantUML 是一个开源项目，支持快速绘制： 时序图 用例图 类图 对象图 活动图 组件图 部署图 状态图 定时图 同时还支持以下非 UML</description>
+    </item>
+    
+    <item>
+      <title>[typora] Typora画图-Mermaid流程图</title>
+      <link>https://blog.nevergiveup.tech/post/editor/typora%E7%94%BB%E5%9B%BEmermaid/</link>
+      <pubDate>Sun, 13 Dec 2020 10:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/editor/typora%E7%94%BB%E5%9B%BEmermaid/</guid>
+      <description>Typora画图-Mermaid流程图 一.介绍 Mermaid 是一个用于画流程图.状态图.时序图.甘特图的库，使用 JS 进行本地渲染，广泛集成于许多 Markdown 编辑器中</description>
+    </item>
+    
+    <item>
+      <title>[phpstrom] phpstrom常用快捷键</title>
+      <link>https://blog.nevergiveup.tech/post/editor/phpstrom%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/</link>
+      <pubDate>Wed, 11 Jan 2017 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/editor/phpstrom%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/</guid>
+      <description>phpstrom常用快捷键 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 CTRL+/ 单行注释/取消注</description>
+    </item>
+    
+    <item>
+      <title>[submit] submit常用快捷键</title>
+      <link>https://blog.nevergiveup.tech/post/editor/submit%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/</link>
+      <pubDate>Tue, 13 Sep 2016 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/editor/submit%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/</guid>
+      <description>submit常用快捷键 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59</description>
+    </item>
+    
+  </channel>
+</rss>

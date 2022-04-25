@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[ceph] ceph理解及总结 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="ceph理解及总结 1.文档说明 本文档是对培训内容和ceph各种零散阅读的个人总结归纳。 精简了各知识点，以方便对ceph整体有个宏观认识，并可" /><meta name="keywords" content="分布式文件系统, ceph, 分布式, 集群, 文件系统, 对象存储, 块存储, iscsi, filesystem, objectstore" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/dfs/ceph/ceph%E7%90%86%E8%A7%A3%E5%8F%8A%E6%80%BB%E7%BB%93/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[ceph] ceph理解及总结" />
+<meta property="og:description" content="ceph理解及总结 1.文档说明 本文档是对培训内容和ceph各种零散阅读的个人总结归纳。 精简了各知识点，以方便对ceph整体有个宏观认识，并可" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/dfs/ceph/ceph%E7%90%86%E8%A7%A3%E5%8F%8A%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-01-08T15:37:56+08:00" />
+<meta property="article:modified_time" content="2022-02-10T16:37:56+08:00" />
+
+<meta itemprop="name" content="[ceph] ceph理解及总结">
+<meta itemprop="description" content="ceph理解及总结 1.文档说明 本文档是对培训内容和ceph各种零散阅读的个人总结归纳。 精简了各知识点，以方便对ceph整体有个宏观认识，并可"><meta itemprop="datePublished" content="2022-01-08T15:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-02-10T16:37:56+08:00" />
+<meta itemprop="wordCount" content="2811">
+<meta itemprop="keywords" content="分布式文件系统,ceph,分布式,集群,文件系统,对象存储,块存储,iscsi,filesystem,objectstore," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[ceph] ceph理解及总结"/>
+<meta name="twitter:description" content="ceph理解及总结 1.文档说明 本文档是对培训内容和ceph各种零散阅读的个人总结归纳。 精简了各知识点，以方便对ceph整体有个宏观认识，并可"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[ceph] ceph理解及总结</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-01-08 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/"> 分布式文件系统 </a>
+            </div>
+          <span class="more-meta"> 约 2811 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ceph理解及总结">ceph理解及总结</a>
+      <ul>
+        <li><a href="#1文档说明">1.文档说明</a></li>
+        <li><a href="#2参考文档">2.参考文档</a></li>
+        <li><a href="#3学习中产生的文档">3.学习中产生的文档</a></li>
+        <li><a href="#4ceph原理理解">4.ceph原理理解</a>
+          <ul>
+            <li><a href="#41ceph基本架构">4.1.ceph基本架构</a></li>
+            <li><a href="#42ceph基本组成">4.2.ceph基本组成</a></li>
+            <li><a href="#43ceph存储流程">4.3.ceph存储流程</a></li>
+            <li><a href="#44ceph的特点">4.4.ceph的特点</a></li>
+            <li><a href="#45集群运行图">4.5.集群运行图</a></li>
+          </ul>
+        </li>
+        <li><a href="#5本地ceph环境安装成果">5.本地ceph环境安装成果</a>
+          <ul>
+            <li><a href="#51基本配置">5.1.基本配置</a></li>
+            <li><a href="#52ceph集群状态">5.2.ceph集群状态</a></li>
+            <li><a href="#53cephfs和smb">5.3.cephfs和smb</a></li>
+            <li><a href="#54rgw">5.4.rgw</a></li>
+            <li><a href="#55rdb">5.5.rdb</a></li>
+            <li><a href="#56dashboard">5.6.dashboard</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="ceph理解及总结">ceph理解及总结</h1>
+<h2 id="1文档说明">1.文档说明</h2>
+<p>本文档是对培训内容和ceph各种零散阅读的个人总结归纳。<br>
+精简了各知识点，以方便对ceph整体有个宏观认识，并可以根据知识点回忆起具体知识点内容。</p>
+<h2 id="2参考文档">2.参考文档</h2>
+<ul>
+<li><a href="https://docs.ceph.com/">ceph官方文档</a></li>
+<li><a href="http://docs.ceph.org.cn/">ceph中文文档</a></li>
+<li><a href="https://gitlab.datatom.tech/infinity/infinity-kb/-/blob/master/research/%E6%8A%80%E6%9C%AF%E9%A2%84%E7%A0%94%E5%88%86%E4%BA%AB/Storage/CEPH%E7%AE%80%E4%BB%8B/ceph%E6%9E%B6%E6%9E%84%E4%B8%8E%E5%8E%9F%E7%90%86%E7%AE%80%E4%BB%8B.md">杨宇昊培训文档</a></li>
+</ul>
+<h2 id="3学习中产生的文档">3.学习中产生的文档</h2>
+<ul>
+<li><a href="https://note.youdao.com/s/Ghh0OypE">ceph学习记录.md</a></li>
+<li><a href="https://note.youdao.com/s/J3Y9eE4J">ceph安装记录.mdd</a></li>
+</ul>
+<h2 id="4ceph原理理解">4.ceph原理理解</h2>
+<h3 id="41ceph基本架构">4.1.ceph基本架构</h3>
+<p><img src="/content/post/dfs/ceph/ceph%E7%90%86%E8%A7%A3%E5%8F%8A%E6%80%BB%E7%BB%93/%E7%BB%8F%E5%85%B8%E6%9E%B6%E6%9E%84.png" alt="img"></p>
+<ul>
+<li>客户端：对象存储（rgw）、块存储（rbd）、文件系统（cephfs），通过直接调用librados库来访问存储</li>
+<li>rgw 接口与兼容s3和swift接口</li>
+<li>cephfs 支持用户级别和内核级别两种方式挂载</li>
+<li>librados 是Rados提供库，支持C，C++，java，Python，Ruby，PHP等访问</li>
+<li>rados 是可靠的、自组织的、可自动恢复、自我管理的分布式对象存储系统</li>
+</ul>
+<h3 id="42ceph基本组成">4.2.ceph基本组成</h3>
+<p><img src="/content/post/dfs/ceph/ceph%E7%90%86%E8%A7%A3%E5%8F%8A%E6%80%BB%E7%BB%93/cephfs%E6%9E%B6%E6%9E%84.png" alt="img"></p>
+<ul>
+<li>mon（Monitor）
+<blockquote>
+<p>维护集群映射主副本，管理守护进程、客户机之间的身份验证和日志记录服务，mon集群保证了高可用。至少3个。</p>
+</blockquote>
+</li>
+<li>mgr（Manager）
+<blockquote>
+<p>负责跟踪运行时指标和Ceph集群的当前状，包括存储利用率、当前性能指标和系统负载。还管理着的Ceph Dashboard和REST API。至少2个。</p>
+</blockquote>
+</li>
+<li>osd（object Storage Device）
+<blockquote>
+<p>用于存储数据、处理数据复制、恢复、再平衡，并通过检查其他Ceph
+OSD daemon的心跳，为monitor和manager提供一些监控信息。通常至少需要3个ceph osd。</p>
+</blockquote>
+</li>
+<li>mds（Ceph Metadata server）
+<blockquote>
+<p>CephFS服务依赖的元数据服务，管理文件元数据，支持用户基本命令(如ls、find等)，以提高性能。</p>
+</blockquote>
+</li>
+<li>pg（Placement Groups）
+<blockquote>
+<p>是一个逻辑的概念,一个PG 包含多个 OSD 。引入 PG 这一层其实是为了更好的分配数据和定位数据。</p>
+</blockquote>
+</li>
+<li>pool
+<blockquote>
+<p>存储池，它是存储对象的逻辑分区，每个存储池都有很多归置组。</p>
+</blockquote>
+</li>
+<li>object
+<blockquote>
+<p>Ceph最底层的存储单元是Object对象，每个Object包含元数据和原始数据，对象包含唯一标识符，键值对的元数据，二进制数据。object的大小由RADOS限定（通常为2m或者4m）</p>
+</blockquote>
+</li>
+<li>crush
+<blockquote>
+<p>是 Ceph 使用的数据分布算法，类似一致性哈希，让数据分配到预期的位置</p>
+</blockquote>
+</li>
+<li>librados
+<blockquote>
+<p>Rados提供库，应用访问rados的入口</p>
+</blockquote>
+</li>
+<li>rgw（Rados gateway）</li>
+<li>rbd（Rados Block Device）</li>
+<li>cephfs（Ceph File System）</li>
+</ul>
+<h3 id="43ceph存储流程">4.3.ceph存储流程</h3>
+<p><img src="https://img.kancloud.cn/4a/2b/4a2b056e6e3664c9909b469cdc47c97e_3646x1807.png" alt="ceph架构图-存储流程"></p>
+<p>分为三个阶段</p>
+<ul>
+<li>File-&gt;Object
+<ul>
+<li>将file切分成多个object，每个object都有唯一的id即oid</li>
+<li>(ino(文件唯一id),ono(object序号))-&gt;oid</li>
+<li>数据条带化</li>
+</ul>
+<blockquote>
+<p>客户端将数据切割成多个条带单元，然后依次映射到对象集中<br>
+对象集中的对象容量应是条带单元的整数倍，且足够大<br>
+条带宽度应是对象尺寸的分片，条带数量确定条带要写入哪个对象集
+条带化可以增加存储设备的吞吐量和性能
+条带单元的尺寸是由客户端配置的，一般为64KB</p>
+</blockquote>
+</li>
+<li>Object-&gt;PG
+<ul>
+<li>根据oid计算一个hash值，并根据目标池id以及pgnum计算获得目标PGID</li>
+</ul>
+</li>
+<li>PG-&gt;OSD
+<ul>
+<li>根据PGID以及crush rule，计算目标osd位置</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">#整个计算流程都是在客户端完成的
+locator = object_name 
+obj_hash = hash(locator) 
+pg = obj_hash &amp; num_pg 
+OSDs_for_pg = crush(pg) # returns a list of OSDs primary = osds_for_pg[0] 
+replicas = osds_for_pg[1:]
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="44ceph的特点">4.4.ceph的特点</h3>
+<ul>
+<li>
+<p>高可扩展性和高可用性</p>
+<ul>
+<li>消除集中网关</li>
+</ul>
+<blockquote>
+<p>Ceph 消除了集中网关，允许客户端直接和 Ceph OSD 守护进程通讯<br>
+为消除中心节点， Ceph 使用了 CRUSH 算法
+mon持有集群运行图的主副本，和OSD守护程序共同维护集群运行图</p>
+</blockquote>
+<ul>
+<li>高可用监视器</li>
+</ul>
+<blockquote>
+<p>ceph支持mon集群<br>
+客户端和守护进程通过Ceph配置文件来发现监视器，监视器成员使用监视器映射（monmap）发现彼此<br>
+monmap强一致性要求，使用Paxos算法来使集群监视器对集群映射达成共识</p>
+</blockquote>
+<ul>
+<li>高可用性用户认证</li>
+</ul>
+<blockquote>
+<p>Ceph 用 cephx 认证系统来认证用户和守护进程<br>
+Cephx 用共享密钥来认证，即客户端和监视器集群各自都有客户端密钥的副本 
+每个监视器都能认证用户、发布会话密钥，所以使用 cephx 时不会有单点故障或瓶颈</p>
+</blockquote>
+</li>
+<li>
+<p>智能程序支撑超大规模</p>
+<ul>
+<li>Ceph 客户端、监视器和 OSD 守护进程可以相互直接交互</li>
+<li>Ceph 允许客户端直接和 OSD 节点联系，这在消除单故障点的同时，提升了性能和系统总容量</li>
+<li>OSD彼此做心跳检测并报告MON，MON也定ping OSD，这种机制意味着监视器还是轻量级进程</li>
+<li>OSD 每天比较对象元数据发现osd缺陷或文件系统错误，OSD每周按位比较对象中的数据做深度清洗</li>
+<li>客户端把对象写入目标归置组的主OSD ，然后这个主 OSD 再用它的 CRUSH 图副本找出用于放对象副本的第二、第三个 OSD，全部副本存储成功后反馈客户端</li>
+<li>Ceph 存储集群应该保存两份以上的对象副本（如 size = 3 且 min size = 2 ）</li>
+<li>新增一OSD守护进程时，集群运行图就要用新增的 OSD 更新，PG会进行重均衡</li>
+</ul>
+</li>
+</ul>
+<h3 id="45集群运行图">4.5.集群运行图</h3>
+<ul>
+<li>Montior Map</li>
+</ul>
+<blockquote>
+<p>包含集群的 fsid 、位置、名字、地址和端口，也包括当前版本、创建时间、最近修改时间。要查看监视器图，用 ceph mon dump 命令。</p>
+</blockquote>
+<ul>
+<li>OSD Map</li>
+</ul>
+<blockquote>
+<p>包含集群 fsid 、创建时间、最近修改时间、存储池列表、副本数量、归置组数量、 OSD 列表及其状态（如 up 、 in ）。要查看OSD运行图，用 ceph osd dump 命令。</p>
+</blockquote>
+<ul>
+<li>PG Map</li>
+</ul>
+<blockquote>
+<p>包含归置组版本、其时间戳、最新的 OSD 运行图版本、占满率、以及各归置组详情，像归置组 ID 、 up set 、 acting set 、 PG 状态（如 active+clean ），和各存储池的数据使用情况统计。</p>
+</blockquote>
+<ul>
+<li>CRUSH Map</li>
+</ul>
+<blockquote>
+<p>包含存储设备列表、故障域树状结构（如设备、主机、机架、行、房间、等等）、和存储数据时如何利用此树状结构的规则。要查看 CRUSH 规则，执行 ceph osd getcrushmap -o {filename} 命令；然后用 crushtool -d {comp-crushmap-filename} -o {decomp-crushmap-filename} 反编译；然后就可以用 cat 或编辑器查看了。</p>
+</blockquote>
+<ul>
+<li>MDS Map</li>
+</ul>
+<blockquote>
+<p>包含当前 MDS 图的版本、创建时间、最近修改时间，还包含了存储元数据的存储池、元数据服务器列表、还有哪些元数据服务器是 up 且 in 的。要查看 MDS 图，执行 ceph mds dump 。</p>
+</blockquote>
+<h2 id="5本地ceph环境安装成果">5.本地ceph环境安装成果</h2>
+<h3 id="51基本配置">5.1.基本配置</h3>
+<table>
+<thead>
+<tr>
+<th>操作系统</th>
+<th>内核版本</th>
+<th>主机名</th>
+<th>网段IP</th>
+<th>磁盘</th>
+<th>服务</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>centos 7.9</td>
+<td>3.10.0</td>
+<td>node1</td>
+<td>10.0.8.116</td>
+<td>系统盘: sda；osd盘: sdb</td>
+<td>mon1,osd0,rgw1,mds1,mgr1,dashboard,smb-server</td>
+</tr>
+<tr>
+<td>centos 7.9</td>
+<td>3.10.0</td>
+<td>node2</td>
+<td>10.0.8.159</td>
+<td>系统盘: sda；osd盘: sdb</td>
+<td>mon2,osd1,rgw2</td>
+</tr>
+<tr>
+<td>centos 7.9</td>
+<td>3.10.0</td>
+<td>node3</td>
+<td>10.0.8.122</td>
+<td>系统盘: sda；osd盘: sdb</td>
+<td>mon3,osd2,rgw3,fs-client,block-client</td>
+</tr>
+<tr>
+<td>windows10</td>
+<td>-</td>
+<td>-</td>
+<td>10.0.6.229</td>
+<td>-</td>
+<td>smb-client(fs-client)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="52ceph集群状态">5.2.ceph集群状态</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@node1 /etc/ceph<span class="o">]</span><span class="c1"># ceph -s</span>
+  cluster:
+    id:     35051854-874a-4919-b8a1-fb60c737034d
+    health: HEALTH_OK
+ 
+  services:
+    mon: <span class="m">3</span> daemons, quorum node1,node2,node3 <span class="o">(</span>age 9d<span class="o">)</span>
+    mgr: node1<span class="o">(</span>active, since 9d<span class="o">)</span>
+    mds: cephfs:1 <span class="o">{</span><span class="nv">0</span><span class="o">=</span><span class="nv">node1</span><span class="o">=</span>up:active<span class="o">}</span>
+    osd: <span class="m">3</span> osds: <span class="m">3</span> up <span class="o">(</span>since 9d<span class="o">)</span>, <span class="m">3</span> in <span class="o">(</span>since 13d<span class="o">)</span>
+    rgw: <span class="m">3</span> daemons active <span class="o">(</span>node1, node2, node3<span class="o">)</span>
+ 
+  task status:
+ 
+  data:
+    pools:   <span class="m">10</span> pools, <span class="m">480</span> pgs
+    objects: <span class="m">372</span> objects, <span class="m">324</span> MiB
+    usage:   3.7 GiB used, <span class="m">26</span> GiB / <span class="m">30</span> GiB avail
+    pgs:     <span class="m">480</span> active+clean
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="53cephfs和smb">5.3.cephfs和smb</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@node1 /etc/ceph<span class="o">]</span><span class="c1"># ceph fs dump</span>
+e4
+enable_multiple, ever_enabled_multiple: 0,0
+compat: <span class="nv">compat</span><span class="o">={}</span>,rocompat<span class="o">={}</span>,incompat<span class="o">={</span><span class="nv">1</span><span class="o">=</span>base v0.20,2<span class="o">=</span>client writeable ranges,3<span class="o">=</span>default file layouts on dirs,4<span class="o">=</span>dir inode in separate object,5<span class="o">=</span>mds uses versioned encoding,6<span class="o">=</span>dirfrag is stored in omap,8<span class="o">=</span>no anchor table,9<span class="o">=</span>file layout v2,10<span class="o">=</span>snaprealm v2<span class="o">}</span>
+legacy client fscid: <span class="m">1</span>
+ 
+Filesystem <span class="s1">&#39;cephfs&#39;</span> <span class="o">(</span>1<span class="o">)</span>
+fs_name	cephfs
+epoch	<span class="m">4</span>
+flags	<span class="m">12</span>
+created	2021-12-13 11:12:05.092833
+modified	2021-12-13 11:12:06.215835
+tableserver	<span class="m">0</span>
+root	<span class="m">0</span>
+session_timeout	<span class="m">60</span>
+session_autoclose	<span class="m">300</span>
+max_file_size	<span class="m">1099511627776</span>
+min_compat_client	-1 <span class="o">(</span>unspecified<span class="o">)</span>
+last_failure	<span class="m">0</span>
+last_failure_osd_epoch	<span class="m">0</span>
+compat	<span class="nv">compat</span><span class="o">={}</span>,rocompat<span class="o">={}</span>,incompat<span class="o">={</span><span class="nv">1</span><span class="o">=</span>base v0.20,2<span class="o">=</span>client writeable ranges,3<span class="o">=</span>default file layouts on dirs,4<span class="o">=</span>dir inode in separate object,5<span class="o">=</span>mds uses versioned encoding,6<span class="o">=</span>dirfrag is stored in omap,8<span class="o">=</span>no anchor table,9<span class="o">=</span>file layout v2,10<span class="o">=</span>snaprealm v2<span class="o">}</span>
+max_mds	<span class="m">1</span>
+in	<span class="m">0</span>
+up	<span class="o">{</span><span class="nv">0</span><span class="o">=</span>4296<span class="o">}</span>
+failed	
+damaged	
+stopped	
+data_pools	<span class="o">[</span>5<span class="o">]</span>
+metadata_pool	<span class="m">6</span>
+inline_data	disabled
+balancer	
+standby_count_wanted	<span class="m">0</span>
+<span class="o">[</span>mds.node1<span class="o">{</span>0:4296<span class="o">}</span> state up:active seq <span class="m">58174</span> addr <span class="o">[</span>v2:10.0.8.116:6808/1903314498,v1:10.0.8.116:6809/1903314498<span class="o">]]</span>
+ 
+ 
+dumped fsmap epoch <span class="m">4</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="54rgw">5.4.rgw</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@node1 /etc/ceph<span class="o">]</span><span class="c1"># ceph osd lspools</span>
+<span class="m">1</span> .rgw.root
+<span class="m">2</span> default.rgw.control
+<span class="m">3</span> default.rgw.meta
+<span class="m">4</span> default.rgw.log
+<span class="m">5</span> cephfs_data
+<span class="m">6</span> cephfs_metadata
+<span class="m">7</span> default.rgw.buckets.index
+<span class="m">8</span> default.rgw.buckets.data
+<span class="m">9</span> default.rgw.buckets.non-ec
+<span class="m">10</span> rbd
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="55rdb">5.5.rdb</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@node3 ~<span class="o">]</span><span class="c1"># sudo rbd ls</span>
+foo
+<span class="o">[</span>root@node3 ~<span class="o">]</span><span class="c1"># rbd device list</span>
+id pool namespace image snap device    
+<span class="m">0</span>  rbd            foo   -    /dev/rbd0 
+<span class="o">[</span>root@node3 /cephblock<span class="o">]</span><span class="c1"># df -Th</span>
+文件系统                类型            容量  已用  可用 已用% 挂载点
+devtmpfs                devtmpfs        7.8G     <span class="m">0</span>  7.8G    0% /dev
+tmpfs                   tmpfs           7.8G     <span class="m">0</span>  7.8G    0% /dev/shm
+tmpfs                   tmpfs           7.8G  8.7M  7.8G    1% /run
+tmpfs                   tmpfs           7.8G     <span class="m">0</span>  7.8G    0% /sys/fs/cgroup
+/dev/mapper/centos-root xfs              17G  2.3G   15G   14% /
+/dev/vda1               xfs            1014M  193M  822M   20% /boot
+tmpfs                   tmpfs           3.8G   52K  3.8G    1% /var/lib/ceph/osd/ceph-2
+tmpfs                   tmpfs          1008M     <span class="m">0</span> 1008M    0% /run/user/0
+ceph-fuse               fuse.ceph-fuse   13G  4.0M   13G    1% /cephfs
+/dev/rbd0               xfs             2.0G   33M  2.0G    2% /cephblock
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="56dashboard">5.6.dashboard</h3>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-02-10
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">分布式文件系统</a>
+          <a href="/tags/ceph/">ceph</a>
+          <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a>
+          <a href="/tags/%E9%9B%86%E7%BE%A4/">集群</a>
+          <a href="/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">文件系统</a>
+          <a href="/tags/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8/">对象存储</a>
+          <a href="/tags/%E5%9D%97%E5%AD%98%E5%82%A8/">块存储</a>
+          <a href="/tags/iscsi/">iscsi</a>
+          <a href="/tags/filesystem/">filesystem</a>
+          <a href="/tags/objectstore/">objectstore</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/site_generator/hugo/hugo/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[hugo] hugo安装和使用</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/dfs/ceph/ceph%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E8%AE%B0%E5%BD%95/">
+            <span class="next-text nav-default">[ceph] ceph集群安装记录</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

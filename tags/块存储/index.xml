@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>块存储 on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/tags/%E5%9D%97%E5%AD%98%E5%82%A8/</link>
+    <description>Recent content in 块存储 on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Sat, 08 Jan 2022 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/%E5%9D%97%E5%AD%98%E5%82%A8/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[ceph] ceph理解及总结</title>
+      <link>https://blog.nevergiveup.tech/post/dfs/ceph/ceph%E7%90%86%E8%A7%A3%E5%8F%8A%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Sat, 08 Jan 2022 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dfs/ceph/ceph%E7%90%86%E8%A7%A3%E5%8F%8A%E6%80%BB%E7%BB%93/</guid>
+      <description>ceph理解及总结 1.文档说明 本文档是对培训内容和ceph各种零散阅读的个人总结归纳。 精简了各知识点，以方便对ceph整体有个宏观认识，并可</description>
+    </item>
+    
+    <item>
+      <title>[ceph] ceph集群安装记录</title>
+      <link>https://blog.nevergiveup.tech/post/dfs/ceph/ceph%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E8%AE%B0%E5%BD%95/</link>
+      <pubDate>Thu, 06 Jan 2022 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dfs/ceph/ceph%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E8%AE%B0%E5%BD%95/</guid>
+      <description>ceph集群安装记录 一、准备工作 1.参考文档 ceph官方文档：https://docs.ceph.com/en/latest/install</description>
+    </item>
+    
+    <item>
+      <title>[ceph] ceph入门学习</title>
+      <link>https://blog.nevergiveup.tech/post/dfs/ceph/ceph%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Wed, 05 Jan 2022 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dfs/ceph/ceph%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/</guid>
+      <description>Ceph之成长之路 一、ceph基础概念了解 1.Ceph是什么？ Ceph是一个统一的分布式存储系统（Distributed File System，DF</description>
+    </item>
+    
+  </channel>
+</rss>

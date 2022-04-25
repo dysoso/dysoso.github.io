@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[SQLite] SQLite数据库入门 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="SQLite数据库入门 本文将告诉您如何使用 SQLite 入门，并让你迅速上手。 一、了解SQLite 1.SQLite简介 SQLite是一个软件库，是一个进" /><meta name="keywords" content="数据库, SQLite, 入门" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/db/sqlite/sqlite%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%A5%E9%97%A8/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[SQLite] SQLite数据库入门" />
+<meta property="og:description" content="SQLite数据库入门 本文将告诉您如何使用 SQLite 入门，并让你迅速上手。 一、了解SQLite 1.SQLite简介 SQLite是一个软件库，是一个进" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/db/sqlite/sqlite%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%A5%E9%97%A8/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-03-10T10:37:56+08:00" />
+<meta property="article:modified_time" content="2022-03-10T10:37:56+08:00" />
+
+<meta itemprop="name" content="[SQLite] SQLite数据库入门">
+<meta itemprop="description" content="SQLite数据库入门 本文将告诉您如何使用 SQLite 入门，并让你迅速上手。 一、了解SQLite 1.SQLite简介 SQLite是一个软件库，是一个进"><meta itemprop="datePublished" content="2022-03-10T10:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-03-10T10:37:56+08:00" />
+<meta itemprop="wordCount" content="1819">
+<meta itemprop="keywords" content="数据库,SQLite,入门," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[SQLite] SQLite数据库入门"/>
+<meta name="twitter:description" content="SQLite数据库入门 本文将告诉您如何使用 SQLite 入门，并让你迅速上手。 一、了解SQLite 1.SQLite简介 SQLite是一个软件库，是一个进"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[SQLite] SQLite数据库入门</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-03-10 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"> 数据库 </a>
+            </div>
+          <span class="more-meta"> 约 1819 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#sqlite数据库入门">SQLite数据库入门</a>
+      <ul>
+        <li><a href="#一了解sqlite">一、了解SQLite</a>
+          <ul>
+            <li><a href="#1sqlite简介">1.SQLite简介</a></li>
+            <li><a href="#2sqlite特点">2.SQLite特点</a></li>
+          </ul>
+        </li>
+        <li><a href="#二使用sqlite">二、使用SQLite</a>
+          <ul>
+            <li><a href="#1安装sqlite">1.安装SQLite</a></li>
+            <li><a href="#2sqlite命令">2.SQLite命令</a></li>
+            <li><a href="#3sqlite语法">3.SQLite语法</a></li>
+            <li><a href="#4python使用sqlite">4.python使用sqlite</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="sqlite数据库入门">SQLite数据库入门</h1>
+<blockquote>
+<p>本文将告诉您如何使用 SQLite 入门，并让你迅速上手。</p>
+</blockquote>
+<h2 id="一了解sqlite">一、了解SQLite</h2>
+<h3 id="1sqlite简介">1.SQLite简介</h3>
+<p>SQLite是一个软件库，是一个进程内的库，是一种嵌入式数据库，实现了自给自足的、无服务器的、零配置的、事务性的 SQL 数据库引擎。</p>
+<p>它是一个零配置的数据库，这意味着与其他数据库不一样，不需要在系统中配置，它的数据库就是一个文件。</p>
+<p>SQLite 是在世界上最广泛部署的 SQL 数据库引擎，由于SQLite本身是C写的，而且体积很小，所以经常被集成到各种应用程序中，Python就内置了SQLite3，所以在Python中使用SQLite，不需要安装任何东西，直接使用。</p>
+<h3 id="2sqlite特点">2.SQLite特点</h3>
+<ul>
+<li>不需要一个单独的服务器进程或操作的系统（无服务器的）。</li>
+<li>SQLite 不需要配置，这意味着不需要安装或管理。</li>
+<li>一个完整的 SQLite 数据库是存储在一个单一的跨平台的磁盘文件。</li>
+<li>SQLite 是非常小的，是轻量级的，完全配置时小于 400KiB，省略可选功能配置时小于250KiB。</li>
+<li>SQLite 是自给自足的，这意味着不需要任何外部的依赖。</li>
+<li>SQLite 事务是完全兼容 ACID 的，允许从多个进程或线程安全访问。</li>
+<li>SQLite 支持 SQL92（SQL2）标准的大多数查询语言的功能。</li>
+<li>SQLite 使用 ANSI-C 编写的，并提供了简单和易于使用的 API。</li>
+<li>SQLite 可在 UNIX（Linux, Mac OS-X, Android, iOS）和 Windows（Win32, WinCE, WinRT）中运行。</li>
+</ul>
+<h2 id="二使用sqlite">二、使用SQLite</h2>
+<h3 id="1安装sqlite">1.安装SQLite</h3>
+<h4 id="11-windows">1.1 windows</h4>
+<ul>
+<li>
+<p>进入 SQL 下载页面： <a href="https://www.sqlite.org/download.html">下载页面</a></p>
+</li>
+<li>
+<p>搜索&quot;Windows&quot;，从 Windows 区下载预编译的二进制文件</p>
+<p><img src="/content/post/db/sqlite/SQLite%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%A5%E9%97%A8/sqlite%E4%B8%8B%E8%BD%BD.png" alt="img"></p>
+</li>
+<li>
+<p>下载  <strong>sqlite-tools-win32-*.zip</strong> 和 <strong>sqlite-dll-win32-*.zip</strong> 压缩文件</p>
+</li>
+<li>
+<p>创建文件夹 C:\sqlite，并在此文件夹下解压上面两个压缩文件，将得到 sqlite3.def、sqlite3.dll 和 sqlite3.exe 文件</p>
+</li>
+<li>
+<p>添加 &ldquo;C:\sqlite&rdquo; 到 PATH 环境变量</p>
+<p><img src="/content/post/db/sqlite/SQLite%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%A5%E9%97%A8/sqlite%E6%B7%BB%E5%8A%A0path.png" alt="1646896173297"></p>
+</li>
+<li>
+<p>命令提示符下，使用 <strong>sqlite3</strong> 命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">C:<span class="se">\&gt;</span>sqlite3
+SQLite version 3.38.0. 2021-01-09 11:53:05
+Enter <span class="s2">&#34;.help&#34;</span> <span class="k">for</span> instructions
+Enter SQL statements terminated with a <span class="s2">&#34;;&#34;</span>
+sqlite&gt;
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="12-linux">1.2 linux</h4>
+<p>目前，几乎所有版本的 Linux 操作系统都附带 SQLite。所以，只要使用下面的命令来检查您的机器上是否已经安装了 SQLite。</p>
+<ul>
+<li>
+<p>检测是否安装sqlite</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@node1 /var/datatom<span class="o">]</span><span class="c1"># sqlite3</span>
+SQLite version 3.7.17 2013-05-20 00:56:22
+Enter <span class="s2">&#34;.help&#34;</span> <span class="k">for</span> instructions
+Enter SQL statements terminated with a <span class="s2">&#34;;&#34;</span>
+sqlite&gt;
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<p>如果没有看到上面的结果，那么就意味着没有在 Linux 机器上安装 SQLite。因此，让我们按照下面的步骤安装 SQLite：</p>
+<ul>
+<li>
+<p>进入 SQL 下载页面： <a href="https://www.sqlite.org/download.html">下载页面</a></p>
+</li>
+<li>
+<p>搜索&quot;<strong>Source Code</strong> &ldquo;，从源代码区下载 <strong>sqlite-autoconf-*.tar.gz</strong></p>
+</li>
+<li>
+<p>安装步骤如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ tar xvzf sqlite-autoconf-3380000.tar.gz
+$ <span class="nb">cd</span> sqlite-autoconf-3380000
+$ ./configure --prefix<span class="o">=</span>/usr/local
+$ make
+$ make install
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="2sqlite命令">2.SQLite命令</h3>
+<p>在命令提示符下键入一个简单的 <strong>sqlite3</strong> 命令，在 SQLite 命令提示符下，您可以使用各种 SQLite 命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@node1 /var/datatom<span class="o">]</span><span class="c1"># sqlite3</span>
+SQLite version 3.7.17 2013-05-20 00:56:22
+Enter <span class="s2">&#34;.help&#34;</span> <span class="k">for</span> instructions
+Enter SQL statements terminated with a <span class="s2">&#34;;&#34;</span>
+sqlite&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p>如需获取可用的点命令的清单，可以在任何时候输入 &ldquo;.help&rdquo;。例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sqlite&gt;.help
+</code></pre></td></tr></table>
+</div>
+</div><p>让我们尝试使用 <strong>.show</strong> 命令，来查看 SQLite 命令提示符的默认设置:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sqlite&gt; .show
+     echo: off
+  explain: off
+  headers: off
+     mode: list
+nullvalue: <span class="s2">&#34;&#34;</span>
+   output: stdout
+separator: <span class="s2">&#34;|&#34;</span>
+    stats: off
+    width:
+sqlite&gt;
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>确保 sqlite&gt; 提示符与点命令之间没有空格，否则将无法正常工作。</p>
+</blockquote>
+<h3 id="3sqlite语法">3.SQLite语法</h3>
+<h4 id="31语法敏感">3.1语法敏感</h4>
+<p>SQLite 是<strong>不区分大小写</strong>的，但也有一些命令是大小写敏感的，比如 <strong>GLOB</strong> 和 <strong>glob</strong> 在 SQLite 的语句中有不同的含义。</p>
+<h4 id="32注释">3.2注释</h4>
+<p>SQL 注释以两个连续的 &ldquo;-&rdquo; 字符（ASCII 0x2d）开始，并扩展至下一个换行符（ASCII 0x0a）或直到输入结束，以先到者为准。</p>
+<p>您也可以使用 C 风格的注释，以 &ldquo;/<em>&rdquo; 开始，并扩展至下一个 &ldquo;</em>/&rdquo; 字符对或直到输入结束，以先到者为准。SQLite的注释可以跨越多行。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sqlite&gt;.help -- 这是一个简单的注释
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="32其他语法类似mysql">3.2其他语法类似mysql</h4>
+<h4 id="33示例">3.3示例</h4>
+<h5 id="331-进入sqlite">3.3.1 进入sqlite</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sqlite3
+
+<span class="c1">#或者以打开某个数据库文件的形式 </span>
+
+sqlite3 /etc/dt.d/disk_cache.db
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="332-列出数据库">3.3.2 列出数据库</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">.databases
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="333-列出数据表">3.3.3 列出数据表</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">.tables
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="334-查询列表">3.3.4 查询列表</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">SELECT * FROM disk_base<span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="335-退出">3.3.5 退出</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">.quit
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4python使用sqlite">4.python使用sqlite</h3>
+<p>由于SQLite的驱动内置在Python标准库中，所以我们可以直接来操作SQLite数据库</p>
+<p>在Python交互式命令行实践一下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 导入SQLite驱动:</span>
+&gt;&gt;&gt; import sqlite3
+<span class="c1"># 连接到SQLite数据库</span>
+<span class="c1"># 数据库文件是test.db</span>
+<span class="c1"># 如果文件不存在，会自动在当前目录创建:</span>
+&gt;&gt;&gt; <span class="nv">conn</span> <span class="o">=</span> sqlite3.connect<span class="o">(</span><span class="s1">&#39;test.db&#39;</span><span class="o">)</span>
+<span class="c1"># 创建一个Cursor:</span>
+&gt;&gt;&gt; <span class="nv">cursor</span> <span class="o">=</span> conn.cursor<span class="o">()</span>
+<span class="c1"># 执行一条SQL语句，创建user表:</span>
+&gt;&gt;&gt; cursor.execute<span class="o">(</span><span class="s1">&#39;create table user (id varchar(20) primary key, name varchar(20))&#39;</span><span class="o">)</span>
+&lt;sqlite3.Cursor object at 0x10f8aa260&gt;
+<span class="c1"># 继续执行一条SQL语句，插入一条记录:</span>
+&gt;&gt;&gt; cursor.execute<span class="o">(</span><span class="s1">&#39;insert into user (id, name) values (\&#39;</span>1<span class="se">\&#39;</span>, <span class="se">\&#39;</span>Michael<span class="se">\&#39;</span><span class="o">)</span><span class="err">&#39;</span><span class="o">)</span>
+&lt;sqlite3.Cursor object at 0x10f8aa260&gt;
+<span class="c1"># 通过rowcount获得插入的行数:</span>
+&gt;&gt;&gt; cursor.rowcount
+<span class="m">1</span>
+<span class="c1"># 关闭Cursor:</span>
+&gt;&gt;&gt; cursor.close<span class="o">()</span>
+<span class="c1"># 提交事务:</span>
+&gt;&gt;&gt; conn.commit<span class="o">()</span>
+<span class="c1"># 关闭Connection:</span>
+&gt;&gt;&gt; conn.close<span class="o">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>查询记录 :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt;&gt;&gt; <span class="nv">conn</span> <span class="o">=</span> sqlite3.connect<span class="o">(</span><span class="s1">&#39;test.db&#39;</span><span class="o">)</span>
+&gt;&gt;&gt; <span class="nv">cursor</span> <span class="o">=</span> conn.cursor<span class="o">()</span>
+<span class="c1"># 执行查询语句:</span>
+&gt;&gt;&gt; cursor.execute<span class="o">(</span><span class="s1">&#39;select * from user where id=?&#39;</span>, <span class="o">(</span><span class="s1">&#39;1&#39;</span>,<span class="o">))</span>
+&lt;sqlite3.Cursor object at 0x10f8aa340&gt;
+<span class="c1"># 获得查询结果集:</span>
+&gt;&gt;&gt; <span class="nv">values</span> <span class="o">=</span> cursor.fetchall<span class="o">()</span>
+&gt;&gt;&gt; values
+<span class="o">[(</span><span class="s1">&#39;1&#39;</span>, <span class="s1">&#39;Michael&#39;</span><span class="o">)]</span>
+&gt;&gt;&gt; cursor.close<span class="o">()</span>
+&gt;&gt;&gt; conn.close<span class="o">()</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-03-10
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+          <a href="/tags/sqlite/">SQLite</a>
+          <a href="/tags/%E5%85%A5%E9%97%A8/">入门</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/linux/arcconf-raid-%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[linux] arcconf RAID 管理工具</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/linux/rpm%E6%89%93%E5%8C%85%E6%95%99%E7%A8%8B%E6%96%B0%E6%89%8B%E5%90%91centos/">
+            <span class="next-text nav-default">[linux] RPM打包教程(教程&#43;资料&#43;案例)</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

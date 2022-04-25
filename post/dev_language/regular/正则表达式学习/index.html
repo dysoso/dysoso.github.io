@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>正则表达式学习 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="正则表达式学习 正则表达式(Regular Expression)是一种文本模式，包括普通字符（例如，a 到 z 之间的字母）和特殊字符（称为&amp;quo" /><meta name="keywords" content="开发语言, 正则, 正则表达式" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/dev_language/regular/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AD%A6%E4%B9%A0/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="正则表达式学习" />
+<meta property="og:description" content="正则表达式学习 正则表达式(Regular Expression)是一种文本模式，包括普通字符（例如，a 到 z 之间的字母）和特殊字符（称为&quo" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/dev_language/regular/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AD%A6%E4%B9%A0/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2017-11-03T15:37:56+08:00" />
+<meta property="article:modified_time" content="2022-02-10T16:37:56+08:00" />
+
+<meta itemprop="name" content="正则表达式学习">
+<meta itemprop="description" content="正则表达式学习 正则表达式(Regular Expression)是一种文本模式，包括普通字符（例如，a 到 z 之间的字母）和特殊字符（称为&quo"><meta itemprop="datePublished" content="2017-11-03T15:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-02-10T16:37:56+08:00" />
+<meta itemprop="wordCount" content="1081">
+<meta itemprop="keywords" content="开发语言,正则,正则表达式," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="正则表达式学习"/>
+<meta name="twitter:description" content="正则表达式学习 正则表达式(Regular Expression)是一种文本模式，包括普通字符（例如，a 到 z 之间的字母）和特殊字符（称为&quo"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">正则表达式学习</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017-11-03 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%BC%80%E5%8F%91%E8%AF%AD%E8%A8%80/"> 开发语言 </a>
+            </div>
+          <span class="more-meta"> 约 1081 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#正则表达式学习">正则表达式学习</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#1正则语法">1.正则语法</a></li>
+            <li><a href="#2正则示例">2.正则示例</a></li>
+            <li><a href="#3js使用正则">3.js使用正则</a></li>
+            <li><a href="#4php使用正则">4.php使用正则</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="正则表达式学习">正则表达式学习</h1>
+<p>正则表达式(Regular Expression)是一种文本模式，包括普通字符（例如，a 到 z 之间的字母）和特殊字符（称为&quot;元字符&quot;）。</p>
+<p>正则表达式使用单个字符串来描述、匹配一系列匹配某个句法规则的字符串。</p>
+<p>正则表达式是繁琐的，但它是强大的，学会之后的应用会让你除了提高效率外，会给你带来绝对的成就感。只要认真阅读本教程，加上应用的时候进行一定的参考，掌握正则表达式不是问题。</p>
+<p>许多程序设计语言都支持利用正则表达式进行字符串操作。</p>
+<h3 id="1正则语法">1.正则语法</h3>
+<h4 id="1-正则在线验证网址">1) 正则在线验证网址</h4>
+<p><a href="https://tool.oschina.net/regex">https://tool.oschina.net/regex</a></p>
+<h3 id="2正则示例">2.正则示例</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">查找字符串中的&lt;img src=&#34;&#34; alt=&#34;&#34;&gt;
+preg_match(&#39;/&lt;img.+src=\&#34;?(.+\.(jpg|gif|bmp|bnp|png))\&#34;?.+&gt;/i&#39;, stripcslashes($test_str), $match);
+
+手机号正则
+$preg_match=&#39;/^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/&#39;;
+验证座机号  010-62279965  0377-62258080   020-
+var r_tel=/^0\d+-\d+$/
+国内座机：
+/^\d{3}-\d{8}|\d{4}-\d{7}$/
+验证手机号:11位  
+var r_tel=/^1[3,5,8]\d{9}$/
+手机：
+/^((13[0-9]{1})|159|153)+\d{8}$/ 
+/^(13+\d{9})|(159+\d{8})|(153+\d{8})$/ 
+
+姓名
+$preg_match=&#34;/^[\x80-\xff]{6,26}$/&#34;; //2-8个中文
+$preg_match=&#39;/^[\x80-\xff]{6,26}$|^([A-Za-z]*\s?[A-Za-z]*)*$/&#39;;
+
+匹配汉字
+preg_match(&#34;/[\x7f-\xff]/&#34;, $title);
+验证中文
+var reg=/^[\u4e00-\u9fa5]{2,17}$/
+验证汉字：验证汉字：
+/^[\u4e00-\u9fa5]+$/ 
+
+身份证验证
+/^((\d{15})|(\d{17}[0-9X]))$/
+验证身份证号  18位或者17位加一个X
+var r_s=/^\d{18}|\d{17}x$/i
+邮箱验证
+/^\w+@\w+(\.\w+)+$/;
+邮箱 
+/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/; 
+所有的通用邮箱地址
+var r_eamil=/^\w+@\w+(\.)\w+$/
+匹配一个QQ邮箱地址
+861745122@qq.com 
+var r_qq_email=/^\d{5,}@qq(\.)com$/
+匹配一个163的邮箱地址
+var r_163_email=/^\w+@163(\.)com$/
+
+验证ip  192.168.1.250
+var r_ip=/^\d{3}(\.)\d{1,3}(\.)\d{1,3}(\.)[2-9]{1,3}$/
+
+验证网址  
+//www.baidu.com 
+//www.taobao.cn   
+//www.sina.net  www.baiwei.
+var r_web=/^www(\.)\w+(\.)\w+$/i
+匹配一个后缀名可能是.com|.net|.cn|.edu
+var email=/^\w+@\w+(\.)com|net|cn|edu$/
+
+验证由26个英文字母组成的字符串
+/^[A-Za-z]+$/ 
+验证由26个大写英文字母组成的字符串：
+/^[A-Z]+$/ 
+验证由26个小写英文字母组成的字符串：
+/^[a-z]+$/ 
+验证由数字和26个英文字母组成的字符串：
+/^[A-Za-z0-9]+$/ 
+验证由数字、26个英文字母或者下划线组成的字符串：
+/^\w+$/ 
+验证用户名：
+/^[a-zA-Z]\w{5,7}$/《数字不能开头，用户包括6到8位》
+验证用户密码:
+/^[a-zA-Z]\w{5,17}$ /正确格式为：以字母开头，长度在6-18之间，只能   包含字符、数字和下划线。
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3js使用正则">3.js使用正则</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="cm">/****match*****/</span>
+<span class="kd">var</span> <span class="nx">reg</span><span class="o">=</span><span class="sr">/^[A-Z]{2}\d{12}$/</span>
+<span class="kd">var</span> <span class="nx">isMatch</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">reg</span><span class="p">);</span><span class="c1">//失败返回NULL,成功返回数组
+</span><span class="c1"></span><span class="cm">/***test******/</span>
+<span class="kd">var</span> <span class="nx">reg</span> <span class="o">=</span><span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="s2">&#34;a&#34;</span><span class="p">);</span><span class="c1">//最简单的正则表达式,将匹配字母a 
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">reg</span><span class="o">=</span><span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="s2">&#34;a&#34;</span><span class="p">,</span><span class="s2">&#34;i&#34;</span><span class="p">);</span><span class="c1">//第二个参数,g （全文查找）,i （忽略大小写） ,m （多行查找)
+</span><span class="c1"></span><span class="nx">例如</span><span class="err">，</span><span class="nx">下面的两条语句是等价的</span><span class="err">：</span>  
+<span class="kd">var</span> <span class="nx">reg</span><span class="o">=</span><span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="s2">&#34;\\w+&#34;</span><span class="p">);</span>  
+<span class="kd">var</span> <span class="nx">reg</span><span class="o">=</span><span class="err">/\w+;</span>
+<span class="kd">var</span> <span class="nx">isMatch</span> <span class="o">=</span> <span class="nx">reg</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">str</span><span class="p">);</span><span class="c1">//返回 Boolean，查找对应的字符串中是否存在模式。
+</span></code></pre></td></tr></table>
+</div>
+</div><h3 id="4php使用正则">4.php使用正则</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="nx">preg_match</span><span class="p">()</span> <span class="nx">函数用于进行正则表达式匹配，成功返回</span> <span class="mi">1</span> <span class="nx">，否则返回</span> <span class="mi">0</span> <span class="nx">。</span>
+<span class="nx">preg_match</span><span class="p">(</span> <span class="nx">string</span> <span class="nx">pattern</span><span class="p">,</span> <span class="nx">string</span> <span class="nx">subject</span> <span class="p">[,</span> <span class="k">array</span> <span class="nx">matches</span> <span class="p">]</span> <span class="p">)</span>
+<span class="nx">pattern</span> <span class="nx">正则表达式</span>
+<span class="nx">subject</span> <span class="nx">需要匹配检索的对象</span>
+<span class="nx">matches</span> <span class="nx">可选，存储匹配结果的数组，</span> <span class="nv">$matches</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="nx">将包含与整个模式匹配的文本，</span><span class="nv">$matches</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="nx">将包含与第一个捕获的括号中的子模式所匹配的文本，以此类推</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-02-10
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E5%BC%80%E5%8F%91%E8%AF%AD%E8%A8%80/">开发语言</a>
+          <a href="/tags/%E6%AD%A3%E5%88%99/">正则</a>
+          <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/dev_language/shell/shell%E8%84%9A%E6%9C%AC%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[shell]shell脚本入门教程</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/tools/vmware/vmware%E5%AE%89%E8%A3%85%E5%B9%B6%E5%88%9D%E5%A7%8B%E5%8C%96/">
+            <span class="next-text nav-default">[VMware]VMware安装及初始化环境</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

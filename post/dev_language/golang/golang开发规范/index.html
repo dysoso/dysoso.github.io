@@ -1,0 +1,2440 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[go] Golang开发规范 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="[TOC] Golang开发规范 一致性的代码更容易维护、是更合理的、需要更少的学习成本、并且随着新的约定出现或者出现错误后更容易迁移、更新、修复 bug" /><meta name="keywords" content="开发语言, 后端, golang, go语言, Golang开发规范" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/dev_language/golang/golang%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[go] Golang开发规范" />
+<meta property="og:description" content="[TOC] Golang开发规范 一致性的代码更容易维护、是更合理的、需要更少的学习成本、并且随着新的约定出现或者出现错误后更容易迁移、更新、修复 bug" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/dev_language/golang/golang%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-05-16T15:37:56+08:00" />
+<meta property="article:modified_time" content="2022-02-10T16:37:56+08:00" />
+
+<meta itemprop="name" content="[go] Golang开发规范">
+<meta itemprop="description" content="[TOC] Golang开发规范 一致性的代码更容易维护、是更合理的、需要更少的学习成本、并且随着新的约定出现或者出现错误后更容易迁移、更新、修复 bug"><meta itemprop="datePublished" content="2021-05-16T15:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-02-10T16:37:56+08:00" />
+<meta itemprop="wordCount" content="9270">
+<meta itemprop="keywords" content="开发语言,后端,golang,go语言,Golang开发规范," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[go] Golang开发规范"/>
+<meta name="twitter:description" content="[TOC] Golang开发规范 一致性的代码更容易维护、是更合理的、需要更少的学习成本、并且随着新的约定出现或者出现错误后更容易迁移、更新、修复 bug"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[go] Golang开发规范</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-05-16 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%BC%80%E5%8F%91%E8%AF%AD%E8%A8%80/"> 开发语言 </a>
+            <a href="/categories/golang/"> golang </a>
+            </div>
+          <span class="more-meta"> 约 9270 字 </span>
+          <span class="more-meta"> 预计阅读 19 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#golang开发规范">Golang开发规范</a>
+      <ul>
+        <li><a href="#注释">注释</a></li>
+        <li><a href="#变量">变量</a></li>
+        <li><a href="#常量">常量</a></li>
+        <li><a href="#包">包</a></li>
+        <li><a href="#相似的声明放在一组">相似的声明放在一组</a></li>
+        <li><a href="#函数">函数</a>
+          <ul>
+            <li><a href="#命名">命名</a></li>
+            <li><a href="#函数分组与顺序">函数分组与顺序</a></li>
+          </ul>
+        </li>
+        <li><a href="#初始化">初始化</a>
+          <ul>
+            <li><a href="#初始化-struct-引用">初始化 Struct 引用</a></li>
+            <li><a href="#初始化-maps">初始化 Maps</a></li>
+            <li><a href="#切片">切片</a></li>
+          </ul>
+        </li>
+        <li><a href="#其他">其他</a>
+          <ul>
+            <li><a href="#接收器-receiver-命名">接收器 (receiver) 命名</a></li>
+            <li><a href="#减少嵌套">减少嵌套</a></li>
+            <li><a href="#不必要的-else">不必要的 else</a></li>
+            <li><a href="#结构体中的嵌入">结构体中的嵌入</a></li>
+            <li><a href="#使用字段名初始化结构体">使用字段名初始化结构体</a></li>
+            <li><a href="#使用原始字符串字面值避免转义">使用原始字符串字面值，避免转义</a></li>
+            <li><a href="#不要使用-panic">不要使用 panic</a></li>
+            <li><a href="#使用-defer-释放资源诸如文件和锁">使用 defer 释放资源，诸如文件和锁</a></li>
+            <li><a href="#避免使用内置名称">避免使用内置名称</a></li>
+            <li><a href="#优先使用-strconv-而不是-fmt">优先使用 strconv 而不是 fmt</a></li>
+            <li><a href="#truefalse-求值">true/false 求值</a></li>
+            <li><a href="#处理类型断言失败">处理类型断言失败</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#服务规范">服务规范</a>
+      <ul>
+        <li><a href="#目录结构及定义">目录结构及定义</a>
+          <ul>
+            <li><a href="#目录结构">目录结构</a></li>
+            <li><a href="#错误定义">错误定义</a></li>
+            <li><a href="#枚举定义">枚举定义</a></li>
+            <li><a href="#数据库定义">数据库定义</a></li>
+          </ul>
+        </li>
+        <li><a href="#命名规范">命名规范</a>
+          <ul>
+            <li><a href="#服务">服务</a></li>
+            <li><a href="#operator">Operator</a></li>
+            <li><a href="#文件">文件</a></li>
+            <li><a href="#api-字段">API 字段</a></li>
+            <li><a href="#数据库">数据库</a></li>
+          </ul>
+        </li>
+        <li><a href="#注释-1">注释</a></li>
+        <li><a href="#api">API</a>
+          <ul>
+            <li><a href="#http-方法的语义和限制">HTTP 方法的语义和限制</a></li>
+            <li><a href="#url-路由">URL 路由</a></li>
+            <li><a href="#参数">参数</a></li>
+          </ul>
+        </li>
+        <li><a href="#api-返回">API 返回</a>
+          <ul>
+            <li><a href="#正常返回">正常返回</a></li>
+            <li><a href="#错误返回">错误返回</a></li>
+            <li><a href="#特殊场景">特殊场景</a></li>
+          </ul>
+        </li>
+        <li><a href="#服务调用">服务调用</a></li>
+      </ul>
+    </li>
+    <li><a href="#数据库规范">数据库规范</a>
+      <ul>
+        <li><a href="#命名规范-1">命名规范</a></li>
+        <li><a href="#表的设计">表的设计</a></li>
+        <li><a href="#索引">索引</a></li>
+        <li><a href="#查询">查询</a></li>
+      </ul>
+    </li>
+    <li><a href="#代码提交">代码提交</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>[TOC]</p>
+<h1 id="golang开发规范">Golang开发规范</h1>
+<p>一致性的代码更容易维护、是更合理的、需要更少的学习成本、并且随着新的约定出现或者出现错误后更容易迁移、更新、修复 bug。</p>
+<h2 id="注释">注释</h2>
+<ul>
+<li>首要原则：一定要写注释，多写注释。代码可维护性基本等价于好的代码设计+注释，设计好坏视个人能力而定，但注释是每个人都可以写好的，重要的地方尽量写中文。</li>
+<li>api接口注释：一个服务对外提供的api一定要写注释，包括接口注释和出入参字段注释，以便生成标准接口文档，方便调用者使用。</li>
+<li>核心逻辑注释：核心逻辑较复杂的一定要写注释，将逻辑和步骤解释清楚，核心逻辑中有变化的部分尽量留下历史注释并写上时间戳和修改人。</li>
+<li>一般注释：一般的结构体，方法，变量等视情况添加注释，考虑因素有两点：1，英文能力有限，有取名字困难症的最好写注释；2，方法，字段等名字太长的可使用简写并添加注释。</li>
+<li>在注释或文档中，遇到中英文混写时，需要在连接处加空格，示例： <code>示例 example 示例</code></li>
+</ul>
+<h2 id="变量">变量</h2>
+<ul>
+<li>采用驼峰方式命名，禁止使用下划线命名。首字母是否大写，根据是否需要外部访问来决定。</li>
+<li>避免可变全局变量。</li>
+<li>如果将变量明确设置为某个值，则应使用短变量声明形式 <code>(:=)</code>，在某些情况下，var 使用关键字时默认值会更清晰。例如，声明空切片。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Bad
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">s</span> <span class="p">=</span> <span class="s">&#34;foo&#34;</span>
+
+<span class="kd">func</span> <span class="nf">f</span><span class="p">(</span><span class="nx">list</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">filtered</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{}</span>
+  <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">list</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">v</span> <span class="p">&gt;</span> <span class="mi">10</span> <span class="p">{</span>
+      <span class="nx">filtered</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">filtered</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Good
+</span><span class="c1"></span><span class="nx">s</span> <span class="o">:=</span> <span class="s">&#34;foo&#34;</span>
+
+<span class="kd">func</span> <span class="nf">f</span><span class="p">(</span><span class="nx">list</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">filtered</span> <span class="p">[]</span><span class="kt">int</span>
+  <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">list</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">v</span> <span class="p">&gt;</span> <span class="mi">10</span> <span class="p">{</span>
+      <span class="nx">filtered</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">filtered</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>在顶层，使用标准 <code>var</code> 关键字。请勿指定类型，除非它与表达式的类型不同。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Bad
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">s</span> <span class="kt">string</span> <span class="p">=</span> <span class="nf">F</span><span class="p">()</span>
+
+<span class="kd">func</span> <span class="nf">F</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&#34;A&#34;</span> <span class="p">}</span>
+
+<span class="c1">// Good
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">s</span> <span class="p">=</span> <span class="nf">F</span><span class="p">()</span>
+<span class="c1">// 由于 F 已经明确了返回一个字符串类型，因此我们没有必要显式指定_s 的类型
+</span><span class="c1">// 还是那种类型
+</span><span class="c1"></span>
+<span class="kd">func</span> <span class="nf">F</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&#34;A&#34;</span> <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>缩小变量作用域。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Bad
+</span><span class="c1"></span><span class="nx">err</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nf">WriteFile</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="mo">0644</span><span class="p">)</span>
+<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+ 	<span class="k">return</span> <span class="nx">err</span>
+<span class="p">}</span>
+
+<span class="c1">// Good
+</span><span class="c1"></span><span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nf">WriteFile</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="mo">0644</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+ 	<span class="k">return</span> <span class="nx">err</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="常量">常量</h2>
+<ul>
+<li>都使用大写字母，如果需要，可以使用下划线分割</li>
+<li>不要在程序中直接写数字、特殊字符串，全部使用常量替代</li>
+</ul>
+<h2 id="包">包</h2>
+<p>当命名包时，请按下面规则选择一个名称：</p>
+<ul>
+<li>全部小写。</li>
+<li>大多数使用命名导入的情况下，不需要重命名。</li>
+<li>简短而简洁。</li>
+<li>不用复数。例如 <code>net/url</code>，而不是 <code>net/urls</code>。</li>
+</ul>
+<p>另请参阅 <a href="https://blog.golang.org/package-names">Package Names</a> 和 <a href="https://rakyll.org/style-packages/">Go 包样式指南</a>.</p>
+<h2 id="相似的声明放在一组">相似的声明放在一组</h2>
+<p>Go 语言支持将相似的声明放在一个组内。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Bad
+</span><span class="c1"></span><span class="kn">import</span> <span class="s">&#34;a&#34;</span>
+<span class="kn">import</span> <span class="s">&#34;b&#34;</span>
+
+<span class="c1">// Good
+</span><span class="c1"></span><span class="kn">import</span> <span class="p">(</span>
+  <span class="s">&#34;a&#34;</span>
+  <span class="s">&#34;b&#34;</span>
+<span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这同样适用于常量、变量和类型声明：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Bad
+</span><span class="c1"></span><span class="kd">const</span> <span class="nx">a</span> <span class="p">=</span> <span class="mi">1</span>
+<span class="kd">const</span> <span class="nx">b</span> <span class="p">=</span> <span class="mi">2</span>
+
+<span class="kd">var</span> <span class="nx">a</span> <span class="p">=</span> <span class="mi">1</span>
+<span class="kd">var</span> <span class="nx">b</span> <span class="p">=</span> <span class="mi">2</span>
+
+<span class="kd">type</span> <span class="nx">Area</span> <span class="kt">float64</span>
+<span class="kd">type</span> <span class="nx">Volume</span> <span class="kt">float64</span>
+
+<span class="c1">// Good
+</span><span class="c1"></span><span class="kd">const</span> <span class="p">(</span>
+  <span class="nx">a</span> <span class="p">=</span> <span class="mi">1</span>
+  <span class="nx">b</span> <span class="p">=</span> <span class="mi">2</span>
+<span class="p">)</span>
+
+<span class="kd">var</span> <span class="p">(</span>
+  <span class="nx">a</span> <span class="p">=</span> <span class="mi">1</span>
+  <span class="nx">b</span> <span class="p">=</span> <span class="mi">2</span>
+<span class="p">)</span>
+
+<span class="kd">type</span> <span class="p">(</span>
+  <span class="nx">Area</span>   <span class="kt">float64</span>
+  <span class="nx">Volume</span> <span class="kt">float64</span>
+<span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>仅将相关的声明放在一组。不要将不相关的声明放在一组。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Bad
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Operation</span> <span class="kt">int</span>
+
+<span class="kd">const</span> <span class="p">(</span>
+  <span class="nx">A</span> <span class="nx">Operation</span> <span class="p">=</span> <span class="kc">iota</span> <span class="o">+</span> <span class="mi">1</span>
+  <span class="nx">B</span>
+  <span class="nx">C</span>
+  <span class="nx">ENV</span> <span class="p">=</span> <span class="s">&#34;ONLINE&#34;</span>
+<span class="p">)</span>
+
+<span class="c1">// Good
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Operation</span> <span class="kt">int</span>
+
+<span class="kd">const</span> <span class="p">(</span>
+  <span class="nx">A</span> <span class="nx">Operation</span> <span class="p">=</span> <span class="kc">iota</span> <span class="o">+</span> <span class="mi">1</span>
+  <span class="nx">B</span>
+  <span class="nx">C</span>
+<span class="p">)</span>
+
+<span class="kd">const</span> <span class="nx">ENV</span> <span class="p">=</span> <span class="s">&#34;ONLINE&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="函数">函数</h2>
+<h3 id="命名">命名</h3>
+<ul>
+<li>采用驼峰方式命名，禁止使用下划线命名。首字母是否大写，根据是否需要外部访问来决定。</li>
+</ul>
+<h3 id="函数分组与顺序">函数分组与顺序</h3>
+<ul>
+<li>函数应按粗略的调用顺序排序。</li>
+<li>同一文件中的函数应按接收者分组。</li>
+</ul>
+<p>因此，导出的函数应先出现在文件中，放在 struct, const, var 定义的后面。
+在定义类型之后，但在接收者的其余方法之前，可能会出现一个 newXYZ()/NewXYZ()
+由于函数是按接收者分组的，因此普通工具函数应在文件末尾出现</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Bad
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">something</span><span class="p">)</span> <span class="nf">Cost</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nf">calcCost</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">weights</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">something</span> <span class="kd">struct</span><span class="p">{</span> <span class="o">...</span> <span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">calcCost</span><span class="p">(</span><span class="nx">n</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">something</span><span class="p">)</span> <span class="nf">Stop</span><span class="p">()</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">newSomething</span><span class="p">()</span> <span class="o">*</span><span class="nx">something</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">&amp;</span><span class="nx">something</span><span class="p">{}</span>
+<span class="p">}</span>
+
+<span class="c1">// Good
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">something</span> <span class="kd">struct</span><span class="p">{</span> <span class="o">...</span> <span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">newSomething</span><span class="p">()</span> <span class="o">*</span><span class="nx">something</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">&amp;</span><span class="nx">something</span><span class="p">{}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">something</span><span class="p">)</span> <span class="nf">Cost</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nf">calcCost</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">weights</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">something</span><span class="p">)</span> <span class="nf">Stop</span><span class="p">()</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">calcCost</span><span class="p">(</span><span class="nx">n</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="初始化">初始化</h2>
+<h3 id="初始化-struct-引用">初始化 Struct 引用</h3>
+<p>在初始化结构引用时，请使用 <code>&amp;T{}</code> 代替 <code>new(T)</code>，以使其与结构体初始化一致。</p>
+<h3 id="初始化-maps">初始化 Maps</h3>
+<p>对于空 map 请使用 make(..) 初始化， 并且 map 是通过编程方式填充的。 这使得 map 初始化在表现上不同于声明，并且它还可以方便地在 make 后添加大小提示。
+在尽可能的情况下，在使用 make() 初始化的时候提供容量信息，向 make() 提供容量提示会在初始化时尝试调整map 的大小，这将减少在将元素添加到 map 时为 map 重新分配内存。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Bad
+</span><span class="c1"></span><span class="kd">var</span> <span class="p">(</span>
+  <span class="c1">// m1 读写安全;
+</span><span class="c1"></span>  <span class="c1">// m2 在写入时会 panic
+</span><span class="c1"></span>  <span class="nx">m1</span> <span class="p">=</span> <span class="kd">map</span><span class="p">[</span><span class="nx">T1</span><span class="p">]</span><span class="nx">T2</span><span class="p">{}</span>
+  <span class="nx">m2</span> <span class="kd">map</span><span class="p">[</span><span class="nx">T1</span><span class="p">]</span><span class="nx">T2</span>
+<span class="p">)</span>
+<span class="c1">// 声明和初始化看起来非常相似的。
+</span><span class="c1"></span>
+<span class="c1">// Good
+</span><span class="c1"></span><span class="kd">var</span> <span class="p">(</span>
+  <span class="c1">// m1 读写安全;
+</span><span class="c1"></span>  <span class="c1">// m2 在写入时会 panic
+</span><span class="c1"></span>  <span class="nx">m1</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="nx">T1</span><span class="p">]</span><span class="nx">T2</span><span class="p">)</span>
+  <span class="nx">m2</span> <span class="kd">map</span><span class="p">[</span><span class="nx">T1</span><span class="p">]</span><span class="nx">T2</span>
+<span class="p">)</span>
+
+<span class="c1">// 声明和初始化看起来差别非常大。
+</span></code></pre></td></tr></table>
+</div>
+</div><p>如果 map 包含固定的元素列表，则使用 map literals(map 初始化列表) 初始化映射</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Bad
+</span><span class="c1"></span><span class="nx">m</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="nx">T1</span><span class="p">]</span><span class="nx">T2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nx">m</span><span class="p">[</span><span class="nx">k1</span><span class="p">]</span> <span class="p">=</span> <span class="nx">v1</span>
+<span class="nx">m</span><span class="p">[</span><span class="nx">k2</span><span class="p">]</span> <span class="p">=</span> <span class="nx">v2</span>
+<span class="nx">m</span><span class="p">[</span><span class="nx">k3</span><span class="p">]</span> <span class="p">=</span> <span class="nx">v3</span>
+
+<span class="c1">// Good
+</span><span class="c1"></span><span class="nx">m</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="nx">T1</span><span class="p">]</span><span class="nx">T2</span><span class="p">{</span>
+  <span class="nx">k1</span><span class="p">:</span> <span class="nx">v1</span><span class="p">,</span>
+  <span class="nx">k2</span><span class="p">:</span> <span class="nx">v2</span><span class="p">,</span>
+  <span class="nx">k3</span><span class="p">:</span> <span class="nx">v3</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>基本准则是：在初始化时使用 map 初始化列表 来添加一组固定的元素。否则使用 make (如果可以，请尽量指定 map 容量)。</p>
+<h3 id="切片">切片</h3>
+<ul>
+<li>初始化时指定切片容量</li>
+</ul>
+<p>在尽可能的情况下，在使用 make() 初始化切片时提供容量信息，特别是在追加切片时。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nb">make</span><span class="p">([]</span><span class="nx">T</span><span class="p">,</span> <span class="nx">length</span><span class="p">,</span> <span class="nx">capacity</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>nil 是一个有效的 slice</li>
+</ul>
+<p>要检查切片是否为空，请始终使用len(s) == 0。而非 nil</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Bad
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">isEmpty</span><span class="p">(</span><span class="nx">s</span> <span class="p">[]</span><span class="kt">string</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">s</span> <span class="o">==</span> <span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="c1">// Good
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">isEmpty</span><span class="p">(</span><span class="nx">s</span> <span class="p">[]</span><span class="kt">string</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>作为接口返回前端时，</li>
+</ul>
+<h2 id="其他">其他</h2>
+<h3 id="接收器-receiver-命名">接收器 (receiver) 命名</h3>
+<ul>
+<li>尽量简短并有意义。</li>
+<li>禁止使用 <code>this</code>、<code>self</code> 等面向对象语言中特定的叫法。</li>
+<li>receiver 的命名要保持一致性。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// GOOD：
+</span><span class="c1">// call()和done()都使用了在上下文中有意义的&#34;c&#34;进行receiver命名
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="nx">Client</span><span class="p">)</span> <span class="nf">call</span><span class="p">()</span> <span class="kt">error</span> <span class="p">{</span>
+    <span class="c1">// ...
+</span><span class="c1"></span><span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="nx">Client</span><span class="p">)</span> <span class="nf">done</span><span class="p">()</span> <span class="kt">error</span> <span class="p">{</span>
+    <span class="c1">// ...
+</span><span class="c1"></span><span class="p">}</span>
+<span class="c1">// BAD：
+</span><span class="c1">// 1. &#34;c&#34;和&#34;client&#34;命名不一致：done() 用了c，call()用了client
+</span><span class="c1">// 2. client命名过于冗余
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="nx">Client</span><span class="p">)</span> <span class="nf">done</span><span class="p">()</span> <span class="kt">error</span> <span class="p">{</span>
+    <span class="c1">// ...
+</span><span class="c1"></span><span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">client</span> <span class="nx">Client</span><span class="p">)</span> <span class="nf">call</span><span class="p">()</span> <span class="kt">error</span> <span class="p">{</span>
+    <span class="c1">// ...
+</span><span class="c1"></span><span class="p">}</span>
+
+<span class="c1">// 不允许使用self
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">self</span> <span class="nx">Server</span><span class="p">)</span> <span class="nf">rcv</span><span class="p">()</span> <span class="kt">error</span> <span class="p">{</span>
+    <span class="c1">// ...
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="减少嵌套">减少嵌套</h3>
+<p>代码应通过尽可能先处理错误情况/特殊情况并尽早返回或继续循环来减少嵌套。减少嵌套多个级别的代码的代码量。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Bad
+</span><span class="c1"></span><span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">data</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="nx">v</span><span class="p">.</span><span class="nx">F1</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">{</span>
+    <span class="nx">v</span> <span class="p">=</span> <span class="nf">process</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">v</span><span class="p">.</span><span class="nf">Call</span><span class="p">();</span> <span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+      <span class="nx">v</span><span class="p">.</span><span class="nf">Send</span><span class="p">()</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">err</span>
+    <span class="p">}</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Invalid v: %v&#34;</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Good
+</span><span class="c1"></span><span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">data</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="nx">v</span><span class="p">.</span><span class="nx">F1</span> <span class="o">!=</span> <span class="mi">1</span> <span class="p">{</span>
+    <span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Invalid v: %v&#34;</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span>
+    <span class="k">continue</span>
+  <span class="p">}</span>
+
+  <span class="nx">v</span> <span class="p">=</span> <span class="nf">process</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
+  <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">v</span><span class="p">.</span><span class="nf">Call</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">err</span>
+  <span class="p">}</span>
+  <span class="nx">v</span><span class="p">.</span><span class="nf">Send</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="不必要的-else">不必要的 else</h3>
+<p>如果在 if 的两个分支中都设置了变量，则可以将其替换为单个 if。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Bad
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">a</span> <span class="kt">int</span>
+<span class="k">if</span> <span class="nx">b</span> <span class="p">{</span>
+  <span class="nx">a</span> <span class="p">=</span> <span class="mi">100</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="nx">a</span> <span class="p">=</span> <span class="mi">10</span>
+<span class="p">}</span>
+
+
+<span class="c1">// Good
+</span><span class="c1"></span><span class="nx">a</span> <span class="o">:=</span> <span class="mi">10</span>
+<span class="k">if</span> <span class="nx">b</span> <span class="p">{</span>
+  <span class="nx">a</span> <span class="p">=</span> <span class="mi">100</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="结构体中的嵌入">结构体中的嵌入</h3>
+<p>嵌入式类型（例如 mutex ）应位于结构体内的字段列表的顶部，并且必须有一个空行将嵌入式字段与常规字段分隔开。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Bad
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Client</span> <span class="kd">struct</span> <span class="p">{</span>
+  <span class="nx">version</span> <span class="kt">int</span>
+  <span class="nx">http</span><span class="p">.</span><span class="nx">Client</span>
+<span class="p">}</span>
+
+<span class="c1">// Good
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Client</span> <span class="kd">struct</span> <span class="p">{</span>
+  <span class="nx">http</span><span class="p">.</span><span class="nx">Client</span>
+
+  <span class="nx">version</span> <span class="kt">int</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="使用字段名初始化结构体">使用字段名初始化结构体</h3>
+<p>初始化结构体时，应该指定字段名称。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Bad
+</span><span class="c1"></span><span class="nx">k</span> <span class="o">:=</span> <span class="nx">User</span><span class="p">{</span><span class="s">&#34;Tom&#34;</span><span class="p">,</span> <span class="s">&#34;MAN&#34;</span><span class="p">,</span> <span class="kc">true</span><span class="p">}</span>
+
+<span class="c1">// Good
+</span><span class="c1"></span><span class="nx">k</span> <span class="o">:=</span> <span class="nx">User</span><span class="p">{</span>
+    <span class="nx">Name</span><span class="p">:</span> <span class="s">&#34;Tom&#34;</span><span class="p">,</span>
+    <span class="nx">Sex</span><span class="p">:</span> <span class="s">&#34;MAN&#34;</span><span class="p">,</span>
+    <span class="nx">Admin</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="使用原始字符串字面值避免转义">使用原始字符串字面值，避免转义</h3>
+<p>Go 支持使用 <a href="https://golang.org/ref/spec#raw_string_lit">原始字符串字面值</a>，也就是 &quot; ` &quot; 来表示原生字符串，在需要转义的场景下，我们应该尽量使用这种方案来替换。可以跨越多行并包含引号。使用这些字符串可以避免更难阅读的手工转义的字符串。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Bad
+</span><span class="c1"></span><span class="nx">wantError</span> <span class="o">:=</span> <span class="s">&#34;unknown name:\&#34;test\&#34;&#34;</span>
+
+<span class="c1">// Good
+</span><span class="c1"></span><span class="nx">wantError</span> <span class="o">:=</span> <span class="s">`unknown error:&#34;test&#34;`</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="不要使用-panic">不要使用 panic</h3>
+<ul>
+<li>除非出现不可恢复的程序错误，不要使用 panic，用多返回值和 error</li>
+</ul>
+<h3 id="使用-defer-释放资源诸如文件和锁">使用 defer 释放资源，诸如文件和锁</h3>
+<p>使用 defer 释放资源，诸如文件和锁。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Bad
+</span><span class="c1"></span><span class="nx">p</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+<span class="k">if</span> <span class="nx">p</span><span class="p">.</span><span class="nx">count</span> <span class="p">&lt;</span> <span class="mi">10</span> <span class="p">{</span>
+  <span class="nx">p</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+  <span class="k">return</span> <span class="nx">p</span><span class="p">.</span><span class="nx">count</span>
+<span class="p">}</span>
+
+<span class="nx">p</span><span class="p">.</span><span class="nx">count</span><span class="o">++</span>
+<span class="nx">newCount</span> <span class="o">:=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">count</span>
+<span class="nx">p</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+
+<span class="k">return</span> <span class="nx">newCount</span>
+<span class="c1">// 当有多个 return 分支时，很容易遗忘 unlock
+</span><span class="c1"></span>
+
+<span class="c1">// Good
+</span><span class="c1"></span><span class="nx">p</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+<span class="k">defer</span> <span class="nx">p</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="nx">p</span><span class="p">.</span><span class="nx">count</span> <span class="p">&lt;</span> <span class="mi">10</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">p</span><span class="p">.</span><span class="nx">count</span>
+<span class="p">}</span>
+
+<span class="nx">p</span><span class="p">.</span><span class="nx">count</span><span class="o">++</span>
+<span class="k">return</span> <span class="nx">p</span><span class="p">.</span><span class="nx">count</span>
+<span class="c1">// 更可读
+</span></code></pre></td></tr></table>
+</div>
+</div><h3 id="避免使用内置名称">避免使用内置名称</h3>
+<p>Go 语言规范 <a href="https://golang.org/ref/spec">language specification</a> 概述了几个内置的， 不应在 Go 项目中使用的名称标识<a href="https://golang.org/ref/spec#Predeclared_identifiers">predeclared identifiers</a>。</p>
+<h3 id="优先使用-strconv-而不是-fmt">优先使用 strconv 而不是 fmt</h3>
+<p>将原语转换为字符串或从字符串转换时，<code>strconv</code> 速度比 <code>fmt</code> 快。</p>
+<h3 id="truefalse-求值">true/false 求值</h3>
+<ul>
+<li>当明确 expr 为 bool 类型时，禁止使用 == 或 != 与 true/false 比较，应该使用 expr 或 !expr</li>
+<li>判断某个整数表达式 expr 是否为零时，禁止使用 !expr，应该使用 expr == 0</li>
+</ul>
+<h3 id="处理类型断言失败">处理类型断言失败</h3>
+<p><a href="https://golang.org/ref/spec#Type_assertions">type assertion</a> 的单个返回值形式针对不正确的类型将产生 panic。因此，请始终使用 “comma ok” 的惯用法。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Bad
+</span><span class="c1"></span><span class="nx">t</span> <span class="o">:=</span> <span class="nx">i</span><span class="p">.(</span><span class="kt">string</span><span class="p">)</span>
+
+<span class="c1">// Good
+</span><span class="c1"></span><span class="nx">t</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">i</span><span class="p">.(</span><span class="kt">string</span><span class="p">)</span>
+<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+  <span class="c1">// 优雅地处理错误
+</span><span class="c1"></span><span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="服务规范">服务规范</h1>
+<h2 id="目录结构及定义">目录结构及定义</h2>
+<h3 id="目录结构">目录结构</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go">
+<span class="err">├──</span> <span class="nx">pkg</span>
+<span class="err">│</span>   <span class="err">├──</span> <span class="nx">clients</span>                           <span class="err">#</span> <span class="nx">依赖服务</span>
+<span class="err">│</span>   <span class="err">│</span>   <span class="err">├──</span> <span class="nx">client_xxx</span>
+<span class="err">│</span>   <span class="err">│</span>   <span class="err">│</span>   <span class="err">├──</span> <span class="nx">client</span><span class="p">.</span><span class="k">go</span>
+<span class="err">│</span>   <span class="err">│</span>   <span class="err">│</span>   <span class="err">├──</span> <span class="nx">operations</span><span class="p">.</span><span class="k">go</span>
+<span class="err">│</span>   <span class="err">│</span>   <span class="err">│</span>   <span class="err">└──</span> <span class="nx">types</span><span class="p">.</span><span class="k">go</span>
+<span class="err">│</span>   <span class="err">│</span>   <span class="err">└──</span> <span class="nx">gen</span><span class="p">.</span><span class="k">go</span>                        <span class="err">#</span> <span class="nx">general</span> <span class="nx">client</span>
+<span class="err">│</span>   <span class="err">├──</span> <span class="nx">constants</span>                         <span class="err">#</span> <span class="nx">存放通用类型</span> 
+<span class="err">│</span>   <span class="err">│</span>   <span class="err">├──</span> <span class="nx">types</span>                         <span class="err">#</span> <span class="nx">存放枚举类型</span>
+<span class="err">│</span>   <span class="err">│</span>   <span class="err">│</span>   <span class="err">├──</span> <span class="nx">account_type</span><span class="p">.</span><span class="k">go</span>           <span class="err">#</span> <span class="nx">枚举类型</span>
+<span class="err">│</span>   <span class="err">│</span>   <span class="err">│</span>   <span class="err">├──</span> <span class="nx">account_type__generated</span><span class="p">.</span><span class="k">go</span> 
+<span class="err">│</span>   <span class="err">│</span>   <span class="err">│</span>   <span class="err">├──</span> <span class="o">...</span><span class="p">.</span>                      
+<span class="err">│</span>   <span class="err">│</span>   <span class="err">│</span>   <span class="err">└──</span> <span class="nx">types</span><span class="p">.</span><span class="k">go</span>                  <span class="err">#</span> <span class="nx">通用三方类型别名定义</span>
+<span class="err">│</span>   <span class="err">│</span>   <span class="err">└──</span> <span class="nx">errors</span>                        <span class="err">#</span> <span class="nx">存放通用错误类型</span>
+<span class="err">│</span>   <span class="err">│</span>       <span class="err">├──</span> <span class="nx">status_error</span><span class="p">.</span><span class="k">go</span>           <span class="err">#</span> <span class="nx">general</span> <span class="nx">errors</span>  
+<span class="err">│</span>   <span class="err">│</span>       <span class="err">└──</span> <span class="nx">status_error__generated</span><span class="p">.</span><span class="k">go</span>
+<span class="err">│</span>   <span class="err">├──</span> <span class="nx">controllers</span>                       
+<span class="err">│</span>   <span class="err">│</span>   <span class="err">└──</span> <span class="nx">account</span>
+<span class="err">│</span>   <span class="err">│</span>       <span class="err">├──</span> <span class="nx">context</span><span class="p">.</span><span class="k">go</span>
+<span class="err">│</span>   <span class="err">│</span>       <span class="err">└──</span> <span class="nx">account__datalist</span><span class="p">.</span><span class="k">go</span>
+<span class="err">│</span>   <span class="err">├──</span> <span class="nx">command</span>                          
+<span class="err">│</span>   <span class="err">│</span>   <span class="err">└──</span> <span class="nx">cmd</span><span class="p">.</span><span class="k">go</span>
+<span class="err">│</span>   <span class="err">├──</span> <span class="nx">models</span>                           <span class="err">#</span> <span class="nx">数据模型和对应的方法</span>
+<span class="err">│</span>   <span class="err">│</span>   <span class="err">├──</span> <span class="nx">account</span><span class="p">.</span><span class="k">go</span>   
+<span class="err">│</span>   <span class="err">│</span>   <span class="err">├──</span> <span class="o">...</span>
+<span class="err">│</span>   <span class="err">│</span>   <span class="err">└──</span> <span class="nx">db</span><span class="p">.</span><span class="k">go</span>
+<span class="err">│</span>   <span class="err">└──</span> <span class="nx">utils</span>                            <span class="err">#</span> <span class="nx">工具类定义</span>
+<span class="err">│</span>    
+<span class="err">├──</span> <span class="nx">cmd</span>
+<span class="err">│</span>   <span class="err">└──</span> <span class="nx">srv</span><span class="o">-</span><span class="nx">example</span>
+<span class="err">│</span>       <span class="err">├──</span> <span class="nx">apis</span>
+<span class="err">│</span>       <span class="err">│</span>   <span class="err">├──</span> <span class="nx">user</span>
+<span class="err">│</span>       <span class="err">│</span>   <span class="err">│</span>   <span class="err">├──</span> <span class="nx">list_user</span><span class="p">.</span><span class="k">go</span>             <span class="err">#</span> <span class="nx">具体接口</span><span class="err">，</span><span class="nx">一个接口一个文件</span>
+<span class="err">│</span>       <span class="err">│</span>   <span class="err">│</span>   <span class="err">└──</span> <span class="nx">root</span><span class="p">.</span><span class="k">go</span> 
+<span class="err">│</span>       <span class="err">│</span>   <span class="err">├──</span> <span class="nx">middleware</span>
+<span class="err">│</span>       <span class="err">│</span>   <span class="err">│</span>   <span class="err">└──</span> <span class="nx">must_account</span><span class="p">.</span><span class="k">go</span> 
+<span class="err">│</span>       <span class="err">│</span>   <span class="err">└──</span> <span class="nx">root</span><span class="p">.</span><span class="k">go</span>
+<span class="err">│</span>		<span class="err">├──</span> <span class="nx">config</span>               
+<span class="err">│</span>		<span class="err">│</span>   <span class="err">├──</span> <span class="k">default</span><span class="p">.</span><span class="nx">yml</span>
+<span class="err">│</span>		<span class="err">│</span>   <span class="err">├──</span> <span class="nx">local</span><span class="p">.</span><span class="nx">yml</span>
+<span class="err">│</span>		<span class="err">│</span>   <span class="err">└──</span> <span class="nx">master</span><span class="p">.</span><span class="nx">yml</span>     
+<span class="err">│</span>		<span class="err">├──</span> <span class="nx">deploy</span>
+<span class="err">│</span>		<span class="err">│</span>   <span class="err">└──</span> <span class="nx">qservice</span><span class="p">.</span><span class="nx">yml</span>
+<span class="err">│</span>		<span class="err">├──</span> <span class="nx">global</span>
+<span class="err">│</span>		<span class="err">│</span>   <span class="err">└──</span> <span class="nx">config</span><span class="p">.</span><span class="k">go</span>
+<span class="err">│</span>		<span class="err">├──</span> <span class="nx">Dockerfile</span>			    <span class="err">#</span>  <span class="nx">复制</span> <span class="nx">Dockerfile</span><span class="p">.</span><span class="k">default</span> <span class="nx">并重命名</span>
+<span class="err">│</span>		<span class="err">├──</span> <span class="nx">Dockerfile</span><span class="p">.</span><span class="k">default</span>      <span class="err">#</span>  <span class="nx">程序运行时自动生成</span> 
+<span class="err">│</span>		<span class="err">└──</span> <span class="nx">main</span><span class="p">.</span><span class="k">go</span>
+<span class="err">│</span>
+<span class="err">├──</span> <span class="p">.</span><span class="nx">gitignore</span>
+<span class="err">├──</span> <span class="p">.</span><span class="nx">gitlab</span><span class="o">-</span><span class="nx">ci</span><span class="p">.</span><span class="nx">yml</span>
+<span class="err">├──</span> <span class="p">.</span><span class="nx">husky</span><span class="p">.</span><span class="nx">yaml</span>
+<span class="err">├──</span> <span class="p">.</span><span class="nx">version</span>
+<span class="err">├──</span> <span class="nx">CHANGELOG</span><span class="p">.</span><span class="nx">md</span>
+<span class="err">├──</span> <span class="k">go</span><span class="p">.</span><span class="nx">mod</span>
+<span class="err">├──</span> <span class="nx">Makefile</span>
+<span class="err">└──</span> <span class="nx">README</span><span class="p">.</span><span class="nx">md</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>所有的配置通过 Context 传递。</li>
+</ul>
+<h4 id="路由文件">路由文件</h4>
+<ul>
+<li>每个 Operator 一个文件</li>
+<li>Operator 文件结构
+<ul>
+<li>init()</li>
+<li>Operator 定义</li>
+<li>Output(ctx context.Context) (interface{}, error)</li>
+</ul>
+</li>
+</ul>
+<p>示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> 
+
+<span class="kn">import</span>
+
+<span class="kd">func</span> <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">Routers</span><span class="p">.</span><span class="nf">Register</span><span class="p">(</span><span class="nx">courier</span><span class="p">.</span><span class="nf">NewRouter</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">Operator</span><span class="p">{}))</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">Operator</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">httpx</span><span class="p">.</span><span class="nx">MethodGet</span> <span class="s">`summary:&#34;示例接口&#34; path:&#34;/examples&#34;`</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">req</span> <span class="o">*</span><span class="nx">Operator</span><span class="p">)</span> <span class="nf">Output</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="o">...</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="错误定义">错误定义</h3>
+<p>通用错误的结构体定义为：<a href="https://godoc.org/github.com/go-courier/statuserror#StatusErr">https://godoc.org/github.com/go-courier/statuserror#StatusErr</a></p>
+<ul>
+<li>错误代码为 9 位：3 位 HTTP Status + 3位服务 id + 3位错误码，保证每个服务返回的错误 code 都是唯一的，当需要透传错误代码时，对外返回的错误代码依然是唯一的</li>
+<li>当用户提交的表单输入的值存在错误时，我们通过 ErrorField s来定位用户输错的每个字段以及错误原因，从而避免一个一个字段提示，造成非常糟糕的用户体验</li>
+<li>source 字段是为了便于定位最终是在哪个服务上发生了错误，但在框架中，source 将自动 append</li>
+</ul>
+<p>但为了方便开发（同时也方便 API 文档的抓取），我们用 const 代替手动定义该结构体，比如</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">errors</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;net/http&#34;</span>
+<span class="p">)</span>
+
+<span class="c1">//go:generate tools gen status-error
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">StatusError</span> <span class="kt">int</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">StatusError</span><span class="p">)</span> <span class="nf">ServiceCode</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="mi">999</span> <span class="o">*</span> <span class="mf">1e3</span>
+<span class="p">}</span>
+
+<span class="kd">const</span> <span class="p">(</span>
+	<span class="c1">// InternalServerError
+</span><span class="c1"></span>	<span class="nx">InternalServerError</span> <span class="nx">StatusError</span> <span class="p">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusInternalServerError</span><span class="o">*</span><span class="mf">1e6</span> <span class="o">+</span> <span class="kc">iota</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="p">)</span>
+
+<span class="kd">const</span> <span class="p">(</span>
+	<span class="c1">// @errTalk Unauthorized
+</span><span class="c1"></span>	<span class="nx">Unauthorized</span> <span class="nx">StatusError</span> <span class="p">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusUnauthorized</span><span class="o">*</span><span class="mf">1e6</span> <span class="o">+</span> <span class="kc">iota</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这些定义放在 <code>constants/errors</code> 包中的 <code>status_error.go</code> 中。其中</p>
+<ul>
+<li>每一个 http code 代表的错误范围都单独起一个 const 集合，即 const 关键字包裹的枚举列表</li>
+<li>每一个错误枚举都要符合错误 code 的编码规则</li>
+<li>每一个服务ID 都必须唯一，使用 gitlab 项目ID。</li>
+<li>每一个错误枚举的上方加上注释表明该错误的说明
+<ul>
+<li>第一行定义 msg，需要简明扼要，如果 <code>@errTalk</code> 前缀表示需要对外提供话术</li>
+<li>其他行为描述，可以为空，如果在业务使用中中需要用到其他描述可以这样使用 <code>IncomeRangeInvalidError.StatusErr().WithDesc(&quot;others desc&quot;)</code></li>
+</ul>
+</li>
+<li>使用 <code>go generate</code> 来生成这些错误的一些函数代码 (也可以用 <code>govendor generate +l</code>，批量执行)</li>
+</ul>
+<h3 id="枚举定义">枚举定义</h3>
+<p>枚举的定义</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">types</span>
+
+<span class="c1">// openapi:enum
+</span><span class="c1">//go:generate tools gen enum CustomerType
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">CustomerType</span> <span class="kt">int8</span>
+
+<span class="c1">// 客户类型
+</span><span class="c1"></span><span class="kd">const</span> <span class="p">(</span>
+    <span class="nx">CUSTOMER_TYPE_UNKNOWN</span>     <span class="nx">CustomerType</span> <span class="p">=</span> <span class="kc">iota</span>
+    <span class="nx">CUSTOMER_TYPE__PERSON</span>                  <span class="c1">// 个人
+</span><span class="c1"></span>    <span class="nx">CUSTOMER_TYPE__ENTERPRISE</span>              <span class="c1">// 企业
+</span><span class="c1"></span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>每一个枚举名称的前缀都为该枚举类型的大写通过下划线分隔</li>
+<li>第一个枚举类型都为 <code>_UNKNOWN</code>，使用一个下划线，值为 <code>iota</code></li>
+<li>后续的枚举类型使用两个下划线来分隔前缀和真实的类型</li>
+<li>后续的枚举类型都加上注释，表明该类型的含义</li>
+<li>使用 <code>tools gen enum</code> 来生成所有枚举的操作函数，其中主要包括序列化和反序列化的函数，以及与 <code>string</code> 之间的相互转换</li>
+<li>虽然为了可读性，外部使用枚举都是字符串，但是数据中存储的都是整型，同时便于 API 文档的抓取</li>
+</ul>
+<h3 id="数据库定义">数据库定义</h3>
+<p>公共部分</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">DB</span> <span class="p">=</span> <span class="nx">sqlx</span><span class="p">.</span><span class="nf">NewDatabase</span><span class="p">(</span><span class="s">&#34;dbName&#34;</span><span class="p">)</span>
+
+<span class="c1">// 使用 pgbuilder 时需要
+</span><span class="c1">// pgbuilder 创建、修改、删除都需要 Mark 时间
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">OperationTimes</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="c1">// 创建时间
+</span><span class="c1"></span>	<span class="nx">CreatedAt</span> <span class="nx">types</span><span class="p">.</span><span class="nx">Timestamp</span> <span class="s">`db:&#34;f_created_at,default=&#39;0&#39;&#34; json:&#34;createdAt&#34; `</span>
+	<span class="c1">// 更新时间
+</span><span class="c1"></span>	<span class="nx">UpdatedAt</span> <span class="nx">types</span><span class="p">.</span><span class="nx">Timestamp</span> <span class="s">`db:&#34;f_updated_at,default=&#39;0&#39;&#34; json:&#34;updatedAt&#34;`</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">times</span> <span class="o">*</span><span class="nx">OperationTimes</span><span class="p">)</span> <span class="nf">MarkUpdatedAt</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">times</span><span class="p">.</span><span class="nx">UpdatedAt</span> <span class="p">=</span> <span class="nx">types</span><span class="p">.</span><span class="nf">Timestamp</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">())</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">times</span> <span class="o">*</span><span class="nx">OperationTimes</span><span class="p">)</span> <span class="nf">MarkCreatedAt</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">times</span><span class="p">.</span><span class="nf">MarkUpdatedAt</span><span class="p">()</span>
+	<span class="nx">times</span><span class="p">.</span><span class="nx">CreatedAt</span> <span class="p">=</span> <span class="nx">times</span><span class="p">.</span><span class="nx">UpdatedAt</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">OperationTimesWithDeletedAt</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">OperationTimes</span>
+	<span class="c1">// 删除时间
+</span><span class="c1"></span>	<span class="nx">DeletedAt</span> <span class="nx">types</span><span class="p">.</span><span class="nx">Timestamp</span> <span class="s">`db:&#34;f_deleted_at,default=&#39;0&#39;&#34; json:&#34;-&#34;`</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">times</span> <span class="o">*</span><span class="nx">OperationTimesWithDeletedAt</span><span class="p">)</span> <span class="nf">MarkDeletedAt</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">times</span><span class="p">.</span><span class="nf">MarkUpdatedAt</span><span class="p">()</span>
+	<span class="nx">times</span><span class="p">.</span><span class="nx">DeletedAt</span> <span class="p">=</span> <span class="nx">times</span><span class="p">.</span><span class="nx">UpdatedAt</span>
+<span class="p">}</span>
+
+
+<span class="kd">type</span> <span class="nx">PrimaryID</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="c1">// 自增 ID
+</span><span class="c1"></span>	<span class="nx">ID</span> <span class="kt">uint64</span> <span class="s">`db:&#34;f_id,autoincrement&#34; json:&#34;-&#34;`</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">//go:generate tools gen model2 Account  --database=DB
+</span><span class="c1">// 账户
+</span><span class="c1">// @def primary ID
+</span><span class="c1">// @def unique_index I_account_id AccountID
+</span><span class="c1">// @def index I_account_type AccountType
+</span><span class="c1">// @def index I_nick_name NickName
+</span><span class="c1">// @def index I_state State
+</span><span class="c1">// @def index I_created_at CreatedAt
+</span><span class="c1">// @def index I_updated_at UpdatedAt
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Account</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">PrimaryID</span>
+	<span class="nx">RefAccountID</span>
+	<span class="nx">AccountBase</span>
+    
+    <span class="c1">// 状态
+</span><span class="c1"></span>	<span class="nx">State</span>       <span class="nx">types</span><span class="p">.</span><span class="nx">State</span>   <span class="s">`db:&#34;f_state,default=&#39;1&#39;&#34; json:&#34;state&#34;`</span>
+    
+	<span class="nx">OperationTimesWithDeletedAt</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">AccountBase</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="c1">// 昵称
+</span><span class="c1"></span>    <span class="nx">NickName</span>        <span class="kt">string</span>            <span class="s">`db:&#34;f_nick_name,size=20&#34; json:&#34;nickName&#34;`</span>
+	<span class="c1">// 账户类型
+</span><span class="c1"></span>	<span class="nx">AccountType</span> <span class="nx">types</span><span class="p">.</span><span class="nx">AccountType</span> <span class="s">`db:&#34;f_account_type&#34; json:&#34;accountType&#34;`</span>
+    <span class="c1">// 头像
+</span><span class="c1"></span>	<span class="nx">Avatar</span>      <span class="kt">string</span>            <span class="s">`db:&#34;f_avatar,default=&#39;&#39;&#34; json:&#34;avatar&#34;`</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">AccountID</span> <span class="p">=</span> <span class="nx">types</span><span class="p">.</span><span class="nx">SFID</span> <span class="c1">// 推荐但不强制
+</span><span class="c1"></span>
+<span class="kd">type</span> <span class="nx">RefAccount</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="c1">// @rel Account.AccountID
+</span><span class="c1"></span>	<span class="c1">// 账户唯一 ID
+</span><span class="c1"></span>	<span class="nx">AccountID</span> <span class="nx">AccountID</span> <span class="s">`db:&#34;f_account_id&#34; json:&#34;accountID&#34;`</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>对公共部分的结构体进行抽离，推荐结构体组合。</li>
+<li>表结构定义应有注释，且注释在 <code>go:generate tools gen model2</code> 下一行 。</li>
+<li>表结构中每个字段都应有相应注释。</li>
+<li>唯一 ID 关联字段使用结构体：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">AccountID</span> <span class="p">=</span> <span class="nx">types</span><span class="p">.</span><span class="nx">SFID</span>
+
+<span class="kd">type</span> <span class="nx">RefAccountID</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="c1">// @rel Account.AccountID
+</span><span class="c1"></span>	<span class="c1">// 账户唯一 ID
+</span><span class="c1"></span>	<span class="nx">AccountID</span> <span class="nx">AccountID</span> <span class="s">`db:&#34;f_account_id&#34; json:&#34;accountID&#34;`</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>结构体名使用 <code>Ref</code> 作为前缀，example: <code>RefAccount</code></li>
+<li>使用注释 <code>@rel Account.Account</code> 标识</li>
+</ul>
+<p>​</p>
+<p>对于复杂的数据结构，可以定义数据结构实现 DataType 、Value、Scan  三个方法，示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;github.com/go-courier/sqlx/v2/datatypes&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">type</span> <span class="nx">Meta</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">][]</span><span class="kt">string</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">Meta</span><span class="p">)</span> <span class="nf">DataType</span><span class="p">(</span><span class="nx">driver</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="s">&#34;text&#34;</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">m</span> <span class="nx">Meta</span><span class="p">)</span> <span class="nf">Value</span><span class="p">()</span> <span class="p">(</span><span class="nx">driver</span><span class="p">.</span><span class="nx">Value</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="nx">datatypes</span><span class="p">.</span><span class="nf">JSONValue</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">m</span> <span class="o">*</span><span class="nx">Meta</span><span class="p">)</span> <span class="nf">Scan</span><span class="p">(</span><span class="nx">src</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="nx">datatypes</span><span class="p">.</span><span class="nf">JSONScan</span><span class="p">(</span><span class="nx">src</span><span class="p">,</span> <span class="nx">m</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="命名规范">命名规范</h2>
+<h3 id="服务">服务</h3>
+<ul>
+<li><strong>API 服务名称应与 <em>gitlab</em> 仓库名称相同</strong>。</li>
+<li><strong>全小写</strong>，单词之间应该使用<strong>英文减号</strong>（<code>-</code>） 符号链接。
+<ul>
+<li>使用 <code>srv-</code> 前缀 <code>srv-&lt;service_name&gt;</code> ，example: <code>srv-weather</code>
+<ul>
+<li>部署时，域名和根路径格式为 <code>api.rockontrol.com/&lt;service_name&gt;</code> ，ex <code>api.rockontrol.com/weather</code></li>
+<li>为避免浏览器请求 TCP 连接数限制，还可以遵循 <code>srv-&lt;service_name&gt;.rockontrol.com/&lt;service_name&gt;</code>，ex <code>srv-weather.rockontrol.com</code></li>
+</ul>
+</li>
+<li>根据服务类型不同，还应在 <code>srv-</code> 的前缀基础上再进行扩展
+<ul>
+<li>业务网关：前缀应为 <code>srv-bff-</code> ，BFF：即 Backend For Frontend（服务于前端的后端），example: <code>srv-bff-park </code></li>
+<li>代理网关：应在服务名后面加上  <code>-gateway</code> ，example：<code>srv-amap-gateway</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="operator">Operator</h3>
+<ul>
+<li>Operator 名使用驼峰命名</li>
+<li>命名是可以使用阿拉伯数字  <code>2</code> 、 <code>4</code> 表示 To 、For 。</li>
+<li>使用以下关键字作为前缀
+<table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>说明</th>
+<th>Method</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Get</td>
+<td>指定获取资源</td>
+<td>GET</td>
+<td>GetUser</td>
+</tr>
+<tr>
+<td>List</td>
+<td>获取资源列表</td>
+<td>GET</td>
+<td>ListUser</td>
+</tr>
+<tr>
+<td>Create</td>
+<td>创建资源</td>
+<td>POST</td>
+<td>CreateUser</td>
+</tr>
+<tr>
+<td>Update</td>
+<td>修改资源</td>
+<td>PUT</td>
+<td>UpdateUser</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>删除资源</td>
+<td>DELETE</td>
+<td>DeleteUser</td>
+</tr>
+<tr>
+<td>Put</td>
+<td>创建或更新资源</td>
+<td>PUT</td>
+<td>PutUser</td>
+</tr>
+<tr>
+<td>Set</td>
+<td>设置资源某个属性或设置资源与其他资源之间的关联关系</td>
+<td>PUT</td>
+<td>SetUserState</td>
+</tr>
+<tr>
+<td>SetUserRoleBind</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<p>例外：<code>Authorize</code></p>
+<p>示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">CreateAccount</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">httpx</span><span class="p">.</span><span class="nx">MethodPost</span> <span class="s">`path:&#34;/&#34; summary:&#34;创建账户&#34;`</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">DeleteAccount</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">httpx</span><span class="p">.</span><span class="nx">MethodDelete</span> <span class="s">`path:&#34;/:accountID&#34; summary:&#34;删除账户&#34;`</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">UpdateAccount</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">httpx</span><span class="p">.</span><span class="nx">MethodPut</span> <span class="s">`path:&#34;/:accountID&#34; summary:&#34;修改账户&#34;`</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">GetAccount</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">httpx</span><span class="p">.</span><span class="nx">MethodGet</span> <span class="s">`path:&#34;/:accountID&#34; summary:&#34;获取用户详情&#34;`</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">ListAccount</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">httpx</span><span class="p">.</span><span class="nx">MethodGet</span> <span class="s">`path:&#34;/&#34; summary:&#34;账户列表&#34;`</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="文件">文件</h3>
+<ul>
+<li>文件名都使用小写字母，如果需要，可以使用下划线分割。</li>
+<li>文件名的后缀使用小写字母。</li>
+<li>每个 Operator 都是独立文件。</li>
+</ul>
+<p>错误的文件名：</p>
+<table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>webServer.go</td>
+<td>文件名不允许出现大写字符</td>
+</tr>
+<tr>
+<td>http.GO</td>
+<td>文件名后缀不允许出现大写字符</td>
+</tr>
+</tbody>
+</table>
+<p>正确的文件名：</p>
+<table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>http.go</td>
+<td>文件名全部小写</td>
+</tr>
+<tr>
+<td>web_server.go</td>
+<td>可以使用下划线分割文件名</td>
+</tr>
+<tr>
+<td>account__datalist.go</td>
+<td>可以使用双下划线进行资源区分</td>
+</tr>
+</tbody>
+</table>
+<h3 id="api-字段">API 字段</h3>
+<p>无论是 API 参数的 Key，还是返回 JSON 的 Key，一般以 **小驼峰 **的格式来命名，比如： <code>userProfile</code></p>
+<ul>
+<li>在 HTTP Header 上的 Key 是 <strong>短横首字母大写</strong>，如 <code>Content-Type</code> , <code>X-Meta</code> , <code>X-Rate-Limit</code></li>
+<li>现有规范要求除外，如 OAuth 2 中的， <code>access_token</code>  等</li>
+</ul>
+<h3 id="数据库">数据库</h3>
+<p>数据库名使用 gitlab 组名 + 服务名，使用下划线 <code>_</code> 链接。example: <code>base_user</code>
+如果当前组下只需一个数据库，可例外，可直接使用  gitlab 组名。example: <code>idp</code></p>
+<h2 id="注释-1">注释</h2>
+<p>接口文档都是可以通过代码生成的，而生成的时候，依赖注释，所以：</p>
+<ul>
+<li>Operator</li>
+<li>参数</li>
+<li>数据库表及字段</li>
+</ul>
+<p>都应有注释，且为单行注释！</p>
+<h2 id="api">API</h2>
+<h3 id="http-方法的语义和限制">HTTP 方法的语义和限制</h3>
+<ul>
+<li><code>POST</code> : 创建、新增</li>
+<li><code>PUT</code> ：更新，强制创建，绑定</li>
+<li><code>PATCH</code> ：部分更新</li>
+<li><code>DELETE</code> : 删除，解除绑定</li>
+<li><code>GET</code> : 查询
+<ul>
+<li>HTTP 协议中 GET 是可以使用 body 的，但是由于部分环境中的请求库不支持在 GET 请求中包含 body，如浏览器的 <a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/send">XMLHttpRequest</a> 。这里也统一禁止在 GET 中使用 body</li>
+<li>如遇到 URI 过长的情况，更新 Nginx 等转发层的配置
+<ul>
+<li>Chrome <a href="https://chromium.googlesource.com/chromium/src/+/master/docs/security/url_display_guidelines/url_display_guidelines.md#url-length">https://chromium.googlesource.com/chromium/src/+/master/docs/security/url_display_guidelines/url_display_guidelines.md#url-length</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="url-路由">URL 路由</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">/&lt;ServiceName&gt;/&lt;Version&gt;/&lt;Resources&gt;
+/&lt;ServiceName&gt;/&lt;Version&gt;/&lt;Resources&gt;/&lt;ResourceID&gt;
+/&lt;ServiceName&gt;/&lt;Version&gt;/&lt;Resources&gt;/&lt;ResourceID&gt;/&lt;Action&gt;
+/&lt;ServiceName&gt;/&lt;Version&gt;/&lt;Resources&gt;/&lt;ResourceID&gt;/&lt;SubResouces&gt;/&lt;SubResouceID&gt;
+/&lt;ServiceName&gt;/&lt;Version&gt;/&lt;Resources&gt;/0/&lt;SubResouces&gt;/&lt;SubResouceID&gt;
+/&lt;ServiceName&gt;/&lt;Version&gt;/&lt;Resources&gt;?&lt;IndexKey1&gt;=&lt;Value&gt;&amp;&lt;IndexKey2&gt;=&lt;Value&gt;
+/&lt;ServiceName&gt;/&lt;Version&gt;/&lt;Resource&gt;?&lt;IndexKey1&gt;=&lt;Value&gt;&amp;&lt;IndexKey2&gt;=&lt;Value&gt;
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>URI 的第一段为服务名称，为了便于做流量分发
+<ul>
+<li>例如 仓库名称为 <code>srv-weather</code> 的服务，上述 <strong><ServiceName></strong> 为 <code>weather</code> 。</li>
+</ul>
+</li>
+<li>URI 的第二段为版本号，为了便于平滑的升级不兼容的接口</li>
+<li>其余部分为 Resources 规则
+<ul>
+<li>URI 的奇数段为 Resource 类型，偶数段为 Resource ID (务必为业务 ID，若无，则为较为稳定的 unique index)
+<ul>
+<li>Resource 类型名应为单词复数，如涉及多个单词组合，不使用小驼峰，使用 <code>-</code> 连接，示例 <code>[http://example.com/user/v0/enterprise-accounts](http://example.com/user/v0/users)</code></li>
+<li>对于单一索引，应满足上述条件</li>
+<li>对于复合索引，Resource 为单数，通过 query 来设定条件</li>
+<li>单复数同形换替代单词</li>
+</ul>
+</li>
+<li>当无须指定一个资源类型的 ID 时，使用 0 占位</li>
+<li>由于 METHOD 的表达能力有限，所以当对同一个资源存在两种不同类型的更新操作时，允许 URI 的最后一个段可以为一个对某资源的操作。</li>
+</ul>
+</li>
+</ul>
+<p>样例：</p>
+<ul>
+<li><strong>Create</strong>
+<ul>
+<li><code>POST [http://example.com/user/v0/users](http://example.com/user/v0/users)</code> 创建用户</li>
+</ul>
+</li>
+<li><strong>Update</strong>
+<ul>
+<li><code>PUT [http://example.com/user/v0/users/:userID](http://example.com/user/v0/users/:userID)</code> 更新某个用户的信息</li>
+<li><code>PUT [http://example.com/user/v0/users/:userID/ban](http://example.com/user/v0/users/:userID/ban)</code> 禁用某个用户</li>
+<li><code>PUT [http://example.com/user/v0/users/:userID/promote](http://example.com/user/v0/users/:userID/promote)</code> 给某个用户提升权限</li>
+</ul>
+</li>
+<li><strong>Delete</strong>
+<ul>
+<li><code>DELETE [http://example.com/user/v0/users/:userID](http://example.com/user/v0/users/:userID)</code> 删除用户</li>
+<li><code>DELETE [http://example.com/user/v0/user?username=xxx](http://example.com/user/v0/user?username=xxx)</code> 通过用户名删除用户</li>
+</ul>
+</li>
+<li><strong>Find</strong>
+<ul>
+<li><code>GET [http://example.com/user/v0/users/:userID](http://example.com/user/v0/users/:userID)</code> 查询某个用户的信息</li>
+<li><code>GET [http://example.com/user/v0/users/:userID/car?carNo=](http://example.com/user/v0/users/:userID/car?carNo=)川Axxx</code> 通过车牌查询某个用户的某个车辆</li>
+<li><code>GET [http://example.com/user/v0/user?mobile=123467890](http://example.com/user/v0/user?mobile=123467890)</code> 通过手机号查询用户信息</li>
+<li><code>GET [http://example.com/user/v0/user?username=xxx](http://example.com/user/v0/user?username=xxx)</code> 通过用户名查询用户信息</li>
+</ul>
+</li>
+<li><strong>Listing</strong>
+<ul>
+<li><code>GET [http://example.com/user/v0/users/:userID/cars](http://example.com/user/v0/users/:userID/cars)</code> 查询某个用户的车辆信息</li>
+<li><code>GET [http://example.com/user/v0/users[?filter=xx]](http://example.com/user/v0/users%5B?filter=xx%5D)</code> 查询多个用户的信息</li>
+</ul>
+</li>
+</ul>
+<h3 id="参数">参数</h3>
+<h4 id="统一的数据类型及结构">统一的数据类型及结构</h4>
+<p><strong>避免使用多个参数去为同一个模型属性定义筛选条件</strong>（如 <code>startTime</code>  和 <code>endTime</code>  筛选 <code>createdAt</code> ）,<strong>应声明特定字符传格式，来表达对应的筛选条件，详见「</strong><a href="https://rockontrol.yuque.com/spec/e2e/datatypes"><strong>数据类型</strong></a><strong>」一章。</strong>
+<strong>​</strong></p>
+<p>**package: **<a href="https://git.querycap.com/tools/datatypes">git.querycap.com/tools/datatypes</a></p>
+<p><strong>对于复杂的传参也可以通过定义对应的数据类型去处理。​</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// openapi:strfmt example
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Example</span> <span class="kd">struct</span><span class="p">{</span>
+    
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="nx">Example</span><span class="p">)</span> <span class="nf">MarshalText</span><span class="p">()</span> <span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+     <span class="o">...</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">d</span> <span class="o">*</span><span class="nx">Example</span><span class="p">)</span> <span class="nf">UnmarshalText</span><span class="p">(</span><span class="nx">data</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="参数的定义">参数的定义</h4>
+<ul>
+<li>
+<p><code>path</code> 上的参数一定是必填的。</p>
+</li>
+<li>
+<p><code>query</code> 上的参数一般可选。</p>
+</li>
+<li>
+<p><code>header</code> 上的参数一般是跨接口的，或者是某种标准需要，如 <code>Referer</code> 。</p>
+</li>
+<li>
+<p><code>body</code> 上的参数，一般是 model 的一部分。</p>
+</li>
+<li>
+<p>参数名需要和模块的名称一致。</p>
+<ul>
+<li>如果是可以表示多个属性，在 <code>path</code> 上的参数可以写成 <code>appIDOrName</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>​</strong></p>
+<ul>
+<li>对于参数结构体，以 <code>Params</code> 作为前缀，示例  <code>ParamsAccount</code></li>
+<li>所有的参数（除系统生成的枚举类型）都需要进行参数校验</li>
+<li>对于 query 参数而言，如果接收的是数组，不需要将参数定定义为复数</li>
+<li>对于 Body 中的参数 json tag 使用小驼峰。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Bad
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">ParamsAccount</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="c1">// 名称
+</span><span class="c1"></span>    <span class="nx">Names</span>    <span class="p">[]</span><span class="kt">string</span>                    <span class="s">`name:&#34;names,omitempty&#34; in:&#34;query&#34; validate:&#34;@slice&lt;@string[1,]&gt;&#34;`</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+
+<span class="c1">// Good 
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">ParamsAccount</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="c1">// 名称
+</span><span class="c1"></span>    <span class="nx">Names</span>    <span class="p">[]</span><span class="kt">string</span>                    <span class="s">`name:&#34;name,omitempty&#34; in:&#34;query&#34; validate:&#34;@slice&lt;@string[1,]&gt;&#34;`</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+
+<span class="c1">// Query
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">ParamsAccount</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="c1">// 大小
+</span><span class="c1"></span>    <span class="nx">Size</span>   <span class="kt">int64</span> <span class="s">`name:&#34;size,omitempty&#34; in:&#34;query&#34; default:&#34;10&#34; validate:&#34;@int64[-1,]&#34;`</span>
+	<span class="c1">// 偏移量
+</span><span class="c1"></span>    <span class="nx">Offset</span> <span class="kt">int64</span> <span class="s">`name:&#34;offset,omitempty&#34; in:&#34;query&#34; default:&#34;0&#34; validate:&#34;@int64[0,]&#34;`</span>
+	<span class="c1">// 名称
+</span><span class="c1"></span>    <span class="nx">Names</span>    <span class="p">[]</span><span class="kt">string</span>                    <span class="s">`name:&#34;name,omitempty&#34; in:&#34;query&#34; validate:&#34;@slice&lt;@string[1,]&gt;&#34;`</span>
+	<span class="c1">// 排序
+</span><span class="c1"></span>    <span class="nx">Sort</span>      <span class="nx">types</span><span class="p">.</span><span class="nx">Sort</span>            <span class="s">`name:&#34;sort,omitempty&#34; default:&#34;createdAt&#34; validate:&#34;@string{createdAt,updatedAt}{,!asc}&#34; in:&#34;query&#34;`</span>
+	<span class="c1">// 创建时间范围
+</span><span class="c1"></span>    <span class="nx">CreatedAt</span> <span class="nx">types</span><span class="p">.</span><span class="nx">DateTimeOrRange</span> <span class="s">`name:&#34;createdAt,omitempty&#34; in:&#34;query&#34;`</span>
+<span class="p">}</span>
+
+<span class="c1">// Body
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">ParamsCreateAccount</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="c1">// 昵称
+</span><span class="c1"></span>    <span class="nx">NickName</span>        <span class="kt">string</span>         <span class="s">`json:&#34;nickName&#34; validate:&#34;@string[2,10]&#34;`</span>
+	<span class="c1">// 账户类型
+</span><span class="c1"></span>	<span class="nx">AccountType</span> <span class="nx">types</span><span class="p">.</span><span class="nx">AccountType</span>  <span class="s">`json:&#34;accountType&#34;`</span>
+    <span class="c1">// 头像
+</span><span class="c1"></span>	<span class="nx">Avatar</span>      <span class="kt">string</span>             <span class="s">`json:&#34;avatar,omitempty&#34; validate:&#34;@string[2,10]&#34;`</span>
+<span class="p">}</span> 
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="鉴权-authorization">鉴权 Authorization</h4>
+<p>除了 AccessKey 的验签鉴权方式，对外服务将采用 Authorization 对每一个接口进行权限校验。
+但由于我们最终服务可能嵌入到不同的客户端中（手机管车，微信）, 可能需要对每个请求进行多系统的权限校验，因此扩展 HTTP Header Authorization。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="err">Authorization: &lt;type&gt; &lt;credentials&gt;[; &lt;type&gt; &lt;credentials&gt;]
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>多段 Authorization 以 <code>;</code> 分隔, 也意味着，<code>credentials</code> 不应该出现 <code>;</code>
+<ul>
+<li>解析时，<code>&lt;type&gt; &lt;credentials&gt;</code> 需要 trim 空字符</li>
+</ul>
+</li>
+<li>主系统 type
+<ul>
+<li><code>Bearer &lt;access_token&gt;</code> <a href="https://tools.ietf.org/html/rfc6750#section-2.1">https://tools.ietf.org/html/rfc6750#section-2.1</a></li>
+<li><code>Basic base64(&lt;username&gt;:&lt;password&gt;)</code> <a href="https://tools.ietf.org/html/rfc7617#section-2">https://tools.ietf.org/html/rfc7617#section-2</a></li>
+</ul>
+</li>
+<li>额外验证
+<ul>
+<li><code>PayPassword &lt;encoded_passsword&gt;</code></li>
+<li><code>PicAuthCode &lt;auth_code&gt;</code></li>
+</ul>
+</li>
+<li>旁系统 type 以对应系统加入前缀
+<ul>
+<li>微信 <code>WechatBearer &lt;token&gt;</code></li>
+</ul>
+</li>
+</ul>
+<p>同时，Authorization 也可以通过 query 参数提供 <code>authorization=encodeURIComponent(xxx)</code></p>
+<ul>
+<li>对于图片标签等需要直接使用地址的，只能有这种方式。</li>
+<li>便于构造简单请求，可以避免多个 OPTIONS 的发送，<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#Simple_requests">https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#Simple_requests</a></li>
+</ul>
+<p>example：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">Authorization</span><span class="p">:</span><span class="w"> </span><span class="l">Bearer xxxxxxx</span><span class="w">
+</span><span class="w"></span><span class="nt">Authorization</span><span class="p">:</span><span class="w"> </span><span class="l">Bearer xxxxxxx; CentreBearer xxxxxx</span><span class="w">
+</span><span class="w"></span><span class="c">#                    base64(aladdin:opensesame)</span><span class="w">
+</span><span class="w"></span><span class="nt">Authorization</span><span class="p">:</span><span class="w"> </span><span class="l">Basic YWxhZGRpbjpvcGVuc2VzYW1l</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p><strong>Refs</strong></p>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization">https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization</a></li>
+<li><a href="https://tools.ietf.org/html/rfc7235#section-4.2">https://tools.ietf.org/html/rfc7235#section-4.2</a></li>
+</ul>
+<h2 id="api-返回">API 返回</h2>
+<h3 id="正常返回">正常返回</h3>
+<p>可根据需要返回 map / []byte 等，如返回的是结构体，需满足下面的规则：</p>
+<ul>
+<li>直接返回模型结构</li>
+<li>如返回数据是包含其他资源，可以使用 <code>With</code> 链接，示例：<code>UserWithRole</code>  or <code>UserWithRoleDataList</code></li>
+<li>如返回数据完全自定义，可使用 Operator 名 + <code>Resp</code> 后缀 ，示例：<code>CreateUserResp</code></li>
+<li>如返回的数据是列表列，命名规则为 资源 + <code>DataList</code> 后缀，示例：<code>UserDataList</code> 、<code>UserWithRoleDataList</code></li>
+</ul>
+<h4 id="列表类结构">列表类结构</h4>
+<p>列表类结构，结构固定包含 Data / Total 字段</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">AccountDataList</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">Data</span>   <span class="p">[]</span><span class="nx">Account</span>  <span class="s">`json:&#34;data&#34;`</span>
+	<span class="nx">Total</span>  <span class="kt">int</span>        <span class="s">`json:&#34;total&#34;`</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="http-status-code-的语义">HTTP Status Code 的语义</h4>
+<ul>
+<li><a href="https://httpstatuses.com/200">200</a> ：正常返回数据</li>
+<li><a href="https://httpstatuses.com/201">201</a>：创建(POST) 成功后的返回</li>
+<li><a href="https://httpstatuses.com/204">204</a>：无数据的正常返回</li>
+</ul>
+<h3 id="错误返回">错误返回</h3>
+<p>API 返回的错误统一如下结构，并且有非 2xx, 3xx 的 HTTP status code 提现在请求中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kr">interface</span> <span class="nx">StatusError</span> <span class="p">{</span>
+  <span class="c1">// 错误标识，服务内唯一
+</span><span class="c1"></span>	<span class="nx">key</span>: <span class="kt">string</span><span class="p">;</span>
+  <span class="c1">// 错误代码 9 位，三段
+</span><span class="c1"></span>  <span class="c1">// 如 400100001，400 即 http status code，100 为 服务编号，001 为自增序列号
+</span><span class="c1"></span>  <span class="nx">code</span>: <span class="kt">number</span><span class="p">;</span>
+  <span class="c1">// 错误简要描述
+</span><span class="c1"></span>  <span class="nx">msg</span>: <span class="kt">string</span><span class="p">;</span>
+  <span class="c1">// 错误详细描述
+</span><span class="c1"></span>  <span class="nx">desc?</span>: <span class="kt">string</span><span class="p">;</span>
+  <span class="c1">// 标记错误是否可直接通知给用户
+</span><span class="c1"></span>  <span class="nx">canBeTalkError</span>: <span class="kt">boolean</span><span class="p">;</span>
+  <span class="c1">// request id 或者其他上下文
+</span><span class="c1"></span>  <span class="nx">id?</span>: <span class="kt">string</span><span class="p">;</span>
+  <span class="c1">// 错误的产生的链路
+</span><span class="c1"></span>  <span class="nx">sources</span>: <span class="kt">string</span><span class="p">[];</span>
+  <span class="c1">// 错误的具体位置
+</span><span class="c1"></span>  <span class="nx">errorFields?</span>: <span class="kt">Array</span><span class="o">&lt;</span><span class="p">{</span> 
+    <span class="c1">// 字段名和路径
+</span><span class="c1"></span>    <span class="c1">// 复杂结构
+</span><span class="c1"></span>    <span class="c1">// user.name
+</span><span class="c1"></span>    <span class="c1">// user.photos[0]
+</span><span class="c1"></span>    <span class="c1">// user.photos[1]
+</span><span class="c1"></span>    <span class="nx">field</span>: <span class="kt">string</span><span class="p">,</span> 
+    <span class="c1">// 错误的参数位置
+</span><span class="c1"></span>    <span class="k">in</span><span class="o">:</span> <span class="s2">&#34;path&#34;</span> <span class="o">|</span> <span class="s2">&#34;query&#34;</span> <span class="o">|</span> <span class="s2">&#34;header&#34;</span> <span class="o">|</span> <span class="s2">&#34;body&#34;</span> <span class="o">|</span> <span class="s2">&#34;cookie&#34;</span><span class="p">,</span>
+    <span class="c1">// 错误信息
+</span><span class="c1"></span>    <span class="nx">msg</span>: <span class="kt">string</span><span class="p">;</span>
+  <span class="p">}</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="http-status-code-的语义-1">HTTP Status Code 的语义</h4>
+<ul>
+<li><a href="https://httpstatuses.com/400">400</a>：传入的参数有问题等</li>
+<li><a href="https://httpstatuses.com/401">401</a>：access token 验证失败</li>
+<li><a href="https://httpstatuses.com/403">403</a>：权限控制访问了，不属于此用户的资源或其他不允许其访问，</li>
+<li><a href="https://httpstatuses.com/404">404</a>：访问了不存在的资源</li>
+<li><a href="https://httpstatuses.com/409">409</a>：重复创建或更新的冲突等</li>
+<li><a href="https://httpstatuses.com/429">429</a>：请求太多</li>
+<li><a href="https://httpstatuses.com/429">499</a>:  客户端主动断开连接</li>
+<li><a href="https://httpstatuses.com/500">500</a>：内部处理发生错误，如请求超时等</li>
+</ul>
+<h3 id="特殊场景">特殊场景</h3>
+<h4 id="过期控制">过期控制</h4>
+<p>当调用方需要使用轮训的方式来刷新数据时，需要 API 告诉调用方什么时候再次请求。
+借鉴 缓存控制，通过在 Response 的 Header 上的设置这些规则即可。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">Cache-Control</span><span class="p">:</span><span class="w"> </span><span class="l">max-age=&lt;seconds&gt;</span><span class="w">
+</span><span class="w"></span><span class="nt">Expires</span><span class="p">:</span><span class="w"> </span><span class="l">&lt;http-date&gt;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>Cache-Control</code> 是相对时间</li>
+<li><code>Expires</code> 是绝对时间 （如果前后端时间不同步则有坑，使用这个的时候，建议使用方传递调用时间，以修正差值）</li>
+</ul>
+<h4 id="频率控制">频率控制</h4>
+<p>当 API 服务需要限制 API 的调用频率时，在 Response 的 Header 上加上额外的信息，对于调用方会更加友好。
+前端也可以根据这些信息，适当的添加如倒计时等 UI 控件（下次可用 <code>3600/X-RateLimit-Limit</code> 秒后），提升用户体验。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">X-RateLimit-Limit</span><span class="p">:</span><span class="w"> </span><span class="l">&lt;每小时请求总次数&gt;</span><span class="w">
+</span><span class="w"></span><span class="nt">X-RateLimit-Remaining</span><span class="p">:</span><span class="w"> </span><span class="l">&lt;当前限制剩余次数&gt;</span><span class="w">
+</span><span class="w"></span><span class="nt">X-RateLimit-Reset</span><span class="p">:</span><span class="w"> </span><span class="l">&lt;频率控制清零的时间戳，如账户锁定场景时，告诉用户什么时候可用再次使用&gt;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="服务调用">服务调用</h2>
+<p>服务与服务之间不能相互调用</p>
+<h1 id="数据库规范">数据库规范</h1>
+<h2 id="命名规范-1">命名规范</h2>
+<ul>
+<li>表名、字段名、索引名使用小写字母，采用下划线分割，
+表名、字段名不超过 32 个字符，表名采用 <code>'t_' 前缀</code> ，字段采用 <code>'f_' 前缀</code>。</li>
+<li>存储实体数据的表，名称使用名词，单数</li>
+<li>索引名称采用 <code>表名+'_i' 前缀</code>，之后顺序跟随索引的字段名，字段名直接以下划线分割，名称示例：<code>t_instance_i_instance</code></li>
+<li>不使用保留字</li>
+<li>存储实体表间多对多对应关系的表，使用两个表名叠加。示例: <code>t_xxxx_tag</code></li>
+<li>SQL 语句中：
+<ul>
+<li>保留字使用全大写</li>
+<li>字符串使用单引号（'）</li>
+</ul>
+</li>
+</ul>
+<h2 id="表的设计">表的设计</h2>
+<ul>
+<li>所有的时间均使用时间戳</li>
+<li>如非必要，请使用软删除，使用 <code>f_deleted_at</code> 表示</li>
+<li>地理相关使用 geography</li>
+<li>字段定义为 NOT NULL</li>
+<li>字段设置 DEFAULT 值</li>
+<li>不直接存储图片、音频、视频等大容量内容</li>
+<li>各表之间相同含义的字段，类型定义要完全相同</li>
+<li>必须设置唯一主键，尽量使用自增id作为主键</li>
+<li>表的唯一键使用 int8</li>
+<li>禁止使用enum</li>
+<li>&hellip;</li>
+</ul>
+<h2 id="索引">索引</h2>
+<ul>
+<li>使用数字主键
+<ul>
+<li>存储实体数据的表，其主键应该是数字类型。</li>
+</ul>
+</li>
+<li>不使用外键
+<ul>
+<li>所有的表不建立外键约束。</li>
+</ul>
+</li>
+<li>&hellip;</li>
+</ul>
+<h2 id="查询">查询</h2>
+<ul>
+<li>禁止使用 % 前导查询</li>
+<li>尽量不使用联表查询</li>
+<li>尽量不使用子查询</li>
+<li>一次查询的结果集不超过 100 行</li>
+</ul>
+<h1 id="代码提交">代码提交</h1>
+<ul>
+<li>提交代码前，使用git diff命令或gitk等工具查看本次改动是否符合预期，避免提交不必要的文件或无关修改</li>
+<li>提交代码前，使用 husky (golangci-lint) 代码检测</li>
+<li>commit 的格式: <code>&lt;提交类型&gt;: &lt;描述&gt; </code>示例： feat: 增加账户管理功能</li>
+<li>提交类型见下。描述需简要说明修改的内容或原因，不能图方便使用固定的msg，不要太长，支持中文。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="err">#</span> <span class="nx">commit示例</span> <span class="nx">feat</span><span class="p">:</span> <span class="nx">增加账户管理功能</span>
+
+<span class="err">#</span> <span class="nx">提交类型包含</span>
+<span class="err">#</span>    <span class="nx">feat</span> <span class="p">=</span> <span class="err">&#39;</span><span class="nx">Features</span><span class="err">&#39;</span><span class="p">,</span> 					<span class="c1">// 功能点
+</span><span class="c1"></span><span class="err">#</span>    <span class="nx">fix</span> <span class="p">=</span> <span class="err">&#39;</span><span class="nx">Bug</span> <span class="nx">Fixes</span><span class="err">&#39;</span><span class="p">,</span> 					<span class="c1">// bug 修复
+</span><span class="c1"></span><span class="err">#</span>    <span class="nx">refactor</span> <span class="p">=</span> <span class="err">&#39;</span><span class="nx">Code</span> <span class="nx">Refactoring</span><span class="err">&#39;</span><span class="p">,</span> 		<span class="c1">// 重构代码
+</span><span class="c1"></span><span class="err">#</span>    <span class="nx">perf</span> <span class="p">=</span> <span class="err">&#39;</span><span class="nx">Performance</span> <span class="nx">Improvements</span><span class="err">&#39;</span><span class="p">,</span>  	<span class="c1">// 性能提升
+</span><span class="c1"></span><span class="err">#</span>    <span class="nx">chore</span> <span class="p">=</span> <span class="err">&#39;</span><span class="nx">Chores</span><span class="err">&#39;</span><span class="p">,</span>  					<span class="c1">// 杂事, 更新grunt任务等; 不包括生产代码变动
+</span><span class="c1"></span><span class="err">#</span>    <span class="nx">revert</span> <span class="p">=</span> <span class="err">&#39;</span><span class="nx">Reverts</span><span class="err">&#39;</span><span class="p">,</span>  					<span class="c1">// 回滚提交
+</span><span class="c1"></span><span class="err">#</span>    <span class="nx">improvement</span> <span class="p">=</span> <span class="err">&#39;</span><span class="nx">Improvement</span><span class="err">&#39;</span><span class="p">,</span>           <span class="c1">// 代码优化
+</span><span class="c1"></span><span class="err">#</span>    <span class="nx">docs</span> <span class="p">=</span> <span class="err">&#39;</span><span class="nx">Documentation</span><span class="err">&#39;</span><span class="p">,</span> 				<span class="c1">// 文档改动
+</span><span class="c1"></span><span class="err">#</span>    <span class="nx">style</span> <span class="p">=</span> <span class="err">&#39;</span><span class="nx">Styles</span><span class="err">&#39;</span><span class="p">,</span>  					<span class="c1">// 格式化, 缺失分号等; 不包括生产代码变动
+</span><span class="c1"></span><span class="err">#</span>    <span class="nx">test</span> <span class="p">=</span> <span class="err">&#39;</span><span class="nx">Tests</span><span class="err">&#39;</span><span class="p">,</span>  						<span class="c1">// 添加缺失的测试, 重构测试, 不包括生产代码变动
+</span><span class="c1"></span><span class="err">#</span>    <span class="nx">build</span> <span class="p">=</span> <span class="err">&#39;</span><span class="nx">Builds</span><span class="err">&#39;</span><span class="p">,</span> 						<span class="c1">// 编译
+</span><span class="c1"></span><span class="err">#</span>    <span class="nx">ci</span> <span class="p">=</span> <span class="err">&#39;</span><span class="nx">Continuous</span> <span class="nx">Integration</span><span class="err">&#39;</span><span class="p">,</span> 	 	<span class="c1">// CI
+</span></code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-02-10
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E5%BC%80%E5%8F%91%E8%AF%AD%E8%A8%80/">开发语言</a>
+          <a href="/tags/%E5%90%8E%E7%AB%AF/">后端</a>
+          <a href="/tags/golang/">golang</a>
+          <a href="/tags/go%E8%AF%AD%E8%A8%80/">go语言</a>
+          <a href="/tags/golang%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/">Golang开发规范</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/version_controller/git/gitlab%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[git]Gitlab安装及使用</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/dev_language/golang/go%E8%AF%AD%E8%A8%80%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83uber/">
+            <span class="next-text nav-default">[go] Go语言编码规范</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

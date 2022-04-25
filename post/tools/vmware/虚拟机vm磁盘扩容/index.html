@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[VMware]虚拟机VM10磁盘扩容 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="虚拟机VMware10磁盘扩容 一、扩容前提条件 ​ 1、要执行操作的虚拟机不能是克隆机 ​ 2、要执行的虚拟机不能含有快照 二、扩容步骤 1、打开虚拟机" /><meta name="keywords" content="VMware, 虚拟机, 工具, 磁盘扩容" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/tools/vmware/%E8%99%9A%E6%8B%9F%E6%9C%BAvm%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[VMware]虚拟机VM10磁盘扩容" />
+<meta property="og:description" content="虚拟机VMware10磁盘扩容 一、扩容前提条件 ​ 1、要执行操作的虚拟机不能是克隆机 ​ 2、要执行的虚拟机不能含有快照 二、扩容步骤 1、打开虚拟机" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/tools/vmware/%E8%99%9A%E6%8B%9F%E6%9C%BAvm%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-08-13T16:37:56+08:00" />
+<meta property="article:modified_time" content="2022-02-10T16:37:56+08:00" />
+
+<meta itemprop="name" content="[VMware]虚拟机VM10磁盘扩容">
+<meta itemprop="description" content="虚拟机VMware10磁盘扩容 一、扩容前提条件 ​ 1、要执行操作的虚拟机不能是克隆机 ​ 2、要执行的虚拟机不能含有快照 二、扩容步骤 1、打开虚拟机"><meta itemprop="datePublished" content="2020-08-13T16:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-02-10T16:37:56+08:00" />
+<meta itemprop="wordCount" content="2495">
+<meta itemprop="keywords" content="VMware,虚拟机,工具,磁盘扩容," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[VMware]虚拟机VM10磁盘扩容"/>
+<meta name="twitter:description" content="虚拟机VMware10磁盘扩容 一、扩容前提条件 ​ 1、要执行操作的虚拟机不能是克隆机 ​ 2、要执行的虚拟机不能含有快照 二、扩容步骤 1、打开虚拟机"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[VMware]虚拟机VM10磁盘扩容</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-08-13 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%B7%A5%E5%85%B7/"> 工具 </a>
+            </div>
+          <span class="more-meta"> 约 2495 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#虚拟机vmware10磁盘扩容">虚拟机VMware10磁盘扩容</a>
+      <ul>
+        <li><a href="#一扩容前提条件">一、扩容前提条件</a>
+          <ul>
+            <li><a href="#-1要执行操作的虚拟机不能是克隆机">​ 1、要执行操作的虚拟机不能是克隆机</a></li>
+            <li><a href="#-2要执行的虚拟机不能含有快照">​ 2、要执行的虚拟机不能含有快照</a></li>
+          </ul>
+        </li>
+        <li><a href="#二扩容步骤">二、扩容步骤</a>
+          <ul>
+            <li><a href="#1打开虚拟机磁盘界面虚拟机是关闭状态">1、打开虚拟机磁盘界面(虚拟机是关闭状态)</a></li>
+            <li><a href="#2点击扩展虚拟机是关闭状态">2、点击扩展(虚拟机是关闭状态)</a></li>
+            <li><a href="#3开启虚拟机进入虚拟机终端查看磁盘相关信息">3、开启虚拟机，进入虚拟机终端，查看磁盘相关信息</a></li>
+            <li><a href="#4创建新分区">4、创建新分区</a></li>
+            <li><a href="#5重启linux操作系统">5、重启Linux操作系统</a></li>
+            <li><a href="#6创建物理卷">6、创建物理卷</a></li>
+            <li><a href="#7查看新建的物理卷和大小">7、查看新建的物理卷和大小</a></li>
+            <li><a href="#8将添加新的物理卷加载到相关卷组">8、将添加新的物理卷，加载到相关卷组</a></li>
+            <li><a href="#9查看卷组信息">9、查看卷组信息</a></li>
+            <li><a href="#10增加卷组大小">10、增加卷组大小</a></li>
+            <li><a href="#12查看扩容后大小">12、查看扩容后大小</a></li>
+          </ul>
+        </li>
+        <li><a href="#三小结">三、小结</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="虚拟机vmware10磁盘扩容">虚拟机VMware10磁盘扩容</h1>
+<h2 id="一扩容前提条件">一、扩容前提条件</h2>
+<h3 id="-1要执行操作的虚拟机不能是克隆机">​ 1、要执行操作的虚拟机不能是克隆机</h3>
+<h3 id="-2要执行的虚拟机不能含有快照">​ 2、要执行的虚拟机不能含有快照</h3>
+<h2 id="二扩容步骤">二、扩容步骤</h2>
+<h3 id="1打开虚拟机磁盘界面虚拟机是关闭状态">1、打开虚拟机磁盘界面(虚拟机是关闭状态)</h3>
+<h3 id="2点击扩展虚拟机是关闭状态">2、点击扩展(虚拟机是关闭状态)</h3>
+<p>​ 我这里是因为有快照，所以是灰色的，这里分配需要的磁盘大小即可。我这里是60-&gt;200(我这里是分配好的)</p>
+<h3 id="3开启虚拟机进入虚拟机终端查看磁盘相关信息">3、开启虚拟机，进入虚拟机终端，查看磁盘相关信息</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">df -h 查看磁盘空间大小
+
+fdisk -l 命令查看磁盘信息
+
+<span class="o">[</span>root@VMkylin3 ~<span class="o">]</span><span class="c1"># df -h</span>
+文件系统               容量  已用  可用 已用% 挂载点
+devtmpfs               886M     <span class="m">0</span>  886M    0% /dev
+tmpfs                  904M     <span class="m">0</span>  904M    0% /dev/shm
+tmpfs                  904M  9.4M  894M    2% /run
+tmpfs                  904M     <span class="m">0</span>  904M    0% /sys/fs/cgroup
+/dev/mapper/nlas-root   39G   14G   25G   37% /
+/dev/sda1             1014M  206M  809M   21% /boot
+/dev/mapper/nlas-home   19G   39M   19G    1% /home
+tmpfs                  181M  8.0K  181M    1% /run/user/42
+tmpfs                  181M     <span class="m">0</span>  181M    0% /run/user/0
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@VMkylin3 ~<span class="o">]</span><span class="c1"># fdisk -l</span>
+
+磁盘 /dev/sda：214.7 GB, <span class="m">214748364800</span> 字节，419430400 个扇区
+<span class="nv">Units</span> <span class="o">=</span> 扇区 of <span class="m">1</span> * <span class="nv">512</span> <span class="o">=</span> <span class="m">512</span> bytes
+扇区大小<span class="o">(</span>逻辑/物理<span class="o">)</span>：512 字节 / <span class="m">512</span> 字节
+I/O 大小<span class="o">(</span>最小/最佳<span class="o">)</span>：512 字节 / <span class="m">512</span> 字节
+磁盘标签类型：dos
+磁盘标识符：0x000bd1b6
+
+   设备 Boot      Start         End      Blocks   Id  System
+/dev/sda1   *        <span class="m">2048</span>     <span class="m">2099199</span>     <span class="m">1048576</span>   <span class="m">83</span>  Linux
+/dev/sda2         <span class="m">2099200</span>   <span class="m">125829119</span>    <span class="m">61864960</span>   8e  Linux LVM
+
+磁盘 /dev/mapper/nlas-root：41.1 GB, <span class="m">41120956416</span> 字节，80314368 个扇区
+<span class="nv">Units</span> <span class="o">=</span> 扇区 of <span class="m">1</span> * <span class="nv">512</span> <span class="o">=</span> <span class="m">512</span> bytes
+扇区大小<span class="o">(</span>逻辑/物理<span class="o">)</span>：512 字节 / <span class="m">512</span> 字节
+I/O 大小<span class="o">(</span>最小/最佳<span class="o">)</span>：512 字节 / <span class="m">512</span> 字节
+
+
+磁盘 /dev/mapper/nlas-swap：2147 MB, <span class="m">2147483648</span> 字节，4194304 个扇区
+<span class="nv">Units</span> <span class="o">=</span> 扇区 of <span class="m">1</span> * <span class="nv">512</span> <span class="o">=</span> <span class="m">512</span> bytes
+扇区大小<span class="o">(</span>逻辑/物理<span class="o">)</span>：512 字节 / <span class="m">512</span> 字节
+I/O 大小<span class="o">(</span>最小/最佳<span class="o">)</span>：512 字节 / <span class="m">512</span> 字节
+
+
+磁盘 /dev/mapper/nlas-home：20.1 GB, <span class="m">20073938944</span> 字节，39206912 个扇区
+<span class="nv">Units</span> <span class="o">=</span> 扇区 of <span class="m">1</span> * <span class="nv">512</span> <span class="o">=</span> <span class="m">512</span> bytes
+扇区大小<span class="o">(</span>逻辑/物理<span class="o">)</span>：512 字节 / <span class="m">512</span> 字节
+I/O 大小<span class="o">(</span>最小/最佳<span class="o">)</span>：512 字节 / <span class="m">512</span> 字节
+</code></pre></td></tr></table>
+</div>
+</div><p>Tips:
+​ 观察设备那行，发现分别是 /dev/sda1，/dev/sda2，所以我们创建的卷是/dev/sda3</p>
+<h3 id="4创建新分区">4、创建新分区</h3>
+<p>此处就省略无关步骤，只显示扩展有关的操作</p>
+<p>创建新分区命令：</p>
+<p>disk /dev/sda</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@VMkylin3 ~<span class="o">]</span><span class="c1"># fdisk -l</span>
+
+磁盘 /dev/sda：214.7 GB, <span class="m">214748364800</span> 字节，419430400 个扇区
+<span class="nv">Units</span> <span class="o">=</span> 扇区 of <span class="m">1</span> * <span class="nv">512</span> <span class="o">=</span> <span class="m">512</span> bytes
+扇区大小<span class="o">(</span>逻辑/物理<span class="o">)</span>：512 字节 / <span class="m">512</span> 字节
+I/O 大小<span class="o">(</span>最小/最佳<span class="o">)</span>：512 字节 / <span class="m">512</span> 字节
+磁盘标签类型：dos
+磁盘标识符：0x000bd1b6
+
+   设备 Boot      Start         End      Blocks   Id  System
+/dev/sda1   *        <span class="m">2048</span>     <span class="m">2099199</span>     <span class="m">1048576</span>   <span class="m">83</span>  Linux
+/dev/sda2         <span class="m">2099200</span>   <span class="m">125829119</span>    <span class="m">61864960</span>   8e  Linux LVM
+
+磁盘 /dev/mapper/nlas-root：41.1 GB, <span class="m">41120956416</span> 字节，80314368 个扇区
+<span class="nv">Units</span> <span class="o">=</span> 扇区 of <span class="m">1</span> * <span class="nv">512</span> <span class="o">=</span> <span class="m">512</span> bytes
+扇区大小<span class="o">(</span>逻辑/物理<span class="o">)</span>：512 字节 / <span class="m">512</span> 字节
+I/O 大小<span class="o">(</span>最小/最佳<span class="o">)</span>：512 字节 / <span class="m">512</span> 字节
+
+
+磁盘 /dev/mapper/nlas-swap：2147 MB, <span class="m">2147483648</span> 字节，4194304 个扇区
+<span class="nv">Units</span> <span class="o">=</span> 扇区 of <span class="m">1</span> * <span class="nv">512</span> <span class="o">=</span> <span class="m">512</span> bytes
+扇区大小<span class="o">(</span>逻辑/物理<span class="o">)</span>：512 字节 / <span class="m">512</span> 字节
+I/O 大小<span class="o">(</span>最小/最佳<span class="o">)</span>：512 字节 / <span class="m">512</span> 字节
+
+
+磁盘 /dev/mapper/nlas-home：20.1 GB, <span class="m">20073938944</span> 字节，39206912 个扇区
+<span class="nv">Units</span> <span class="o">=</span> 扇区 of <span class="m">1</span> * <span class="nv">512</span> <span class="o">=</span> <span class="m">512</span> bytes
+扇区大小<span class="o">(</span>逻辑/物理<span class="o">)</span>：512 字节 / <span class="m">512</span> 字节
+I/O 大小<span class="o">(</span>最小/最佳<span class="o">)</span>：512 字节 / <span class="m">512</span> 字节
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@VMkylin3 ~<span class="o">]</span><span class="c1"># fdisk /dev/sda</span>
+欢迎使用 fdisk <span class="o">(</span>util-linux 2.23.2<span class="o">)</span>。
+
+更改将停留在内存中，直到您决定将更改写入磁盘。
+使用写入命令前请三思。
+
+
+命令<span class="o">(</span>输入 m 获取帮助<span class="o">)</span>：n
+Partition type:
+   p   primary <span class="o">(</span><span class="m">2</span> primary, <span class="m">0</span> extended, <span class="m">2</span> free<span class="o">)</span>
+   e   extended
+Select <span class="o">(</span>default p<span class="o">)</span>: p
+分区号 <span class="o">(</span>3,4，默认 3<span class="o">)</span>：3
+起始 扇区 <span class="o">(</span>125829120-419430399，默认为 125829120<span class="o">)</span>：
+将使用默认值 <span class="m">125829120</span>
+Last 扇区, +扇区 or +size<span class="o">{</span>K,M,G<span class="o">}</span> <span class="o">(</span>125829120-419430399，默认为 419430399<span class="o">)</span>：
+将使用默认值 <span class="m">419430399</span>
+分区 <span class="m">3</span> 已设置为 Linux 类型，大小设为 <span class="m">140</span> GiB
+
+命令<span class="o">(</span>输入 m 获取帮助<span class="o">)</span>：w
+The partition table has been altered!
+
+Calling ioctl<span class="o">()</span> to re-read partition table.
+
+WARNING: Re-reading the partition table failed with error 16: 设备或资源忙.
+The kernel still uses the old table. The new table will be used at
+the next reboot or after you run partprobe<span class="o">(</span>8<span class="o">)</span> or kpartx<span class="o">(</span>8<span class="o">)</span>
+正在同步磁盘。
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="5重启linux操作系统">5、重启Linux操作系统</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">reboot
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="6创建物理卷">6、创建物理卷</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">pvcreate /dev/sda3
+
+<span class="o">[</span>root@VMkylin3 ~<span class="o">]</span><span class="c1"># pvcreate /dev/sda3</span>
+Physical volume <span class="s2">&#34;/dev/sda3&#34;</span> successfully created.
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="7查看新建的物理卷和大小">7、查看新建的物理卷和大小</h3>
+<p>pvdisplay</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@VMkylin3 ~<span class="o">]</span><span class="c1"># pvdisplay</span>
+  --- Physical volume ---
+  PV Name               /dev/sda2
+  VG Name               nlas
+  PV Size               &lt;59.00 GiB / not usable 3.00 MiB
+  Allocatable           yes 
+  PE Size               4.00 MiB
+  Total PE              <span class="m">15103</span>
+  Free PE               <span class="m">1</span>
+  Allocated PE          <span class="m">15102</span>
+  PV UUID               bac0FK-LO0b-d0Pp-KHUH-NiO1-1D4f-T46oeM
+   
+  <span class="s2">&#34;/dev/sda3&#34;</span> is a new physical volume of <span class="s2">&#34;140.00 GiB&#34;</span>
+  --- NEW Physical volume ---
+  PV Name               /dev/sda3
+  VG Name               
+  PV Size               140.00 GiB
+  Allocatable           NO
+  PE Size               <span class="m">0</span>   
+  Total PE              <span class="m">0</span>
+  Free PE               <span class="m">0</span>
+  Allocated PE          <span class="m">0</span>
+  PV UUID               RRPVNr-VpBW-cxoD-6puy-bNxZ-uNPc-L7qmpp
+</code></pre></td></tr></table>
+</div>
+</div><p>此时发现，有140G的剩余空间。</p>
+<h3 id="8将添加新的物理卷加载到相关卷组">8、将添加新的物理卷，加载到相关卷组</h3>
+<p>注意，卷组信息是上面命令查看的VG Name所在行</p>
+<p>​ 我的是 VG Name nlas</p>
+<p>vgextend nlas /dev/sda3</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@VMkylin3 ~<span class="o">]</span><span class="c1"># vgextend nlas /dev/sda3</span>
+  Volume group <span class="s2">&#34;nlas&#34;</span> successfully extended
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="9查看卷组信息">9、查看卷组信息</h3>
+<p>vgdisplay</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@VMkylin3 ~<span class="o">]</span><span class="c1"># vgdisplay</span>
+  --- Volume group ---
+  VG Name               nlas
+  System ID             
+  Format                lvm2
+  Metadata Areas        <span class="m">2</span>
+  Metadata Sequence No  <span class="m">5</span>
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                <span class="m">0</span>
+  Cur LV                <span class="m">3</span>
+  Open LV               <span class="m">3</span>
+  Max PV                <span class="m">0</span>
+  Cur PV                <span class="m">2</span>
+  Act PV                <span class="m">2</span>
+  VG Size               198.99 GiB
+  PE Size               4.00 MiB
+  Total PE              <span class="m">50942</span>
+  Alloc PE / Size       <span class="m">15102</span> / 58.99 GiB
+  Free  PE / Size       <span class="m">35840</span> / 140.00 GiB
+  VG UUID               KzeKcg-SY4F-o3Qz-cERA-j1to-SoER-Z9tL49
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="10增加卷组大小">10、增加卷组大小</h3>
+<p>1、查看卷组信息，本人是需要在root下增加所以是 nlas-root</p>
+<p>cd /dev/mapper</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@VMkylin3 mapper<span class="o">]</span><span class="c1"># ll</span>
+总用量 <span class="m">0</span>
+crw------- <span class="m">1</span> root root 10, <span class="m">236</span> 1月   <span class="m">9</span> 09:41 control
+lrwxrwxrwx <span class="m">1</span> root root       <span class="m">7</span> 1月   <span class="m">9</span> 09:41 nlas-home -&gt; ../dm-2
+lrwxrwxrwx <span class="m">1</span> root root       <span class="m">7</span> 1月   <span class="m">9</span> 09:41 nlas-root -&gt; ../dm-0
+lrwxrwxrwx <span class="m">1</span> root root       <span class="m">7</span> 1月   <span class="m">9</span> 09:41 nlas-swap -&gt; ../dm-1
+</code></pre></td></tr></table>
+</div>
+</div><p>2、增加 nlas 大小</p>
+<p>lvresize -L +135G /dev/mapper/nlas-root</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@VMkylin3 mapper<span class="o">]</span><span class="c1"># lvresize -L +135G /dev/mapper/nlas-root</span>
+  Size of logical volume nlas/root changed from &lt;38.30 GiB <span class="o">(</span><span class="m">9804</span> extents<span class="o">)</span> to &lt;173.30 GiB <span class="o">(</span><span class="m">44364</span> extents<span class="o">)</span>.
+  Logical volume nlas/root successfully resized.
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="11重新识别-nlas-大小">11、重新识别 nlas 大小</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">命令1：
+
+resize2fs /dev/mapper/nlas-root
+
+命令2：
+
+xfs_growfs /dev/mapper/nlas-root
+
+命令1可能会出现 找不到有效的文件系统超级块. 的错误，这时候用2就ok
+
+<span class="o">[</span>root@VMkylin3 mapper<span class="o">]</span><span class="c1"># xfs_growfs /dev/mapper/nlas-root</span>
+meta-data<span class="o">=</span>/dev/mapper/nlas-root  <span class="nv">isize</span><span class="o">=</span><span class="m">512</span>    <span class="nv">agcount</span><span class="o">=</span>4, <span class="nv">agsize</span><span class="o">=</span><span class="m">2509824</span> <span class="nv">blks</span>
+         <span class="o">=</span>                       <span class="nv">sectsz</span><span class="o">=</span><span class="m">512</span>   <span class="nv">attr</span><span class="o">=</span>2, <span class="nv">projid32bit</span><span class="o">=</span><span class="nv">1</span>
+         <span class="o">=</span>                       <span class="nv">crc</span><span class="o">=</span><span class="m">1</span>        <span class="nv">finobt</span><span class="o">=</span><span class="m">0</span> <span class="nv">spinodes</span><span class="o">=</span><span class="m">0</span>
+<span class="nv">data</span>     <span class="o">=</span>                       <span class="nv">bsize</span><span class="o">=</span><span class="m">4096</span>   <span class="nv">blocks</span><span class="o">=</span>10039296, <span class="nv">imaxpct</span><span class="o">=</span><span class="nv">25</span>
+         <span class="o">=</span>                       <span class="nv">sunit</span><span class="o">=</span><span class="m">0</span>      <span class="nv">swidth</span><span class="o">=</span><span class="m">0</span> blks
+<span class="nv">naming</span>   <span class="o">=</span>version <span class="m">2</span>              <span class="nv">bsize</span><span class="o">=</span><span class="m">4096</span>   ascii-ci<span class="o">=</span><span class="m">0</span> <span class="nv">ftype</span><span class="o">=</span><span class="m">1</span>
+<span class="nv">log</span>      <span class="o">=</span>internal               <span class="nv">bsize</span><span class="o">=</span><span class="m">4096</span>   <span class="nv">blocks</span><span class="o">=</span>4902, <span class="nv">version</span><span class="o">=</span><span class="nv">2</span>
+         <span class="o">=</span>                       <span class="nv">sectsz</span><span class="o">=</span><span class="m">512</span>   <span class="nv">sunit</span><span class="o">=</span><span class="m">0</span> blks, lazy-count<span class="o">=</span><span class="m">1</span>
+<span class="nv">realtime</span> <span class="o">=</span>none                   <span class="nv">extsz</span><span class="o">=</span><span class="m">4096</span>   <span class="nv">blocks</span><span class="o">=</span>0, <span class="nv">rtextents</span><span class="o">=</span><span class="m">0</span>
+data blocks changed from <span class="m">10039296</span> to <span class="m">45428736</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="12查看扩容后大小">12、查看扩容后大小</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@VMkylin3 mapper<span class="o">]</span><span class="c1"># df -h</span>
+文件系统               容量  已用  可用 已用% 挂载点
+devtmpfs               886M     <span class="m">0</span>  886M    0% /dev
+tmpfs                  904M     <span class="m">0</span>  904M    0% /dev/shm
+tmpfs                  904M  9.4M  894M    2% /run
+tmpfs                  904M     <span class="m">0</span>  904M    0% /sys/fs/cgroup
+/dev/mapper/nlas-root  174G   14G  160G    9% /
+/dev/mapper/nlas-home   19G   39M   19G    1% /home
+/dev/sda1             1014M  206M  809M   21% /boot
+tmpfs                  181M   12K  181M    1% /run/user/42
+tmpfs                  181M     <span class="m">0</span>  181M    0% /run/user/0
+</code></pre></td></tr></table>
+</div>
+</div><p>发现此时由36G-&gt;174G，扩容完成。</p>
+<h2 id="三小结">三、小结</h2>
+<p>​ 这是我找到的最简单的扩容方法，相比一些帖子省去一些没必要的操作，很快很速度。不用设计lvm的操作，因为在lvm操作容易出现很多以我现在的能力无法解决的问题。</p>
+<p>​ 这是我找到的最简单的扩容方法，相比一些帖子省去一些没必要的操作，很快很速度。不用设计lvm的操作，因为在lvm操作容易出现很多以我现在的能力无法解决的问题。</p>
+<p>​ 话不多说希望可以帮到大家。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-02-10
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/vmware/">VMware</a>
+          <a href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/">虚拟机</a>
+          <a href="/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="/tags/%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9/">磁盘扩容</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/dev_language/php/swoole/hyperf%E5%AE%89%E8%A3%85%E4%B8%8E%E5%85%A5%E9%97%A8/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[hyperf]hyperf安装及入门</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/dev_language/lua/lua%E8%84%9A%E6%9C%AC%E5%85%A5%E9%97%A8/">
+            <span class="next-text nav-default">[lua]Lua脚本安装</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

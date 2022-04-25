@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[mysql] mysql中间件mysql-proxy - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="mysql中间件mysql-proxy mysql-proxy负责mysql数据库的主从分离和负载均衡 1.读写分离是由lua实现的,即lua是" /><meta name="keywords" content="数据库, mysql, mysql-proxy" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/db/mysql/mysql%E4%B8%AD%E9%97%B4%E4%BB%B6mysql-proxy/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[mysql] mysql中间件mysql-proxy" />
+<meta property="og:description" content="mysql中间件mysql-proxy mysql-proxy负责mysql数据库的主从分离和负载均衡 1.读写分离是由lua实现的,即lua是" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/db/mysql/mysql%E4%B8%AD%E9%97%B4%E4%BB%B6mysql-proxy/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2017-05-12T15:37:56+08:00" />
+<meta property="article:modified_time" content="2022-02-10T16:37:56+08:00" />
+
+<meta itemprop="name" content="[mysql] mysql中间件mysql-proxy">
+<meta itemprop="description" content="mysql中间件mysql-proxy mysql-proxy负责mysql数据库的主从分离和负载均衡 1.读写分离是由lua实现的,即lua是"><meta itemprop="datePublished" content="2017-05-12T15:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-02-10T16:37:56+08:00" />
+<meta itemprop="wordCount" content="1588">
+<meta itemprop="keywords" content="数据库,mysql,mysql-proxy," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[mysql] mysql中间件mysql-proxy"/>
+<meta name="twitter:description" content="mysql中间件mysql-proxy mysql-proxy负责mysql数据库的主从分离和负载均衡 1.读写分离是由lua实现的,即lua是"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[mysql] mysql中间件mysql-proxy</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017-05-12 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"> 数据库 </a>
+            <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/"> 中间件 </a>
+            </div>
+          <span class="more-meta"> 约 1588 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#mysql中间件mysql-proxy">mysql中间件mysql-proxy</a>
+          <ul>
+            <li><a href="#1读写分离是由lua实现的即lua是基础组件现在mysql-proxy里面已经集成无需再安装">1.读写分离是由lua实现的,即lua是基础组件,现在mysql-proxy里面已经集成,无需再安装</a></li>
+            <li><a href="#2proxy安装">2.proxy安装</a></li>
+            <li><a href="#3proxy配置">3.proxy配置</a></li>
+            <li><a href="#4修改读写分离配置文件">4.修改读写分离配置文件</a></li>
+            <li><a href="#5配置一下环境变量">5.配置一下环境变量</a></li>
+            <li><a href="#6启动mysql-proxy">6.启动mysql-proxy</a></li>
+            <li><a href="#7读写分离的测试">7.读写分离的测试</a></li>
+            <li><a href="#8停止mysql-proxy">8.停止mysql-proxy</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="mysql中间件mysql-proxy">mysql中间件mysql-proxy</h2>
+<p>mysql-proxy负责mysql数据库的主从分离和负载均衡</p>
+<h3 id="1读写分离是由lua实现的即lua是基础组件现在mysql-proxy里面已经集成无需再安装">1.读写分离是由lua实现的,即lua是基础组件,现在mysql-proxy里面已经集成,无需再安装</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># yum -y install gcc* gcc-c++* autoconf* automake* zlib* libxml* ncurses-devel* libmc rypt* libtool* flex*  pkgconfig*</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2proxy安装">2.proxy安装</h3>
+<p>下载地址:https://downloads.mysql.com/archives/proxy/#downloads</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># tar zxvf mysql-proxy-0.8.5-linux-el6-x86-64bit.tar.gz  //解压文件</span>
+<span class="c1"># mv mysql-proxy-0.8.5-linux-el6-x86-64bit /usr/local/mysql-proxy  //将解压得到的文件夹移动到某个位置,这个位置需要自己创建</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3proxy配置">3.proxy配置</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># cd /usr/local/mysql-proxy</span>
+<span class="c1"># mkdir lua #创建脚本存放目录</span>
+<span class="c1"># mkdir logs #创建日志目录</span>
+<span class="c1"># cp share/doc/mysql-proxy/rw-splitting.lua ./lua #复制读写分离配置文件</span>
+<span class="c1"># cp share/doc/mysql-proxy/admin-sql.lua ./lua #复制管理脚本</span>
+<span class="c1"># vi /etc/mysql-proxy.cnf   #创建配置文件</span>
+<span class="c1"># 将以下复制到配置文件中,并按照自己的需要修改,重点注意的是:#后面的文字只是注释,在实际的文件中最好删除或者将注释和参数放在不同的行,同时,每个参数后面不能后空格,一个空格都不行（重点！重点！重点！）</span>
+<span class="c1">####################################################################</span>
+<span class="o">[</span>mysql-proxy<span class="o">]</span>
+<span class="nv">user</span><span class="o">=</span>root
+<span class="c1">#运行mysql-proxy用户</span>
+admin-username<span class="o">=</span>root
+<span class="c1">#主从mysql共有的用户</span>
+admin-password<span class="o">=</span>root
+<span class="c1">#用户的密码</span>
+proxy-address<span class="o">=</span>192.168.20.166:4040
+<span class="c1">#mysql-proxy运行ip和端口,不加端口,默认4040</span>
+proxy-read-only-backend-addresses<span class="o">=</span>192.168.20.166:3306
+<span class="c1">#指定后端从slave读取数据</span>
+proxy-backend-addresses<span class="o">=</span>192.168.20.44:3306
+<span class="c1">#指定后端主master写入数据</span>
+proxy-lua-script<span class="o">=</span>/usr/local/mysql-proxy/lua/rw-splitting.lua
+<span class="c1">#指定读写分离配置文件位置</span>
+admin-lua-script<span class="o">=</span>/usr/local/mysql-proxy/lua/admin-sql.lua
+<span class="c1">#指定管理脚本</span>
+log-file<span class="o">=</span>/usr/local/mysql-proxy/logs/mysql-proxy.log
+<span class="c1">#日志位置</span>
+log-level<span class="o">=</span>info
+<span class="c1">#定义log日志级别,由高到低分别有(error|warning|info|message|debug)</span>
+<span class="nv">daemon</span><span class="o">=</span><span class="nb">true</span>
+<span class="c1">#以守护进程方式运行</span>
+<span class="nv">keepalive</span><span class="o">=</span><span class="nb">true</span>
+<span class="c1">#mysql-proxy崩溃时,尝试重启</span>
+<span class="c1">####################################################################</span>
+<span class="c1">#:wq保存后退出,然后修改文件的权限</span>
+<span class="c1"># chmod 660 /etc/mysql-proxy.cnf</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4修改读写分离配置文件">4.修改读写分离配置文件</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># vi /usr/local/mysql-proxy/lua/rw-splitting.lua</span>
+<span class="k">if</span> not proxy.global.config.rwsplit <span class="k">then</span>
+ proxy.global.config.rwsplit <span class="o">=</span> <span class="o">{</span>
+  <span class="nv">min_idle_connections</span> <span class="o">=</span> 1, <span class="c1">#默认超过4个连接数时,才开始读写分离,改为1</span>
+  <span class="nv">max_idle_connections</span> <span class="o">=</span> 1, <span class="c1">#默认8,改为1</span>
+  <span class="nv">is_debug</span> <span class="o">=</span> <span class="nb">false</span>
+ <span class="o">}</span>
+end
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="5配置一下环境变量">5.配置一下环境变量</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># export PATH=$PATH:/usr/local/mysql-proxy/bin/</span>
+<span class="c1"># echo &#34;PATH=$PATH:/usr/local/mysql-proxy/bin&#34; &gt;&gt; /etc/profile</span>
+配置完环境变量之后,可以使用该命令来测试一下是否配置成功
+<span class="c1">#vim /usr/local/mysql-proxy/logs/mysql-proxy.log</span>
+<span class="c1">#mysql-proxy -V</span>
+<span class="c1">#mysql-proxy --help</span>
+顺便,这里介绍一下各个参数的意义:
+--help-all   :获取全部帮助信息；
+--proxy-address<span class="o">=</span>host:port  :代理服务监听的地址和端口；
+--admin-address<span class="o">=</span>host:port  :管理模块监听的地址和端口；
+--proxy-backend-addresses<span class="o">=</span>host:port :后端mysql服务器的地址和端口；
+--proxy-read-only-backend-addresses<span class="o">=</span>host:port :后端只读mysql服务器的地址和端口；
+--proxy-lua-script<span class="o">=</span>file_name :完成mysql代理功能的Lua脚本；
+--daemon  :以守护进程模式启动mysql-proxy；
+--keepalive  :在mysql-proxy崩溃时尝试重启之；
+--log-file<span class="o">=</span>/path/to/log_file_name :日志文件名称；
+--log-level<span class="o">=</span>level :日志级别；
+--log-use-syslog :基于syslog记录日志；
+--plugins<span class="o">=</span>plugin:在mysql-proxy启动时加载的插件；
+--user<span class="o">=</span>user_name  :运行mysql-proxy进程的用户；
+--defaults-file<span class="o">=</span>/path/to/conf_file_name : 默认使用的配置文件路径；其配置段使用<span class="o">[</span>mysql-proxy<span class="o">]</span>标识；
+--proxy-skip-profiling : 禁用profile；
+--pid-file<span class="o">=</span>/path/to/pid_file_name :进程文件名；
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="6启动mysql-proxy">6.启动mysql-proxy</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># mysql-proxy --defaults-file=/etc/mysql-proxy.cnf #开启服务</span>
+<span class="c1"># /usr/local/mysql-proxy/bin/mysql-proxy --defaults-file=/etc/mysql-proxy.cnf</span>
+<span class="c1"># netstat -tupln | grep 4040 #已经启动</span>
+<span class="c1"># tcp 0 0 192.168.189.130:4040 0.0.0.0:* LISTEN 1264/mysql-proxy</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="7读写分离的测试">7.读写分离的测试</h3>
+<h4 id="1在主从和proxy配置正确的情况下">1).在主从和proxy配置正确的情况下</h4>
+<p>关闭从库的服务:slave stop；然后在proxy作查询操作,正常情况下只能看到表,但不能查询到表里面的内容</p>
+<h4 id="2另一种方法就是使用抓包的方式这里主要使用这种方式应该比较容易理解">2).另一种方法就是使用抓包的方式,这里主要使用这种方式,应该比较容易理解</h4>
+<p>首先使用该命令分别在master服务器和slave服务器上监听:
+其中eth部分是网卡的驱动名称,可以在/etc/sysconfig/network-scripts/中看到,一般第一个显示的就是,只需要eth*这部分就可以了
+master服务器:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># tcpdump -i eth2 -nn -XX ip dst 192.168.20.44 and tcp dst port 3306</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>slave服务器:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#tcpdump -i ens32 -nn -XX ip dst 192.168.20.166 and tcp dst port 3306</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>master中能抓取到有关写的sql语句的包（update和delete读者可以自行测试）,但slave不能,同时,slave能抓取到有关读的sql语句的包,但master不能,说明这已经完成了读写分离的配置了</p>
+<h3 id="8停止mysql-proxy">8.停止mysql-proxy</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo killall mysql-proxy
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-02-10
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+          <a href="/tags/mysql/">mysql</a>
+          <a href="/tags/mysql-proxy/">mysql-proxy</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/tools/vmware/vmware%E5%AE%89%E8%A3%85%E5%B9%B6%E5%88%9D%E5%A7%8B%E5%8C%96/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[VMware]VMware安装及初始化环境</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/db/mysql/mysql%E4%B8%AD%E9%97%B4%E4%BB%B6mycat%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/">
+            <span class="next-text nav-default">[mysql] mysql中间件MyCat安装及使用</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

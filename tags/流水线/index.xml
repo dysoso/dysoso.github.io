@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>流水线 on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/tags/%E6%B5%81%E6%B0%B4%E7%BA%BF/</link>
+    <description>Recent content in 流水线 on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Fri, 23 Jul 2021 10:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/%E6%B5%81%E6%B0%B4%E7%BA%BF/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[jenkins]Jenkins安装及使用教程</title>
+      <link>https://blog.nevergiveup.tech/post/tools/jenkins/jenkins%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</link>
+      <pubDate>Fri, 23 Jul 2021 10:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/tools/jenkins/jenkins%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</guid>
+      <description>Jenkins安装及使用教程 一、jenkins是什么？ ​ Jenkins是一个开源的、提供友好操作界面的持续集成(CI)工具，起源于Hudso</description>
+    </item>
+    
+  </channel>
+</rss>

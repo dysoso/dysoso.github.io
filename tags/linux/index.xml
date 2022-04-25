@@ -7,23 +7,104 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh_CN</language>
     <copyright>蜀ICP备2021005948号-1</copyright>
-    <lastBuildDate>Sun, 26 Dec 2021 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 20 Apr 2022 09:45:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>[linux] confd&#43;etcd配置同步</title>
-      <link>https://blog.nevergiveup.tech/post/%E4%B8%AD%E9%97%B4%E4%BB%B6/confd&#43;etcd%E9%85%8D%E7%BD%AE%E5%90%8C%E6%AD%A5/</link>
+      <title>[linux] 替换ISO内核并生成自定义iso镜像文件</title>
+      <link>https://blog.nevergiveup.tech/post/linux/%E6%9B%BF%E6%8D%A2iso%E5%86%85%E6%A0%B8%E5%B9%B6%E7%94%9F%E6%88%90%E8%87%AA%E5%AE%9A%E4%B9%89iso%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6/</link>
+      <pubDate>Wed, 20 Apr 2022 09:45:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/linux/%E6%9B%BF%E6%8D%A2iso%E5%86%85%E6%A0%B8%E5%B9%B6%E7%94%9F%E6%88%90%E8%87%AA%E5%AE%9A%E4%B9%89iso%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6/</guid>
+      <description>[TOC] 替换ISO内核并生成自定义iso镜像文件 一些说明 initrd.img 什么是initrd?安装系统引到模式下的RAM镜像 initrd 的英文含义是 boot loader initialized RAM disk，就是由</description>
+    </item>
+    
+    <item>
+      <title>[linux]Linux日志管理工具logrotate</title>
+      <link>https://blog.nevergiveup.tech/post/linux/linux%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86%E5%99%A8logrotate/</link>
+      <pubDate>Fri, 18 Mar 2022 14:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/linux/linux%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86%E5%99%A8logrotate/</guid>
+      <description>Linux日志管理工具logrotate logrotate是linux系统上的一个日志管理工具，可以对日志文件自动切割或截断。 一、介绍 ​ li</description>
+    </item>
+    
+    <item>
+      <title>[linux] arcconf RAID 管理工具</title>
+      <link>https://blog.nevergiveup.tech/post/linux/arcconf-raid-%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</link>
+      <pubDate>Fri, 11 Mar 2022 09:38:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/linux/arcconf-raid-%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</guid>
+      <description>arcconf RAID 管理工具 简介 Adaptec ARCCONF Command Line Utilityarcconf 是 Adaptec RAID 适配器管理工具* 常用命令 1 2 3 4 5 6 7 8 9 10 11 12 13 arcconf LIST #查询整列卡信息 arcconf GETCONFIG 1 AD # 查询 Controller #1 的适配器信息 arcconf GETCONFIG 1 LD</description>
+    </item>
+    
+    <item>
+      <title>[linux] RPM打包教程(教程&#43;资料&#43;案例)</title>
+      <link>https://blog.nevergiveup.tech/post/linux/rpm%E6%89%93%E5%8C%85%E6%95%99%E7%A8%8B%E6%96%B0%E6%89%8B%E5%90%91centos/</link>
+      <pubDate>Fri, 04 Mar 2022 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/linux/rpm%E6%89%93%E5%8C%85%E6%95%99%E7%A8%8B%E6%96%B0%E6%89%8B%E5%90%91centos/</guid>
+      <description>RPM打包教程 学习rpm打包，一篇文章就够了 RPM（Redhat Package Manager）是用于Redhat、CentOS、Fedora等Linux</description>
+    </item>
+    
+    <item>
+      <title>[linux] Linux源码包的安装步骤</title>
+      <link>https://blog.nevergiveup.tech/post/linux/linux%E6%BA%90%E7%A0%81%E5%8C%85%E7%9A%84%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4/</link>
+      <pubDate>Fri, 04 Mar 2022 11:31:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/linux/linux%E6%BA%90%E7%A0%81%E5%8C%85%E7%9A%84%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4/</guid>
+      <description>Linux源码包的安装步骤 1.下载源码包并解压 1 2 3 4 5 6 7 8 #可使用 wget 命令“http:\\”直接下载到主机 或者其他方式上传源码包 #根据源码</description>
+    </item>
+    
+    <item>
+      <title>[linux] Pacemaker集群资源管理器原理及部署</title>
+      <link>https://blog.nevergiveup.tech/post/linux/pacemaker%E5%BC%80%E6%BA%90%E9%9B%86%E7%BE%A4%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%99%A8%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/</link>
+      <pubDate>Fri, 18 Feb 2022 09:45:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/linux/pacemaker%E5%BC%80%E6%BA%90%E9%9B%86%E7%BE%A4%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%99%A8%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/</guid>
+      <description>Pacemaker集群资源管理器原理及部署 一.Pacemaker概述 1.Pacemaker介绍 Pacemaker是 Linux环境中使用最为广</description>
+    </item>
+    
+    <item>
+      <title>[etcd] confd&#43;etcd配置同步</title>
+      <link>https://blog.nevergiveup.tech/post/middleware/confd&#43;etcd%E9%85%8D%E7%BD%AE%E5%90%8C%E6%AD%A5/</link>
       <pubDate>Sun, 26 Dec 2021 15:37:56 +0800</pubDate>
       
-      <guid>https://blog.nevergiveup.tech/post/%E4%B8%AD%E9%97%B4%E4%BB%B6/confd&#43;etcd%E9%85%8D%E7%BD%AE%E5%90%8C%E6%AD%A5/</guid>
+      <guid>https://blog.nevergiveup.tech/post/middleware/confd&#43;etcd%E9%85%8D%E7%BD%AE%E5%90%8C%E6%AD%A5/</guid>
       <description>confd+etcd配置同步 一、etcd集群安装配置 参考 etcd集群部署与使用.md 二、confd介绍与资料 confd是一个轻量级的配置管理</description>
     </item>
     
     <item>
-      <title>[linux] etcd集群配置与使用</title>
-      <link>https://blog.nevergiveup.tech/post/%E4%B8%AD%E9%97%B4%E4%BB%B6/etcd%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2%E4%B8%8E%E4%BD%BF%E7%94%A8/</link>
+      <title>[etcd] etcd集群配置与使用</title>
+      <link>https://blog.nevergiveup.tech/post/middleware/etcd%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2%E4%B8%8E%E4%BD%BF%E7%94%A8/</link>
       <pubDate>Sat, 25 Dec 2021 15:37:56 +0800</pubDate>
       
-      <guid>https://blog.nevergiveup.tech/post/%E4%B8%AD%E9%97%B4%E4%BB%B6/etcd%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2%E4%B8%8E%E4%BD%BF%E7%94%A8/</guid>
+      <guid>https://blog.nevergiveup.tech/post/middleware/etcd%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2%E4%B8%8E%E4%BD%BF%E7%94%A8/</guid>
       <description>etcd集群配置与使用 一.etcd原理 1.etcd介绍 etcd是使用Go语言开发的一个开源的、高可用的分布式key-value存储系统，可以</description>
+    </item>
+    
+    <item>
+      <title>[linux]linux磁盘管理及本地文件系统&amp;磁盘挂载</title>
+      <link>https://blog.nevergiveup.tech/post/linux/linux%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86%E5%8F%8A%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%A3%81%E7%9B%98%E6%8C%82%E8%BD%BD/</link>
+      <pubDate>Mon, 13 Sep 2021 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/linux/linux%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86%E5%8F%8A%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%A3%81%E7%9B%98%E6%8C%82%E8%BD%BD/</guid>
+      <description>linux磁盘管理及本地文件系统&amp;amp;磁盘挂载 一.linux磁盘管理 二.本地文件系统&amp;amp;磁盘挂载 查看磁盘挂载情况 1 2 3 4 5 #查看挂</description>
+    </item>
+    
+    <item>
+      <title>[linux]samba安装及使用</title>
+      <link>https://blog.nevergiveup.tech/post/linux/smb%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Thu, 11 Mar 2021 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/linux/smb%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
+      <description>smb安装及使用 一.smb安装及配置 1.源码安装smb并使用 安装Samba 1 2 #安装Samba包 yum -y install samba samba-client samba-common 创建samba用户 1 2 3 4 5 6 groupadd</description>
+    </item>
+    
+    <item>
+      <title>[linux]虚拟机&amp;linux基础开发环境配置(详)</title>
+      <link>https://blog.nevergiveup.tech/post/linux/%E8%99%9A%E6%8B%9F%E6%9C%BAlinux%E5%9F%BA%E7%A1%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Tue, 22 Sep 2020 16:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/linux/%E8%99%9A%E6%8B%9F%E6%9C%BAlinux%E5%9F%BA%E7%A1%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</guid>
+      <description>虚拟机&amp;amp;linux基础开发环境配置 1.新建虚拟机 新建虚拟机 设置磁盘位置/大小 设置cpu 设置内存 设置网络 2.安装系统 选择光盘位置-安装</description>
     </item>
     
     <item>
@@ -33,6 +114,42 @@
       
       <guid>https://blog.nevergiveup.tech/post/linux/centos7-supervisor-%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/</guid>
       <description>CentOS7 supervisor 安装与配置 安装 1 yum install supervisor 配置文件目录 1 2 3 4 5 /etc/ supervisor.conf supervisor.d/ 项目一.ini 项目二.ini laravel 队列配置示例 1 2 3 4 5 6 7 8 9 10 11 12 13 14 说明， user=www 为启动的</description>
+    </item>
+    
+    <item>
+      <title>[docker]docker &amp; docker-compose安装与使用</title>
+      <link>https://blog.nevergiveup.tech/post/linux/docker/docker-docker-compose%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Mon, 12 Nov 2018 16:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/linux/docker/docker-docker-compose%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/</guid>
+      <description>docker &amp;amp; docker-compose安装与使用 本文记录docker及docker-compose的安装及使用 官方文档: https://docs.docker.com/get-started/ 1.安装docker 参考</description>
+    </item>
+    
+    <item>
+      <title>[linux]linux常用命令</title>
+      <link>https://blog.nevergiveup.tech/post/linux/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
+      <pubDate>Tue, 12 Jun 2018 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/linux/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
+      <description>linux常用命令 本文记录一些常用的linux命令，方便在使用时查询，并持续更新中··· 一.基础操作 1. 查看目录及文件 1 2 3 4 5 6 &amp;gt; ls //li</description>
+    </item>
+    
+    <item>
+      <title>[crontab]定时器crontab安装与使用</title>
+      <link>https://blog.nevergiveup.tech/post/linux/linux%E5%AE%9A%E6%97%B6%E5%99%A8crontab%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Tue, 12 Apr 2016 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/linux/linux%E5%AE%9A%E6%97%B6%E5%99%A8crontab%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/</guid>
+      <description>定时器crontab安装与使用 1.crontab说明 所有用户定义的 crontab 都被保存在/var/spool/cron 目录中 首先说说cron,它是一个</description>
+    </item>
+    
+    <item>
+      <title>[php]lnmp开发环境配置及常用软件安装</title>
+      <link>https://blog.nevergiveup.tech/post/linux/lnmp%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%8F%8A%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/</link>
+      <pubDate>Mon, 15 Feb 2016 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/linux/lnmp%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%8F%8A%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/</guid>
+      <description>lnmp开发环境配置及常用软件安装 一.nginx安装 0.准备工作 yum update yum install -y gcc gcc-c++ yum install -y pcre pcre-devel openssl openssl-devel zlib zlib-devel psmisc 1.添加专用分组和用户 1 2 3 4 5 6 7 groupadd www useradd</description>
     </item>
     
   </channel>

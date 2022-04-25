@@ -7,13 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh_CN</language>
     <copyright>蜀ICP备2021005948号-1</copyright>
-    <lastBuildDate>Fri, 11 Sep 2015 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/categories/%E5%85%B6%E4%BB%96/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 15 Aug 2021 16:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/categories/%E5%85%B6%E4%BB%96/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>windows10下修改cmd和power shell的编码方式(解决中文乱码)</title>
+      <link>https://blog.nevergiveup.tech/post/other/windows10%E4%B8%8B%E4%BF%AE%E6%94%B9cmd%E5%92%8Cpower-shell%E7%9A%84%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F/</link>
+      <pubDate>Sun, 15 Aug 2021 16:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/other/windows10%E4%B8%8B%E4%BF%AE%E6%94%B9cmd%E5%92%8Cpower-shell%E7%9A%84%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F/</guid>
+      <description>windows10下修改cmd和power shell的编码方式 power shell 使用用Powershell的配置文件（PROFILE）来实现。PROFIL</description>
+    </item>
+    
     <item>
       <title>笔记本触摸板使用说明</title>
-      <link>https://blog.nevergiveup.tech/post/%E5%B7%A5%E5%85%B7/%E7%AC%94%E8%AE%B0%E6%9C%AC%E8%A7%A6%E6%91%B8%E6%9D%BF/</link>
+      <link>https://blog.nevergiveup.tech/post/other/%E7%AC%94%E8%AE%B0%E6%9C%AC%E8%A7%A6%E6%91%B8%E6%9D%BF/</link>
       <pubDate>Fri, 11 Sep 2015 15:37:56 +0800</pubDate>
       
-      <guid>https://blog.nevergiveup.tech/post/%E5%B7%A5%E5%85%B7/%E7%AC%94%E8%AE%B0%E6%9C%AC%E8%A7%A6%E6%91%B8%E6%9D%BF/</guid>
+      <guid>https://blog.nevergiveup.tech/post/other/%E7%AC%94%E8%AE%B0%E6%9C%AC%E8%A7%A6%E6%91%B8%E6%9D%BF/</guid>
       <description>笔记本触摸板使用说明 1 2 3 4 5 6 7 8 一个手指——点点点，想点哪里点哪里 两个手指——同时按一下触控板就是鼠标右键功能两个手指——对齐上下滑动可</description>
     </item>
     

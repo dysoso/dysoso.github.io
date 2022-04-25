@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>phpstrom on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/tags/phpstrom/</link>
+    <description>Recent content in phpstrom on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Wed, 11 Jan 2017 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/phpstrom/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[phpstrom] phpstrom常用快捷键</title>
+      <link>https://blog.nevergiveup.tech/post/editor/phpstrom%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/</link>
+      <pubDate>Wed, 11 Jan 2017 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/editor/phpstrom%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/</guid>
+      <description>phpstrom常用快捷键 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 CTRL+/ 单行注释/取消注</description>
+    </item>
+    
+  </channel>
+</rss>

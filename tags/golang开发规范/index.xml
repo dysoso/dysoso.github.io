@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Golang开发规范 on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/tags/golang%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/</link>
+    <description>Recent content in Golang开发规范 on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Sun, 16 May 2021 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/golang%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[go] Golang开发规范</title>
+      <link>https://blog.nevergiveup.tech/post/dev_language/golang/golang%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/</link>
+      <pubDate>Sun, 16 May 2021 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dev_language/golang/golang%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/</guid>
+      <description>[TOC] Golang开发规范 一致性的代码更容易维护、是更合理的、需要更少的学习成本、并且随着新的约定出现或者出现错误后更容易迁移、更新、修复 bug</description>
+    </item>
+    
+  </channel>
+</rss>

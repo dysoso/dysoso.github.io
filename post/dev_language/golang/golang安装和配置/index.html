@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[go] golang安装和配置 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="Golang 一.Windows安装 1.下载Golang 访问Go国内镜像站下载页面 https://golang.google.cn/dl/ 并在页面最上方的版本中选择你当前的系统版本，会下载最新版本的Go开发" /><meta name="keywords" content="开发语言, 后端, golang, go语言, 安装, 配置" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/dev_language/golang/golang%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[go] golang安装和配置" />
+<meta property="og:description" content="Golang 一.Windows安装 1.下载Golang 访问Go国内镜像站下载页面 https://golang.google.cn/dl/ 并在页面最上方的版本中选择你当前的系统版本，会下载最新版本的Go开发" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/dev_language/golang/golang%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-05-13T15:37:56+08:00" />
+<meta property="article:modified_time" content="2022-02-10T16:37:56+08:00" />
+
+<meta itemprop="name" content="[go] golang安装和配置">
+<meta itemprop="description" content="Golang 一.Windows安装 1.下载Golang 访问Go国内镜像站下载页面 https://golang.google.cn/dl/ 并在页面最上方的版本中选择你当前的系统版本，会下载最新版本的Go开发"><meta itemprop="datePublished" content="2021-05-13T15:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-02-10T16:37:56+08:00" />
+<meta itemprop="wordCount" content="3394">
+<meta itemprop="keywords" content="开发语言,后端,golang,go语言,安装,配置," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[go] golang安装和配置"/>
+<meta name="twitter:description" content="Golang 一.Windows安装 1.下载Golang 访问Go国内镜像站下载页面 https://golang.google.cn/dl/ 并在页面最上方的版本中选择你当前的系统版本，会下载最新版本的Go开发"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[go] golang安装和配置</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-05-13 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%BC%80%E5%8F%91%E8%AF%AD%E8%A8%80/"> 开发语言 </a>
+            <a href="/categories/golang/"> golang </a>
+            </div>
+          <span class="more-meta"> 约 3394 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#golang">Golang</a>
+      <ul>
+        <li><a href="#一windows安装">一.Windows安装</a>
+          <ul>
+            <li><a href="#1下载golang">1.下载Golang</a></li>
+            <li><a href="#2安装golang">2.安装Golang</a></li>
+            <li><a href="#3系统环境配置">3.系统环境配置</a></li>
+            <li><a href="#4ide开发环境安装">4.IDE开发环境安装</a></li>
+          </ul>
+        </li>
+        <li><a href="#二linux安装">二.Linux安装</a>
+          <ul>
+            <li><a href="#1安装go">1.安装Go</a></li>
+            <li><a href="#2添加执行命令至环境变量">2.添加执行命令至环境变量</a></li>
+            <li><a href="#3gomod和goproxy配置">3.GOMOD和GOPROXY配置</a></li>
+            <li><a href="#4验证安装">4.验证安装</a></li>
+          </ul>
+        </li>
+        <li><a href="#三多版本golang安装">三.多版本golang安装</a>
+          <ul>
+            <li><a href="#1-安装第一个golang版本">1 安装第一个Golang版本</a></li>
+            <li><a href="#2-安装第二个golang版本">2 安装第二个Golang版本</a></li>
+            <li><a href="#3-使用两个golang版本">3 使用两个Golang版本</a></li>
+            <li><a href="#4-卸载第二个golang版本">4 卸载第二个Golang版本</a></li>
+          </ul>
+        </li>
+        <li><a href="#四golang简记">四.Golang简记</a>
+          <ul>
+            <li><a href="#网络编程">网络编程</a></li>
+            <li><a href="#面向对象">面向对象</a></li>
+            <li><a href="#零碎知识点">零碎知识点</a></li>
+            <li><a href="#新人易犯58个错误">新人易犯58个错误</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="golang">Golang</h1>
+<h2 id="一windows安装">一.Windows安装</h2>
+<h3 id="1下载golang">1.下载Golang</h3>
+<blockquote>
+<p>访问Go国内镜像站下载页面 https://golang.google.cn/dl/<br>
+并在页面最上方的版本中选择你当前的系统版本，会下载最新版本的Go开发包: </p>
+</blockquote>
+<h3 id="2安装golang">2.安装Golang</h3>
+<blockquote>
+<p>访问官方安装介绍页面 https://golang.google.cn/doc/install<br>
+按照当前系统版本执行对应的安装流程即可。</p>
+</blockquote>
+<h3 id="3系统环境配置">3.系统环境配置</h3>
+<ul>
+<li>
+<p>$GOROOT：go的安装目录，配置后不会再更改；C:\Program Files\Go</p>
+</li>
+<li>
+<p>$GOPATH：go项目在本地的开发环境的的项目根路径(以便项目编译，go build, go install)，不同的项目在编译的时候该环境变量可以不同；D:\go</p>
+</li>
+<li>
+<p>$PATH：需要将go的bin目录添加到系统$PATH中以便方便使用go的相关命令，配置后也不会再更改；C:\Program Files\Go\bin</p>
+</li>
+<li>
+<p>GOMOD和GOPROXY配置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">go env -w <span class="nv">GO111MODULE</span><span class="o">=</span>on
+go env -w <span class="nv">GOPROXY</span><span class="o">=</span>https://goproxy.cn,direct
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="4ide开发环境安装">4.IDE开发环境安装</h3>
+<h4 id="goland下载安装及使用">Goland下载安装及使用</h4>
+<ul>
+<li>go path 配置</li>
+<li>go Module 配置：GOPROXY=https://goproxy.cn</li>
+<li>go fmt 配置：Tools-&gt;File Watchers-&gt;add gofmt</li>
+<li>IDE代码风格配置：Editor-&gt;Code Style-&gt;Go</li>
+</ul>
+<h2 id="二linux安装">二.Linux安装</h2>
+<h3 id="1安装go">1.安装Go</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">mkdir -p /data/tools <span class="o">&amp;&amp;</span> <span class="nb">cd</span> /data/tools
+curl -R -O https://dl.google.com/go/go1.17.6.linux-amd64.tar.gz
+rm -rf /usr/local/go <span class="o">&amp;&amp;</span> tar -C /usr/local -xzf /data/tools/go1.17.6.linux-amd64.tar.gz
+mkdir -p /root/go
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2添加执行命令至环境变量">2.添加执行命令至环境变量</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">vim /etc/profile
+【内容】
+<span class="nb">export</span> <span class="nv">GOROOT</span><span class="o">=</span>/usr/local/go
+<span class="nb">export</span> <span class="nv">GOPATH</span><span class="o">=</span>/root/go
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$GOPATH</span>/bin:<span class="nv">$GOROOT</span>/bin
+
+<span class="nb">source</span> /etc/profile
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3gomod和goproxy配置">3.GOMOD和GOPROXY配置</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">go env -w <span class="nv">GO111MODULE</span><span class="o">=</span>on
+go env -w <span class="nv">GOPROXY</span><span class="o">=</span>https://goproxy.cn,direct
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4验证安装">4.验证安装</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@node1 ~<span class="o">]</span><span class="c1"># go version</span>
+go version go1.17.6 linux/amd64
+<span class="o">[</span>root@node1 ~<span class="o">]</span><span class="c1"># go env</span>
+<span class="nv">GO111MODULE</span><span class="o">=</span><span class="s2">&#34;on&#34;</span>
+<span class="nv">GOARCH</span><span class="o">=</span><span class="s2">&#34;amd64&#34;</span>
+<span class="nv">GOBIN</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
+<span class="nv">GOCACHE</span><span class="o">=</span><span class="s2">&#34;/root/.cache/go-build&#34;</span>
+<span class="nv">GOENV</span><span class="o">=</span><span class="s2">&#34;/root/.config/go/env&#34;</span>
+<span class="nv">GOEXE</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
+<span class="nv">GOEXPERIMENT</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
+<span class="nv">GOFLAGS</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
+<span class="nv">GOHOSTARCH</span><span class="o">=</span><span class="s2">&#34;amd64&#34;</span>
+<span class="nv">GOHOSTOS</span><span class="o">=</span><span class="s2">&#34;linux&#34;</span>
+<span class="nv">GOINSECURE</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
+<span class="nv">GOMODCACHE</span><span class="o">=</span><span class="s2">&#34;/root/go/pkg/mod&#34;</span>
+<span class="nv">GONOPROXY</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
+<span class="nv">GONOSUMDB</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
+<span class="nv">GOOS</span><span class="o">=</span><span class="s2">&#34;linux&#34;</span>
+<span class="nv">GOPATH</span><span class="o">=</span><span class="s2">&#34;/root/go&#34;</span>
+<span class="nv">GOPRIVATE</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
+<span class="nv">GOPROXY</span><span class="o">=</span><span class="s2">&#34;https://goproxy.cn,direct&#34;</span>
+<span class="nv">GOROOT</span><span class="o">=</span><span class="s2">&#34;/usr/local/go&#34;</span>
+<span class="nv">GOSUMDB</span><span class="o">=</span><span class="s2">&#34;sum.golang.org&#34;</span>
+<span class="nv">GOTMPDIR</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
+<span class="nv">GOTOOLDIR</span><span class="o">=</span><span class="s2">&#34;/usr/local/go/pkg/tool/linux_amd64&#34;</span>
+<span class="nv">GOVCS</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
+<span class="nv">GOVERSION</span><span class="o">=</span><span class="s2">&#34;go1.17.6&#34;</span>
+<span class="nv">GCCGO</span><span class="o">=</span><span class="s2">&#34;gccgo&#34;</span>
+<span class="nv">AR</span><span class="o">=</span><span class="s2">&#34;ar&#34;</span>
+<span class="nv">CC</span><span class="o">=</span><span class="s2">&#34;gcc&#34;</span>
+<span class="nv">CXX</span><span class="o">=</span><span class="s2">&#34;g++&#34;</span>
+<span class="nv">CGO_ENABLED</span><span class="o">=</span><span class="s2">&#34;1&#34;</span>
+<span class="nv">GOMOD</span><span class="o">=</span><span class="s2">&#34;/dev/null&#34;</span>
+<span class="nv">CGO_CFLAGS</span><span class="o">=</span><span class="s2">&#34;-g -O2&#34;</span>
+<span class="nv">CGO_CPPFLAGS</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
+<span class="nv">CGO_CXXFLAGS</span><span class="o">=</span><span class="s2">&#34;-g -O2&#34;</span>
+<span class="nv">CGO_FFLAGS</span><span class="o">=</span><span class="s2">&#34;-g -O2&#34;</span>
+<span class="nv">CGO_LDFLAGS</span><span class="o">=</span><span class="s2">&#34;-g -O2&#34;</span>
+<span class="nv">PKG_CONFIG</span><span class="o">=</span><span class="s2">&#34;pkg-config&#34;</span>
+<span class="nv">GOGCCFLAGS</span><span class="o">=</span><span class="s2">&#34;-fPIC -m64 -pthread -fmessage-length=0 -fdebug-prefix-map=/tmp/go-build1635051452=/tmp/go-build -gno-record-gcc-switches&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="三多版本golang安装">三.多版本golang安装</h2>
+<p>windows 和 linux 安装方法一致</p>
+<h3 id="1-安装第一个golang版本">1 安装第一个Golang版本</h3>
+<blockquote>
+<p>内容如上</p>
+</blockquote>
+<h3 id="2-安装第二个golang版本">2 安装第二个Golang版本</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#按自己需求修改版本号,这里以1.17.6为例</span>
+go get golang.org/dl/go1.17.6
+go1.17.6 download 
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3-使用两个golang版本">3 使用两个Golang版本</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#第一个版本直接使用go就行</span>
+go version
+<span class="c1">#第二个版本使用go+版本号</span>
+go1.17.6 version
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4-卸载第二个golang版本">4 卸载第二个Golang版本</h3>
+<ul>
+<li>
+<p>GOROOT删除第二个golang</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="s2">&#34;go get golang.org/dl/go1.17.6&#34;</span> 
+</code></pre></td></tr></table>
+</div>
+</div><p>这个命令 会在你的家目录下面 生成一个 sdk/go1.17.6 文件，这个地方就是你的 go1.17.6 的 GOROOT</p>
+<p>删除 go1.17.6 即可</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@localhost sdk<span class="o">]</span><span class="c1"># ll</span>
+total <span class="m">4</span>
+drwxr-xr-x. <span class="m">10</span> root <span class="m">0</span> <span class="m">4096</span> Mar <span class="m">21</span> 05:41 go1.17.6
+<span class="o">[</span>root@localhost sdk<span class="o">]</span><span class="c1"># pwd</span>
+/root/sdk
+<span class="o">[</span>root@localhost sdk<span class="o">]</span><span class="c1"># rm -rf /root/sdk/go1.17.6</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>GOBIN删除第二个golang</p>
+<p>使用go env查看GOBIN位置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@localhost bin<span class="o">]</span><span class="c1"># go env</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>然后删除你本机 GOBIN 里面的 go1.17.6 就可以</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@localhost bin<span class="o">]</span><span class="c1"># ls</span>
+go  go1.17.6  gofmt
+<span class="o">[</span>root@localhost bin<span class="o">]</span><span class="c1"># pwd</span>
+/root/go/bin
+<span class="o">[</span>root@localhost bin<span class="o">]</span><span class="c1"># rm -rf /root/go/bin/go1.17.6</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h2 id="四golang简记">四.Golang简记</h2>
+<h3 id="网络编程">网络编程</h3>
+<ul>
+<li>1.物理层（设备，电脑链接网络，传送0和1的电信号）（双绞线，光纤，无线电波）</li>
+<li>2.数据链路层（网卡，以太网协议及广播，数据包及MAC寻址，ARP协议获取MAC地址）（以太网，网桥）</li>
+<li>3.网络层（网络地址，IP协议，IP寻找子网络&amp;MAC寻找目标网卡）（IP，ARP，路由）</li>
+<li>4.传输层（UDP协议和TCP协议，端口确定网络程序）（TCP UDP）</li>
+<li>5.socket抽象层（BSD UNIX的进程通信机制，通常也称作”套接字”）</li>
+<li>6.应用层（规定应用程序使用的数据格式，TCP协议之上常见的Email、HTTP、FTP等协议）（HTTP，FTP，SMTP）</li>
+</ul>
+<blockquote>
+<p>会话层 表达出 应用层</p>
+</blockquote>
+<h3 id="面向对象">面向对象</h3>
+<h4 id="接口">接口</h4>
+<ul>
+<li>只有当接口存储的类型和对象都为nil时，接口才等于nil</li>
+<li>接口也可实现类似OOP中的多态,一个类型可实现多个接口</li>
+<li>接口名：接口命名习惯以 er 结尾，如有写操作的接口叫Writer，有字符串功能的接口叫Stringer等</li>
+<li>方法名：当方法名首字母是大写且这个接口类型名首字母也是大写时，这个方法可以被接口所在的包（package）之外的代码访问。</li>
+<li>空接口是指没有定义任何方法的接口。因此任何类型都实现了空接口</li>
+<li>类型断言:x.(T)</li>
+</ul>
+<h3 id="零碎知识点">零碎知识点</h3>
+<ul>
+<li>1.new() 与 make() 的区别</li>
+</ul>
+<blockquote>
+<p>new(T) 和 make(T,args) 是 Go 语言内建函数，用来分配内存，但适用的类型不同。<br>
+new(T) 会为 T 类型的新值分配已置零的内存空间，并返回地址（指针），即类型为 *T 的值。换句话说就是，返回一个指针，该指针指向新分配的、类型为 T 的零值。适用于值类型，如数组、结构体等。<br>
+make(T,args) 返回初始化之后的 T 类型的值，这个值并不是 T 类型的零值，也不是指针 *T，是经过初始化之后的 T 的引用。make() 只适用于 slice、map 和 channel.</p>
+</blockquote>
+<ul>
+<li>2.异常的捕捉</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="err">#</span><span class="nx">recover在panic之前</span><span class="err">，</span><span class="nx">且在defer的函数内</span><span class="err">，</span><span class="nx">才可生效</span>
+<span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+      <span class="c1">// recover() 复活 恢复
+</span><span class="c1"></span>      <span class="c1">// 会返回程序为什么挂了
+</span><span class="c1"></span>      <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nb">recover</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+         <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+      <span class="p">}</span>
+   <span class="p">}()</span>
+<span class="c1">// 自己抛
+</span><span class="c1"></span><span class="nb">panic</span><span class="p">(</span><span class="s">&#34;半径不能为负&#34;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>3.转换小写字母</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">//转换成小写字母
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">toLowerCase</span><span class="p">(</span><span class="nx">str</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+    <span class="nx">rune_arr</span> <span class="o">:=</span> <span class="p">[]</span><span class="nb">rune</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span>
+    <span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">rune_arr</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="nx">rune_arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">65</span> <span class="o">&amp;&amp;</span> <span class="nx">rune_arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">90</span> <span class="p">{</span>
+            <span class="nx">rune_arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">32</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">string</span><span class="p">(</span><span class="nx">rune_arr</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>4.Golang 解决 golang.org/x/ 下包下载不下来的问题</li>
+</ul>
+<blockquote>
+<p>由于众所周知的原因，golang在下载golang.org的包时会出现访问不了的情况。尤其是x包，很多库都依赖于它。由于x包在github上都有镜像，我们可以使用从github.com上把代码clone到创建的golang。org/x目录上就OK了</p>
+</blockquote>
+<h3 id="新人易犯58个错误">新人易犯58个错误</h3>
+<ul>
+<li>1.左大括号 { 不能单独放一行</li>
+<li>2.未使用的变量：全局变量声明但不使用是可以的</li>
+<li>3.未使用的 import：可以使用 _下划线符号作为别名来忽略导入的包</li>
+<li>4.简短声明的变量只能在函数内部使用</li>
+<li>5.使用简短声明来重复声明变量</li>
+<li>6.不能使用简短声明来设置字段的值</li>
+<li>7.不小心覆盖了变量：短声明在函数中覆盖了全局变量</li>
+<li>8.显式类型的变量无法使用 nil 来初始化</li>
+<li>9.直接使用值为 nil 的 slice、map：需使用make分配内存</li>
+<li>10.map 容量：不能用 cap() 来检测分配空间的大小</li>
+<li>11.string 类型的变量值不能为 nil</li>
+<li>12.Array 类型的值作为函数参数：此时只是作为副本；如果需要修改原始数据，使用指针或切片</li>
+<li>13.range 遍历 slice 和 array 时混淆了返回值：第一个是元素索引，第二个是元素的值</li>
+<li>14.slice 和 array 其实是一维数据</li>
+<li>15.访问 map 中不存在的 key：检查返回的第二个参数即可</li>
+<li>16.string 类型的值是常量，不可更改：将 string 转为 rune slice（此时 1 个 rune 可能占多个 byte），直接更新 rune 中的字符</li>
+<li>17.string 与 byte slice 之间的转换</li>
+<li>18.string 与索引操作符：对字符串用索引访问返回的不是字符，而是一个 byte 值</li>
+<li>19.字符串并不都是 UTF8 文本：判断字符串是否是 UTF8 文本，可使用 &ldquo;unicode/utf8&rdquo; 包中的 ValidString() 函数</li>
+<li>20.字符串的长度：可使用 &ldquo;unicode/utf8&rdquo; 包中的 RuneCountInString</li>
+<li>21.在多行 array、slice、map 语句中缺少 , 号</li>
+<li>22.log.Fatal 和 log.Panic 不只是 log</li>
+<li>23.对内建数据结构的操作并不是同步的：goroutine 和 channel 是进行原子操作的好方法，或使用 &ldquo;sync&rdquo; 包中的锁。</li>
+<li>24.range 迭代 string 得到的值：应将 string 保存为 byte slice 再进行操作</li>
+<li>25.range 迭代 map：重新编译每次排序不一样</li>
+<li>26.switch 中的 fallthrough 语句：也可以改写 case 为多条件判断</li>
+<li>27.自增和自减运算：只作为运算符而非表达式</li>
+<li>28.按位取反：很多编程语言使用 ~ 作为一元按位取反（NOT）操作符，Go 使用 ^</li>
+<li>29.运算符的优先级：优先级另当别论</li>
+<li>30.不导出的 struct 字段无法被 encode：以小写字母开头的字段成员是无法被外部直接访问</li>
+<li>31.程序退出时还有 goroutine 在执行：使用 channel 关闭 goroutine</li>
+<li>32.向无缓冲的 channel 发送数据，只要 receiver 准备好了就会立刻返回</li>
+<li>33.向已关闭的 channel 发送数据会造成 panic</li>
+<li>34.使用了值为 nil 的 channel</li>
+<li>35.若函数 receiver 传参是传值方式，则无法修改参数的原有值</li>
+<li>36.关闭 HTTP 的响应体：新手很容易忘记手动关闭，或者写在了错误的位置</li>
+<li>37.关闭 HTTP 连接</li>
+<li>38.将 JSON 中的数字解码为 interface 类型</li>
+<li>39.struct、array、slice 和 map 的值比较</li>
+<li>40.从 panic 中恢复</li>
+<li>41.在 range 迭代 slice、array、map 时通过更新引用来更新元素</li>
+<li>42.slice 中隐藏的数据：新 slice 会引用原 slice 的底层数组</li>
+<li>43.Slice 中数据的误用：重新分配新的 slice 并拷贝你需要的数据</li>
+<li>44.旧 slice：二者的数据指向相同的底层数组</li>
+<li>45.类型声明与方法</li>
+<li>46.跳出 for-switch 和 for-select 代码块</li>
+<li>47.for 语句中的迭代变量与闭包函数</li>
+<li>48.defer 函数的参数值</li>
+<li>49.defer 函数的执行时机</li>
+<li>50.失败的类型断言：断言失败则会返回目标类型的“零值”，断言变量与原来变量混用可能出现异常情况</li>
+<li>51.阻塞的 gorutinue 与资源泄露</li>
+<li>52.使用指针作为方法的 receiver：map 类型的元素、通过 interface 引用的变量不可寻址</li>
+<li>53.更新 map 字段的值：因为 map 中的元素是不可寻址的。需区分开的是，slice 的元素可寻址</li>
+<li>54.nil interface 和 nil interface 值：interface 类型的变量只有在类型和值均为 nil 时才为 nil</li>
+<li>55.堆栈变量:你并不总是清楚你的变量是分配到了堆还是栈</li>
+<li>56.GOMAXPROCS、Concurrency（并发）and Parallelism（并行）:GOMAXPROCS 可以超过执行 goroutine 的 CPU 核心数</li>
+<li>57.读写操作(goroutine 中操作)的重新排序：以使用 channel 或 sync 包中的锁机制来固定输出排序</li>
+<li>58.优先调度：可以使用 runtime 包中的 Gosched() 来 手动启动调度器</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-02-10
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E5%BC%80%E5%8F%91%E8%AF%AD%E8%A8%80/">开发语言</a>
+          <a href="/tags/%E5%90%8E%E7%AB%AF/">后端</a>
+          <a href="/tags/golang/">golang</a>
+          <a href="/tags/go%E8%AF%AD%E8%A8%80/">go语言</a>
+          <a href="/tags/%E5%AE%89%E8%A3%85/">安装</a>
+          <a href="/tags/%E9%85%8D%E7%BD%AE/">配置</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/dev_language/golang/go%E8%AF%AD%E8%A8%80%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83uber/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[go] Go语言编码规范</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/version_controller/git/%E4%BC%98%E5%8C%96github%E6%89%93%E5%BC%80%E9%80%9F%E5%BA%A6-%E5%89%AF%E6%9C%AC/">
+            <span class="next-text nav-default">[git]优化github打开速度(解决无法打开或者打开慢的问题)</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

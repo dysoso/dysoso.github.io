@@ -9,11 +9,11 @@
     <copyright>蜀ICP备2021005948号-1</copyright>
     <lastBuildDate>Sun, 26 Dec 2021 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/confd/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>[linux] confd&#43;etcd配置同步</title>
-      <link>https://blog.nevergiveup.tech/post/%E4%B8%AD%E9%97%B4%E4%BB%B6/confd&#43;etcd%E9%85%8D%E7%BD%AE%E5%90%8C%E6%AD%A5/</link>
+      <title>[etcd] confd&#43;etcd配置同步</title>
+      <link>https://blog.nevergiveup.tech/post/middleware/confd&#43;etcd%E9%85%8D%E7%BD%AE%E5%90%8C%E6%AD%A5/</link>
       <pubDate>Sun, 26 Dec 2021 15:37:56 +0800</pubDate>
       
-      <guid>https://blog.nevergiveup.tech/post/%E4%B8%AD%E9%97%B4%E4%BB%B6/confd&#43;etcd%E9%85%8D%E7%BD%AE%E5%90%8C%E6%AD%A5/</guid>
+      <guid>https://blog.nevergiveup.tech/post/middleware/confd&#43;etcd%E9%85%8D%E7%BD%AE%E5%90%8C%E6%AD%A5/</guid>
       <description>confd+etcd配置同步 一、etcd集群安装配置 参考 etcd集群部署与使用.md 二、confd介绍与资料 confd是一个轻量级的配置管理</description>
     </item>
     

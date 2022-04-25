@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[redis] Redis-Docker部署及主从复制配置 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="Redis-Docker部署及主从复制配置 1.安装部署Redis 1).查看所有的Redis镜像 docker search redis 2).拉取你中意的Redis镜像（推荐s" /><meta name="keywords" content="缓存, 数据库, redis, cache, no sql, 主从复制, docker" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/cache/redis/redis-docker%E9%83%A8%E7%BD%B2%E5%8F%8A%E9%85%8D%E7%BD%AE/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[redis] Redis-Docker部署及主从复制配置" />
+<meta property="og:description" content="Redis-Docker部署及主从复制配置 1.安装部署Redis 1).查看所有的Redis镜像 docker search redis 2).拉取你中意的Redis镜像（推荐s" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/cache/redis/redis-docker%E9%83%A8%E7%BD%B2%E5%8F%8A%E9%85%8D%E7%BD%AE/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-09-07T15:37:56+08:00" />
+<meta property="article:modified_time" content="2022-02-10T16:37:56+08:00" />
+
+<meta itemprop="name" content="[redis] Redis-Docker部署及主从复制配置">
+<meta itemprop="description" content="Redis-Docker部署及主从复制配置 1.安装部署Redis 1).查看所有的Redis镜像 docker search redis 2).拉取你中意的Redis镜像（推荐s"><meta itemprop="datePublished" content="2019-09-07T15:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-02-10T16:37:56+08:00" />
+<meta itemprop="wordCount" content="1729">
+<meta itemprop="keywords" content="缓存,数据库,redis,cache,no sql,主从复制,docker," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[redis] Redis-Docker部署及主从复制配置"/>
+<meta name="twitter:description" content="Redis-Docker部署及主从复制配置 1.安装部署Redis 1).查看所有的Redis镜像 docker search redis 2).拉取你中意的Redis镜像（推荐s"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[redis] Redis-Docker部署及主从复制配置</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-09-07 </span>
+        <div class="post-category">
+            <a href="/categories/%E7%BC%93%E5%AD%98/"> 缓存 </a>
+            </div>
+          <span class="more-meta"> 约 1729 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#redis-docker部署及主从复制配置"><strong>Redis-Docker部署及主从复制配置</strong></a>
+      <ul>
+        <li><a href="#1安装部署redis"><strong>1.安装部署Redis</strong></a>
+          <ul>
+            <li><a href="#1查看所有的redis镜像"><strong>1).查看所有的Redis镜像</strong></a></li>
+            <li><a href="#2拉取你中意的redis镜像推荐star高的"><strong>2).拉取你中意的Redis镜像（推荐star高的）</strong></a></li>
+            <li><a href="#3创建挂载的目录"><strong>3).创建挂载的目录</strong></a></li>
+            <li><a href="#4配置文件"><strong>4).配置文件</strong></a></li>
+            <li><a href="#5创建容器并启动端口6379"><strong>5).创建容器并启动,端口6379</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#2启动失败查看日志">2.启动失败,查看日志</a>
+          <ul>
+            <li><a href="#3配置说明">3.配置说明</a></li>
+          </ul>
+        </li>
+        <li><a href="#4进入容器">4.进入容器:</a></li>
+        <li><a href="#5进入redis">5.进入redis</a></li>
+        <li><a href="#6主从复制"><strong>6.主从复制</strong></a>
+          <ul>
+            <li><a href="#a创建共享网络"><strong>A.创建共享网络</strong></a></li>
+            <li><a href="#b端口6379"><strong>B.端口:6379</strong></a></li>
+            <li><a href="#c端口6380"><strong>C.端口:6380</strong></a></li>
+            <li><a href="#d端口6381"><strong>D.端口:6381</strong></a></li>
+            <li><a href="#e测试主从复制"><strong>E.测试主从复制</strong></a></li>
+            <li><a href="#f哨兵-sentinel"><strong>F.哨兵</strong> <strong>sentinel</strong></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="redis-docker部署及主从复制配置"><strong>Redis-Docker部署及主从复制配置</strong></h1>
+<h2 id="1安装部署redis"><strong>1.安装部署Redis</strong></h2>
+<h3 id="1查看所有的redis镜像"><strong>1).查看所有的Redis镜像</strong></h3>
+<p>docker search redis</p>
+<h3 id="2拉取你中意的redis镜像推荐star高的"><strong>2).拉取你中意的Redis镜像（推荐star高的）</strong></h3>
+<p>docker pull <redis images></p>
+<p>em:</p>
+<p>docker pull redis</p>
+<h3 id="3创建挂载的目录"><strong>3).创建挂载的目录</strong></h3>
+<p>宿主机创建目录</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">mkdir -p /data/LPAPP/docker_redis_6379/etc
+
+mkdir -p /data/LPAPP/docker_redis_6379/data
+
+mkdir -p /data/LPAPP/docker_redis_6379/log
+
+chmod -R <span class="m">777</span> /data/LPAPP/docker_redis_6379/etc
+
+chmod -R <span class="m">777</span> /data/LPAPP/docker_redis_6379/data
+
+chmod -R <span class="m">777</span> /data/LPAPP/docker_redis_6379/log
+</code></pre></td></tr></table>
+</div>
+</div><p>宿主机上创建redis用户</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">useradd redis
+
+<span class="nb">cd</span> /data/LPAPP
+
+chown -Rf redis:redis docker_redis_6379
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4配置文件"><strong>4).配置文件</strong></h3>
+<h4 id="aredisconf配置文件"><strong>A.redis.conf配置文件</strong></h4>
+<p>#根据文档-Redis(主从复制),</p>
+<p>在/data/LPAPP/docker_redis_6379/etc下</p>
+<p>vim redis.conf</p>
+<p>复制粘贴(Redis(主从复制))=&gt;5.完整redis.conf)配置内容</p>
+<p>修改内容:</p>
+<p>#启动端口</p>
+<p>port 6379</p>
+<p>#守护方式PID存放路径</p>
+<p>pidfile /var/run/redis_6379.pid</p>
+<p>#日志文件stdout是标准输出(输出屏幕或者发送给dev/null)</p>
+<p>logfile &ldquo;/var/log/redis/redis_6379.log&rdquo;</p>
+<p>#守护方式启动,docker必须为关闭</p>
+<p>daemonize no</p>
+<h4 id="bsentinelconf配置文件"><strong>B.sentinel.conf配置文件</strong></h4>
+<p>#根据文档-Redis(主从复制)生成以下配置文件</p>
+<p>sentinel.conf #哨兵配置</p>
+<h3 id="5创建容器并启动端口6379"><strong>5).创建容器并启动,端口6379</strong></h3>
+<p>1.拉取镜像并创建容器并启动(挂载目录并从配置启动)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">docker run --privileged<span class="o">=</span><span class="nb">true</span> <span class="se">\
+</span><span class="se"></span>
+-p 6379:6379 <span class="se">\
+</span><span class="se"></span>
+-v /data/LPAPP/docker_redis_6379/data:/data <span class="se">\
+</span><span class="se"></span>
+-v /data/LPAPP/docker_redis_6379/etc:/etc/redis <span class="se">\
+</span><span class="se"></span>
+-v /data/LPAPP/docker_redis_6379/log:/var/log/redis <span class="se">\
+</span><span class="se"></span>
+--name redis_6379 <span class="se">\
+</span><span class="se"></span>
+-itd redis redis-server /etc/redis/redis.conf
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="2启动失败查看日志">2.启动失败,查看日志</h2>
+<p>docker logs redis_6379</p>
+<h3 id="3配置说明">3.配置说明</h3>
+<p>-p 6379:6379:把容器内的6379端口映射到宿主机6379端口</p>
+<p>-v /data/LPAPP/docker_redis_6379/data:/data：把宿主机配置好的redis.conf放到容器内的这个位置中</p>
+<p>-v /root/redis/data:/data：把redis持久化的数据在宿主机内显示，做数据备份</p>
+<p>redis-server /etc/redis/redis.conf -p 6379：这个是关键配置，让redis不是无配置启动，而是按照这个redis.conf的配置启动，并且端口为630</p>
+<p>–appendonly yes：redis启动后数据持久化</p>
+<p>&ndash;privileged=true 增加权限，解决权限不够，导致执行后docker ps 查不到redis</p>
+<h2 id="4进入容器">4.进入容器:</h2>
+<p>docker exec -it redis_6379 /bin/bash</p>
+<h2 id="5进入redis">5.进入redis</h2>
+<p>docker exec -it redis_6379 redis-cli -h localhost -p 6379 -a dy123456</p>
+<h2 id="6主从复制"><strong>6.主从复制</strong></h2>
+<h3 id="a创建共享网络"><strong>A.创建共享网络</strong></h3>
+<p>docker network create &ndash;driver bridge docker_redis</p>
+<p>docker netweork ls</p>
+<p>docker network inspect docker_redis</p>
+<h3 id="b端口6379"><strong>B.端口:6379</strong></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">docker stop redis_6379
+
+docker rm redis_6379
+
+docker run --privileged<span class="o">=</span><span class="nb">true</span> <span class="se">\
+</span><span class="se"></span>
+-p 6379:6379 <span class="se">\
+</span><span class="se"></span>
+-v /data/LPAPP/docker_redis_6379/data:/data <span class="se">\
+</span><span class="se"></span>
+-v /data/LPAPP/docker_redis_6379/etc:/etc/redis <span class="se">\
+</span><span class="se"></span>
+-v /data/LPAPP/docker_redis_6379/log:/var/log/redis <span class="se">\
+</span><span class="se"></span>
+--network docker_redis <span class="se">\
+</span><span class="se"></span>
+--name redis_6379 <span class="se">\
+</span><span class="se"></span>
+-itd redis redis-server /etc/redis/redis.conf
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="c端口6380"><strong>C.端口:6380</strong></h3>
+<h4 id="a创建目录">A.创建目录</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">mkdir -p /data/LPAPP/docker_redis_6380/etc <span class="se">\
+</span><span class="se"></span>
+mkdir -p /data/LPAPP/docker_redis_6380/data <span class="se">\
+</span><span class="se"></span>
+mkdir -p /data/LPAPP/docker_redis_6380/log <span class="se">\
+</span><span class="se"></span>
+chmod -R <span class="m">777</span> /data/LPAPP/docker_redis_6380/etc <span class="se">\
+</span><span class="se"></span>
+chmod -R <span class="m">777</span> /data/LPAPP/docker_redis_6380/data <span class="se">\
+</span><span class="se"></span>
+chmod -R <span class="m">777</span> /data/LPAPP/docker_redis_6380/log <span class="se">\
+</span><span class="se"></span>
+chown -Rf redis:redis docker_redis_6380
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="b创建配置">B.创建配置</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">cp /data/LPAPP/docker_redis_6379/etc/redis.conf /data/LPAPP/docker_redis_6380/etc/
+
+vim redis.conf
+
+修改内容:
+
+<span class="se">\#</span>启动端口
+
+port <span class="m">6379</span>
+
+<span class="se">\#</span>守护方式PID存放路径
+
+pidfile /var/run/redis_6380.pid
+
+<span class="se">\#</span>日志文件stdout是标准输出<span class="o">(</span>输出屏幕或者发送给dev/null<span class="o">)</span>
+
+logfile <span class="s2">&#34;/var/log/redis/redis_6380.log&#34;</span>
+
+<span class="se">\#</span>守护方式启动,docker必须为关闭
+
+daemonize no
+
+<span class="se">\#</span>从服务器只读
+
+slave-read-only yes
+
+<span class="se">\#</span>从服务器关闭AOF备份
+
+appendonly no
+
+<span class="se">\#</span>注释save相关的RDB备份
+
+<span class="se">\#</span>主服务器访问密码
+
+masterauth dy123456
+
+<span class="se">\#</span>主服务器IP和PORT
+
+slaveof redis_6379 <span class="m">6379</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="c创建并启动容器">C.创建并启动容器</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">docker run --privileged<span class="o">=</span><span class="nb">true</span> <span class="se">\
+</span><span class="se"></span>
+-p 6380:6379 <span class="se">\
+</span><span class="se"></span>
+-v /data/LPAPP/docker_redis_6380/data:/data <span class="se">\
+</span><span class="se"></span>
+-v /data/LPAPP/docker_redis_6380/etc:/etc/redis <span class="se">\
+</span><span class="se"></span>
+-v /data/LPAPP/docker_redis_6380/log:/var/log/redis <span class="se">\
+</span><span class="se"></span>
+--network docker_redis <span class="se">\
+</span><span class="se"></span>
+--name redis_6380 <span class="se">\
+</span><span class="se"></span>
+-itd redis redis-server /etc/redis/redis.conf
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="d端口6381"><strong>D.端口:6381</strong></h3>
+<h4 id="a创建目录-1">A.创建目录</h4>
+<p>mkdir -p /data/LPAPP/docker_redis_6381/etc \</p>
+<p>mkdir -p /data/LPAPP/docker_redis_6381/data \</p>
+<p>mkdir -p /data/LPAPP/docker_redis_6381/log \</p>
+<p>chmod -R 777 /data/LPAPP/docker_redis_6381/etc \</p>
+<p>chmod -R 777 /data/LPAPP/docker_redis_6381/data \</p>
+<p>chmod -R 777 /data/LPAPP/docker_redis_6381/log \</p>
+<p>chown -Rf redis:redis docker_redis_6381</p>
+<h4 id="b创建配置-1">B.创建配置</h4>
+<p>cp /data/LPAPP/docker_redis_6380/etc/redis.conf /data/LPAPP/docker_redis_6381/etc/</p>
+<p>vim redis.conf</p>
+<p>修改内容:</p>
+<p>#启动端口</p>
+<p>port 6379</p>
+<p>#守护方式PID存放路径</p>
+<p>pidfile /var/run/redis_6381.pid</p>
+<p>#日志文件stdout是标准输出(输出屏幕或者发送给dev/null)</p>
+<p>logfile &ldquo;/var/log/redis/redis_6381.log&rdquo;</p>
+<p>#守护方式启动,docker必须为关闭</p>
+<p>daemonize no</p>
+<p>#从服务器只读</p>
+<p>slave-read-only yes</p>
+<p>#从服务器关闭AOF备份</p>
+<p>appendonly no</p>
+<p>#注释save相关的RDB备份</p>
+<p>#主服务器访问密码</p>
+<p>masterauth dy123456</p>
+<p>#主服务器IP和PORT</p>
+<p>slaveof redis_6379 6379</p>
+<h4 id="c创建并启动容器-1">C.创建并启动容器</h4>
+<p>docker run &ndash;privileged=true \</p>
+<p>-p 6381:6379 \</p>
+<p>-v /data/LPAPP/docker_redis_6381/data:/data \</p>
+<p>-v /data/LPAPP/docker_redis_6381/etc:/etc/redis \</p>
+<p>-v /data/LPAPP/docker_redis_6381/log:/var/log/redis \</p>
+<p>&ndash;network docker_redis \</p>
+<p>&ndash;name redis_6381 \</p>
+<p>-itd redis redis-server /etc/redis/redis.conf</p>
+<h3 id="e测试主从复制"><strong>E.测试主从复制</strong></h3>
+<p>#查看redis服务信息</p>
+<p>docker exec -it redis_6379 redis-cli -p 6379 -a dy123456 info</p>
+<p>#查看主从复制信息</p>
+<p>docker exec -it redis_6379 redis-cli -p 6379 -a dy123456 info replication</p>
+<p>#redis客户端,测试主从复制</p>
+<p>docker exec -it redis_6379 redis-cli -h localhost -p 6379 -a dy123456</p>
+<h3 id="f哨兵-sentinel"><strong>F.哨兵</strong> <strong>sentinel</strong></h3>
+<h4 id="a创建目录-2">A.创建目录</h4>
+<p>mkdir -p /data/LPAPP/docker_redis_sentinel_26379/etc</p>
+<p>mkdir -p /data/LPAPP/docker_redis_sentinel_26379/data</p>
+<p>mkdir -p /data/LPAPP/docker_redis_sentinel_26379/log</p>
+<p>chmod -R 777 /data/LPAPP/docker_redis_sentinel_26379/etc \</p>
+<p>chmod -R 777 /data/LPAPP/docker_redis_sentinel_26379/data \</p>
+<p>chmod -R 777 /data/LPAPP/docker_redis_sentinel_26379/log \</p>
+<p>chown -Rf redis:redis docker_redis_sentinel_26379</p>
+<h4 id="b创建配置-2">B.创建配置</h4>
+<p>cd /data/LPAPP/docker_redis_sentinel_26379/etc</p>
+<p>vim sentinel.conf</p>
+<p>复制粘贴(Redis(主从复制))=&gt;sentinel.conf配置)配置内容</p>
+<p>修改的内容:</p>
+<p>sentinel monitor redis_6379 172.18.0.2 6379 1</p>
+<p>sentinel auth-pass redis_6379 dy123456</p>
+<p>sentinel down-after-milliseconds redis_6379 10000</p>
+<h4 id="c创建并启动容器-2">C.创建并启动容器</h4>
+<p>docker run &ndash;privileged=true \</p>
+<p>-p 26379:26379 \</p>
+<p>-v /data/LPAPP/docker_redis_sentinel_26379/data:/data \</p>
+<p>-v /data/LPAPP/docker_redis_sentinel_26379/etc:/etc/redis \</p>
+<p>-v /data/LPAPP/docker_redis_sentinel_26379/log:/var/log/redis \</p>
+<p>&ndash;network docker_redis \</p>
+<p>&ndash;name redis_sentinel_26379 \</p>
+<p>-itd redis redis-sentinel /etc/redis/sentinel.conf</p>
+<h4 id="d观察容器内哨兵情况">D.观察容器内哨兵情况</h4>
+<p>监听哨兵日志,停止主redis服务器,观看日志变化</p>
+<p>docker exec -it redis_sentinel_26379 redis-cli -h localhost -p 26379 -a dy123456</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-02-10
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E7%BC%93%E5%AD%98/">缓存</a>
+          <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+          <a href="/tags/redis/">redis</a>
+          <a href="/tags/cache/">cache</a>
+          <a href="/tags/no-sql/">no sql</a>
+          <a href="/tags/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/">主从复制</a>
+          <a href="/tags/docker/">docker</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/dev_language/java/spring-boot%E5%AD%A6%E4%B9%A0%E5%8F%8A%E4%BD%BF%E7%94%A8/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[java]Spring boot学习笔记</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/cache/redis/redis%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%8E%9F%E7%90%86%E5%92%8C%E9%85%8D%E7%BD%AE/">
+            <span class="next-text nav-default">[redis] Redis主从复制原理和配置</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

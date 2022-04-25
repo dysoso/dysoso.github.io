@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[crontab]定时器crontab安装与使用 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="定时器crontab安装与使用 1.crontab说明 所有用户定义的 crontab 都被保存在/var/spool/cron 目录中 首先说说cron,它是一个" /><meta name="keywords" content="linux, crontab, 定时器" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/linux/linux%E5%AE%9A%E6%97%B6%E5%99%A8crontab%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[crontab]定时器crontab安装与使用" />
+<meta property="og:description" content="定时器crontab安装与使用 1.crontab说明 所有用户定义的 crontab 都被保存在/var/spool/cron 目录中 首先说说cron,它是一个" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/linux/linux%E5%AE%9A%E6%97%B6%E5%99%A8crontab%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2016-04-12T15:37:56+08:00" />
+<meta property="article:modified_time" content="2022-02-10T16:37:56+08:00" />
+
+<meta itemprop="name" content="[crontab]定时器crontab安装与使用">
+<meta itemprop="description" content="定时器crontab安装与使用 1.crontab说明 所有用户定义的 crontab 都被保存在/var/spool/cron 目录中 首先说说cron,它是一个"><meta itemprop="datePublished" content="2016-04-12T15:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-02-10T16:37:56+08:00" />
+<meta itemprop="wordCount" content="2433">
+<meta itemprop="keywords" content="linux,crontab,定时器," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[crontab]定时器crontab安装与使用"/>
+<meta name="twitter:description" content="定时器crontab安装与使用 1.crontab说明 所有用户定义的 crontab 都被保存在/var/spool/cron 目录中 首先说说cron,它是一个"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[crontab]定时器crontab安装与使用</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2016-04-12 </span>
+        <div class="post-category">
+            <a href="/categories/linux/"> linux </a>
+            </div>
+          <span class="more-meta"> 约 2433 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#定时器crontab安装与使用">定时器crontab安装与使用</a>
+          <ul>
+            <li><a href="#1crontab说明">1.crontab说明</a></li>
+            <li><a href="#2安装crontab">2.安装crontab</a></li>
+            <li><a href="#3操作crontab服务">3.操作crontab服务</a></li>
+            <li><a href="#4crontab常用命令">4.crontab常用命令</a></li>
+            <li><a href="#5定时规则及示例">5.定时规则及示例</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="定时器crontab安装与使用">定时器crontab安装与使用</h2>
+<h3 id="1crontab说明">1.crontab说明</h3>
+<p>所有用户定义的 crontab 都被保存在/var/spool/cron 目录中</p>
+<p>首先说说cron,它是一个linux下的定时执行工具。根用户以外的用户可以使用 crontab 工具来配置 cron 任务。
+所有用户定义的 crontab 都被保存在/var/spool/cron 目录中，并使用创建它们的用户身份来执行。
+要以某用户身份创建一个 crontab 项目，登录为该用户，然后键入 crontab -e 命令来编辑该用户的 crontab。
+该文件使用的格式和 /etc/crontab 相同。当对 crontab 所做的改变被保存后，
+该 crontab 文件就会根据该用户名被保存，并写入文件 /var/spool/cron/username 中。
+cron 守护进程每分钟都检查 /etc/crontab 文件、etc/cron.d/ 目录、以及 /var/spool/cron 目录中的改变。
+如果发现了改变，它们就会被载入内存。这样，当某个 crontab 文件改变后就不必重新启动守护进程了。</p>
+<h3 id="2安装crontab">2.安装crontab</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">yum install crontabs
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3操作crontab服务">3.操作crontab服务</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">/sbin/service crond status <span class="c1">#查看crontab服务状态</span>
+/sbin/service crond start <span class="c1">#启动服务</span>
+/sbin/service crond stop <span class="c1">#关闭服务</span>
+/sbin/service crond restart <span class="c1">#重启服务</span>
+/sbin/service crond reload <span class="c1">#重新载入配置</span>
+
+ntsysv <span class="c1">#查看crontab服务是否已设置为开机启动，执行命令</span>
+chkconfig –level <span class="m">35</span> crond on <span class="c1">#加入开机自动启动</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4crontab常用命令">4.crontab常用命令</h3>
+<ul>
+<li>
+<p>基础构造</p>
+<blockquote>
+<p>功能说明：设置计时器。</p>
+<p>语　　法：crontab [-u &lt;用户名称&gt;][配置文件] 或 crontab [-u &lt;用户名称&gt;][-elr]</p>
+<p>补充说明：cron是一个常驻服务，它提供计时器的功能，
+让用户在特定的时间得以执行预设的指令或程序。
+只要用户会编辑计时器的配置文件，就可以使 用计时器的功能。其配置文件格式如下</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">Minute Hour   Day  Month DayOFWeek Command
+分钟   小时   日   月    星期      命令
+
+*       *      *    *     *        *
+
+第1列表示分钟1～59 每分钟用*或者 */1表示
+第2列表示小时1～23（0表示0点）
+第3列表示日期1～31
+第4列 表示月份1～12
+第5列标识号星期0～6（0表示星期天）
+第6列要运行的命令
+
+记住几个特殊符号的含义:
+“*”代表取值范围内的数字,
+“/”代表”每”,
+“-”代表从某个数字到某个数字,
+“,”分开几个离散的数字
+
+说明：你可以用whereis php查找php执行文件位置
+
+说明：test.php必须为可执行文件：chmod +x test.php
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>将shell加入crontab:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">crontab -e
+
+写入:* * * * * /usr/bin/php -f /root/test.php &gt;&gt; test.log
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>删除crontab内容里的任务</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sed -i <span class="s1">&#39;/test2.sh/d&#39;</span> /var/spool/cron/root
+
+sed -i <span class="s2">&#34;http:#pctest.ruthout.com/index.php/Empty/test&#34;</span> /var/spool/cron/crontabs/root
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>查看任务</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">crontab -l
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="5定时规则及示例">5.定时规则及示例</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="m">30</span> <span class="m">21</span> * * * /etc/init.d/nginx restart
+每晚的21:30重启 nginx。
+
+* * * * * /usr/bin/php -f /root/test.php &gt;&gt; test.log
+每一分钟执行/root/test.php文件，将结果输出到test.log中
+
+<span class="m">00</span> <span class="m">23</span> * * * /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/deleSinFakeData&#34;</span>
+每晚11点执行 一次清理昨天签到假数据
+
+*/1 * * * * sleep <span class="m">3</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+*/1 * * * * sleep <span class="m">6</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+......
+签到人数，每3秒增加2人
+
+
+<span class="c1">#以下为示例</span>
+<span class="c1">#同步时钟</span>
+*/30 * * * * ntpdate 210.72.145.44
+
+<span class="nv">MAILTO</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
+
+<span class="c1">#清理业务垃圾日志</span>
+<span class="c1">#仅仅保留3天</span>
+<span class="m">0</span> <span class="m">3</span> * * * find /data/web/web/Application/Runtime/Logs/* -type f -mtime +3 -exec rm -rf <span class="o">{}</span> <span class="se">\;</span>
+
+<span class="c1">#stop ruthout service</span>
+<span class="c1">#0 3 * * * /data/batstop </span>
+<span class="c1">#start ruthout service</span>
+<span class="c1">#1 3 * * * /data/batstart</span>
+<span class="c1">#backup mysql data</span>
+<span class="m">1</span> <span class="m">2</span> * * * /data/mysqlbackup.sh
+
+<span class="c1">#cut nginx log</span>
+<span class="m">0</span> <span class="m">0</span> * * * /bin/bash /opt/rh/cut_log.sh
+
+<span class="c1">#parse nginx access log</span>
+<span class="c1">#0 1 * * * /opt/remi/php54/root/usr/bin/php /data/RuthServer/crontab/parse_www_log.php</span>
+<span class="c1">#0 1 * * * /opt/remi/php54/root/usr/bin/php /data/RuthServer/crontab/parse_api_log.php</span>
+
+<span class="c1">#statistic</span>
+<span class="m">0</span> <span class="m">1</span> * * * /opt/remi/php54/root/usr/bin/php /data/RuthServer/crontab/stats.php
+
+<span class="c1">#恢复php-fpm</span>
+<span class="m">15</span> <span class="m">1</span> * * * /sbin/service php-fpm restart
+
+<span class="c1">#清理svn 三天前备份</span>
+<span class="m">0</span> <span class="m">3</span> * * * find /data/svn_bk/* -type d -mtime +3 -exec rm -rf <span class="o">{}</span> <span class="se">\;</span>
+
+<span class="c1">#一分钟去拉取一次用户的提交信息</span>
+*/1 * * * * sleep <span class="m">10</span> <span class="o">&amp;&amp;</span> /usr/bin/python /root/code_db/download_from_wx.py &gt;&gt;/root/code_db/meeting_id.log
+*/1 * * * * sleep <span class="m">20</span> <span class="o">&amp;&amp;</span> /usr/bin/python /root/code_db/download_from_wx.py &gt;&gt;/root/code_db/meeting_id.log
+*/1 * * * * sleep <span class="m">30</span> <span class="o">&amp;&amp;</span> /usr/bin/python /root/code_db/download_from_wx.py &gt;&gt;/root/code_db/meeting_id.log
+*/1 * * * * sleep <span class="m">40</span> <span class="o">&amp;&amp;</span> /usr/bin/python /root/code_db/download_from_wx.py &gt;&gt;/root/code_db/meeting_id.log
+*/1 * * * * sleep <span class="m">50</span> <span class="o">&amp;&amp;</span> usr/bin/python /root/code_db/download_from_wx.py &gt;&gt;/root/code_db/meeting_id.log
+
+<span class="c1">#定时执行付费问答，1提示专家24小时未回复 2提示用户专家36小时内回复了 3提示用户由于专家超36小时未回复，退款</span>
+*/1  * * * *  /usr/bin/curl <span class="s2">&#34;http:#server.ruthout.com/?mod=qa&amp;act=remindAsk&amp;do=remindAskUser&#34;</span>
+*/2  * * * *  /usr/bin/curl <span class="s2">&#34;http:#server.ruthout.com/?mod=qa&amp;act=remindAsk&#34;</span>
+
+<span class="c1">#对微课视频进行10%截取，用于微课分享</span>
+*/1 * * * * /usr/bin/python /root/soft/ffmpeg_process.py
+
+<span class="c1">#用于1分钟查询一次未解决的问题</span>
+*/2 * * * * python /root/soft/cmd_exec_worker/post_ask_reminder.py
+
+<span class="c1">#防止gearman/openoffice server挂掉，如果挂掉就重启</span>
+*/1 * * * * /bin/sh /root/soft/script/gearman_check.sh
+
+<span class="c1">#清理cached的缓存，每1个小时清洗一次</span>
+<span class="c1">#0 */1 * * * sync;echo 3 &gt; /proc/sys/vm/drop_caches</span>
+
+<span class="c1">#文档转码,pdf和swf，每2分钟一次</span>
+*/2 * * * * python /root/soft/cmd_exec_worker/doc_2pdf_2swf_oo.py
+
+<span class="c1">#用户注册同步，从ruth到fmalldb</span>
+*/5 * * * * python /root/soft/cmd_exec_worker/db_sync_2fmall.py
+
+<span class="c1">#扫描nginx 日志，查询攻击的地址，然后nginx封闭IP一天</span>
+*/5 * * * * /bin/sh /root/soft/cmd_exec_worker/nginx_monitor/ip_blocks.sh
+*/2 * * * * /bin/sh /root/soft/cmd_exec_worker/nginx_monitor/ip_blocks_server.sh
+<span class="c1">#*/5 * * * * /bin/sh /root/soft/cmd_exec_worker/nginx_monitor/ip_blocks_wap.sh</span>
+
+<span class="c1">#解封被封掉的IP</span>
+<span class="m">0</span> <span class="m">1</span> * * * /bin/sh /root/soft/cmd_exec_worker/nginx_monitor/clear_ips.sh
+
+<span class="c1">#签到人数 0点-8点，11点-17点，每3秒增加2人</span>
+<span class="c1">#每3秒调用一次</span>
+<span class="c1">#* * * * * /bin/sh /usr/local/crontab/crontab_sign_data.sh</span>
+<span class="c1">#* * * * * sleep 3;curl http:#www.ruthout.com/index.php/ApiUser/addSignData</span>
+<span class="c1">#* * * * * sleep 3; /usr/bin/curl &#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+*/1 * * * *  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+*/1 * * * * sleep <span class="m">3</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+*/1 * * * * sleep <span class="m">6</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+*/1 * * * * sleep <span class="m">9</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+*/1 * * * * sleep <span class="m">12</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+*/1 * * * * sleep <span class="m">15</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+*/1 * * * * sleep <span class="m">18</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+*/1 * * * * sleep <span class="m">21</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+*/1 * * * * sleep <span class="m">24</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+*/1 * * * * sleep <span class="m">27</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+*/1 * * * * sleep <span class="m">30</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+*/1 * * * * sleep <span class="m">33</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+*/1 * * * * sleep <span class="m">36</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+*/1 * * * * sleep <span class="m">39</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+*/1 * * * * sleep <span class="m">42</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+*/1 * * * * sleep <span class="m">45</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+*/1 * * * * sleep <span class="m">48</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+*/1 * * * * sleep <span class="m">51</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+*/1 * * * * sleep <span class="m">54</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+*/1 * * * * sleep <span class="m">57</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/index.php/ApiCrontab/addSignData&#34;</span>
+<span class="c1">#每晚11点执行 一次清理昨天签到假数据</span>
+<span class="c1">#00 23 * * * /usr/bin/curl &#34;http:#www.ruthout.com/index.php/ApiCrontab/deleSinFakeData&#34;</span>
+<span class="c1">#每20秒执行一下定时发帖检查，如果有定时发贴，则进行发贴</span>
+*/1 * * * * sleep <span class="m">20</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#admin.priv.ruthout.com/admin.php/Crontab/doAddCrontabCircleTopic&#34;</span>
+*/1 * * * * sleep <span class="m">40</span> <span class="o">&amp;&amp;</span>  /usr/bin/curl <span class="s2">&#34;http:#admin.priv.ruthout.com/admin.php/Crontab/doAddCrontabCircleTopic&#34;</span>
+
+<span class="c1">#每天早上7点执行一次投票数量随机加5-10次 (2017-09-22日前)</span>
+<span class="c1">#00 07 * * * /usr/bin/curl &#34;http:#www.ruthout.com/TempVoteDraw/addRandVote&#34;</span>
+
+<span class="c1">#最赞hr活动，每一分钟执行一次给审核通过的专家发送短信通知</span>
+<span class="c1">#*/1  * * * *  /usr/bin/curl &#34;http:#www.ruthout.com/index.php/ApiCrontab/sendExamieHrPassMsg&#34;</span>
+
+<span class="c1">#峰会报名活动，每一分钟执行一次给审核通过的用户发送短信通知</span>
+<span class="c1">#*/1  * * * *  /usr/bin/curl &#34;http:#www.ruthout.com/index.php/ApiCrontab/sendExamieMeetingEnroll&#34;</span>
+
+<span class="c1">#峰会报名活动，每一分钟执行一次给审核用户发微信消息通知</span>
+<span class="c1">#*/1  * * * *  /usr/bin/curl &#34;http:#www.ruthout.com/Enrollmeeting2/pushEnrollStateWxMsg&#34;</span>
+
+<span class="c1">#峰会邀约报名，每一分钟执行一次被邀约人报名成功，更新分享表报名状态，并发给邀约者收益微信通知</span>
+<span class="c1">#*/1  * * * *  /usr/bin/curl &#34;http:#www.ruthout.com/Enrollmeeting2/updateShreWx&#34;</span>
+
+<span class="c1">#峰会邀约报名，每一分钟执行一次峰会提现处理,发放微信现金红包</span>
+*/1  * * * *  /usr/bin/curl <span class="s2">&#34;http:#www.ruthout.com/Wxhongbao/sendHongBao&#34;</span>
+
+<span class="c1">#sync;echo 3 &gt; /proc/sys/vm/drop_caches</span>
+
+<span class="c1">#定时执行hr_sas项目更新，如果有新版本则更新，没有则不更新</span>
+* * * * * /bin/sh /data/soft/cmd_exec_worker/svn_up_hr_sas/crontab_up.sh
+
+<span class="c1">#建立索引</span>
+<span class="m">0</span> <span class="m">2</span> * * * /usr/java/jdk1.7.0_65/bin/java -cp /data/ruth_rpc/search-index-1.0-jar-with-dependencies.jar com.ruthout.index.CreateQASearchIndex &gt;&gt;/data/ruth_rpc/index.log
+
+<span class="c1">#峰会每天微信对账信息</span>
+<span class="m">0</span> <span class="m">2</span> * * * /usr/bin/python /root/code_db/WxpayAPI_php_log.py
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-02-10
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/linux/">linux</a>
+          <a href="/tags/crontab/">crontab</a>
+          <a href="/tags/%E5%AE%9A%E6%97%B6%E5%99%A8/">定时器</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/editor/submit%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[submit] submit常用快捷键</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/linux/lnmp%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%8F%8A%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/">
+            <span class="next-text nav-default">[php]lnmp开发环境配置及常用软件安装</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

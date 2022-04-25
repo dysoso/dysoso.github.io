@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>RAID on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/tags/raid/</link>
+    <description>Recent content in RAID on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Fri, 11 Mar 2022 09:38:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/raid/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[linux] arcconf RAID 管理工具</title>
+      <link>https://blog.nevergiveup.tech/post/linux/arcconf-raid-%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</link>
+      <pubDate>Fri, 11 Mar 2022 09:38:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/linux/arcconf-raid-%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</guid>
+      <description>arcconf RAID 管理工具 简介 Adaptec ARCCONF Command Line Utilityarcconf 是 Adaptec RAID 适配器管理工具* 常用命令 1 2 3 4 5 6 7 8 9 10 11 12 13 arcconf LIST #查询整列卡信息 arcconf GETCONFIG 1 AD # 查询 Controller #1 的适配器信息 arcconf GETCONFIG 1 LD</description>
+    </item>
+    
+  </channel>
+</rss>

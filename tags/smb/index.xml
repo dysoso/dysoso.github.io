@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>smb on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/tags/smb/</link>
+    <description>Recent content in smb on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Thu, 11 Mar 2021 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/smb/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[linux]samba安装及使用</title>
+      <link>https://blog.nevergiveup.tech/post/linux/smb%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Thu, 11 Mar 2021 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/linux/smb%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
+      <description>smb安装及使用 一.smb安装及配置 1.源码安装smb并使用 安装Samba 1 2 #安装Samba包 yum -y install samba samba-client samba-common 创建samba用户 1 2 3 4 5 6 groupadd</description>
+    </item>
+    
+  </channel>
+</rss>

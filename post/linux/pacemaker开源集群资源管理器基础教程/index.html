@@ -1,0 +1,1855 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[linux] Pacemaker集群资源管理器原理及部署 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="Pacemaker集群资源管理器原理及部署 一.Pacemaker概述 1.Pacemaker介绍 Pacemaker是 Linux环境中使用最为广" /><meta name="keywords" content="linux, pacemaker, 分布式, 开源, 集群, 资源管理器, corosync, pcsd" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/linux/pacemaker%E5%BC%80%E6%BA%90%E9%9B%86%E7%BE%A4%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%99%A8%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[linux] Pacemaker集群资源管理器原理及部署" />
+<meta property="og:description" content="Pacemaker集群资源管理器原理及部署 一.Pacemaker概述 1.Pacemaker介绍 Pacemaker是 Linux环境中使用最为广" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/linux/pacemaker%E5%BC%80%E6%BA%90%E9%9B%86%E7%BE%A4%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%99%A8%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-02-18T09:45:56+08:00" />
+<meta property="article:modified_time" content="2022-02-18T09:45:56+08:00" />
+
+<meta itemprop="name" content="[linux] Pacemaker集群资源管理器原理及部署">
+<meta itemprop="description" content="Pacemaker集群资源管理器原理及部署 一.Pacemaker概述 1.Pacemaker介绍 Pacemaker是 Linux环境中使用最为广"><meta itemprop="datePublished" content="2022-02-18T09:45:56+08:00" />
+<meta itemprop="dateModified" content="2022-02-18T09:45:56+08:00" />
+<meta itemprop="wordCount" content="11262">
+<meta itemprop="keywords" content="linux,pacemaker,分布式,开源,集群,资源管理器,corosync,pcsd," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[linux] Pacemaker集群资源管理器原理及部署"/>
+<meta name="twitter:description" content="Pacemaker集群资源管理器原理及部署 一.Pacemaker概述 1.Pacemaker介绍 Pacemaker是 Linux环境中使用最为广"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[linux] Pacemaker集群资源管理器原理及部署</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-02-18 </span>
+        <div class="post-category">
+            <a href="/categories/linux/"> linux </a>
+            </div>
+          <span class="more-meta"> 约 11262 字 </span>
+          <span class="more-meta"> 预计阅读 23 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#pacemaker集群资源管理器原理及部署">Pacemaker集群资源管理器原理及部署</a>
+      <ul>
+        <li><a href="#一pacemaker概述">一.Pacemaker概述</a>
+          <ul>
+            <li><a href="#1pacemaker介绍">1.Pacemaker介绍</a></li>
+            <li><a href="#2pacemaker主要功能">2.Pacemaker主要功能</a></li>
+            <li><a href="#3pacemaker的服务模式">3.Pacemaker的服务模式</a></li>
+            <li><a href="#4pacemaker的架构">4.Pacemaker的架构</a></li>
+            <li><a href="#5pacemake内部组件">5.Pacemake内部组件</a></li>
+          </ul>
+        </li>
+        <li><a href="#二pacemaker集群管理工具pcs">二.Pacemaker集群管理工具pcs</a>
+          <ul>
+            <li><a href="#1pcs介绍">1.pcs介绍</a></li>
+            <li><a href="#2pcs命令">2.pcs命令</a></li>
+            <li><a href="#3常用的管理命令">3.常用的管理命令</a></li>
+            <li><a href="#4pacemaker-资源的相关概念">4.Pacemaker 资源的相关概念</a></li>
+            <li><a href="#5crm中的几个基本概念">5.CRM中的几个基本概念</a></li>
+          </ul>
+        </li>
+        <li><a href="#三pacemaker心跳监测corosync">三.Pacemaker心跳监测Corosync</a></li>
+        <li><a href="#四集群安装配置corosyncpacemakerpcsd">四.集群安装配置（corosync+pacemaker+pcsd）</a>
+          <ul>
+            <li><a href="#1环境介绍">1.环境介绍</a></li>
+            <li><a href="#2基于corosync实现web高可用基础配置">2.基于corosync实现web高可用基础配置</a></li>
+            <li><a href="#3安装corosync和pacemaker">3.安装corosync和pacemaker</a></li>
+            <li><a href="#4corosync配置及启动">4.corosync配置及启动</a></li>
+            <li><a href="#5集群及pacemaker配置文件">5.<strong>集群及pacemaker配置文件</strong></a></li>
+            <li><a href="#6基于corosync实现web高可用资源管理">6.基于corosync实现web高可用资源管理</a></li>
+          </ul>
+        </li>
+        <li><a href="#五pacemaker运维命令">五.Pacemaker运维命令</a>
+          <ul>
+            <li><a href="#1pcs-命令的管理类别">1.pcs 命令的管理类别</a></li>
+            <li><a href="#2pcs-cluster-管理节点-命令">2.pcs cluster (管理节点) 命令</a></li>
+          </ul>
+        </li>
+        <li><a href="#3pcs-status-查询状态-命令">3.pcs status (查询状态) 命令</a>
+          <ul>
+            <li></li>
+          </ul>
+        </li>
+        <li><a href="#4pcs-stonith-管理隔离-命令">4.pcs stonith (管理隔离) 命令</a>
+          <ul>
+            <li></li>
+          </ul>
+        </li>
+        <li><a href="#5pcs-resoure-管理资源-命令">5.pcs resoure (管理资源) 命令</a>
+          <ul>
+            <li></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="pacemaker集群资源管理器原理及部署">Pacemaker集群资源管理器原理及部署</h1>
+<h2 id="一pacemaker概述">一.Pacemaker概述</h2>
+<h3 id="1pacemaker介绍">1.Pacemaker介绍</h3>
+<p><strong>      Pacemaker是 Linux环境中使用最为广泛的开源集群资源管理器(CRM)， Pacemaker利用集群基础架构(Corosync或者 Heartbeat)提供的消息和集群成员管理功能，实现节点和资源级别的故障检测和资源恢复，从而最大程度保证集群服务的高可用。</strong></p>
+<p>      从逻辑功能而言， pacemaker在集群管理员所定义的资源规则驱动下，负责集群中软件服务的全生命周期管理，这种管理甚至包括整个软件系统以及软件系统彼此之间的交互。 Pacemaker在实际应用中可以管理任何规模的集群，由于其具备强大的资源依赖模型，这使得集群管理员能够精确描述和表达集群资源之间的关系（包括资源的顺序和位置等关系）。</p>
+<p>      Pacemaker仅是资源管理器，并不提供集群心跳信息,事实上 Pacemaker的心跳机制主要基于 Corosync或 Heartbeat来实现，Heartbeat到了3.0版本后已经被拆分为几个子项目:</p>
+<ul>
+<li>
+<p>Heartbeat</p>
+<p>最初的消息通信层被独立为新的 Heartbeat项目，新的 Heartbeat只负责维护集群各节点的信息以及它们之间的心跳通信，通常将 Pacemaker与 Heartbeat或者 Corosync共同组成集群管理软件， Pacemaker利用 Heartbeat或者Corosync提供的节点及节点之间的心跳信息来判断节点状态。</p>
+</li>
+<li>
+<p>Cluster Clue</p>
+<p>Cluster Clue 相当于一个中间层，它用来将Heartbeat和Pacemaker关联起来，主要包含两个部分，即本地资源管理器（Local Resource Manager，LRM）和Fencing设备（Shoot The Other Node In The Head，STONITH）</p>
+</li>
+<li>
+<p>Resource Agent</p>
+<p>资源代理（Resource Agent，RA）是用来控制服务的启停，监控服务状态的脚本集合，这些脚本会被位于本节点上的LRM调用从而实现各种资源的启动、停止、监控等操作。</p>
+</li>
+<li>
+<p>Pacemaker</p>
+<p>Pacemaker是整个高可用集群的控制中心，用来管理整个集群的资源状态行为，客户端通过 pacemaker来配置、管理、监控整个集群的运行状态。</p>
+</li>
+</ul>
+<h3 id="2pacemaker主要功能">2.Pacemaker主要功能</h3>
+<ul>
+<li>监测并恢复节点和服务级别的故障。</li>
+<li>存储无关，并不需要共享存储。</li>
+<li>资源无关，任何能用脚本控制的资源都可以作为集群服务。</li>
+<li>支持节点 STONITH功能以保证集群数据的完整性和防止集群脑裂。</li>
+<li>支持大型或者小型集群。</li>
+<li>支持 Quorum机制和资源驱动类型的集群。</li>
+<li>支持几乎是任何类型的冗余配置。</li>
+<li>自动同步各个节点的配置文件。</li>
+<li>可以设定集群范围内的 Ordering、 Colocation and Anti-colocation等约束。</li>
+<li>高级服务类型支持:
+<ul>
+<li>Clone功能，即那些要在多个节点运行的服务可以通过 Clone功能实现， Clone功能将会在多个节点上启动相同的服务；</li>
+<li>Multi-state功能，即那些需要运行在多状态下的服务可以通过 Multi&ndash;state实现，在高可用集群的服务中，有很多服务会运行在不同的高可用模式下，</li>
+<li>如：Active/Active模式或者 Active/passive模式等，并且这些服务可能会在 Active 与standby(Passive)之间切换。</li>
+</ul>
+</li>
+<li>具有统一的、脚本化的集群管理工具</li>
+</ul>
+<h3 id="3pacemaker的服务模式">3.Pacemaker的服务模式</h3>
+<p>​	Pacemaker对用户的环境没有特定的要求，这使得它支持任何类型的高可用节点冗余配置，包括 Active/Active、 Active/Passive、N+1、 N+M、 N-to-1 and N-to-N模式的高可用集群，用户可以根据自身对业务的高可用级别要求和成本预算，通过 Pacemaker部署适合自己的高可用集群。</p>
+<ul>
+<li>
+<p>Active/Active模式</p>
+<p>在这种模式下，故障节点上的访问请求或自动转到另外一个正常运行节点上，或通过负载均衡器在剩余的正常运行的节点上进行负载均衡。这种模式下集群中的节点通常部署了相同的软件并具有相同的参数配置，同时各服务在这些节点上并行运行</p>
+</li>
+<li>
+<p>Active/Passive模式</p>
+<p>在这种模式下，每个节点上都部署有相同的服务实例，但是正常情况下只有一个节点上的服务实例处于激活状态，只有当前活动节点发生故障后，另外的处于 standby状态的节点上的服务才会被激活，这种模式通常意味着需要部署额外的且正常情况下不承载负载的硬件。</p>
+</li>
+<li>
+<p>N+1模式</p>
+<p>所谓的N+1就是多准备一个额外的备机节点，当集群中某一节点故障后该备机节点会被激活从而接管故障节点的服务。在不同节点安装和配置有不同软件的集群中，即集群中运行有多个服务的情况下，该备机节点应该具备接管任何故障服务的能力，而如果整个集群只运行同一个服务，则N+1模式便退变为 Active/Passive模式。</p>
+</li>
+<li>
+<p>N+M模式</p>
+<p>在单个集群运行多种服务的情况下，N+1模式下仅有的一个故障接管节点可能无法提供充分的冗余，因此，集群需要提供 M（M&gt;l）个备机节点以保证集群在多个服务同时发生故障的情况下仍然具备高可用性， M的具体数目需要根据集群高可用性的要求和成本预算来权衡。</p>
+</li>
+<li>
+<p>N-to-l模式</p>
+<p>在 N-to-l模式中，允许接管服务的备机节点临时成为活动节点（此时集群已经没有备机节点），但是，当故障主节点恢复并重新加人到集群后，备机节点上的服务会转移到主节点上运行，同时该备机节点恢复 standby状态以保证集群的高可用</p>
+</li>
+<li>
+<p>N-to-N模式</p>
+<p>N-to-N是 Active/Active模式和N+M模式的结合， N-to-N集群将故障节点的服务和访问请求分散到集群其余的正常节点中，在N-to-N集群中并不需要有Standby节点的存在、但是需要所有Active的节点均有额外的剩余可用资源。</p>
+</li>
+</ul>
+<h3 id="4pacemaker的架构">4.Pacemaker的架构</h3>
+<p>从高层次的集群抽象功能来看， Pacemaker的核心架构主要由集群不相关组件、集群资源管理组件和集群底层基础模块三个部分组成。</p>
+<ul>
+<li>
+<p>底层基础模块</p>
+<p>底层的基础架构模块主要向集群提供可靠的消息通信、集群成员关系和等功能，底层基础模块主要包括像 corosync、 CMAN和 Heartbeat等项目组件</p>
+</li>
+<li>
+<p>集群无关组件</p>
+<p>这部分组件主要包括资源本身以及用于启动、关闭以及监控资源状态的脚本，同时还包括用于屏蔽和消除实现这些脚本所采用的不同标准之间差异的本地进程</p>
+</li>
+<li>
+<p>资源管理器</p>
+<p>Pacemaker就像集群大脑，专门负责响应和处理与集群相关的事件，这些事件主要包括集群节点的加人、集群节点脱离，以及由资源故障、维护、计划的资源相关操作所引起的资源事件，同时还包括其他的一些管理员操作事件，如对配置文件的修改和服务重启等操作。</p>
+</li>
+</ul>
+<h3 id="5pacemake内部组件">5.Pacemake内部组件</h3>
+<p>Pacemaker作为一个独立的集群资源管理器项目，其本身由多个内部组件构成，这些内部组件彼此之间相互通信协作并最终实现了集群的资源管理， Pacemaker项目由五个内部组件构成，各个组件之间的关系如 :</p>
+<ul>
+<li>
+<p>CIB：集群信息基础（ Cluster Information Base)。</p>
+</li>
+<li>
+<p>CRMd：集群资源管理进程（ Cluster Resource Manager deamon)。</p>
+</li>
+<li>
+<p>LRMd：本地资源管理进程(Local Resource Manager deamon)。</p>
+</li>
+<li>
+<p>PEngine(PE)：策略引擎(PolicyEngine)。</p>
+</li>
+<li>
+<p>STONITHd：集群 Fencing进程（ Shoot The Other Node In The Head deamon)。</p>
+</li>
+</ul>
+<p><img src="/content/post/linux/Pacemaker%E5%BC%80%E6%BA%90%E9%9B%86%E7%BE%A4%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%99%A8%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/pcs-internals.png" alt="img"></p>
+<h2 id="二pacemaker集群管理工具pcs">二.Pacemaker集群管理工具pcs</h2>
+<h3 id="1pcs介绍">1.pcs介绍</h3>
+<p>​      可以用用 cibadmin命令行工具来查看和管理 pacemaker的集群配置信息，集群 CIB中的配置信息量非常大而且以 XML语言呈现，对于仅由极少数节点和资源所组成的集群，cibadmin也许是个可行方案。 而在开源社区里，简单实用才是真正开源精神的体现，对于开源系统中任何文件配置参数的修改，简化统一的命令行工具才是最终的归宿。</p>
+<p>      随着开源集群软件Pacemaker版本的不断更新，社区推出了两个常用的集群管理命令行工具，即集群管理员最为常用的 pcs和 crmsh命令。本文使用的是 pcs命令行工具，关于 crmsh的更多使用方法和手册可以参考Pacemaker的官方网站。在 pacemaker集群中PCS命令行工具几乎可以实现集群管理的各种功能，例如，全部受控的 pacemaker和配置属性的变更管理都可以通过 pcs实现。此外，需要注意的是， pcs命令行的使用对系统中安装的 pacemaker和 corosync软件版本有一定要求，即 Pacemaker1.1.8及其以上版本， Corosync 2.0及其以上版本才能使用 pcs命令行工具进行集群管理。</p>
+<h3 id="2pcs命令">2.pcs命令</h3>
+<p>pcs命令可以管理的集群对象类别和具体使用方式可以通过pcs &ndash;help参数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@node1 ~<span class="o">]</span><span class="c1"># pcs --help</span>
+
+Usage: pcs <span class="o">[</span>-f file<span class="o">]</span> <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>commands<span class="o">]</span>...
+Control and configure pacemaker and corosync.
+
+Options:
+    -h, --help         Display usage and exit.
+    -f file            Perform actions on file instead of active CIB.
+    --debug            Print all network traffic and external commands run.
+    --version          Print pcs version information. List pcs capabilities <span class="k">if</span>
+                       --full is specified.
+    --request-timeout  Timeout <span class="k">for</span> each outgoing request to another node in
+                       seconds. Default is 60s.
+    --force            Override checks and errors, the exact behavior depends on
+                       the command. WARNING: Using the --force option is
+                       strongly discouraged unless you know what you are doing.
+
+Commands:
+    cluster     Configure cluster options and nodes<span class="p">|</span>配置集群选项和节点
+    resource    Manage cluster resources<span class="p">|</span>创建和管理集群资源
+    stonith     Manage fence devices<span class="p">|</span>创建和管理fence设备
+    constraint  Manage resource constraints<span class="p">|</span>管理集群资源约束和限制
+    property    Manage pacemaker properties<span class="p">|</span>管理集群节点和资源属性
+    acl         Manage pacemaker access control lists<span class="p">|</span>管理acl
+    qdevice     Manage quorum device provider on the <span class="nb">local</span> host.
+    quorum      Manage cluster quorum settings<span class="p">|</span>管理quorum机制设置
+    booth       Manage booth <span class="o">(</span>cluster ticket manager<span class="o">)</span>.
+    status      View cluster status<span class="p">|</span>查看当前集群资源和节点以及进程状态
+    config      View and manage cluster configuration<span class="p">|</span>以用户可读格式显示完整集群配置信息
+    pcsd        Manage pcs daemon<span class="p">|</span>管理pcs守护进程
+    node        Manage cluster nodes<span class="p">|</span>管理集群节点
+    alert       Manage pacemaker alerts<span class="p">|</span>管理告警
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3常用的管理命令">3.常用的管理命令</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">cluster      配置集群选项和节点
+status       查看当前集群资源和节点以及进程状态
+resource     创建和管理集群资源
+constraint   管理集群资源约束和限制
+property     管理集群节点和资源属性
+config       以用户可读格式显示完整集群配置信息
+
+<span class="c1">#显示当前 pcs 版本</span>
+pcs --version
+<span class="c1">#查看原始集群配置</span>
+pcs cluster cib
+<span class="c1">#显示完整集群配置</span>
+pcs config
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4pacemaker-资源的相关概念">4.Pacemaker 资源的相关概念</h3>
+<h4 id="资源"><strong>资源</strong></h4>
+<p>Resource在 Pacemaker集群中，各种功能服务通常被配置为集群资源，从而接受资源管理器的调度与控制，资源是集群管理的最小单位对象</p>
+<h4 id="分类"><strong>分类</strong></h4>
+<p>根据用户的配置，资源有不同的种类，其中最为简单的资源是原始资源(primitive Resource)，此外还有相对高级和复杂的资源组(Resource Group)和克隆资源(Clone Resource)等集群资源概念</p>
+<h4 id="资源代理"><strong>资源代理</strong></h4>
+<p>在 Pacemaker集群中，每一个原始资源都有一个资源代理(Resource Agent， RA)，RA是一个与资源相关的外部脚本程序，该程序抽象了资源本身所提供的服务并向集群呈现一致的视图以供集群对该资源进行操作控制。</p>
+<h4 id="资源代理作用"><strong>资源代理作用</strong></h4>
+<p>通过 RA，几乎任何应用程序都可以成为 Pacemaker集群的资源从而被集群资源管理器和控制。RA的存在，使得集群资源管理器可以对其所管理的资源“不求甚解&quot;，即集群资源管理器无需知道资源具体的工作逻辑和原理（ RA已将其封装），资源管理器只需向 RA发出 start、 stop、Monitor等命令， RA便会执行相应的操作。从资源管理器对资源的控制过程来看，集群对资源的管理完全依赖于该资源所提供的，即资源的 RA脚本功能直接决定了资源管理器可以对该资源进行何种控制，因此一个功能完善的 RA在发行之前必须经过充分的功能测试</p>
+<h4 id="资源属性"><strong>资源属性</strong></h4>
+<p>在 pacemaker中，每个资源都具有属性，资源属性决定了该资源 RA脚本的位置，以及该资源隶属于哪种资源标准。例如，在某些情况下，用户可能会在同一系统中安装不同版本或者不同来源的同一服务（如相同的 RabbitMQ Cluster安装程序可能来自 RabbitMQ官方社区也可能来自 Redhat提供的 RabbitMQ安装包），在这个时候，就会存在同一服务对应多个版本资源的情况，为了区分不同来源的资源，就需要在定义集群资源的时候通过资源属性来指定具体使用哪个资源</p>
+<h4 id="资源约束"><strong>资源约束</strong></h4>
+<p>集群是由众多具有特定功能的资源组成的集合，集群中的每个资源都可以对外提供独立服务，但是资源彼此之间存在依赖与被依赖的关系。如资源B的启动必须依赖资源A的存在，因此资源A必须在资源B之前启动，再如资源A必须与资源B位于同一节点以共享某些服务，则资源 B与 A在故障切换时必须作为一个逻辑整体而同时迁移到其他节点，在 pacemaker中，资源之间的这种关系通过资源约束或限制（ Resource constraint)来实现。</p>
+<h3 id="5crm中的几个基本概念">5.CRM中的几个基本概念</h3>
+<h4 id="1资源类型">1).资源类型</h4>
+<ul>
+<li>
+<p>primitive（native）：基本资源，原始资源</p>
+</li>
+<li>
+<p>group：资源组</p>
+</li>
+<li>
+<p>clone：克隆资源（可同时运行在多个节点上），要先定义为primitive后才能进行clone。主要包含STONITH和集群文件系统（cluster filesystem）</p>
+</li>
+<li>
+<p>master/slave：主从资源，如drdb（下文详细讲解）</p>
+</li>
+</ul>
+<h4 id="2ra类型">2).RA类型</h4>
+<ul>
+<li>
+<p>Lsb：linux表中库，一般位于/etc/rc.d/init.d/目录下的支持start|stop|status等参数的服务脚本都是lsb</p>
+</li>
+<li>
+<p>ocf：Open cluster Framework，开放集群架构</p>
+</li>
+<li>
+<p>heartbeat：heartbaet V1版本</p>
+</li>
+<li>
+<p>stonith：专为配置stonith设备而用</p>
+</li>
+</ul>
+<h4 id="3资源粘性">3).资源粘性</h4>
+<p>资源粘性表示资源是否倾向于留在当前节点，如果为正整数，表示倾向，负数则会离开，-inf表示正无穷，inf表示正无穷。</p>
+<h4 id="4资源约束">4).资源约束</h4>
+<p>资源约束则用以指定在哪些群集节点上运行资源，以何种顺序装载资源，以及特定资源依赖于哪些其它资源。</p>
+<ul>
+<li>
+<p>Resource Location（资源位置）：定义资源可以、不可以或尽可能在哪些节点上运行；</p>
+</li>
+<li>
+<p>Resource Collocation（资源排列）：排列约束用以定义集群资源可以或不可以在某个节点上同时运行；</p>
+</li>
+<li>
+<p>Resource Order（资源顺序）：顺序约束定义集群资源在节点上启动的顺序；</p>
+</li>
+</ul>
+<p>定义约束时，还需要指定值。资源安按值管理是集群工作方式的重要组成部分。从迁移资源到决定在已降级集群中停止哪些资源的整个过程是通过以某种方式改变资源值来实现的。值按每个资源来计算，资源值为负的任何节点都无法运行该资源。在计算出资源值后，集群选择值最高的节点。</p>
+<p>有两个特殊值：inf(正无穷,表示只要有可能就要）、-inf(负无穷,表示只要有可能就不要)</p>
+<p> 定义资源约束时，也可以指定每个约束的值。值较高的约束先应用，值较低的约束后应用。通过使用不同的值为既定资源创建更多位置约束，可指定资源故障转移至的目标节点的顺序。</p>
+<h2 id="三pacemaker心跳监测corosync">三.Pacemaker心跳监测Corosync</h2>
+<p><strong>Corosync在传递信息的时候可以通过一个简单的配置文件来定义信息传递的方式和协议等。</strong></p>
+<p><strong>Corosync作为Pacemaker的心跳检测机制存在。</strong></p>
+<p>它是一个新兴的软件，2008年推出，但其实它并不是一个真正意义上的新软件，在2002年的时候有一个项目Openais它由于过大，分裂为两个子项目，其中可以实现HA心跳信息传输的功能就是Corosync ,它的代码60%左右来源于Openais. Corosync可以提供一个完整的HA功能，但是要实现更多，更复杂的功能，那就需要使用Openais了。</p>
+<p>Corosync是未来的发展方向。在以后的新项目里，一般采用Corosync，而hb_gui可以提供很好的HA管理功能，可以实现图形化的管理。另外相关的图形化有RHCS的套件luci+ricci.</p>
+<h2 id="四集群安装配置corosyncpacemakerpcsd">四.集群安装配置（corosync+pacemaker+pcsd）</h2>
+<h3 id="1环境介绍">1.环境介绍</h3>
+<table>
+<thead>
+<tr>
+<th>主机IP</th>
+<th>主机名</th>
+<th>安装配置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10.0.8.111</td>
+<td>node1</td>
+<td>corosync+pacemaker+pcsd+crmsh</td>
+</tr>
+<tr>
+<td>10.0.8.112</td>
+<td>node2</td>
+<td>corosync+pacemaker+pcsd+crmsh</td>
+</tr>
+<tr>
+<td>10.0.8.113</td>
+<td>node3</td>
+<td>corosync+pacemaker+pcsd+crmsh</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2基于corosync实现web高可用基础配置">2.基于corosync实现web高可用基础配置</h3>
+<h4 id="1配置主机名">1).配置主机名</h4>
+<p>node1示例</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># vim /etc/hosts</span>
+10.0.8.111  node1 node1.hoo.com
+10.0.8.112  node2 node2.hoo.com
+10.0.8.113  node3 node3.hoo.com
+<span class="c1"># ifconfig eth0 10.0.8.111 up</span>
+<span class="c1"># hostname node1</span>
+<span class="c1"># uname -n</span>
+<span class="c1"># vim /etc/sysconfig/network  //重启才生效，source也不生效</span>
+<span class="nv">hostname</span><span class="o">=</span>node1
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2时间同步">2).时间同步</h4>
+<p>node2和node3都配置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># crontab -e</span>
+*/5 * * * * /usr/sbin/ntpdate 10.0.8.111 <span class="p">&amp;</span>&gt; /dev/null
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3配置node之间ssh互信">3).配置node之间SSH互信</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">node1:
+<span class="c1">#ssh-keygen  -t rsa -f ~/.ssh/id_rsa  -P &#39;&#39;</span>
+<span class="c1"># ssh-copy-id -i .ssh/id_rsa.pub root@node2.hoo.com</span>
+node1:
+<span class="c1">#ssh-keygen  -t rsa -f ~/.ssh/id_rsa  -P &#39;&#39;</span>
+<span class="c1"># ssh-copy-id -i .ssh/id_rsa.pub root@node1.hoo.com</span>
+node1：测试
+<span class="c1">#  ssh node2.hoo.com ‘date’;date</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="4安装httpd">4).安装httpd</h4>
+<p>node1,node2</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># yum install httpd -y</span>
+<span class="c1"># ssh node2 &#34;yum install httpd -y &#34;</span>
+<span class="c1"># ss -tunl | grep 80</span>
+<span class="c1"># ssh node2 &#34;ss -tunl | grep 80&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>node1,node2均关闭httpd的自启动，httpd由Pacemaker管理</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># chkconfig httpd off</span>
+<span class="c1"># ckconfig --list httpd  //检查</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>node1,node2提供测试页</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@node1 ~<span class="o">]</span><span class="c1"># echo &#34;node1.hoo.com&#34; &gt;/var/www/html/index.html</span>
+<span class="o">[</span>root@node2 ~<span class="o">]</span><span class="c1"># echo &#34;node2.hoo.com&#34; &gt;/var/www/html/index.html</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="5安装资源管理器客户端命令接口工具crmsh">5).安装资源管理器客户端命令接口工具crmsh</h4>
+<p>从pacemaker 1.1.8开始，crmsh发展成了一个独立项目，叫crmsh。pacemaker默认不提供命令接口工具，需要单独安装crmsh。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">//crmsh依赖pssh
+<span class="c1"># yum -y install pssh-2.3.1-2.el6.x86_64.rpm</span>
+<span class="c1"># yum -y install crmsh-1.2.6-4.el6.x86_64.rpm</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3安装corosync和pacemaker">3.安装corosync和pacemaker</h3>
+<p>所有节点均安装</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># yum install corosync pacemaker -y</span>
+<span class="c1"># rpm -ql corosync</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>可使用 <code>yum install</code> 命令安装 Red Hat High Availability Add-On 软件包以及 High Availability 频道中的所有可用 fence 代理。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">yum install pcs fence-agents-all
+</code></pre></td></tr></table>
+</div>
+</div><p>另外，可使用下面的命令安装 Red Hat High Availability Add-On 软件包以及只有您需要的 fence 代理。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">yum install pcs fence-agents-model
+</code></pre></td></tr></table>
+</div>
+</div><p>以下命令显示可用 fence 代理列表。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@node1 ~<span class="o">]</span><span class="c1"># rpm -q -a | grep fence </span>
+fence-agents-rhevm-4.0.2-3.el7.x86_64
+fence-agents-ilo-mp-4.0.2-3.el7.x86_64
+fence-agents-ipmilan-4.0.2-3.el7.x86_64
+...
+</code></pre></td></tr></table>
+</div>
+</div><p><code>lvm2-cluster</code> 和 <code>gfs2-utils</code> 软件包是 ResilientStorage 频道的一部分，可根据需要使用以下命令安装</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">yum install lvm2-cluster gfs2-utils
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4corosync配置及启动">4.corosync配置及启动</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#配置目录：/etc/corosync</span>
+<span class="c1">#配置模板：/etc/corosync/corosync.conf.example</span>
+<span class="c1">#服务器脚本：/etc/rc.d/init.d/corosync</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="1配置主配置文件">1).配置主配置文件</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@node1 ~<span class="o">]</span><span class="c1"># cd /etc/corosync/</span>
+<span class="o">[</span>root@node1 corosync<span class="o">]</span><span class="c1"># cp corosync.conf.example corosync.conf</span>
+<span class="o">[</span>root@node1 corosync<span class="o">]</span><span class="c1"># vi corosync.conf</span>
+compatibility: whitetank   <span class="c1">#表示是否兼容0.8之前的版本</span>
+totem <span class="o">{</span>        <span class="c1">#图腾，定义集群中各节点中通信机制以及参数</span>
+        version: <span class="m">2</span>    <span class="c1">#图腾的协议版本号，不修改</span>
+        secauth: on   <span class="c1">#安全认证功能是否启用，当使用aisexec时，会非常消耗CPU</span>
+        threads: <span class="m">0</span>    <span class="c1">#实现认证时的并行线程数，0表示默认配置</span>
+        interface <span class="o">{</span>   <span class="c1"># 指定在哪个接口发心跳信息，子模块</span>
+                ringnumber: <span class="m">0</span>   <span class="c1">#冗余环号，节点有多个网卡是可定义，避免心跳信息成环。</span>
+                bindnetaddr: 192.168.1.0   <span class="c1">#绑定心跳网段</span>
+                mcastaddr: 226.94.8.8      <span class="c1">#心跳组播地址</span>
+                mcastport: <span class="m">5405</span>            <span class="c1">#心跳组播使用端口</span>
+                ttl: <span class="m">1</span>                     <span class="c1">#表示只向外播一次</span>
+        <span class="o">}</span>
+<span class="o">}</span>
+logging <span class="o">{</span>          <span class="c1"># 跟日志相关</span>
+        fileline: off       <span class="c1">#指定要打印的行</span>
+        to_stderr: no       <span class="c1">#是否发送到标准错误输出，即屏幕</span>
+        to_logfile: yes     <span class="c1">#记录到日志文件</span>
+        to_syslog: no       <span class="c1">#记录到系统日志syslog</span>
+        logfile: /var/log/cluster/corosync.log  <span class="c1">#日志文件路径</span>
+        debug: off          <span class="c1">#是否启动调试</span>
+        timestamp: on       <span class="c1">#是否打印时间戳</span>
+        logger_subsys <span class="o">{</span>     <span class="c1">#日志的子系统</span>
+                subsys: AMF
+                debug: off
+        <span class="o">}</span>
+<span class="o">}</span>
+service <span class="o">{</span>
+  ver:  <span class="m">0</span>
+  name: pacemaker        <span class="c1">#定义corosync启动时同时启动pacemaker</span>
+  <span class="c1"># use_mgmtd: yes</span>
+<span class="o">}</span>                                                                                                                             
+aisexec <span class="o">{</span>     <span class="c1">#表示启动ais的功能时，以哪个用户的身份运行</span>
+              <span class="c1">#这个块可不定义，corosync默认就是以root身份运行的</span>
+  user: root
+  group: root
+<span class="o">}</span>
+amf <span class="o">{</span>     <span class="c1"># 跟编程接口相关的</span>
+        mode: disabled
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2生成认证key">2).生成认证key</h4>
+<p>   用corosync-keygen生成key时，由于要使用/dev/random生成随机数，因此如果新装的系统操作不多，如果没有足够的熵，狂敲键盘即可，随意敲，敲够即可。（关于random使用键盘敲击产生随机数的原理可自行google）</p>
+<p>   实验演示没有足够的熵，这里将采用投机的方式，生产环境，切切不可。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">//投机的认证方式
+<span class="c1"># mv /dev/random /dev/lala</span>
+<span class="c1"># ln /dev/urandom /dev/random   //将随机数生成器链接至伪随机数生成器</span>
+<span class="c1"># corosync-keygen    //生成密钥文件，用于节点通信，会生成authkey文件</span>
+<span class="c1"># rm -rf /dev/random        //删除链接</span>
+<span class="c1"># mv /dev/lala /dev/random     //还原随机数生成器</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3copy配置给node2">3).copy配置给node2</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@node1 corosync<span class="o">]</span><span class="c1"># scp authkey corosync.conf node2:/etc/corosync/</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="4启动corosync">4).启动corosync</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@node1 corosync<span class="o">]</span><span class="c1"># service corosync start</span>
+<span class="o">[</span>root@node1 corosync<span class="o">]</span><span class="c1"># ssh node2  &#34;service corosync start&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="5检查启动状况">5).检查启动状况</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">//查看corosync引擎是否正常启动
+<span class="o">[</span>root@node1 corosync<span class="o">]</span><span class="c1"># grep -e &#34;Corosync Cluster Engine&#34; -e &#34;configuration file&#34; /var/log/messages</span>
+//查看初始化节点通知是否正常发出
+<span class="o">[</span>root@node1 corosync<span class="o">]</span><span class="c1"># grep  TOTEM  /var/log/messages</span>
+//检查启动过程中是否有错误产生
+<span class="o">[</span>root@node1 corosync<span class="o">]</span><span class="c1"># grep ERROR: /var/log/messages | grep -v unpack_resources</span>
+//查看pacemaker是否正常启动
+<span class="o">[</span>root@node1 corosync<span class="o">]</span><span class="c1"># grep pcmk_startup /var/log/messages</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="5集群及pacemaker配置文件">5.<strong>集群及pacemaker配置文件</strong></h3>
+<h4 id="1配置文件说明">1).配置文件说明</h4>
+<p>Red Hat High Availability Add-On 的配置文件为 corosync.conf 和 cib.xml。请勿直接编辑这些文件，而是使
+用 pcs 或 pcsd 界面进行编辑。</p>
+<p>corosync.conf 文件（/etc/corosync/corosync.conf）提供 corosync 使用的集群参数，后者是 Pacemaker 所在集群管理器</p>
+<p>cib.xml 是一个 XML 文件（/var/lib/pacemaker/cib/cib.xml），代表集群配置和集群中所有资源的当前状态。这个文件由 Pacemaker 的集群信息基地（CIB）使用。会自动在整个集群中同步 CIB 的内容</p>
+<h4 id="2修改配置">2).修改配置</h4>
+<p><strong>pcs命令行</strong>
+pcs 命令行界面通过为 corosync.conf 文件 cib.xml 提供界面，从而控制和配置 corosync 及 Pacemaker。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#pcs 命令一般格式如下。</span>
+pcs <span class="o">[</span>-f file<span class="o">]</span> <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>commands<span class="o">]</span>...
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>查看原始集群配置</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">pcs cluster cib
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>将配置更改保存到文件中</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#使用 pcs 命令时，可使用 -f 选项将配置更改保存到文件中，而不会影响活跃的 CIB。</span>
+<span class="c1">#如果之前已配置了集群，且已有一个活跃 CIB，则可使用以下命令保存原始 xml 文件。</span>
+pcs cluster cib filename
+<span class="c1">#例如：可使用以下命令将原始 xml 从 CIB 保存到名为 testfile 的文件。</span>
+pcs cluster cib testfile
+
+<span class="c1">#以下命令在 testfile1 中创建一个资源，但不会将该资源添加到当前运行的集群配置中。</span>
+pcs -f testfile1 resource create VirtualIP ocf💓IPaddr2 <span class="nv">ip</span><span class="o">=</span>192.168.0.120
+<span class="nv">cidr_netmask</span><span class="o">=</span><span class="m">24</span> op monitor <span class="nv">interval</span><span class="o">=</span>30s
+<span class="c1">#可使用以下命令将 testfile 的当前内容 push 回 CIB 中。</span>
+pcs cluster cib-push filename
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="6基于corosync实现web高可用资源管理">6.基于corosync实现web高可用资源管理</h3>
+<h4 id="1crmsh使用介绍">1).crmsh使用介绍</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@node1 ~<span class="o">]</span><span class="c1"># crm  //进入crmsh</span>
+crm<span class="o">(</span>live<span class="o">)</span><span class="c1"># help   #查看帮助</span>
+This is crm shell, a Pacemaker <span class="nb">command</span> line interface.
+Available commands:
+    cib              manage shadow CIBs            <span class="c1">#CIB管理模块</span>
+    resource         resources management     <span class="c1">#资源管理模块</span>
+    configure        CRM cluster configuration  <span class="c1">#CRM配置，包含资源粘性、资源类型、资源约束等</span>
+    node             nodes management  <span class="c1">#节点管理</span>
+    options          user preferences  <span class="c1">#用户偏好</span>
+    <span class="nb">history</span>          CRM cluster <span class="nb">history</span>  <span class="c1">#CRM 历史</span>
+    site             Geo-cluster support  <span class="c1">#地理集群支持</span>
+    ra               resource agents information center <span class="c1">#资源代理配置</span>
+    status           show cluster status  <span class="c1">#查看集群状态</span>
+    help,?           show <span class="nb">help</span> <span class="o">(</span><span class="nb">help</span> topics <span class="k">for</span> list of topics<span class="o">)</span>  <span class="c1">#查看帮助</span>
+    end,cd,up        go back one level  <span class="c1">#返回上一级</span>
+    quit,bye,exit    <span class="nb">exit</span> the program  <span class="c1">#退出</span>
+crm<span class="o">(</span>live<span class="o">)</span><span class="c1"># configure         #进入配置模式</span>
+crm<span class="o">(</span>live<span class="o">)</span>configure# show     <span class="c1">#查看当前配置</span>
+crm<span class="o">(</span>live<span class="o">)</span>configure# verify   <span class="c1">#检查当前配置语法</span>
+crm<span class="o">(</span>live<span class="o">)</span>configure# commit   <span class="c1">#提交配置</span>
+crm<span class="o">(</span>live<span class="o">)</span>configure# <span class="nb">cd</span>
+crm<span class="o">(</span>live<span class="o">)</span><span class="c1"># ra   //进入RA（资源代理配置）模式</span>
+crm<span class="o">(</span>live<span class="o">)</span>ra# <span class="nb">help</span>
+This level contains commands which show various information about
+the installed resource agents. It is available both at the top
+level and at the <span class="sb">`</span>configure<span class="sb">`</span> level.
+Available commands:
+    classes          list classes and providers    <span class="c1">##查看RA类型</span>
+    list             list RA <span class="k">for</span> a class <span class="o">(</span>and provider<span class="o">)</span>  <span class="c1">##查看指定类型（或提供商）的RA</span>
+    meta,info        show meta data <span class="k">for</span> a RA   <span class="c1">##查看RA详细信息</span>
+    providers        show providers <span class="k">for</span> a RA and a class  <span class="c1">##查看指定资源的提供商和类型</span>
+    help,?           show <span class="nb">help</span> <span class="o">(</span><span class="nb">help</span> topics <span class="k">for</span> list of topics<span class="o">)</span>
+    end,cd,up        go back one level
+    quit,bye,exit    <span class="nb">exit</span> the program
+crm<span class="o">(</span>live<span class="o">)</span>ra# <span class="nb">cd</span>
+crm<span class="o">(</span>live<span class="o">)</span><span class="c1"># status   //查看集群状态</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2stonith参数的调整">2).stonith参数的调整</h4>
+<p>禁用stonith功能，corosync默认是启用stonith功能的，没有stonith设备，若直接去配置资源的话，verif会报错，无法commit。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@node1 corosync<span class="o">]</span><span class="c1"># crm configure    #进入crm命令行模式配置资源等</span>
+crm<span class="o">(</span>live<span class="o">)</span>configure# property    <span class="c1">#切换到property目录下，可以用两次tab键进行补全和查看</span>
+usage: property <span class="o">[</span><span class="nv">$id</span><span class="o">=</span>&lt;set_id&gt;<span class="o">]</span> &lt;option&gt;<span class="o">=</span>&lt;value&gt;    <span class="c1"># property的用法和格式</span>
+crm<span class="o">(</span>live<span class="o">)</span>configure# property stonith-enabled<span class="o">=</span><span class="nb">false</span>   <span class="c1">#禁用stonith-enabled</span>
+crm<span class="o">(</span>live<span class="o">)</span>configure# verify      <span class="c1">#检查设置的属性是否正确</span>
+crm<span class="o">(</span>live<span class="o">)</span>configure# commit    <span class="c1">#提交</span>
+crm<span class="o">(</span>live<span class="o">)</span>configure# show     <span class="c1">#查看当前集群的所有配置信息</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3配置web集群">3).配置web集群</h4>
+<h2 id="五pacemaker运维命令">五.Pacemaker运维命令</h2>
+<p>梳理pacemaker的运维命令，将pacemaker的运维命令进行输出</p>
+<h3 id="1pcs-命令的管理类别">1.pcs 命令的管理类别</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">cluster: 配置集群选项和节点
+status :查看当前集群资源和节点以及进程的状态
+resource:创建和管理集群资源
+constraint:管理集群资源约束和限制
+property :管理集群节点和资源属性
+stonith：进行隔离
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2pcs-cluster-管理节点-命令">2.pcs cluster (管理节点) 命令</h3>
+<h4 id="启动服务器">启动服务器</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs cluster start 10.0.8.160
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="强制启动服务器">强制启动服务器</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs cluster start --force
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="启动所有服务器">启动所有服务器</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs cluster start --all
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="关闭服务器">关闭服务器</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs cluster stop 10.0.8.160
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="强制关闭服务器">强制关闭服务器</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs cluster stop --force
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="关闭所有的服务器">关闭所有的服务器</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs cluster stop --all
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="让服务器随pcs服务一同启动">让服务器随pcs服务一同启动</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs cluster <span class="nb">enable</span> 10.0.8.160
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="让所有服务器都随-pcs-服务一起启动">让所有服务器都随 pcs 服务一起启动</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs cluster <span class="nb">enable</span> --all
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="取消服务器随-pcs-服务器一同启动">取消服务器随 pcs 服务器一同启动</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs cluster diablle 10.0.8.160
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="取消让所有服务器都随-pcs-服务一起启动">取消让所有服务器都随 pcs 服务一起启动</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs cluster disable --all
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="在pcs集群里添加新的节点">在pcs集群里添加新的节点</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs cluster node add 10.0.8.160
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="在pcs集群里删除一个节点">在pcs集群里删除一个节点</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs cluster node remove 10.0.8.160
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="让某台服务器失效">让某台服务器失效</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs cluster standby 10.0.8.160
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="让所有服务器失效">让所有服务器失效</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs cluster standby --all
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="让某一台服务器从失效状态回归到活跃状态">让某一台服务器从失效状态回归到活跃状态</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs cluster unstandby 10.0.8.160
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="让所有服务器从失效状态回归到活跃状态">让所有服务器从失效状态回归到活跃状态</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs cluster unstandby --all
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="启动集群实例">启动集群实例</h4>
+<p>启动node1, node2, node3的pcs集群</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"> pcs cluster setup --start --name testcluster --last_man_standing --wait_for_all node1 node2 node3
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="查看本地的pcs配置文件">查看本地的pcs配置文件</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">vim /etc/corosync/corosync.conf
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="同步pcs节点的配置文件">同步pcs节点的配置文件</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs cluster sync
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="pcs-cluster-setup命令">pcs cluster setup命令</h4>
+<ol>
+<li>
+<p>&ndash;wait_for_all
+当所有集群成员都处于 online 的时候才启动集群投票，主要用于阻止被隔离的主机参与投票</p>
+</li>
+<li>
+<p>&ndash;auto_tie_breaker
+最低投票从从总数的 50% +1 变为 50% ，如果被分割的主机群两边的数量相等，则拥有最小主机 ID 的那一边才会生效</p>
+</li>
+</ol>
+<p>（补充：–auto_tie_breaker 主要用于集群主机数是双数的主机群）</p>
+<ol start="3">
+<li>–last_man_standing</li>
+</ol>
+<p>有了这个参数之后每隔 10 秒钟，就重新计算一次期望投票数，主要用于人为关闭主机后快速进行重新投票
+和 –auto_tie_breaker 选项结合可以让整个集群只有一台主机处于激活状态</p>
+<p>（注意:当期望投票数发生变化时， # pcs corosync-quorumtool -m 命令不会自动更新，所以最好使用这个命令 watch -n1 corosync-quorumtool）</p>
+<ol start="4">
+<li>–two_node</li>
+</ol>
+<p>设置整个集群只包含有两台主机，期望投票数是1，他会自动启用 wait_for_all 选项</p>
+<h2 id="3pcs-status-查询状态-命令">3.pcs status (查询状态) 命令</h2>
+<h4 id="查看集群状态">查看集群状态</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#显示集群和集群资源所有状态</span>
+pcs status
+<span class="c1">#显示具体集群组件的状态</span>
+<span class="c1">#{commands}的可选值为:resources、groups、cluster、nodes 或 pcsd</span>
+pcs status <span class="o">{</span>commands<span class="o">}</span>
+<span class="c1">#输出为xml</span>
+pcs status xml
+
+<span class="c1">#可使用以下命令显示集群当前状态的信息子集</span>
+<span class="c1">#显示集群状态，但不显示集群资源</span>
+pcs cluster status
+<span class="c1">#以下命令显示集群资源状态</span>
+pcs status resources
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="查看与集群相关的信息">查看与集群相关的信息</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs status cluster
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="只查看资源组的资源">只查看资源组的资源</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs status groups
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="只查看资源组个人的资源">只查看资源组个人的资源</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs status resources
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="查看主机的配置状态">查看主机的配置状态</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs status nodes
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="只查看-corosync-的状态">只查看 corosync 的状态</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs status corosync
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="查看-pcsd-在每一个主机上的配置状态">查看 pcsd 在每一个主机上的配置状态</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs status pcsd
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="查看-pcs-总共的主机数当前的主机数最大期望投票数最低投票数要求当前生效投票数">查看 pcs 总共的主机数，当前的主机数，最大期望投票数，最低投票数要求，当前生效投票数</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs corosync-quorumtool -m
+</code></pre></td></tr></table>
+</div>
+</div><p>（注意：为了防止脑裂，PCS 的最低投票数必须高于总主机数的 50%）</p>
+<h4 id="查看最近的投票信息">查看最近的投票信息</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">watch -n1 corosync-quorumtool
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="查看所有的-pcs-资源">查看所有的 pcs 资源</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs resource show
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="查看某一个-pcs-资源">查看某一个 pcs 资源</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs resourece show node22
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="查看所有-pcs-资源被限制的列表">查看所有 pcs 资源被限制的列表</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs constraint list
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="查看现有的资源限制信息">查看现有的资源限制信息</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs constraint
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="查看现有的详细资源限制信息">查看现有的详细资源限制信息</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs constraint --full
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="查看资源被限制到某一台机器上的信息">查看资源被限制到某一台机器上的信息</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">crm_simulate -sL
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="4pcs-stonith-管理隔离-命令">4.pcs stonith (管理隔离) 命令</h2>
+<p>fence 的作用是隔离不需要的主机，当一台主机和集群失去联系时，将其隔离，以防止脑裂</p>
+<h4 id="查看所有可用的-fence-的列表">查看所有可用的 fence 的列表</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs stonith list
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="查看可用-fence-的详细信息">查看可用 fence 的详细信息</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs stonith describe fence_rhevm
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="查看所有已配置的-fence-状况">查看所有已配置的 fence 状况</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">pcs stonith fence show --full
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="删除某一个-fence">删除某一个 fence</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">pcs stonith delete &lt;fence&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="删除当前所有的-fencing-资源">删除当前所有的 fencing 资源</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">for i in fence_node{a..d}; do
+&gt; pcs stonith delete &amp;{I}
+&gt; done
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="创建-fence_vmware_soap-的案例">创建 fence_vmware_soap 的案例</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">pcs stonith create vmfence fence_vmware_soap ipaddr=192.168.0.254 login=&#34;vmfence&#34; passwd=&#34;vmfence&#34; ssl_insecure=1 pcmk_host_check=&#34;static-list&#34; pcmk_host_list=&#34;pacemaker0 pacemaker1 pacemaker2&#34;
+</code></pre></td></tr></table>
+</div>
+</div><p>（
+补充：这里以创建</p>
+<ol>
+<li>名为 vmfence</li>
+<li>fence 服务器的 IP 地址为 192.168.0.254</li>
+<li>fence 服务器的用户名为</li>
+<li>fence 服务器的密码为</li>
+<li>被 fence 监控的服务器为 pacemaker0、pacemaker1 和 pacemaker2
+的 fence 为例
+）</li>
+</ol>
+<p>（注意：fence_vmware_soap 需要在 vmware 环境下才能被使用，且需要设置好 vmfence 的用户、密码、IP 等）</p>
+<h4 id="隔离某一个台主机">隔离某一个台主机</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"> pcs stonith fence &lt;host&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="从-fencing-删除某台主机">从 fencing 删除某台主机</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs stonith delete &lt;host&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="5pcs-resoure-管理资源-命令">5.pcs resoure (管理资源) 命令</h2>
+<p>resoure 是进行资源管理的，此处的命令比较重要</p>
+<h4 id="pcs-resource-命令的常用选项">pcs resource 命令的常用选项</h4>
+<ol>
+<li>
+<p>interval=value
+定义资源监控的时间，如果不设置的话，就使用的是 resource agent ，每 60 秒检测一次</p>
+</li>
+<li>
+<p>timeout=value
+设置操作的等待时间，如果时间结束了某项操作还没有完成，则自动失败</p>
+</li>
+<li>
+<p>on-fail=action
+如果操作失败，则会执行以下动作</p>
+</li>
+<li>
+<p>ignore
+忽略所有失败的操作</p>
+</li>
+<li>
+<p>block
+当 fence 没有被配置时，停止执行操作</p>
+</li>
+<li>
+<p>stop
+停止处于激活状态的集群</p>
+</li>
+<li>
+<p>restart
+重启资源</p>
+</li>
+<li>
+<p>fence
+当 fence 有被配置时，当某个资源停止时隔离运行此资源的主机</p>
+</li>
+<li>
+<p>standby
+将所有资源从他正在运行的主机上移到另一个主机</p>
+</li>
+</ol>
+<h4 id="pcs-resource-命令选项的使用案例">pcs resource 命令选项的使用案例</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"> pcs resourece create webserver apache \
+&gt; configfile=&#34;/etc/httpd/conf/http.conf&#34; \
+&gt; statusurl=&#34;http:?/127.0.0.1/server-status&#34; --group myweb \
+&gt; op monitor interval=20s timeout=30s
+</code></pre></td></tr></table>
+</div>
+</div><p>补充：这里以创建</p>
+<ol>
+<li>名为 webserver</li>
+<li>配置文件是 /etc/httpd/conf/http.conf</li>
+<li>状态链接是 http:?/127.0.0.1/server-status</li>
+<li>组名是 myweb</li>
+<li>监控间隔是 20 秒</li>
+<li>延迟时间是 30 秒
+的 apache 资源为例</li>
+</ol>
+<h4 id="显示所有可用的资源列表">显示所有可用的资源列表</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">pcs resource list
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="查看具体的某一个可用资源的介绍">查看具体的某一个可用资源的介绍</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">pcs resource describe &lt;resource&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="查看所有的-pcs-资源-1">查看所有的 pcs 资源</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">pcs resource show
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="查看某一个-pcs-资源-1">查看某一个 pcs 资源</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">pcs resource show &lt;resource&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="查看所有-pcs-资源被限制的情况">查看所有 pcs 资源被限制的情况</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">pcs constraint list
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="清理故障重新拉起资源">清理故障,重新拉起资源</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pcs resource cleanup --all
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="修改-pcs-资源">修改 pcs 资源</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"># pcs resource update &lt;resource&gt; &lt;option&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="删除-pcs-资源">删除 pcs 资源</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">pcs resource delete &lt;resource&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="在某一个组里面添加某一个资源">在某一个组里面添加某一个资源</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">pcs resource group add &lt;group&gt; &lt;resource&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="在某一个组里面删除某一个资源">在某一个组里面删除某一个资源</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">pcs resource group remove &lt;group&gt; &lt;resource&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="停用某一个-pcs-资源">停用某一个 pcs 资源</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">pcs resource disable &lt;resource&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="启用某一个-pcs-资源">启用某一个 pcs 资源</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">pcs resource enable &lt;resource&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="移动-pcs-资源到另一个主机">移动 pcs 资源到另一个主机</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">pcs resource move &lt;resource&gt; &lt;host&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="指定某一个-pcs-资源只能在某一个主机上运行">指定某一个 pcs 资源只能在某一个主机上运行</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">pcs resource ban &lt;resource&gt; &lt;host&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="清除某一个-pcs-资源只能在某一个主机上运行的限制">清除某一个 pcs 资源只能在某一个主机上运行的限制</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">pcs resource clear &lt;resource&gt; &lt;host&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="删除某一个资源的监控">删除某一个资源的监控</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">pcs resource op remove &lt;resource&gt; monitor
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="添加某一个资源的监控">添加某一个资源的监控</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">pcs resource op add &lt;resource&gt; monitor &lt;fence parameter&gt; onfail=fence
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="查看某一个-pcs-资源失败的次数">查看某一个 pcs 资源失败的次数</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">pcs resource failcount show &lt;resource&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="检查某一个资源的情况">检查某一个资源的情况</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">pcs resource debug-start firstwebserver --full
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-02-18
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/linux/">linux</a>
+          <a href="/tags/pacemaker/">pacemaker</a>
+          <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a>
+          <a href="/tags/%E5%BC%80%E6%BA%90/">开源</a>
+          <a href="/tags/%E9%9B%86%E7%BE%A4/">集群</a>
+          <a href="/tags/%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%99%A8/">资源管理器</a>
+          <a href="/tags/corosync/">corosync</a>
+          <a href="/tags/pcsd/">pcsd</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/linux/linux%E6%BA%90%E7%A0%81%E5%8C%85%E7%9A%84%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[linux] Linux源码包的安装步骤</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/site_generator/hugo/themes/">
+            <span class="next-text nav-default">[hugo] hugo主题列表及github排行榜</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

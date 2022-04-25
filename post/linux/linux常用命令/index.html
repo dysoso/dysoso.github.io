@@ -1,0 +1,2978 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[linux]linux常用命令 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="linux常用命令 本文记录一些常用的linux命令，方便在使用时查询，并持续更新中··· 一.基础操作 1. 查看目录及文件 1 2 3 4 5 6 &amp;gt; ls //li" /><meta name="keywords" content="linux, 常用命令" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/linux/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[linux]linux常用命令" />
+<meta property="og:description" content="linux常用命令 本文记录一些常用的linux命令，方便在使用时查询，并持续更新中··· 一.基础操作 1. 查看目录及文件 1 2 3 4 5 6 &gt; ls //li" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/linux/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2018-06-12T15:37:56+08:00" />
+<meta property="article:modified_time" content="2022-02-10T16:37:56+08:00" />
+
+<meta itemprop="name" content="[linux]linux常用命令">
+<meta itemprop="description" content="linux常用命令 本文记录一些常用的linux命令，方便在使用时查询，并持续更新中··· 一.基础操作 1. 查看目录及文件 1 2 3 4 5 6 &gt; ls //li"><meta itemprop="datePublished" content="2018-06-12T15:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-02-10T16:37:56+08:00" />
+<meta itemprop="wordCount" content="12458">
+<meta itemprop="keywords" content="linux,常用命令," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[linux]linux常用命令"/>
+<meta name="twitter:description" content="linux常用命令 本文记录一些常用的linux命令，方便在使用时查询，并持续更新中··· 一.基础操作 1. 查看目录及文件 1 2 3 4 5 6 &gt; ls //li"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[linux]linux常用命令</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-06-12 </span>
+        <div class="post-category">
+            <a href="/categories/linux/"> linux </a>
+            </div>
+          <span class="more-meta"> 约 12458 字 </span>
+          <span class="more-meta"> 预计阅读 25 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#linux常用命令">linux常用命令</a>
+      <ul>
+        <li><a href="#一基础操作">一.基础操作</a>
+          <ul>
+            <li><a href="#1-查看目录及文件">1. 查看目录及文件</a></li>
+            <li><a href="#2-目录切换">2. 目录切换</a></li>
+            <li><a href="#3-目录操作">3. 目录操作</a></li>
+            <li><a href="#4-文件操作">4. 文件操作</a></li>
+            <li><a href="#5查看当前目录和用户">5.查看当前目录和用户</a></li>
+          </ul>
+        </li>
+        <li><a href="#二系统设置">二.系统设置</a>
+          <ul>
+            <li><a href="#1-用户设置">1. 用户设置</a></li>
+            <li><a href="#2-组别设置">2. 组别设置</a></li>
+            <li><a href="#3-权限设置">3. 权限设置</a></li>
+            <li><a href="#4host和hostname设置">4.host和hostname设置</a></li>
+            <li><a href="#5网络设置">5.网络设置</a></li>
+            <li><a href="#6防火墙">6.防火墙</a></li>
+            <li><a href="#7环境变量">7.环境变量</a></li>
+            <li><a href="#8-图形界面-与-命令界面-切换">8. 图形界面 与 命令界面 切换</a></li>
+          </ul>
+        </li>
+        <li><a href="#三系统管理">三.系统管理</a>
+          <ul>
+            <li><a href="#1-系统关机重启">1. 系统关机重启</a></li>
+            <li><a href="#2-系统服务管理">2. 系统服务管理</a></li>
+            <li><a href="#3-文件系统挂载取消挂载">3. 文件系统挂载/取消挂载</a></li>
+            <li><a href="#4-磁盘管理">4. 磁盘管理</a></li>
+            <li><a href="#5内存管理">5.内存管理</a></li>
+          </ul>
+        </li>
+        <li><a href="#三系统命令">三.系统命令</a>
+          <ul>
+            <li><a href="#1查看指令">1.查看指令</a></li>
+            <li><a href="#2-使用root用户去执行命令">2. 使用root用户去执行命令</a></li>
+            <li><a href="#3系统版本信息">3.系统版本信息</a></li>
+            <li><a href="#4端口">4.端口</a></li>
+            <li><a href="#5进程">5.进程</a></li>
+            <li><a href="#6ssh">6.ssh</a></li>
+            <li><a href="#7scp">7.scp</a></li>
+            <li><a href="#8find">8.find</a></li>
+          </ul>
+        </li>
+        <li><a href="#四备查">四.备查</a></li>
+        <li><a href="#五软件管理">五.软件管理</a>
+          <ul>
+            <li><a href="#1下载到本地">1.下载到本地</a></li>
+            <li><a href="#2rpm方式安装软件">2.rpm方式安装软件：</a></li>
+            <li><a href="#2yum安装">2.yum安装</a></li>
+            <li><a href="#3压缩管理">3.压缩管理</a></li>
+            <li><a href="#4上传下载导入导出">4.上传下载(导入导出)</a></li>
+            <li><a href="#5文本转换">5.文本转换</a></li>
+            <li><a href="#6vim">6.vim</a></li>
+            <li><a href="#7alnmp软件管理">7.alnmp软件管理</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="linux常用命令">linux常用命令</h1>
+<blockquote>
+<p>本文记录一些常用的linux命令，方便在使用时查询，并持续更新中···</p>
+</blockquote>
+<h2 id="一基础操作">一.基础操作</h2>
+<h3 id="1-查看目录及文件">1. 查看目录及文件</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt; ls            //list列出目录的文件信息
+&gt; ls  -l        //list -list以“详细信息”查看目录文件
+&gt; ll            //list -list以“详细信息”查看目录文件
+&gt; ls  -a        //list  -all查看目录“全部”<span class="o">(</span>包括隐藏文件<span class="o">)</span>文件
+&gt; ls  -al       //list  -all list 查看目录“全部”<span class="o">(</span>包括隐藏文件<span class="o">)</span>文件,以“详细信息”展示
+&gt; ls  目录      //查看指定目录下有什么文件
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2-目录切换">2. 目录切换</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt; <span class="nb">cd</span>  dirname       //进行目录切换
+&gt; <span class="nb">cd</span>  ..            //向上级目录切换
+&gt; <span class="nb">cd</span>  ~    或 <span class="nb">cd</span>     //直接切换到当前用户对应的家目录
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3-目录操作">3. 目录操作</h3>
+<h4 id="1-创建目录-make-directory">1) 创建目录 make directory</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt; mkdir  目录名字
+&gt; mkdir -p newdir/newdir/newdir       //递归方式创建多个连续目录
+
+//新的多级目录数目如果大于等于2个，就要使用-p参数
+mkdir      dir/newdir                //不用-p参数
+mkdir  -p  dir/newdir/newdir         //使用-p参数
+mkdir  -p  newdir/newdir/newdir      //使用-p参数
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2-移动目录文件和目录--move">2) 移动目录(文件和目录)  move</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt; mv  dir1  dir2            //把dir1移动到dir2目录下
+&gt; mv  dir1/dir2  dir3       //把dir2移动到dir3目录下
+&gt; mv  dir1/dir2  dir3/dir4  //把dir2移动到dir4目录下
+&gt; mv  dir1/dir2  ./         //把dir2移动到当前目录下
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3-改名字--文件和目录">3) 改名字  (文件和目录)</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt; mv  dir1  newdir          //修改dir1的名字为newdir
+
+mv是“移动” 和 “改名字” 合并的指令
+&gt; mv  dir1  ./newdir            //dir1移动到当前目录下 并改名字为newdir
+&gt; mv  dir1/dir2  dir3           //dir2移动到dir3目录下， 并改名字为“原名”
+&gt; mv  dir1/dir2  dir3/newdir    //dir2移动到dir3目录下，并改名字为“newdir”
+&gt; mv  dir1/dir2  dir3/dir4      //dir2移动到dir4目录下， 并改名字为“原名”
+&gt; mv  dir1/dir2  dir3/dir4/newdir   //dir2移动到dir4目录下， 并改名字为“newdir”
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="4-复制改名字文件和目录-copy">4) 复制(改名字)(文件和目录) copy</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">① 文件的复制
+&gt; cp  file1  dir/newfile2         //file1被复制一份到dir目录下，并改名字为“newfile2”
+&gt; cp  file1  dir               //file1被复制一份到dir目录下，并改名字为“原名”
+&gt; cp  dir1/filea  dir2/newfile  //filea被复制一份到dir2目录下，并改名字为“newfile”
+② 目录的复制<span class="o">(</span>需要设置-r<span class="o">[</span>recursive递归<span class="o">]</span>参数，无视目录的层次<span class="o">)</span>
+&gt; cp -r dir1   dir2             //dir1被复制到dir2目录下,并改名字为<span class="s2">&#34;原名&#34;</span>
+&gt; cp -r  dir1/dir2  dir3/newdir  //dir2被复制到dir3目录下,并改名字为<span class="s2">&#34;newdir&#34;</span>
+&gt; cp -r  dir1/dir2  dir3/dir4/   //dir2被复制到dir4目录下,并改名字为<span class="s2">&#34;原名&#34;</span>
+&gt; cp -r  dir1/dir2  dir3/dir4/newdir   //dir2被复制到dir4目录下,并改名字为<span class="s2">&#34;newdir&#34;</span>
+&gt; cp -r  dir1  ../../newdir     //dir1被复制到上两级目录下,并改名字为<span class="s2">&#34;newdir&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="5删除文件和目录remove">5）删除(文件和目录)remove</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt; rm  文件
+&gt; rm -r  目录           //-r<span class="o">[</span>recursive递归<span class="o">]</span>递归方式删除目录
+&gt; rm -rf  文件/目录     //-r force  递归强制方式删除文件
+                        force强制，不需要额外的提示
+&gt; rm  -rf  /
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4-文件操作">4. 文件操作</h3>
+<h4 id="1-查看文件内容">1) 查看文件内容</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">cat  filename       //打印文件内容到输出终端
+more  filename      //通过敲回车方式逐行查看文件的各个行内容
+                    //默认从第一行开始查看
+                    //不支持回看
+                    //q 退出查看
+
+less                //通过“上下左右”键查看文件的各个部分内容
+                    //支持回看
+                    //q 退出查看
+
+head -n filename    //查看文件的前n行内容
+tail -n filename    //查看文件的最末尾n行内容
+
+wc filename         //查看文件的行数
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2-创建文件">2) 创建文件</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt; touch  dir1/filename
+&gt; touch  filename
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3-给文件追加内容">3) 给文件追加内容</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt; <span class="nb">echo</span> 内容 &gt; 文件名称      //把“内容”以<span class="o">[</span>覆盖写<span class="o">]</span>方式追加给“文件”
+&gt; <span class="nb">echo</span> 内容 &gt;&gt;  文件名称    //把“内容”以<span class="o">[</span>追加<span class="o">]</span>形式写给“文件”
+<span class="o">(</span>如果文件不存在会创建文件<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="5查看当前目录和用户">5.查看当前目录和用户</h3>
+<ul>
+<li>
+<p>查看完整的操作位置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">pwd</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>查看当前用户是谁</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">whoami
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h2 id="二系统设置">二.系统设置</h2>
+<h3 id="1-用户设置">1. 用户设置</h3>
+<p>配置文件：/etc/passwd</p>
+<h4 id="1-创建用户-user-add">1) 创建用户 user add</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt;# useradd
+&gt;# useradd  liming          //创建liming用户，同时会创建一个同名的组出来
+&gt;# useradd  -g 组别编号  username   //把用户的组别设置好，避免创建同名的组出来
+&gt;# useradd  -g 组编号  -u 用户编号  -d 家目录   username
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2-修改用户-user-modify">2) 修改用户 user modify</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt;# usermod  -g 组编号  -u 用户编号  -d 家目录  -l 新名字  username
+<span class="o">(</span>修改家目录时需要手动创建之<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3-删除用户-user-delete">3) 删除用户 user delete</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt;# userdel  username
+&gt;# userdel -r  username    //删除用户同时删除其家目录
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="4-给用户设置密码使其登录系统">4) 给用户设置密码，使其登录系统</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt; passwd 用户名
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="5-查看用户">5) 查看用户</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">cat /etc/passwd 可以查看所有用户的列表
+w 可以查看当前活跃的用户列表
+
+<span class="c1">#查看当前是谁</span>
+whoami
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="6--用户切换">6)  用户切换</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt; su -  或  su - root       //向root用户切换
+&gt; <span class="nb">exit</span>          //退回到原用户
+
+&gt; su 用户名     //普通用户切换
+
+多次使用su指令，会造成用户的“叠加”：
+<span class="o">(</span>su和exit最好匹配使用<span class="o">)</span>
+jinnan---&gt;root---&gt;jinnan---&gt;root---&gt;jinnan
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2-组别设置">2. 组别设置</h3>
+<p>配置文件： /etc/group</p>
+<h4 id="1-创建组-group-add">1) 创建组 group add</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt;# groupadd  music
+&gt;# groupadd  movie
+&gt;# groupadd  php
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2-修改组-group-modify">2) 修改组 group modify</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt;# groupmod  -g gid  -n 新名字  groupname
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3-删除组-group-delete">3) 删除组 group delete</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt;# groupdel  groupname    //组下边如果有用户存在，就禁止删除
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="4-查看组">4) 查看组</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">cat /etc/group 查看用户组
+groups 查看当前登录用户的组内成员
+groups gliethttp 查看gliethttp用户所在的组,以及组内成员
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3-权限设置">3. 权限设置</h3>
+<h4 id="1chmod">1).chmod</h4>
+<p>字母相对方式权限的设置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt;#chmod <span class="o">(</span>ugo<span class="o">)(</span>+-<span class="o">)(</span>rwx<span class="o">)</span> 目录 u:当前用户,g:同组用户,o:其他组用户<span class="p">;</span>+-增加减少权限<span class="p">;</span>r:读取权限,w:写权限,x:执行权限
+&gt;#sudo chmod -R ugo+rwx /usr/local/http2/htdocs/ZZYPHP/ //给该目录下所有子文件目录在当前组其他组都有读写执行权限
+//数字绝对方式权限的设置,0:没有权限,1:执行,2:写,3:写执行,4:读,5:读执行,6:读写,7:读写执行
+&gt;#chmod <span class="m">753</span> 目录      //主人7权限,同组5权限,其他组3权限
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4host和hostname设置">4.host和hostname设置</h3>
+<ul>
+<li>
+<p>host</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">host文件位置：/etc/hosts
+vim /etc/hosts即可编辑
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>hostname</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#查看主机名</span>
+hostname
+
+<span class="c1">#修改主机名</span>
+hostname workspace   <span class="c1">#立即生效</span>
+sudo vim /etc/hosts
+<span class="o">[</span>新增内容<span class="o">]</span>
+127.0.0.1 workspace
+
+sudo vim /etc/hostname
+<span class="o">[</span>修改内容<span class="o">]</span>
+workspace
+
+sudo vim /etc/sysconfig/network
+<span class="o">[</span>新增或修改<span class="o">]</span>
+<span class="nv">HOSTNAME</span><span class="o">=</span>workspace
+
+sudo vim /etc/cloud/cloud.cfg
+<span class="c1"># 删除或者注释语句- update_hostname</span>
+
+reboot
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="5网络设置">5.网络设置</h3>
+<h4 id="1-网络服务管理">1) 网络服务管理</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#开启停止重启服务</span>
+service network start/stop/restart 或
+systemctl start/stop/restart network
+<span class="c1">#服务状态</span>
+systemctl status network
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2-查看网络查看ip">2) 查看网络(查看IP)</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#查看网络</span>
+ifconfig 
+ip addr
+<span class="c1">#查看所使用的网卡名称</span>
+ifconfig -a
+<span class="c1">#############################</span>
+ens32:  <span class="nv">flags</span><span class="o">=</span>4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu <span class="m">1500</span>
+        inet 192.168.2.40  netmask 255.255.255.0  broadcast 192.168.2.255
+        inet6 fe80::20c:29ff:fece:fc3c  prefixlen <span class="m">64</span>  scopeid 0x20&lt;link&gt;
+        ether 00:0c:29:ce:fc:3c  txqueuelen <span class="m">1000</span>  <span class="o">(</span>Ethernet<span class="o">)</span>
+        RX packets <span class="m">17403</span>  bytes <span class="m">1453165</span> <span class="o">(</span>1.3 MiB<span class="o">)</span>
+        RX errors <span class="m">0</span>  dropped <span class="m">0</span>  overruns <span class="m">0</span>  frame <span class="m">0</span>
+        TX packets <span class="m">1107</span>  bytes <span class="m">201665</span> <span class="o">(</span>196.9 KiB<span class="o">)</span>
+        TX errors <span class="m">0</span>  dropped <span class="m">0</span> overruns <span class="m">0</span>  carrier <span class="m">0</span>  collisions <span class="m">0</span>
+<span class="c1">#############################</span>
+当前使用网卡:ens32,ip地址为:192.168.2.40
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3-修改网络配置">3) 修改网络配置</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#查看网卡配置</span>
+vim /etc/sysconfig/network-scripts/ifcfg-ens32
+<span class="nb">cd</span> /etc/sysconfig/network-scripts
+
+<span class="c1">#修改配置(dhcp)</span>
+<span class="nv">HWADDR</span><span class="o">=</span>物理网卡地址
+<span class="nv">BOOTPROTO</span><span class="o">=</span><span class="nv">dhcp改为BOOTPROTO</span><span class="o">=</span>static
+<span class="nv">HWADDR</span><span class="o">=</span>00:50:56:2e:c1:74
+<span class="nv">IPADDR</span><span class="o">=</span>192.168.103.113
+<span class="nv">GATEWAY</span><span class="o">=</span>192.168.103.1
+<span class="nv">NETMASK</span><span class="o">=</span>255.255.255.0
+<span class="nv">DNS1</span><span class="o">=</span>61.139.2.69
+<span class="nv">DNS2</span><span class="o">=</span>114.114.114.114
+rm -rf /etc/udev/rules.d/70-persistent-net.rules
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="6防火墙">6.防火墙</h3>
+<h4 id="1-firewall">1) firewall</h4>
+<ul>
+<li>
+<p>服务管理</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">启动：systemctl start firewalld
+查看状态：systemctl status firewalld
+停止： systemctl disable firewalld
+禁用： systemctl stop firewalld
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>常用命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#列出所有端口</span>
+firewall-cmd --list-ports
+<span class="c1">#列出所有打开的端口</span>
+firewall-cmd --zone<span class="o">=</span>public --list-ports
+<span class="c1">#查看端口</span>
+firewall-cmd --zone<span class="o">=</span> public --query-port<span class="o">=</span>80/tcp
+<span class="c1">#开放端口,--permanent永久生效，没有此参数重启后失效</span>
+firewall-cmd --zone<span class="o">=</span>public --add-port<span class="o">=</span>2380/tcp --permanent
+firewall-cmd --add-port<span class="o">=</span>445/tcp --permanent
+<span class="c1">#删除开放端口</span>
+firewall-cmd --zone<span class="o">=</span> public --remove-port<span class="o">=</span>80/tcp --permanent
+<span class="c1">#重新载入</span>
+firewall-cmd --reload
+<span class="c1">#显示状态</span>
+firewall-cmd --state
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="2-selinux">2) SELinux</h4>
+<p>SELinux(Security-Enhanced Linux) 是美国国家安全局（NSA）对于强制访问控制的实现，是 Linux历史上最杰出的新安全子系统</p>
+<ul>
+<li>
+<p>查看状态</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">getenforce
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>临时生效</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#命令临时生效：</span>
+setenforce <span class="m">0</span> <span class="o">(</span>临时生效可以直接用setenforce <span class="m">0</span> <span class="o">)</span>
+            <span class="m">1</span> 启用
+            <span class="m">0</span> 告警，不启用
+chcon -t samba_share_t /go-develop
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>永久生效</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 操作前先备份</span>
+cp /etc/selinux/config /etc/selinux/config.bak
+
+<span class="c1"># 更改setlinux级别</span>
+sed -i <span class="s1">&#39;s/SELINUX=enforcing/\SELINUX=permissive/&#39;</span> /etc/selinux/config
+     <span class="o">==</span>&gt; vim /etc/selinux/config/  --&gt; <span class="nv">SELINUX</span><span class="o">=</span>enforcing<span class="o">[</span>效果同上<span class="o">]</span>
+<span class="c1"># SELINUX参数enforcing代表打开，disabled代表关闭</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>放开权限</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#开启Samba用户HOME目录权限</span>
+/usr/sbin/setsebool  -P <span class="nv">samba_enable_home_dirs</span><span class="o">=</span><span class="m">1</span>
+<span class="c1">#开启单个共享目录（path）权限</span>
+chcon -t samba_share_t path
+<span class="c1">#开启所有共享目录</span>
+<span class="c1">#查看防火墙开启状态</span>
+getsebool  -a <span class="p">|</span> grep samba
+
+<span class="c1">#只读权限</span>
+/usr/sbin/setsebool -P samba_export_all_ro on
+<span class="c1">#读写权限</span>
+/usr/sbin/setsebool -P samba_export_all_rw on
+<span class="c1">#查看某个目录（path）是否开启了权限</span>
+ls -ldZ path
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="7环境变量">7.环境变量</h3>
+<ul>
+<li>
+<p>临时添加</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">export</span> <span class="nv">ETCDCTL_API</span><span class="o">=</span><span class="m">3</span>
+<span class="nb">unset</span> ETCDCTL_API
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>永久添加环境变量(影响当前用户)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#vim ~/.bashrc</span>
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/usr/local/nginx/sbin/
+保存，退出，然后运行：
+<span class="c1">#source /etc/profile</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>永久添加环境变量(影响所有用户)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># vim /etc/profile</span>
+在文档最后，添加:
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/usr/local/nginx/sbin/
+保存，退出，然后运行：
+<span class="c1">#source /etc/profile</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>查看系统环境变量</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">env <span class="c1"># 查看环境变量 资源</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="8-图形界面-与-命令界面-切换">8. 图形界面 与 命令界面 切换</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">root用户可以切换
+&gt;# init <span class="m">3</span>
+&gt;# init <span class="m">5</span> 
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="三系统管理">三.系统管理</h2>
+<h3 id="1-系统关机重启">1. 系统关机重启</h3>
+<h4 id="1-关机命令">1) 关机命令</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">halt   立刻关机
+
+poweroff  立刻关机
+
+shutdown -h now 立刻关机<span class="o">(</span>root用户使用<span class="o">)</span>
+
+shutdown -h <span class="m">10</span> 10分钟后自动关机
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2-重启命令">2) 重启命令</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">reboot  重启
+
+shutdown -r now 立刻重启<span class="o">(</span>root用户使用<span class="o">)</span>
+
+shutdown -r <span class="m">10</span> 过10分钟自动重启<span class="o">(</span>root用户使用<span class="o">)</span>
+
+shutdown -r 20:35 在时间为20:35时候重启<span class="o">(</span>root用户使用<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3-日志">3) 日志</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#查看关机时间</span>
+who -b
+last reboot
+last reboot <span class="p">|</span> head -1
+uptime
+cat /proc/uptime
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2-系统服务管理">2. 系统服务管理</h3>
+<h4 id="1-服务管理">1) 服务管理</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#查看状态</span>
+systemctl status <span class="o">{</span>服务名<span class="o">}</span>
+<span class="c1">#开启停止重启</span>
+systemctl start/stop/restart <span class="o">{</span>服务名<span class="o">}</span>  或者 service <span class="o">{</span>服务名<span class="o">}</span> start/stop/restart
+<span class="c1">#开机启动</span>
+systemctl enable/disable <span class="o">{</span>服务名<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2-服务日志">2) 服务日志</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#查看所有服务日志</span>
+journalctl -f
+<span class="c1">#查看单个服务日志</span>
+journalctl -u 服务名 -行数<span class="o">(</span>最新多少行<span class="o">)</span>
+<span class="c1">#查看系统日志</span>
+tail -100 /var/log/message
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3-文件系统挂载取消挂载">3. 文件系统挂载/取消挂载</h3>
+<h4 id="1-挂载语法">1) 挂载语法：</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">命令格式：
+mount <span class="o">[</span>-fnrsvw<span class="o">]</span> <span class="o">[</span>-t vfstype<span class="o">]</span> <span class="o">[</span>-o options<span class="o">]</span> device dir
+---------------------------------------------------------------------------------
+参数说明：
+
+1.-fnrsvw
+-V：显示程序版本
+-h：显示辅助讯息
+-v：显示较讯息，通常和 -f 用来除错。
+-a：将 /etc/fstab 中定义的所有档案系统挂上。
+-F：这个命令通常和 -a 一起使用，它会为每一个 mount 的动作产生一个行程负责执行。在系统需要挂上大量 NFS 档案系统时可以加快挂上的动作。
+-f：通常用在除错的用途。它会使 mount 并不执行实际挂上的动作，而是模拟整个挂上的过程。通常会和 -v 一起使用。
+-n：一般而言，mount 在挂上后会在 /etc/mtab 中写入一笔资料。但在系统中没有可写入档案系统存在的情况下可以用这个选项取消这个动作。
+-s-r：等于 -o ro
+-w：等于 -o rw
+
+2.-t vfstype 指定文件系统的类型，通常不必指定。mount 会自动选择正确的类型。常用类型有：
+光盘或光盘镜像：iso9660
+DOS fat16文件系统：msdos
+Windows 9x fat32文件系统：vfat
+Windows NT ntfs文件系统：ntfs
+Mount Windows文件网络共享：smbfs
+UNIX<span class="o">(</span>LINUX<span class="o">)</span> 文件网络共享：nfs
+
+3.-o options 主要用来描述设备或档案的挂接方式。常用的参数有：
+loop：用来把一个文件当成硬盘分区挂接上系统
+ro：采用只读方式挂接设备
+rw：采用读写方式挂接设备
+iocharset：指定访问文件系统所用字符集
+
+4.device 要挂接<span class="o">(</span>mount<span class="o">)</span>的设备。
+
+5.dir设备在系统上的挂接点<span class="o">(</span>mount point<span class="o">)</span>。
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2-取消挂载语法">2) 取消挂载语法:</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">umount <span class="o">[</span>-ahnrvV<span class="o">][</span>-t &lt;文件系统类型&gt;<span class="o">][</span>文件系统<span class="o">]</span>
+---------------------------------------------------------------------------------
+参数：
+-a 卸除/etc/mtab中记录的所有文件系统。
+-h 显示帮助。
+-n 卸除时不要将信息存入/etc/mtab文件中。
+-r 若无法成功卸除，则尝试以只读的方式重新挂入文件系统。
+-t&lt;文件系统类型&gt; 仅卸除选项中所指定的文件系统。
+-v 执行时显示详细的信息。
+-V 显示版本信息。
+<span class="o">[</span>文件系统<span class="o">]</span> 除了直接指定文件系统外，也可以用设备名称或挂入点来表示文件系统。
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3-查看挂载">3) 查看挂载</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">df -h
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="4-示例光驱挂载">4) 示例：光驱挂载</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt; mount   /dev/cdrom  /home/jinnan/rom      //把光驱挂载到rom目录
+&gt; umount  /dev/cdrom                        //<span class="o">(</span>硬件<span class="o">)</span>卸载光驱
+&gt; umount  /home/jinnan/rom                  //<span class="o">(</span>挂载点<span class="o">)</span>卸载光驱
+&gt; eject                                     //弹出光盘
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4-磁盘管理">4. 磁盘管理</h3>
+<h4 id="1df查看整体磁盘空间">1).df查看整体磁盘空间</h4>
+<p>df：列出文件系统的整体磁盘使用量, 显示磁盘分区上可以使用的磁盘空间</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt;df <span class="o">[</span>-ahikHTm<span class="o">]</span> <span class="o">[</span>目录或文件名<span class="o">]</span>
+选项与参数：
+    -a ：列出所有的文件系统，包括系统特有的 /proc 等文件系统；
+    -k ：以 KBytes 的容量显示各文件系统；
+    -m ：以 MBytes 的容量显示各文件系统；
+    -h ：以人们较易阅读的 GBytes, MBytes, KBytes 等格式自行显示；
+    -H ：以 <span class="nv">M</span><span class="o">=</span>1000K 取代 <span class="nv">M</span><span class="o">=</span>1024K 的进位方式；
+    -T ：显示文件系统类型, 连同该 partition 的 filesystem 名称 <span class="o">(</span>例如 ext3<span class="o">)</span> 也列出；
+    -i ：不用硬盘容量，而以 inode 的数量来显示
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2du查看文件和目录">2).du查看文件和目录</h4>
+<p>du命令也是查看使用空间的，但是与df命令不同的是Linux du命令是对文件和目录磁盘使用的空间的查看</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt;du <span class="o">[</span>-ahskm<span class="o">]</span> 文件或目录名称
+选项与参数：
+    -a ：列出所有的文件与目录容量，因为默认仅统计目录底下的文件量而已。
+    -h ：以人们较易读的容量格式 <span class="o">(</span>G/M<span class="o">)</span> 显示；
+    -s ：列出总量而已，而不列出每个各别的目录占用容量；
+    -S ：不包括子目录下的总计，与 -s 有点差别。
+    -k ：以 KBytes 列出容量显示；
+    -m ：以 MBytes 列出容量显示；
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>示例</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">du -sh --max-depth<span class="o">=</span><span class="m">1</span> 目录
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="3fdisk磁盘分区">3).fdisk磁盘分区</h4>
+<p>fdisk 是 Linux 的磁盘分区表操作工具。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt;fdisk <span class="o">[</span>-l<span class="o">]</span> 装置名称
+选项与参数：
+    -l ：输出后面接的装置所有的分区内容。若仅有 fdisk -l 时， 则系统将会把整个系统内能够搜寻到的装置的分区均列出来。
+    
+<span class="c1">#### 4).磁盘格式化</span>
+&gt;mkfs <span class="o">[</span>-t 文件系统格式<span class="o">]</span> 装置文件名
+选项与参数：
+    -t ：可以接文件系统格式，例如 ext3, ext2, vfat 等<span class="o">(</span>系统有支持才会生效<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="4lsblk-查看挂载">4).lsblk 查看挂载</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">#查看挂载信息
+$: lsblk  
+ 
+# 查看未挂载的磁盘信息
+$: fdisk -l
+
+# 当前未挂载的磁盘为 /dev/sda
+$: fdisk /dev/sda
+ 
+# 查看帮助信息
+ 1. 输入 m 显示所有命令列示。
+ 2. 输入 p 显示硬盘分割情形，打印分区表。
+ 3. 输入 a 设定硬盘启动区。
+ 4. 输入 n 设定新的硬盘分割区。
+    4.1. 输入 e 硬盘为[延伸]分割区(extend)。
+    4.2. 输入 p 硬盘为[主要]分割区(primary)。
+ 5. 输入 t 改变硬盘分割区属性。　　　　　　　　　　
+    t:分区系统id号
+    L:82:linux swap
+    83:linux
+    86：NTFS window分区
+ 6. 输入 d 删除硬盘分割区属性。
+ 7. 输入 q 结束不存入硬盘分割区属性。
+ 8. 输入 w 结束并写入硬盘分割区属性
+ 
+$: p  =&gt; 可查看磁盘类型 要为：gpt
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="5fsck磁盘检验">5).fsck磁盘检验</h4>
+<p>fsck（file system check）用来检查和维护不一致的文件系统。若系统掉电或磁盘发生问题，可利用fsck命令对文件系统进行检查</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt;fsck <span class="o">[</span>-t 文件系统<span class="o">]</span> <span class="o">[</span>-ACay<span class="o">]</span> 装置名称
+选项与参数：
+    -t : 给定档案系统的型式，若在 /etc/fstab 中已有定义或 kernel 本身已支援的则不需加上此参数
+    -s : 依序一个一个地执行 fsck 的指令来检查
+    -A : 对/etc/fstab 中所有列出来的 分区（partition）做检查
+    -C : 显示完整的检查进度
+    -d : 打印出 e2fsck 的 debug 结果
+    -p : 同时有 -A 条件时，同时有多个 fsck 的检查一起执行
+    -R : 同时有 -A 条件时，省略 / 不检查
+    -V : 详细显示模式
+    -a : 如果检查有错则自动修复
+    -r : 如果检查有错则由使用者回答是否修复
+    -y : 选项指定检测每个文件是自动输入yes，在不确定那些是不正常的时候，可以执行 <span class="c1"># fsck -y 全部检查修复。</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="6mount磁盘挂载与卸除">6).mount磁盘挂载与卸除</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt;mount <span class="o">[</span>-t 文件系统<span class="o">]</span> <span class="o">[</span>-L Label名<span class="o">]</span> <span class="o">[</span>-o 额外选项<span class="o">]</span> <span class="o">[</span>-n<span class="o">]</span>  装置文件名  挂载点
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="5内存管理">5.内存管理</h3>
+<h4 id="1-free查看内存">1) free查看内存</h4>
+<p>free 命令显示系统使用和空闲的内存情况，包括物理内存、交互区内存(swap)和内核缓冲区内存。共享内存将被忽略</p>
+<ul>
+<li>
+<p>语法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">free <span class="o">[</span>参数<span class="o">]</span>
+
+-b 　以Byte为单位显示内存使用情况。 
+
+-k 　以KB为单位显示内存使用情况。 
+
+-m 　以MB为单位显示内存使用情况。
+
+-g   以GB为单位显示内存使用情况。 
+
+-o 　不显示缓冲区调节列。 
+
+-s&lt;间隔秒数&gt; 　持续观察内存使用状况。 
+
+-t 　显示内存总和列。 
+
+-V 　显示版本信息。 
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>常用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">free -h
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="2-释放内存">2) 释放内存</h4>
+<ul>
+<li>
+<p>把buffe中的数据先写入到硬盘中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sync
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>释放内存</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">echo</span> <span class="m">3</span> &gt; /proc/sys/vm/drop_caches
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="3-查看内存占用前10">3) 查看内存占用前10</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">ps aux <span class="p">|</span> sort -k4nr <span class="p">|</span> head -n <span class="m">10</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="三系统命令">三.系统命令</h2>
+<h3 id="1查看指令">1.查看指令</h3>
+<p>查看一个指令对应的执行程序文件在哪,查看指令可设置的参数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt; which  指令    <span class="c1">#查看指令位置</span>
+&gt; man 指令       <span class="c1">#查看指令参数&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2-使用root用户去执行命令">2. 使用root用户去执行命令</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt; sudo 指令
+eg.sudo passwd root
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3系统版本信息">3.系统版本信息</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#查看系统版本信息</span>
+uname -a
+cat /etc/redhat-release
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4端口">4.端口</h3>
+<ul>
+<li>
+<p>netstat</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">netstat -tunlp <span class="p">|</span> grep 端口号
+-t <span class="o">(</span>tcp<span class="o">)</span> 仅显示tcp相关选项
+-u <span class="o">(</span>udp<span class="o">)</span>仅显示udp相关选项
+-n 拒绝显示别名，能显示数字的全部转化为数字
+-l 仅列出在Listen<span class="o">(</span>监听<span class="o">)</span>的服务状态
+-p 显示建立相关链接的程序名
+
+<span class="c1">#端口监听</span>
+netstat -lnpt
+netstat -nap <span class="p">|</span> grep <span class="m">15672</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>lsof</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">lsof -i:端口号
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="5进程">5.进程</h3>
+<h4 id="1-查看进程">1) 查看进程</h4>
+<ul>
+<li>
+<p>语法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">ps命令查找与进程相关的PID号：
+ps a 显示现行终端机下的所有程序，包括其他用户的程序。
+ps -A 显示所有程序。
+ps c 列出程序时，显示每个程序真正的指令名称，而不包含路径，参数或常驻服务的标示。
+ps -e 此参数的效果和指定”A”参数相同。
+ps e 列出程序时，显示每个程序所使用的环境变量。
+ps f 用ASCII字符显示树状结构，表达程序间的相互关系。
+ps -H 显示树状结构，表示程序间的相互关系。
+ps -N 显示所有的程序，除了执行ps指令终端机下的程序之外。
+ps s 采用程序信号的格式显示程序状况。
+ps S 列出程序时，包括已中断的子程序资料。
+ps -t&lt;终端机编号&gt; 指定终端机编号，并列出属于该终端机的程序的状况。
+ps u 以用户为主的格式来显示程序状况。
+ps x 显示所有程序，不以终端机来区分。
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>示例</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#最常用的方法是ps aux,然后再通过管道使用grep命令过滤查找特定的进程,然后再对特定的进程进行操作。</span>
+ps aux <span class="p">|</span> grep program_filter_word
+ps -ef <span class="p">|</span>grep tomcat
+
+<span class="c1">#显示出所有的java进程，去处掉当前的grep进程</span>
+ps -ef<span class="p">|</span>grep java<span class="p">|</span>grep -v grep 
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="2-杀死进程">2) 杀死进程</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo <span class="nb">kill</span> -9 端口号
+ps killall  httpd  杀死全部的httpd进程
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3-查看线程">3) 查看线程</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#查线程</span>
+pstree -p <span class="m">231890</span>
+ps -T -p <span class="m">8240</span>
+top -H
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="6ssh">6.ssh</h3>
+<ul>
+<li>
+<p>安装</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">yum install ssh
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>服务管理</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">service sshd start
+或者
+systemctl start sshd
+systemctl status sshd
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>语法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">ssh<span class="o">(</span>选项<span class="o">)(</span>参数<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>选项</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">-1：强制使用ssh协议版本1；
+-2：强制使用ssh协议版本2；
+-4：强制使用IPv4地址；
+-6：强制使用IPv6地址；
+-A：开启认证代理连接转发功能；
+-a：关闭认证代理连接转发功能；
+-b：使用本机指定地址作为对应连接的源ip地址；
+-C：请求压缩所有数据；
+-F：指定ssh指令的配置文件；
+-f：后台执行ssh指令；
+-g：允许远程主机连接主机的转发端口；
+-i：指定身份文件；
+-l：指定连接远程服务器登录用户名；
+-N：不执行远程指令；
+-o：指定配置选项；
+-p：指定远程服务器上的端口；
+-q：静默模式；
+-X：开启X11转发功能；
+-x：关闭X11转发功能；
+-y：开启信任X11转发功能。
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>参数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#name:用户名,server-ip:服务器ip</span>
+ssh name@server-ip
+<span class="c1">#如果本地用户和远程用户一致,可以省略name</span>
+ssh server-ip
+<span class="c1">#默认端口22,如果远程服务器的端口是其他的，在后面加上-p参数。</span>
+ssh name@server-ip -p <span class="m">12345</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>远程执行命令</p>
+<ul>
+<li>
+<p>远程执行命令#远程执行命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#远程执行命令#远程执行命令</span>
+ssh name@server-ip <span class="s2">&#34;命令&#34;</span>
+em:
+ssh root@node2 <span class="s2">&#34;df -h&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>执行需要交互的命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#远程执行命令#远程执行命令</span>
+ssh -t name@server-ip <span class="s2">&#34;命令&#34;</span>
+em:
+ssh -t root@node2 <span class="s2">&#34;sudo ls /root&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>执行多行的命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#混合使用单引号和双引号换行</span>
+<span class="o">[</span>root@node1 ~<span class="o">]</span><span class="c1"># ssh node2 &#39;</span>
+&gt; ls
+&gt; <span class="nb">pwd</span>
+&gt; <span class="nb">echo</span> <span class="s2">&#34;hello&#34;</span>
+&gt; <span class="err">&#39;</span>
+anaconda-ks.cfg
+infinity-4.2.0-x86_64
+init.txt
+srv-gw-infinity-utils-4.2-1.el7.x86_64.rpm
+yumback
+/root
+hello
+<span class="o">[</span>root@node1 ~<span class="o">]</span><span class="c1">#</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>执行本地的脚本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#不带参数的</span>
+ssh name@server-ip &lt; <span class="o">{</span>路径<span class="o">}</span>.sh
+
+<span class="c1">#带参数的</span>
+ssh name@server-ip <span class="s1">&#39;bash -s&#39;</span> &lt; <span class="o">{</span>路径<span class="o">}</span>.sh <span class="o">{</span>脚本参数<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>执行远程服务器上的脚本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#不带参数的</span>
+ssh name@server-ip <span class="o">{</span>绝对路径<span class="o">}</span>.sh
+
+<span class="c1">#带参数的</span>
+ssh name@server-ip <span class="o">{</span>绝对路径<span class="o">}</span>.sh <span class="o">{</span>脚本参数<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+</ul>
+<h3 id="7scp">7.scp</h3>
+<p>scp 是 secure copy 的缩写, scp 是 linux 系统下基于 ssh 登陆进行安全的远程文件拷贝命令。</p>
+<ul>
+<li>
+<p>参数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">-1： 强制scp命令使用协议ssh1
+-2： 强制scp命令使用协议ssh2
+-4： 强制scp命令只使用IPv4寻址
+-6： 强制scp命令只使用IPv6寻址
+-B： 使用批处理模式（传输过程中不询问传输口令或短语）
+-C： 允许压缩。（将-C标志传递给ssh，从而打开压缩功能）
+-p：保留原文件的修改时间，访问时间和访问权限。
+-q： 不显示传输进度条。
+-r： 递归复制整个目录。
+-v：详细方式显示输出。scp和ssh<span class="o">(</span>1<span class="o">)</span>会显示出整个过程的调试信息。这些信息用于调试连接，验证和配置问题。
+-c cipher： 以cipher将数据传输进行加密，这个选项将直接传递给ssh。
+-F ssh_config： 指定一个替代的ssh配置文件，此参数直接传递给ssh。
+-i identity_file： 从指定文件中读取传输时使用的密钥文件，此参数直接传递给ssh。
+-l limit： 限定用户所能使用的带宽，以Kbit/s为单位。
+-o ssh_option： 如果习惯于使用ssh_config<span class="o">(</span>5<span class="o">)</span>中的参数传递方式，
+-P port：注意是大写的P, port是指定数据传输用到的端口号
+-S program： 指定加密传输时所使用的程序。此程序必须能够理解ssh<span class="o">(</span>1<span class="o">)</span>的选项。
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>从本地复制到远程</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">scp local_file remote_username@remote_ip:remote_folder 
+或者 
+scp local_file remote_username@remote_ip:remote_file 
+或者 
+scp local_file remote_ip:remote_folder 
+或者 
+scp local_file remote_ip:remote_file 
+
+em:
+scp /home/space/music/1.mp3 root@www.runoob.com:/home/root/others/music 
+scp /home/space/music/1.mp3 root@www.runoob.com:/home/root/others/music/001.mp3 
+scp /home/space/music/1.mp3 www.runoob.com:/home/root/others/music 
+scp /home/space/music/1.mp3 www.runoob.com:/home/root/others/music/001.mp3 
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>从远程复制到本地</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">scp root@www.runoob.com:/home/root/others/music /home/space/music/1.mp3 
+scp -r www.runoob.com:/home/root/others/ /home/space/music/
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="8find">8.find</h3>
+<ul>
+<li>
+<p>语法</p>
+<p>find命令使用 Linux find命令可以用不同的搜索标准如名字、类型、所属人、大小等来搜索目录树。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">find path expression search-term
+
+参数说明 :
+find 根据下列规则判断 path 和 expression，在命令列上第一个 - <span class="o">(</span> <span class="o">)</span> , ! 之前的部份为 path，之后的是 expression。如果 path 是空字串则使用目前路径，如果 expression 是空字串则使用 -print 为预设 expression。
+expression 中可使用的选项有二三十个之多，在此只介绍最常用的部份。
+-mount, -xdev : 只检查和指定目录在同一个文件系统下的文件，避免列出其它文件系统中的文件
+-amin n : 在过去 n 分钟内被读取过
+-anewer file : 比文件 file 更晚被读取过的文件
+-atime n : 在过去n天内被读取过的文件
+-cmin n : 在过去 n 分钟内被修改过
+-cnewer file :比文件 file 更新的文件
+-ctime n : 在过去n天内被修改过的文件
+-empty : 空的文件-gid n or -group name : gid 是 n 或是 group 名称是 name
+-ipath p, -path p : 路径名称符合 p 的文件，ipath 会忽略大小写
+-name name, -iname name : 文件名称符合 name 的文件。iname 会忽略大小写
+-size n : 文件大小 是 n 单位，b 代表 <span class="m">512</span> 位元组的区块，c 表示字元数，k 表示 kilo bytes，w 是二个位元组。
+-type c : 文件类型是 c 的文件。
+d: 目录
+c: 字型装置文件
+b: 区块装置文件
+p: 具名贮列
+f: 一般文件
+l: 符号连结
+s: socket
+-pid n : process id 是 n 的文件
+你可以使用 <span class="o">(</span> <span class="o">)</span> 将运算式分隔，并使用下列运算。
+exp1 -and exp2
+! expr
+-not expr
+exp1 -or exp2
+exp1, exp2
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>示例</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">将当前目录及其子目录下所有文件后缀为 .c 的文件列出来:
+<span class="c1"># find . -name &#34;*.c&#34;</span>
+
+将当前目录及其子目录中的所有文件列出：
+<span class="c1"># find . -type f</span>
+
+将当前目录及其子目录下所有最近 <span class="m">20</span> 天内更新过的文件列出:
+<span class="c1"># find . -ctime -20</span>
+
+查找 /var/log 目录中更改时间在 <span class="m">7</span> 日以前的普通文件，并在删除之前询问它们：
+<span class="c1"># find /var/log -type f -mtime +7 -ok rm {} \;</span>
+
+查找当前目录中文件属主具有读、写权限，并且文件所属组的用户和其他用户具有读权限的文件：
+<span class="c1"># find . -type f -perm 644 -exec ls -l {} \;</span>
+
+查找系统中所有文件长度为 <span class="m">0</span> 的普通文件，并列出它们的完整路径：
+<span class="c1"># find / -type f -size 0 -exec ls -l {} \;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h2 id="四备查">四.备查</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># uname -a # 查看内核/操作系统/CPU信息</span>
+<span class="c1"># head -n 1 /etc/issue # 查看操作系统版本</span>
+<span class="c1"># cat /proc/cpuinfo # 查看CPU信息</span>
+<span class="c1"># hostname # 查看计算机名</span>
+<span class="c1"># lspci -tv # 列出所有PCI设备</span>
+<span class="c1"># lsusb -tv # 列出所有USB设备</span>
+<span class="c1"># lsmod # 列出加载的内核模块</span>
+<span class="c1"># env # 查看环境变量 资源</span>
+<span class="c1"># free -m # 查看内存使用量和交换区使用量</span>
+<span class="c1"># df -h # 查看各分区使用情况</span>
+<span class="c1"># du -sh # 查看指定目录的大小</span>
+<span class="c1"># grep MemTotal /proc/meminfo # 查看内存总量</span>
+<span class="c1"># grep MemFree /proc/meminfo # 查看空闲内存量</span>
+<span class="c1"># uptime # 查看系统运行时间、用户数、负载</span>
+<span class="c1"># cat /proc/loadavg # 查看系统负载 磁盘和分区</span>
+<span class="c1"># mount | column -t # 查看挂接的分区状态</span>
+<span class="c1"># fdisk -l # 查看所有分区</span>
+<span class="c1"># swapon -s # 查看所有交换分区</span>
+<span class="c1"># hdparm -i /dev/hda # 查看磁盘参数(仅适用于IDE设备)</span>
+<span class="c1"># dmesg | grep IDE # 查看启动时IDE设备检测状况 网络</span>
+<span class="c1"># ifconfig # 查看所有网络接口的属性</span>
+<span class="c1"># iptables -L # 查看防火墙设置</span>
+<span class="c1"># route -n # 查看路由表</span>
+<span class="c1"># netstat -lntp # 查看所有监听端口</span>
+<span class="c1"># netstat -antp # 查看所有已经建立的连接</span>
+<span class="c1"># netstat -s # 查看网络统计信息 进程</span>
+<span class="c1"># ps -ef # 查看所有进程</span>
+<span class="c1"># top # 实时显示进程状态 用户</span>
+<span class="c1"># w # 查看活动用户</span>
+<span class="c1"># id # 查看指定用户信息</span>
+<span class="c1"># last # 查看用户登录日志</span>
+<span class="c1"># cut -d: -f1 /etc/passwd # 查看系统所有用户</span>
+
+<span class="c1"># cut -d: -f1 /etc/group # 查看系统所有组</span>
+<span class="c1"># crontab -l # 查看当前用户的计划任务 服务</span>
+<span class="c1"># chkconfig –list # 列出所有系统服务</span>
+<span class="c1"># chkconfig –list | grep on # 列出所有启动的系统服务 程序</span>
+<span class="c1"># rpm -qa # 查看所有安装的软件包</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="五软件管理">五.软件管理</h2>
+<h3 id="1下载到本地">1.下载到本地</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt;#wget 地址
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2rpm方式安装软件">2.rpm方式安装软件：</h3>
+<h4 id="1-安装">1) 安装</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">－i: 安装
+－v: 显示安装过程
+－vv: 显示安装详细过程
+－h: 显示安装进度 
+－U: 指定的安装包比已安装的安装包新或者未安装
+－F: 指定的包比已安装的包新 --oldpackage 指定的包比已安装过的包旧
+－ivh：安装显示安装进度--install--verbose--hash
+－Uvh：升级软件包--Update；
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2-卸载">2) 卸载</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">－e：删除包
+
+－e 包名
+rpm -e <span class="sb">`</span>rpm -q vsftpd<span class="sb">`</span> 
+或
+rpm -e vsftpd --allmatches 安装了多个版本的某个rpm可以一次性全部删除
+--nodeps 删除时不检查依赖性关系
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3-查询">3) 查询</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">－q: 查询包是否安装
+－qa: 查询已安装的所有包
+－qf: 文件路径  查询指定的文件来源于哪一个rpm包
+－ql: 包名 查询该包提供了哪些文件
+－qp: rpm包 对未安装的包，指定rpm文件再配合其他查询子选项来进行各项查询操作
+－q: --changelog 包名 查看更新日志
+－qc: 包名 查看该软件包所提供的配置文件
+－qd: 包名 查看该软件包所提供的文档文件
+－qi: 包名 查看该软件包的详细信息
+－q**: --scripts 查看安装前及安装后的脚本** 
+－q: --provides 包名 查看一个软件包提供了哪些能力
+－qR: 包名 查看一个软件包的运行所依赖的能力
+－q: --whatprovides 能力名 查看一个能力由哪个包提供
+－q: --whatrequires 能力名 查看一个能力依赖于哪些包
+－qpl：列出RPM软件包内的文件信息<span class="o">[</span>Query Package list<span class="o">]</span>；
+－qpi：列出RPM软件包的描述信息<span class="o">[</span>Query Package install package<span class="o">(</span>s<span class="o">)]</span>；
+－qf：查找指定文件属于哪个RPM软件包<span class="o">[</span>Query File<span class="o">]</span>；
+
+－Va：校验所有的RPM软件包，查找丢失的文件<span class="o">[</span>View Lost<span class="o">]</span>；
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="4-示例">4) 示例</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt;#rpm  -ivh  软件包全名          //安装软件
+&gt;#rpm  -q   软件包名<span class="o">(</span>完整<span class="o">)</span>    //query查看软件是否有安装
+&gt;#rpm  -e   软件包名 <span class="o">(</span>完整<span class="o">)</span>      //卸载软件
+&gt;#rpm  -ql  软件包名 <span class="o">(</span>完整<span class="o">)</span>      //query all  软件安装目录
+&gt;#rpm  -qa                      //query all  查看系统里边全部rpm方式安装的软件
+&gt;#rpm  -qa  <span class="p">|</span>  grep ftpd<span class="o">(</span>部分名字<span class="o">)</span>          //模糊查找指定软件ftpd是否有安装
+<span class="nv">软件包全名</span> <span class="o">=</span> 软件包名+软件版本+支持的系统+支持cpu型号+文件后缀
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2yum安装">2.yum安装</h3>
+<h4 id="1-语法">1) 语法</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#语法</span>
+yum <span class="o">[</span>options<span class="o">]</span> <span class="o">[</span>command<span class="o">]</span> package
+
+<span class="o">[</span>options<span class="o">]</span>
+-y：对所有的提问都回答“yes”；
+-R：设置yum处理一个命令的最大等待时间；
+Install:用于安装指定的软件包，同时安装依赖的底层软件包，自动解决依赖关系。
+Update:更新系统中已安装的软件包，没有指定软件包名时将更新整个系统中所有软件包。
+check-update:检查软件包是否有更新。
+remove:卸载指定的软件包，同时删除依赖于指定软件包的其他软件包。
+info:查询程序包information。
+deplist:查询与指定软件包存在依赖关系的软件包，包括依赖指定软件包，以及指定软件包依赖的底层支持软件包。
+groupinstall:安装指定的软件组
+groupupdate:更新指定的软件组
+grouplist:查询软件组。
+groupremove:删除指定的软件组。
+list <span class="o">[</span>all <span class="p">|</span> available <span class="p">|</span> installed <span class="p">|</span> updates<span class="o">]</span>:显示程序包   
+repolist <span class="o">[</span>all <span class="p">|</span> enabled <span class="p">|</span> disabled<span class="o">]</span>:显示仓库列表
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2-仓库管理">2) 仓库管理</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">yum repolist <span class="o">[</span>参数<span class="o">]</span>
+
+<span class="o">[</span>参数<span class="o">]</span>
+all 显示所有的仓库
+enabled 显示已启用的仓库
+disabled 显示已禁用的仓库
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3-列表">3) 列表</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">yum list <span class="o">[</span>参数<span class="o">]</span>
+
+<span class="o">[</span>参数<span class="o">]</span>
+available 显示所有可用的，且未安装的
+installed 显示所有已安装的包
+updates 显示可更新的包
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="4-搜索查找软件包">4) 搜索(查找软件包)</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">yum search 关键字
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="5-安装">5) 安装</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">yum install rpm包名 安装远程的rpm包,并用yum解决依赖性关系
+yum localinstall <span class="p">|</span>install rpm路径 安装本地的rpm包，并用yum解决依赖性关系
+yum localupdate <span class="p">|</span>update rpm路径 更新本地的rpm包，并用yum解决依赖性关系
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="6-升级慎用">6) 升级(慎用)</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#列出所有可更新的软件清单命令：</span>
+yum check-update
+
+yum update 包名
+注意：
+a.如果不跟包名会升级所有包，包括linux内核
+b.升级不好你就挂了
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="7-卸载删除软件">7) 卸载(删除软件)</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">yum remove rpm包名
+注意：
+a.删除的时候会把依赖的也都删了
+b.这种删除方式可能导致的问题是，把中间依赖的也删了，但是还有其他组件依赖这个中间包，你会发
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="8-软件组管理">8) 软件组管理</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#列出所有可用的软件组列表</span>
+yum grouplist
+
+<span class="c1">#安装指定软件组，组名可由grouplist查出来</span>
+yum groupinstall 组名
+
+<span class="c1">#卸载指定软件组</span>
+yum groupremove 组名
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="9-清理缓存">9) 清理缓存</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#清除缓存命令:</span>
+yum clean packages: 清除缓存目录下的软件包
+yum clean headers: 清除缓存目录下的 headers
+yum clean oldheaders: 清除缓存目录下旧的 headers
+yum clean, yum clean all <span class="o">(=</span> yum clean packages<span class="p">;</span> yum clean oldheaders<span class="o">)</span> :清除缓存目录下的软件包及旧的headers
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3压缩管理">3.压缩管理</h3>
+<h4 id="1-zip">1) zip</h4>
+<ul>
+<li>
+<p>压缩</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">  <span class="c1">#zip命令所在目录为/usr/bin/zip</span>
+  <span class="c1">#zip [选项] 压缩包名 源文件或源目录</span>
+  <span class="c1">#选项：</span>
+  <span class="c1">#   -r：压缩目录</span>
+  <span class="c1">#em:</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>解压</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#unzip [选项] 压缩包名</span>
+<span class="c1">#选项：</span>
+<span class="c1">#   -d：指定解压缩位置</span>
+<span class="c1">#em:</span>
+unzip -d /tmp/ test.zip
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="2-gz">2) gz</h4>
+<h4 id="3-tar">3) tar</h4>
+<ul>
+<li>
+<p>压缩(tar.gz,tgz格式是相同的，命名不同而已 )</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">tar -zcvf examples.tgz examples <span class="o">(</span>examples当前执行路径下的目录<span class="o">)</span>
+
+说明：
+-z, --gzip filter the archive through gzip 通过gzip压缩的形式对文件进行归档
+
+举例：
+tar -zcvf file.tgz dir <span class="c1">#dir目录</span>
+
+tar -zcvf root.tgz docker/ go/ jenkins-data/ rpmbuild/ sdk/ test/ init.sh jenkins.sh licence.sh
+tar -zcvf work.tgz work/
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>解压</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">tar -zxvf examples.tar （解压至当前执行目录下）
+tar -zxvf examples.tar  -C /path <span class="o">(</span>/path 解压至其它路径<span class="o">)</span>
+
+举例：
+tar -zxvf file.tgz
+tar -zxvf file.tgz -C /temp
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="4上传下载导入导出">4.上传下载(导入导出)</h3>
+<ul>
+<li>安装</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">yum install -y lrzsz
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>导出</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sz 文件目录路径
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>导入</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">rz
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="5文本转换">5.文本转换</h3>
+<ul>
+<li>dos2unix</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#如果一次转换多个文件，把这些文件名直接跟在dos2unix之后。（注：也可以加上-o参数，也可以不加，效果一样）</span>
+
+dos2unix file1 file2 file3 
+dos2unix -o file1 file2 file3 
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="6vim">6.vim</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#打开创建</span>
+&gt;vim filename //打开vim并创建名为filename的文件
+
+<span class="c1">#vim模式</span>
+正常模式（按Esc或Ctrl+<span class="o">[</span>进入） 左下角显示文件名或为空
+插入模式（按i键进入） 左下角显示--INSERT--
+可视模式（不知道如何进入） 左下角显示--VISUAL--
+
+<span class="c1">#退出</span>
+&gt;:wq 保存并退出
+&gt;ZZ 保存并退出
+&gt;:q! 强制退出并忽略所有更改
+&gt;:e! 放弃所有修改，并打开原来文件。
+
+<span class="c1">#插入命令</span>
+i 在当前位置生前插入
+I 在当前行首插入
+a 在当前位置后插入
+A 在当前行尾插入
+o 在当前行之后插入一行
+O 在当前行之前插入一行
+
+<span class="c1">#光标移动</span>
+在命令行模式下输入G  可以直接跳转到页面的底部
+在命令行模式下输入1G 可以跳转到页面的头部位置
+&gt;:52    //跳到指定行，冒号+行号，回车，比如跳到240行就是 :240回车
+&gt;52G    //跳到指定行，冒号+行号，回车，比如跳到240行就是 :240回车
+Ctrl + e 向下滚动一行
+Ctrl + y 向上滚动一行
+Ctrl + d 向下滚动半屏
+Ctrl + u 向上滚动半屏
+Ctrl + f 向下滚动一屏
+Ctrl + b 向上滚动一屏
+
+<span class="c1">#撤销</span>
+u 撤销（Undo）
+U 撤销对整行的操作
+Ctrl + r 重做（Redo），即撤销的撤销。
+<span class="c1">#删除</span>
+双击 d
+
+<span class="c1">#显示行号</span>
+:set nu 或 :set number
+<span class="c1">#跳转行号</span>
+:数字
+
+<span class="c1">#执行shell命令</span>
+:!command
+:!ls 列出当前目录下文件
+:!perl -c script.pl 检查perl脚本语法，可以不用退出vim，非常方便。
+:!perl script.pl 执行perl脚本，可以不用退出vim，非常方便。
+:suspend或Ctrl - Z 挂起vim，回到shell，按fg可以返回vim。
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="7alnmp软件管理">7.alnmp软件管理</h3>
+<h4 id="1-nginx">1) nginx</h4>
+<ul>
+<li>服务器,启动,停止,重启</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">0)检查nginx配置文件是否正确
+nginx -t -c /usr/nginx/conf/nginx.conf 或 /usr/nginx/sbin/nginx -t
+1)启动
+nginx -c /usr/local/nginx/conf/nginx.conf 或 usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+/usr/sbin/nginx -c /etc/nginx/nginx.conf
+2)停止
+A.查询主进程号:ps -ef | grep nginx
+B.停止主进程号:
+从容停止Nginx：kill -QUIT 主进程号
+快速停止Nginx：kill -TERM 主进程号
+强制停止Nginx：kill -9 主进程号
+3)平滑重启
+kill -HUP 住进称号或进程号文件路径 或 /usr/local/nginx/sbin/nginx -s reload
+/usr/sbin/nginx -c /etc/nginx/nginx.conf -s reload
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2-apache">2) apache</h4>
+<ul>
+<li>服务器,启动,停止,重启</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">0)检查配置文件
+/usr/local/apache2/bin/apachectl configtest
+1)启动
+/usr/local/apache2/bin/apachectl start apaceh
+2)停止
+/usr/local/apache2/bin/apachectl stop
+3)重启
+/usr/local/apache2/bin/apachectl restart
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3-mysql">3) mysql</h4>
+<ul>
+<li>服务器,启动,停止,重启</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">1)启动
+/etc/inint.d/mysqld start
+2)停止
+/etc/inint.d/mysqld stop
+3)重启
+/etc/inint.d/mysqld restart
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="4-php">4) php</h4>
+<ul>
+<li>php-fpm服务,启动,停止,重启</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">1)启动
+/etc/inint.d/php-fpm start
+2)停止
+/etc/inint.d/php-fpm stop
+3)重启
+/etc/inint.d/php-fpm restart
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-02-10
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/linux/">linux</a>
+          <a href="/tags/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">常用命令</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/db/mysql/mysql%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[mysql] mysql开发规范</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/middleware/elasticsearch%E5%9C%A8docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/">
+            <span class="next-text nav-default">[elasticsearch]Elasticsearch在docker安装及使用</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -10,10 +10,10 @@
     <lastBuildDate>Thu, 13 Aug 2020 16:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[VMware]虚拟机VM10磁盘扩容</title>
-      <link>https://blog.nevergiveup.tech/post/%E5%B7%A5%E5%85%B7/%E8%99%9A%E6%8B%9F%E6%9C%BAvm%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9/</link>
+      <link>https://blog.nevergiveup.tech/post/tools/vmware/%E8%99%9A%E6%8B%9F%E6%9C%BAvm%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9/</link>
       <pubDate>Thu, 13 Aug 2020 16:37:56 +0800</pubDate>
       
-      <guid>https://blog.nevergiveup.tech/post/%E5%B7%A5%E5%85%B7/%E8%99%9A%E6%8B%9F%E6%9C%BAvm%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9/</guid>
+      <guid>https://blog.nevergiveup.tech/post/tools/vmware/%E8%99%9A%E6%8B%9F%E6%9C%BAvm%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9/</guid>
       <description>虚拟机VMware10磁盘扩容 一、扩容前提条件 ​ 1、要执行操作的虚拟机不能是克隆机 ​ 2、要执行的虚拟机不能含有快照 二、扩容步骤 1、打开虚拟机</description>
     </item>
     

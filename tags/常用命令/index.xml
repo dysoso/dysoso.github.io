@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>常用命令 on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/tags/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
+    <description>Recent content in 常用命令 on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Tue, 12 Jun 2018 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[linux]linux常用命令</title>
+      <link>https://blog.nevergiveup.tech/post/linux/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
+      <pubDate>Tue, 12 Jun 2018 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/linux/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
+      <description>linux常用命令 本文记录一些常用的linux命令，方便在使用时查询，并持续更新中··· 一.基础操作 1. 查看目录及文件 1 2 3 4 5 6 &amp;gt; ls //li</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>makefile on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/tags/makefile/</link>
+    <description>Recent content in makefile on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Fri, 04 Mar 2022 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/makefile/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[linux] RPM打包教程(教程&#43;资料&#43;案例)</title>
+      <link>https://blog.nevergiveup.tech/post/linux/rpm%E6%89%93%E5%8C%85%E6%95%99%E7%A8%8B%E6%96%B0%E6%89%8B%E5%90%91centos/</link>
+      <pubDate>Fri, 04 Mar 2022 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/linux/rpm%E6%89%93%E5%8C%85%E6%95%99%E7%A8%8B%E6%96%B0%E6%89%8B%E5%90%91centos/</guid>
+      <description>RPM打包教程 学习rpm打包，一篇文章就够了 RPM（Redhat Package Manager）是用于Redhat、CentOS、Fedora等Linux</description>
+    </item>
+    
+    <item>
+      <title>[linux] Linux源码包的安装步骤</title>
+      <link>https://blog.nevergiveup.tech/post/linux/linux%E6%BA%90%E7%A0%81%E5%8C%85%E7%9A%84%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4/</link>
+      <pubDate>Fri, 04 Mar 2022 11:31:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/linux/linux%E6%BA%90%E7%A0%81%E5%8C%85%E7%9A%84%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4/</guid>
+      <description>Linux源码包的安装步骤 1.下载源码包并解压 1 2 3 4 5 6 7 8 #可使用 wget 命令“http:\\”直接下载到主机 或者其他方式上传源码包 #根据源码</description>
+    </item>
+    
+  </channel>
+</rss>
