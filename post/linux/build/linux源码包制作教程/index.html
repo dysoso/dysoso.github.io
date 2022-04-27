@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[linux] Linux源码包的制作教程 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="Linux源码包的制作教程" /><meta name="keywords" content="linux, centos, 源码包, 二进制软件包, configure, makefile, make, install, clean" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/linux/build/linux%E6%BA%90%E7%A0%81%E5%8C%85%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[linux] Linux源码包的制作教程" />
+<meta property="og:description" content="Linux源码包的制作教程" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/linux/build/linux%E6%BA%90%E7%A0%81%E5%8C%85%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-03-04T15:37:56+08:00" />
+<meta property="article:modified_time" content="2022-03-04T15:37:56+08:00" />
+
+<meta itemprop="name" content="[linux] Linux源码包的制作教程">
+<meta itemprop="description" content="Linux源码包的制作教程"><meta itemprop="datePublished" content="2022-03-04T15:37:56+08:00" />
+<meta itemprop="dateModified" content="2022-03-04T15:37:56+08:00" />
+<meta itemprop="wordCount" content="12215">
+<meta itemprop="keywords" content="linux,centos,源码包,二进制软件包,configure,makefile,make,install,clean," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[linux] Linux源码包的制作教程"/>
+<meta name="twitter:description" content="Linux源码包的制作教程"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[linux] Linux源码包的制作教程</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-03-04 </span>
+        <div class="post-category">
+            <a href="/categories/linux/"> linux </a>
+            </div>
+          <span class="more-meta"> 约 12215 字 </span>
+          <span class="more-meta"> 预计阅读 25 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#linux源码包的制作教程">Linux源码包的制作教程</a>
+      <ul>
+        <li><a href="#一概述">一.概述</a>
+          <ul>
+            <li><a href="#1linux源码包">1.linux源码包</a></li>
+            <li><a href="#2linux二进制包">2.linux二进制包</a></li>
+            <li><a href="#2为什么要使用make">2.为什么要使用make？</a></li>
+            <li><a href="#3什么是makefile-">3.什么是makefile ？</a></li>
+            <li><a href="#4关于程序的编译和链接">4.关于程序的编译和链接</a></li>
+          </ul>
+        </li>
+        <li><a href="#二configure介绍">二.configure介绍</a>
+          <ul>
+            <li><a href="#1什么是configure">1.什么是configure？</a></li>
+            <li><a href="#2configurep配置详细说明">2.configurep配置详细说明</a></li>
+          </ul>
+        </li>
+        <li><a href="#三make介绍">三.Make介绍</a>
+          <ul>
+            <li><a href="#1什么是make">1.什么是Make?</a></li>
+            <li><a href="#2常用的make命令">2.常用的Make命令</a></li>
+          </ul>
+        </li>
+        <li><a href="#四makefile介绍">四.Makefile介绍</a>
+          <ul>
+            <li><a href="#1什么是makefile">1.什么是Makefile</a></li>
+            <li><a href="#2makefile的规则">2.makefile的规则</a></li>
+            <li><a href="#3makefile文件语法">3.makefile文件语法</a></li>
+            <li><a href="#4几个makefile示例">4.几个makefile示例</a></li>
+          </ul>
+        </li>
+        <li><a href="#五编译打包原理">五.编译打包原理</a>
+          <ul>
+            <li><a href="#1make是如何工作的">1.make是如何工作的</a></li>
+            <li><a href="#2makefile中使用变量">2.makefile中使用变量</a></li>
+            <li><a href="#3让make自动推导">3.让make自动推导</a></li>
+            <li><a href="#4另类风格的makefiles">4.另类风格的makefiles</a></li>
+            <li><a href="#5清空目标文件的规则">5.清空目标文件的规则</a></li>
+            <li><a href="#6makefile里有什么">6.Makefile里有什么？</a></li>
+            <li><a href="#7makefile的文件名">7.Makefile的文件名</a></li>
+            <li><a href="#8引用其它的makefile">8.引用其它的Makefile</a></li>
+            <li><a href="#9环境变量makefiles">9.环境变量MAKEFILES</a></li>
+            <li><a href="#10make的工作方式">10.make的工作方式</a></li>
+          </ul>
+        </li>
+        <li><a href="#六项目打包示例">六.项目打包示例</a>
+          <ul>
+            <li><a href="#1几个项目打包的makefile示例">1.几个项目打包的Makefile示例</a></li>
+            <li><a href="#2制作go项目二进制软件包安装包">2.制作Go项目二进制软件包安装包</a></li>
+          </ul>
+        </li>
+        <li><a href="#七参考文献">七、参考文献</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>[TOC]</p>
+<h1 id="linux源码包的制作教程">Linux源码包的制作教程</h1>
+<blockquote>
+<p>学习Linux源码包的制作，一篇文章就够了。</p>
+<p>本文章从源码包的概念开始，详细讲解每个步骤：configure，makefile，make，make install，make clean。</p>
+<p>教你怎么去编写makefile编译文件。</p>
+<p>本教程同样适用于使用makefile为安装文件的二进制软件包制作.</p>
+<p>并用具体案例来说明整个流程，内含案例源码。</p>
+<p>如需将源码包制作成rpm安装包，可以参考教程：<a href="https://blog.nevergiveup.tech/post/linux/build/linux%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8C%85rpm%E5%8C%85%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B/">Linux二进制包(RPM包)制作教程(教程+资料+案例)</a></p>
+</blockquote>
+<h2 id="一概述">一.概述</h2>
+<h3 id="1linux源码包">1.linux源码包</h3>
+<p>实际上，源码包就是一大堆源代码程序，是由程序员按照特定的格式和语法编写出来的。</p>
+<p>我们都知道，计算机只能识别机器语言，也就是二进制语言，所以源码包的安装需要一名“翻译官”将“abcd”翻译成二进制语言，这名“翻译官”通常被称为编译器。</p>
+<p>“编译”指的是从源代码到直接被计算机（或虚拟机）执行的目标代码的翻译过程，编译器的功能就是把源代码翻译为二进制代码，让计算机识别并运行。</p>
+<p>源码包的安装需要把源代码编译为二进制代码，因此安装时间较长，很费时间。</p>
+<p>为了解决使用源码包安装方式的这些问题，Linux 软件包的安装出现了使用二进制包的安装方式。</p>
+<h3 id="2linux二进制包">2.linux二进制包</h3>
+<p>二进制包，也就是源码包经过成功编译之后产生的包。由于二进制包在发布之前就已经完成了编译的工作，因此用户安装软件的速度较快（同 Windows下安装软件速度相当），且安装过程报错几率大大减小。</p>
+<p>二进制包是 Linux 下默认的软件安装包，因此二进制包又被称为默认安装软件包。目前主要有以下 2 大主流的二进制包管理系统：</p>
+<ul>
+<li>RPM 包管理系统：功能强大，安装、升级、査询和卸载非常简单方便，因此很多 Linux 发行版都默认使用此机制作为软件安装的管理方式，例如 Fedora、CentOS、SuSE 等。</li>
+<li>DPKG 包管理系统：由 Debian Linux 所开发的包管理机制，通过 DPKG 包，Debian Linux 就可以进行软件包管理，主要应用在 Debian 和 Ubuntu 中。</li>
+</ul>
+<p>同时有些开发者，会将编译好的二进制文件和其他配置，安装脚本压缩打包，然后使用脚本安装，不过安装较为复杂。</p>
+<h3 id="2为什么要使用make">2.为什么要使用make？</h3>
+<p>在开发学习过程中，经常需要编译，简单的项目构建起来很方便。但遇到较复杂的项目，比如要跨平台交叉编译，选择性单元测试，性能测试，命令就要附加很多参数，敲起来麻烦，还容易忘记，时常要查看help。为了解决这个问题，我们可以编写shell，将常用操作封装在脚本中，虽然实现简单，但每个人编写、阅读能力不一，不利于规范化。另一个更好的选择，就是使用make。</p>
+<h3 id="3什么是makefile-">3.什么是makefile ？</h3>
+<p>​	因为， makefile关系到了整个工程的编译规则。一个工程中的源文件不计数，其按<strong>类型、功能、模块</strong>分别放在若干个目录中，makefile定义了一系列的规则来指定，哪些文件需要先编译，哪些文件需要后编译，哪些文件需要重新编译，甚至于进行更复杂的功能操作，因为makefile就像一个Shell脚本一样，其中也可以执行操作系统的命令。</p>
+<p>​	makefile带来的好处就是——“自动化编译”，一旦写好，只需要一个make命令，整个工程完全自动编译，极大的提高了软件开发的效率。 make是一个命令工具，是一个解释makefile中指令的命令工具，一般来说，大多数的IDE都有这个命令，比如：Delphi的make，Visual C++的nmake，Linux下GNU的make。可见，makefile都成为了一种在工程方面的编译方法。</p>
+<h3 id="4关于程序的编译和链接">4.关于程序的编译和链接</h3>
+<p>​	一般来说，无论是C、C++、还是pas，首先要把源文件编译成<strong>中间代码文件</strong>，在Windows下也就是 .obj 文件，UNIX下是 .o 文件，即 Object File，这个动作叫做<strong>编译（compile）</strong>。然后再把大量的Object File合成执行文件，这个动作叫作链接（link） 。</p>
+<p>​	<strong>译时</strong>，编译器需要的是语法的正确，函数与变量的声明的正确。对于后者，通常是你需要告诉编译器头文件的所在位置（头文件中应该只是声明，而定义应该放在C/C++文件中），只要所有的语法正确，编译器就可以编译出中间目标文件。一般来说，每个源文件都应该对应于一个中间目标文件（O文件或是OBJ文件）。 
+<strong>链接时</strong>，主要是链接函数和全局变量，所以，我们可以使用这些中间目标文件（O文件或是OBJ文件）来链接我们的应用程序。链接器并不管函数所在的源文件，只管函数的中间目标文件（Object File），在大多数时候，由于源文件太多，编译生成的中间目标文件太多，而在链接时需要明显地指出中间目标文件名，这对于编译很不方便，所以，我们要给中间目标文件打个包，在Windows下这种包叫“<strong>库文件”（Library File)</strong>，也就是 .lib 文件，在UNIX下，是Archive File，也就是 .a 文件。</p>
+<p>​      总结一下，源文件首先会生成中间目标文件，再由中间目标文件生成执行文件。在编译时，编译器只检测程序语法，和函数、变量是否被声明。如果函数未被声明，编译器会给出一个警告，但可以生成Object File。而在链接程序时，链接器会在所有的Object File中找寻函数的实现，如果找不到，那到就会报链接错误码（Linker Error），在VC下，这种错误一般是：Link 2001错误，意思说是说，链接器未能找到函数的实现。你需要指定函数的ObjectFile.</p>
+<h2 id="二configure介绍">二.configure介绍</h2>
+<h3 id="1什么是configure">1.什么是configure？</h3>
+<p>​	configure 是一个shell脚本。用来检测你的安装平台的目标特征的，并自动生成makefile文件，如果手动编写了makefile文件，则configure非必须的。</p>
+<p>​	为下一步的编译做准备，你可以通过在 configure 后加上参数来对安装进行控制，比如代码:./configure –prefix=/usr 意思是将该软件安装在 /usr 下面，执行文件就会安装在 /usr/bin （而不是默认的 /usr/local/bin),资源文件就会安装在 /usr/share（而不是默认的/usr/local/share）。同时一些软件的配置文件你可以通过指定 –sys-config= 参数进行设定。有一些软件还可以加上 –with、–enable、–without、–disable 等等参数对编译加以控制，你可以通过允许 ./configure –help 察看详细的说明帮助。</p>
+<h3 id="2configurep配置详细说明">2.configurep配置详细说明</h3>
+<p>配置项较多，可以参考文章：<a href="https://blog.csdn.net/yyyljw/article/details/121861679">Linux 下configure配置详解</a></p>
+<p>本教程使用自定义的Makefile，所以此步可以跳过。</p>
+<h2 id="三make介绍">三.Make介绍</h2>
+<h3 id="1什么是make">1.什么是Make?</h3>
+<p>​	Make是最常用的构建工具，诞生于1977年，主要用于C语言的项目。但是实际上 ，任何只要某个文件有变化，就要重新构建的项目，都可以用Make构建。</p>
+<p>​	make命令是GNU的工程化编译工具，用以实现工程化的管理，提高开发效率。</p>
+<p>​	构建规则都写在Makefile文件里面，要学会如何Make命令，就必须学会如何编写Makefile文件。</p>
+<p>​	<strong>Make解释Makefile</strong> 中的指令（应该说是规则）。在Makefile文件中描述了整个工程所有文件的编译顺序、编译规则。Makefile 有自己的书写格式、关键字、函数。像C 语言有自己的格式、关键字和函数一样。而且在Makefile 中可以使用系统shell所提供的任何命令来完成想要的工作。</p>
+<h3 id="2常用的make命令">2.常用的Make命令</h3>
+<p>make一般命令如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#安装</span>
+make install
+<span class="c1">#卸载</span>
+make uninstall
+<span class="c1">#默认的进行源代码编译</span>
+make
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="四makefile介绍">四.Makefile介绍</h2>
+<h3 id="1什么是makefile">1.什么是Makefile</h3>
+<p>​	make命令执行时，需要一个makefile文件，以告诉make命令需要怎么样的去编译和链接程序。</p>
+<p>​	首先，我们用一个示例来说明makefile的书写规则，以便给大家一个感性认识。这个示例来源于gnu 的make使用手册，在这个示例中，我们的工程有8个c文件，和3个头文件，我们要写一个makefile来告诉make命令如何编译和链接这几个文件。我们的规则是：</p>
+<ol>
+<li>如果这个工程没有编译过，那么我们的所有c文件都要编译并被链接。</li>
+<li>如果这个工程的某几个c文件被修改，那么我们只编译被修改的c文件，并链接目标程序。</li>
+<li>如果这个工程的头文件被改变了，那么我们需要编译引用了这几个头文件的c文件，并链接目标程序。</li>
+</ol>
+<p>只要我们的makefile写得够好，所有的这一切，我们只用一个make命令就可以完成，make命令会自动智能地根据当前的文件修改的情况来确定哪些文件需要重编译，从而自动编译所需要的文件和链接目标程序。</p>
+<h3 id="2makefile的规则">2.makefile的规则</h3>
+<h4 id="1makefile的规则">1).makefile的规则</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nf">target ... </span><span class="o">:</span> <span class="n">prerequisites</span> ...
+<span class="err">[tab]</span> <span class="err">command</span>
+    <span class="err">...</span>
+    <span class="err">...</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>target</p>
+<p>一个目标，可以是文件名(object file（目标文件）)，也可以是某个操作的名字（伪目标），还可以是一个标签（label），这个名字由自己定义，用来指明要构建的对象 。</p>
+</li>
+<li>
+<p>prerequisites</p>
+<p>生成该target所依赖的文件和/或target</p>
+</li>
+<li>
+<p>tab</p>
+<p>使用tab来缩进</p>
+</li>
+<li>
+<p>command</p>
+<p>该target要执行的命令（任意的shell命令）</p>
+</li>
+</ul>
+<p>这就是makefile的规则，也就是makefile中最核心的内容。</p>
+<h4 id="2伪目标">2).伪目标</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nf">create</span><span class="o">:</span>
+    touch newfile
+</code></pre></td></tr></table>
+</div>
+</div><p>比如上面这条规则，伪目标为create，命令作用为创建一个文件。要想构建这个操作，调用<code>make create</code>即可。</p>
+<p>但是如果目录下，存在一个文件名为create，那么构建命令就不会去执行。为了解决这个问题，当使用伪目标时，可以明确声明create是“伪目标“，告诉make跳过文件检查。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nf">.PHONY</span><span class="o">:</span> <span class="n">clean</span>
+<span class="nf">create</span><span class="o">:</span>
+    touch newfile
+</code></pre></td></tr></table>
+</div>
+</div><p>如果Make命令运行时没有指定目标，默认会执行Makefile文件的第一个目标。</p>
+<h4 id="3prerequisites先决条件">3).prerequisites先决条件</h4>
+<p>先决条件，通常是文件名，多个名字用空格分隔。</p>
+<p>它定义了一个是否进行重新构建的判断标准： 如果有任何一个先决文件发生改变（时间戳更新），就要重新构建。</p>
+<p>这是一个文件的依赖关系，也就是说，target这一个或多个的目标文件依赖于prerequisites中的文件，其生成规则定义在command中。说白一点就是说:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">prerequisites中如果有一个以上的文件比target文件要新的话，command所定义的命令就会被执行。
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="示例">示例</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nf">result.txt</span><span class="o">:</span> <span class="n">source</span>.<span class="n">txt</span>
+    cp source.txt result.txt
+</code></pre></td></tr></table>
+</div>
+</div><p>上面代码中，构建 result.txt 的前置条件是 source.txt 。如果当前目录中，source.txt 已经存在，那么<code>make result.txt</code>可以正常运行，否则必须再写一条规则，来生成 source.txt 。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nf">source.txt</span><span class="o">:</span>
+    <span class="nb">echo</span> <span class="s2">&#34;this is the source&#34;</span> &gt; source.txt
+</code></pre></td></tr></table>
+</div>
+</div><p>上面代码中，source.txt后面没有前置条件，就意味着它跟其他文件都无关，只要这个文件还不存在，每次调用<code>make source.txt</code>，它都会生成。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="err">$</span> <span class="err">make</span> <span class="err">result.txt</span>
+<span class="err">$</span> <span class="err">make</span> <span class="err">result.txt</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果需要生成多个文件，往往采用下面的写法。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nf">source</span><span class="o">:</span> <span class="n">file</span>1 <span class="n">file</span>2 <span class="n">file</span>3
+</code></pre></td></tr></table>
+</div>
+</div><p>上面代码中，source 是一个伪目标，只有三个前置文件，没有任何对应的命令。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="err">$</span> <span class="err">make</span> <span class="err">source</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>执行<code>make source</code>命令后，就会一次性生成 file1，file2，file3 三个文件</p>
+<h4 id="4commands命令">4).commands命令</h4>
+<p>命令是构建目标时具体执行的指令，由一行或多行shell组成。每行命令之前必须有一个tab键缩进。如果想用其他键缩进，可以用内置变量.RECIPEPREFIX声明。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nv">.RECIPEPREFIX</span> <span class="o">=</span> &gt;
+<span class="nf">hello</span><span class="o">:</span>
+<span class="err">&gt;</span> <span class="err">echo</span> <span class="err">Hello,</span> <span class="err">world</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>需要注意的是，每行shell在一个单独的bash进程中执行，多进程间没有继承关系。</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nf">var</span><span class="o">:</span>
+    <span class="nb">export</span> <span class="nv">name</span><span class="o">=</span>wangpeng
+    <span class="nb">echo</span> <span class="s2">&#34;myname is </span><span class="nv">$name</span><span class="s2">&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>运行上面的构建 ，发现变量name是取不到的，因为两行shell在两个独立的bash中运行。</p>
+<ul>
+<li>
+<p>最直接的方法就是将两行shell写到一行中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nf">var</span><span class="o">:</span>
+    <span class="nb">export</span> <span class="nv">name</span><span class="o">=</span>wangpeng<span class="p">;</span> <span class="nb">echo</span> <span class="s2">&#34;myname is </span><span class="nv">$name</span><span class="s2">&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>第二种办法，在换行前加反斜杠\转义，</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nf">var</span><span class="o">:</span>
+    <span class="nb">export</span> <span class="nv">name</span><span class="o">=</span>wangpeng <span class="se">\
+</span><span class="se"></span>    <span class="nb">echo</span> <span class="s2">&#34;myname is </span><span class="nv">$name</span><span class="s2">&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>还有第三种办法是使用<code>。ONESHELL</code>内置命令。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nf">.ONESHELL</span><span class="o">:</span>
+<span class="nf">var</span><span class="o">:</span>
+    <span class="nb">export</span> <span class="nv">name</span><span class="o">=</span>wangpeng
+    <span class="nb">echo</span> <span class="s2">&#34;myname is </span><span class="nv">$name</span><span class="s2">&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="3makefile文件语法">3.makefile文件语法</h3>
+<h4 id="1注释">1).注释</h4>
+<p>行首井号（#）表示注释。</p>
+<h4 id="2回显">2).回显</h4>
+<p>回显是指，在执行到每行命令前，将命令本身打印出来。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nf">test</span><span class="o">:</span>
+    <span class="c1"># 这是测试</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>执行上面构建会输出</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">$ make <span class="nb">test</span>
+<span class="c1"># 这是测试</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在命令的前面加上@，就可以关闭回声。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nf">test</span><span class="o">:</span>
+    @# 这是测试
+</code></pre></td></tr></table>
+</div>
+</div><p>这下构建时就不会有任何输出。</p>
+<h4 id="3通配符">3).通配符</h4>
+<p>Makefile 的通配符与 Bash 一致，主要有星号&quot;*&quot;、问号&quot;?&quot;。比如*.text 表示所有后缀名为text的文件。</p>
+<h4 id="4模式匹配">4).模式匹配</h4>
+<p>Make命令允许对文件名，进行类似正则运算的匹配，主要用到的匹配符是%。比如，假定当前目录下有 f1.c 和 f2.c 两个源码文件，需要将它们编译为对应的对象文件。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nf">%.o</span><span class="o">:</span> %.<span class="n">c</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>等同于下面的写法。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nf">f1.o</span><span class="o">:</span> <span class="n">f</span>1.<span class="n">c</span>
+<span class="nf">f2.o</span><span class="o">:</span> <span class="n">f</span>2.<span class="n">c</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>使用匹配符%，可以将大量同类型的文件，只用一条规则就完成构建。</p>
+<h4 id="5变量和赋值符">5).变量和赋值符</h4>
+<p>Makefile 允许自定义变量。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nv">txt</span> <span class="o">=</span> Hello World
+<span class="nf">test</span><span class="o">:</span>
+    @echo <span class="k">$(</span>txt<span class="k">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>调用shell中的变量，需要使用两个美元符号$$。</p>
+<p>Makefile一共提供了四个赋值运算符 （=、:=、?=、+=），它们的区别请看<a href="http://stackoverflow.com/questions/448910/makefile-variable-assignment">StackOverflow</a>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nv">VARIABLE</span> <span class="o">=</span> value
+<span class="c"># 在执行时扩展，允许递归扩展。
+</span><span class="c"></span>
+<span class="nv">VARIABLE</span> <span class="o">:=</span> value
+<span class="c"># 在定义时扩展。
+</span><span class="c"></span>
+<span class="nv">VARIABLE</span> <span class="o">?=</span> value
+<span class="c"># 只有在该变量为空时才设置值。
+</span><span class="c"></span>
+<span class="nv">VARIABLE</span> <span class="o">+=</span> value
+<span class="c"># 将值追加到变量的尾端。
+</span></code></pre></td></tr></table>
+</div>
+</div><h4 id="6内置变量">6).内置变量</h4>
+<p>Make命令提供一系列内置变量，比如，$(CC)指向当前使用的编译器，$(MAKE) 指向当前使用的Make工具。这主要是为了跨平台的兼容性，详细的内置变量清单见<a href="https://www.gnu.org/software/make/manual/html_node/Implicit-Variables.html">手册</a>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nf">output</span><span class="o">:</span>
+    <span class="k">$(</span>CC<span class="k">)</span> -o output input.c
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="7判断和循环">7).判断和循环</h4>
+<p>Makefile使用 Bash 语法，完成判断和循环。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="err">ifeq</span> <span class="err">(</span><span class="k">$(</span><span class="nv">CC</span><span class="k">)</span><span class="err">,gcc)</span>
+  <span class="nv">libs</span><span class="o">=</span><span class="k">$(</span>libs_for_gcc<span class="k">)</span>
+<span class="err">else</span>
+  <span class="nv">libs</span><span class="o">=</span><span class="k">$(</span>normal_libs<span class="k">)</span>
+<span class="err">endif</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上面代码判断当前编译器是否 gcc ，然后指定不同的库文件。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nv">LIST</span> <span class="o">=</span> one two three
+<span class="nf">all</span><span class="o">:</span>
+    <span class="k">for</span> i in <span class="k">$(</span>LIST<span class="k">)</span><span class="p">;</span> <span class="k">do</span> <span class="se">\
+</span><span class="se"></span>        <span class="nb">echo</span> <span class="nv">$$</span>i<span class="p">;</span> <span class="se">\
+</span><span class="se"></span>    <span class="k">done</span>
+
+<span class="c"># 等同于
+</span><span class="c"></span>
+<span class="nf">all</span><span class="o">:</span>
+    <span class="k">for</span> i in one two three<span class="p">;</span> <span class="k">do</span> <span class="se">\
+</span><span class="se"></span>        <span class="nb">echo</span> <span class="nv">$i</span><span class="p">;</span> <span class="se">\
+</span><span class="se"></span>    <span class="k">done</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上面代码的运行结果。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="err">one</span>
+<span class="err">two</span>
+<span class="err">three</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4几个makefile示例">4.几个makefile示例</h3>
+<h4 id="1简单项目-执行多个目标">1).简单项目-执行多个目标</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nf">.PHONY</span><span class="o">:</span> <span class="n">cleanall</span> <span class="n">cleanobj</span> <span class="n">cleandiff</span>
+
+<span class="nf">cleanall</span><span class="o">:</span> <span class="n">cleanobj</span> <span class="n">cleandiff</span>
+        rm all
+
+<span class="nf">cleanobj</span><span class="o">:</span>
+        rm *.o
+
+<span class="nf">cleandiff</span><span class="o">:</span>
+        rm *.diff
+</code></pre></td></tr></table>
+</div>
+</div><p>上面代码可以调用不同目标，删除不同后缀名的文件，也可以调用一个目标（cleanall），删除所有指定类型的文件。</p>
+<h4 id="2c语言项目示例">2).c语言项目示例</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nf">edit </span><span class="o">:</span> <span class="n">main</span>.<span class="n">o</span> <span class="n">kbd</span>.<span class="n">o</span> <span class="n">command</span>.<span class="n">o</span> <span class="n">display</span>.<span class="n">o</span> \
+        <span class="n">insert</span>.<span class="n">o</span> <span class="n">search</span>.<span class="n">o</span> <span class="n">files</span>.<span class="n">o</span> <span class="n">utils</span>.<span class="n">o</span>
+    cc -o edit main.o kbd.o command.o display.o <span class="se">\
+</span><span class="se"></span>        insert.o search.o files.o utils.o
+
+<span class="nf">main.o </span><span class="o">:</span> <span class="n">main</span>.<span class="n">c</span> <span class="n">defs</span>.<span class="n">h</span>
+    cc -c main.c
+<span class="nf">kbd.o </span><span class="o">:</span> <span class="n">kbd</span>.<span class="n">c</span> <span class="n">defs</span>.<span class="n">h</span> <span class="n">command</span>.<span class="n">h</span>
+    cc -c kbd.c
+<span class="nf">command.o </span><span class="o">:</span> <span class="n">command</span>.<span class="n">c</span> <span class="n">defs</span>.<span class="n">h</span> <span class="n">command</span>.<span class="n">h</span>
+    cc -c command.c
+<span class="nf">display.o </span><span class="o">:</span> <span class="n">display</span>.<span class="n">c</span> <span class="n">defs</span>.<span class="n">h</span> <span class="n">buffer</span>.<span class="n">h</span>
+    cc -c display.c
+<span class="nf">clean </span><span class="o">:</span>
+    rm edit main.o kbd.o command.o display.o <span class="se">\
+</span><span class="se"></span>        insert.o search.o files.o utils.o
+</code></pre></td></tr></table>
+</div>
+</div><p>反斜杠（ <code>\</code> ）是换行符的意思。这样比较便于makefile的阅读。我们可以把这个内容保存在名字为“makefile”或“Makefile”的文件中，然后在该目录下直接输入命令 <code>make</code> 就可以生成执行文件edit。如果要删除执行文件和所有的中间目标文件，那么，只要简单地执行一下 <code>make clean</code> 就可以了。</p>
+<p>在这个makefile中，目标文件（target）包含：执行文件edit和中间目标文件（ <code>*.o</code> ），依赖文件（prerequisites）就是冒号后面的那些 <code>.c</code> 文件和 <code>.h</code> 文件。每一个 <code>.o</code> 文件都有一组依赖文件，而这些 <code>.o</code> 文件又是执行文件 <code>edit</code> 的依赖文件。依赖关系的实质就是说明了目标文件是由哪些文件生成的，换言之，目标文件是哪些文件更新的。</p>
+<p>在定义好依赖关系后，后续的那一行定义了如何生成目标文件的操作系统命令，一定要以一个 <code>Tab</code> 键作为开头。记住，make并不管命令是怎么工作的，他只管执行所定义的命令。make会比较targets文件和prerequisites文件的修改日期，如果prerequisites文件的日期要比targets文件的日期要新，或者target不存在的话，那么，make就会执行后续定义的命令。</p>
+<p>这里要说明一点的是， <code>clean</code> 不是一个文件，它只不过是一个动作名字，有点像c语言中的label一样，其冒号后什么也没有，那么，make就不会自动去找它的依赖性，也就不会自动执行其后所定义的命令。要执行其后的命令，就要在make命令后明显得指出这个label的名字。这样的方法非常有用，我们可以在一个makefile中定义不用的编译或是和编译无关的命令，比如程序的打包，程序的备份，等等。</p>
+<h2 id="五编译打包原理">五.编译打包原理</h2>
+<h3 id="1make是如何工作的">1.make是如何工作的</h3>
+<p>在默认的方式下，也就是我们只输入 <code>make</code> 命令。那么，</p>
+<ul>
+<li>
+<p>make会在当前目录下找名字叫“Makefile”或“makefile”的文件。</p>
+</li>
+<li>
+<p>如果找到，它会找文件中的第一个目标文件（target），在上面的例子中，他会找到“edit”这个文件，并把这个文件作为最终的目标文件。</p>
+</li>
+<li>
+<p>如果edit文件不存在，或是edit所依赖的后面的 <code>.o</code> 文件的文件修改时间要比 <code>edit</code> 这个文件新，那么，他就会执行后面所定义的命令来生成 <code>edit</code> 这个文件。</p>
+</li>
+<li>
+<p>如果 <code>edit</code> 所依赖的 <code>.o</code> 文件也不存在，那么make会在当前文件中找目标为 <code>.o</code> 文件的依赖性，如果找到则再根据那一个规则生成 <code>.o</code> 文件。（这有点像一个堆栈的过程）</p>
+</li>
+<li>
+<p>当然，你的C文件和H文件是存在的啦，于是make会生成 <code>.o</code> 文件，然后再用 <code>.o</code> 文件生成make的终极任务，也就是执行文件 <code>edit</code> 了。</p>
+</li>
+</ul>
+<p>​    这就是整个make的依赖性，make会一层又一层地去找文件的依赖关系，直到最终编译出第一个目标文件。在找寻的过程中，如果出现错误，比如最后被依赖的文件找不到，那么make就会直接退出，并报错，而对于所定义的命令的错误，或是编译不成功，make根本不理。make只管文件的依赖性，即，如果在我找了依赖关系之后，冒号后面的文件还是不在，那么对不起，我就不工作啦。</p>
+<p>​    通过上述分析，我们知道，像clean这种，没有被第一个目标文件直接或间接关联，那么它后面所定义的命令将不会被自动执行，不过，我们可以显示要make执行。即命令—— <code>make clean</code> ，以此来清除所有的目标文件，以便重编译。</p>
+<p>​    于是在我们编程中，如果这个工程已被编译过了，当我们修改了其中一个源文件，比如 <code>file.c</code> ，那么根据我们的依赖性，我们的目标 <code>file.o</code> 会被重编译（也就是在这个依性关系后面所定义的命令），于是 <code>file.o</code> 的文件也是最新的啦，于是 <code>file.o</code> 的文件修改时间要比 <code>edit</code> 要新，所以 <code>edit</code> 也会被重新链接了（详见 <code>edit</code> 目标文件后定义的命令）。</p>
+<p>​    而如果我们改变了 <code>command.h</code> ，那么， <code>kdb.o</code> 、 <code>command.o</code> 和 <code>files.o</code> 都会被重编译，并且， <code>edit</code> 会被重链接。</p>
+<h3 id="2makefile中使用变量">2.makefile中使用变量</h3>
+<p>我们在makefile一开始就这样定义：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nv">objects</span> <span class="o">=</span> main.o kbd.o command.o display.o <span class="se">\
+</span><span class="se"></span>     insert.o search.o files.o utils.o
+</code></pre></td></tr></table>
+</div>
+</div><p>于是，我们就可以很方便地在我们的makefile中以 <code>$(objects)</code> 的方式来使用这个变量了 :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">objects = main.o kbd.o command.o display.o \
+    insert.o search.o files.o utils.o
+
+edit : $(objects)
+    cc -o edit $(objects)
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3让make自动推导">3.让make自动推导</h3>
+<p>GNU的make很强大，它可以自动推导文件以及文件依赖关系后面的命令，于是我们就没必要去在每一个 <code>.o</code> 文件后都写上类似的命令，因为，我们的make会自动识别，并自己推导命令。</p>
+<p>只要make看到一个 <code>.o</code> 文件，它就会自动的把 <code>.c</code> 文件加在依赖关系中，如果make找到一个 <code>whatever.o</code> ，那么 <code>whatever.c</code> 就会是 <code>whatever.o</code> 的依赖文件。并且 <code>cc -c whatever.c</code> 也会被推导出来，于是，我们的makefile再也不用写得这么复杂。我们的新makefile又出炉了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nv">objects</span> <span class="o">=</span> main.o kbd.o command.o display.o <span class="se">\
+</span><span class="se"></span>    insert.o search.o files.o utils.o
+
+<span class="nf">edit </span><span class="o">:</span> <span class="k">$(</span><span class="nv">objects</span><span class="k">)</span>
+    cc -o edit <span class="k">$(</span>objects<span class="k">)</span>
+
+<span class="nf">main.o </span><span class="o">:</span> <span class="n">defs</span>.<span class="n">h</span>
+<span class="nf">kbd.o </span><span class="o">:</span> <span class="n">defs</span>.<span class="n">h</span> <span class="n">command</span>.<span class="n">h</span>
+<span class="nf">command.o </span><span class="o">:</span> <span class="n">defs</span>.<span class="n">h</span> <span class="n">command</span>.<span class="n">h</span>
+<span class="nf">display.o </span><span class="o">:</span> <span class="n">defs</span>.<span class="n">h</span> <span class="n">buffer</span>.<span class="n">h</span>
+<span class="nf">insert.o </span><span class="o">:</span> <span class="n">defs</span>.<span class="n">h</span> <span class="n">buffer</span>.<span class="n">h</span>
+<span class="nf">search.o </span><span class="o">:</span> <span class="n">defs</span>.<span class="n">h</span> <span class="n">buffer</span>.<span class="n">h</span>
+<span class="nf">files.o </span><span class="o">:</span> <span class="n">defs</span>.<span class="n">h</span> <span class="n">buffer</span>.<span class="n">h</span> <span class="n">command</span>.<span class="n">h</span>
+<span class="nf">utils.o </span><span class="o">:</span> <span class="n">defs</span>.<span class="n">h</span>
+
+<span class="nf">.PHONY </span><span class="o">:</span> <span class="n">clean</span>
+<span class="nf">clean </span><span class="o">:</span>
+    rm edit <span class="k">$(</span>objects<span class="k">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这种方法，也就是make的“隐晦规则”。上面文件内容中， <code>.PHONY</code> 表示 <code>clean</code> 是个伪目标文件</p>
+<h3 id="4另类风格的makefiles">4.另类风格的makefiles</h3>
+<p>既然我们的make可以自动推导命令，那么我看到那堆 <code>.o</code> 和 <code>.h</code> 的依赖就有点不爽，那么多的重复的 <code>.h</code> ，能不能把其收拢起来，好吧，没有问题，这个对于make来说很容易，谁叫它提供了自动推导命令和文件的功能呢？来看看最新风格的makefile吧。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nv">objects</span> <span class="o">=</span> main.o kbd.o command.o display.o <span class="se">\
+</span><span class="se"></span>    insert.o search.o files.o utils.o
+
+<span class="nf">edit </span><span class="o">:</span> <span class="k">$(</span><span class="nv">objects</span><span class="k">)</span>
+    cc -o edit <span class="k">$(</span>objects<span class="k">)</span>
+
+<span class="nf">$(objects) </span><span class="o">:</span> <span class="n">defs</span>.<span class="n">h</span>
+<span class="nf">kbd.o command.o files.o </span><span class="o">:</span> <span class="n">command</span>.<span class="n">h</span>
+<span class="nf">display.o insert.o search.o files.o </span><span class="o">:</span> <span class="n">buffer</span>.<span class="n">h</span>
+
+<span class="nf">.PHONY </span><span class="o">:</span> <span class="n">clean</span>
+<span class="nf">clean </span><span class="o">:</span>
+    rm edit <span class="k">$(</span>objects<span class="k">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这种风格，让我们的makefile变得很简单，但我们的文件依赖关系就显得有点凌乱了。鱼和熊掌不可兼得。还看你的喜好了。我是不喜欢这种风格的，一是文件的依赖关系看不清楚，二是如果文件一多，要加入几个新的 <code>.o</code> 文件，那就理不清楚了。</p>
+<h3 id="5清空目标文件的规则">5.清空目标文件的规则</h3>
+<p>每个Makefile中都应该写一个清空目标文件（ <code>.o</code> 和执行文件）的规则，这不仅便于重编译，也很利于保持文件的清洁。这是一个“修养”（呵呵，还记得我的《编程修养》吗）。一般的风格都是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nf">clean</span><span class="o">:</span>
+    rm edit <span class="k">$(</span>objects<span class="k">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>更为稳健的做法是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nf">.PHONY </span><span class="o">:</span> <span class="n">clean</span>
+<span class="nf">clean </span><span class="o">:</span>
+    -rm edit <span class="k">$(</span>objects<span class="k">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>前面说过， <code>.PHONY</code> 表示 <code>clean</code> 是一个“伪目标”。而在 <code>rm</code> 命令前面加了一个小减号的意思就是，也许某些文件出现问题，但不要管，继续做后面的事。当然， <code>clean</code> 的规则不要放在文件的开头，不然，这就会变成make的默认目标，相信谁也不愿意这样。不成文的规矩是——“clean从来都是放在文件的最后”。</p>
+<h3 id="6makefile里有什么">6.Makefile里有什么？</h3>
+<p>Makefile里主要包含了五个东西：显式规则、隐晦规则、变量定义、文件指示和注释。</p>
+<ul>
+<li>显式规则。显式规则说明了如何生成一个或多个目标文件。这是由Makefile的书写者明显指出要生成的文件、文件的依赖文件和生成的命令。</li>
+<li>隐晦规则。由于我们的make有自动推导的功能，所以隐晦的规则可以让我们比较简略地书写 Makefile，这是由make所支持的。</li>
+<li>变量的定义。在Makefile中我们要定义一系列的变量，变量一般都是字符串，这个有点像你C语言中的宏，当Makefile被执行时，其中的变量都会被扩展到相应的引用位置上。</li>
+<li>文件指示。其包括了三个部分，一个是在一个Makefile中引用另一个Makefile，就像C语言中的include一样；另一个是指根据某些情况指定Makefile中的有效部分，就像C语言中的预编译#if一样；还有就是定义一个多行的命令。有关这一部分的内容，我会在后续的部分中讲述。</li>
+<li>注释。Makefile中只有行注释，和UNIX的Shell脚本一样，其注释是用 <code>#</code> 字符，这个就像C/C++中的 <code>//</code> 一样。如果你要在你的Makefile中使用 <code>#</code> 字符，可以用反斜杠进行转义，如： <code>\#</code> 。</li>
+</ul>
+<p>最后，还值得一提的是，在Makefile中的命令，必须要以 <code>Tab</code> 键开始。</p>
+<h3 id="7makefile的文件名">7.Makefile的文件名</h3>
+<p>​	默认的情况下，make命令会在当前目录下按顺序找寻文件名为“GNUmakefile”、“makefile”、“Makefile”的文件，找到了解释这个文件。在这三个文件名中，最好使用“Makefile”这个文件名，因为，这个文件名第一个字符为大写，这样有一种显目的感觉。最好不要用“GNUmakefile”，这个文件是GNU的make识别的。有另外一些make只对全小写的“makefile”文件名敏感，但是基本上来说，大多数的make都支持“makefile”和“Makefile”这两种默认文件名。</p>
+<p>​	当然，你可以使用别的文件名来书写Makefile，比如：“Make.Linux”，“Make.Solaris”，“Make.AIX”等，如果要指定特定的Makefile，你可以使用make的 <code>-f</code> 和 <code>--file</code> 参数，如： <code>make -f Make.Linux</code> 或 <code>make --file Make.AIX</code> 。</p>
+<h3 id="8引用其它的makefile">8.引用其它的Makefile</h3>
+<p>在Makefile使用 <code>include</code> 关键字可以把别的Makefile包含进来，这很像C语言的 <code>#include</code> ，被包含的文件会原模原样的放在当前文件的包含位置。 <code>include</code> 的语法是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="err">include</span> <span class="err">&lt;filename&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>filename</code> 可以是当前操作系统Shell的文件模式（可以包含路径和通配符）。</p>
+<p>在 <code>include</code> 前面可以有一些空字符，但是绝不能是 <code>Tab</code> 键开始。 <code>include</code> 和 <code>&lt;filename&gt;</code> 可以用一个或多个空格隔开。举个例子，你有这样几个Makefile： <code>a.mk</code> 、 <code>b.mk</code> 、 <code>c.mk</code> ，还有一个文件叫 <code>foo.make</code> ，以及一个变量 <code>$(bar)</code> ，其包含了 <code>e.mk</code> 和 <code>f.mk</code> ，那么，下面的语句：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="err">include</span> <span class="err">foo.make</span> <span class="err">*.mk</span> <span class="k">$(</span><span class="nv">bar</span><span class="k">)</span>
+<span class="c">#等价于
+</span><span class="c"></span><span class="err">include</span> <span class="err">foo.make</span> <span class="err">a.mk</span> <span class="err">b.mk</span> <span class="err">c.mk</span> <span class="err">e.mk</span> <span class="err">f.mk</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>make命令开始时，会找寻 <code>include</code> 所指出的其它Makefile，并把其内容安置在当前的位置。就好像C/C++的 <code>#include</code> 指令一样。如果文件都没有指定绝对路径或是相对路径的话，make会在当前目录下首先寻找，如果当前目录下没有找到，那么，make还会在下面的几个目录下找：</p>
+<ol>
+<li>如果make执行时，有 <code>-I</code> 或 <code>--include-dir</code> 参数，那么make就会在这个参数所指定的目录下去寻找。</li>
+<li>如果目录 <code>&lt;prefix&gt;/include</code> （一般是： <code>/usr/local/bin</code> 或 <code>/usr/include</code> ）存在的话，make也会去找。</li>
+</ol>
+<p>如果有文件没有找到的话，make会生成一条警告信息，但不会马上出现致命错误。它会继续载入其它的文件，一旦完成makefile的读取，make会再重试这些没有找到，或是不能读取的文件，如果还是不行，make才会出现一条致命信息。如果你想让make不理那些无法读取的文件，而继续执行，你可以在include前加一个减号“-”。如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ma" data-lang="ma"><span class="o">-</span><span class="n">include</span><span class="w"> </span><span class="o">&lt;</span><span class="n">filename</span><span class="o">&gt;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>其表示，无论include过程中出现什么错误，都不要报错继续执行。和其它版本make兼容的相关命令是sinclude，其作用和这一个是一样的。</p>
+<h3 id="9环境变量makefiles">9.环境变量MAKEFILES</h3>
+<p>如果你的当前环境中定义了环境变量 <code>MAKEFILES</code> ，那么，make会把这个变量中的值做一个类似于 <code>include</code> 的动作。这个变量中的值是其它的Makefile，用空格分隔。只是，它和 <code>include</code> 不同的是，从这个环境变量中引入的Makefile的“目标”不会起作用，如果环境变量中定义的文件发现错误，make也会不理。</p>
+<p>但是在这里我还是建议不要使用这个环境变量，因为只要这个变量一被定义，那么当你使用make时，所有的Makefile都会受到它的影响，这绝不是你想看到的。在这里提这个事，只是为了告诉大家，也许有时候你的Makefile出现了怪事，那么你可以看看当前环境中有没有定义这个变量。</p>
+<h3 id="10make的工作方式">10.make的工作方式</h3>
+<p>GNU的make工作时的执行步骤如下：（想来其它的make也是类似）</p>
+<ul>
+<li>读入所有的Makefile。</li>
+<li>读入被include的其它Makefile。</li>
+<li>初始化文件中的变量。</li>
+<li>推导隐晦规则，并分析所有规则。</li>
+<li>为所有的目标文件创建依赖关系链。</li>
+<li>根据依赖关系，决定哪些目标要重新生成。</li>
+<li>执行生成命令。</li>
+</ul>
+<p>1-5步为第一个阶段，6-7为第二个阶段。第一个阶段中，如果定义的变量被使用了，那么，make会把其展开在使用的位置。但make并不会完全马上展开，make使用的是拖延战术，如果变量出现在依赖关系的规则中，那么仅当这条依赖被决定要使用了，变量才会在其内部展开。</p>
+<h2 id="六项目打包示例">六.项目打包示例</h2>
+<h3 id="1几个项目打包的makefile示例">1.几个项目打包的Makefile示例</h3>
+<h4 id="1codegen项目makefile">1).codegen项目makefile</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nv">PKG</span> <span class="o">=</span> <span class="k">$(</span>shell cat go.mod <span class="p">|</span> grep <span class="s2">&#34;^module &#34;</span> <span class="p">|</span> sed -e <span class="s2">&#34;s/module //g&#34;</span><span class="k">)</span>
+<span class="nv">VERSION</span> <span class="o">=</span> v<span class="k">$(</span>shell cat .version<span class="k">)</span>
+<span class="nv">COMMIT_SHA</span> <span class="o">?=</span> <span class="k">$(</span>shell git describe --always<span class="k">)</span>-devel
+
+<span class="nv">GOOS</span> <span class="o">?=</span> <span class="k">$(</span>shell go env GOOS<span class="k">)</span>
+<span class="nv">GOARCH</span> <span class="o">?=</span> <span class="k">$(</span>shell go env GOARCH<span class="k">)</span>
+<span class="nv">GOBUILD</span><span class="o">=</span><span class="nv">CGO_ENABLED</span><span class="o">=</span><span class="m">0</span> go build -ldflags <span class="s2">&#34;-X </span><span class="si">${</span><span class="nv">PKG</span><span class="si">}</span><span class="s2">/version.Version=</span><span class="si">${</span><span class="nv">VERSION</span><span class="si">}</span><span class="s2">+sha.</span><span class="si">${</span><span class="nv">COMMIT_SHA</span><span class="si">}</span><span class="s2">&#34;</span>
+<span class="nv">GOINSTALL</span><span class="o">=</span><span class="nv">CGO_ENABLED</span><span class="o">=</span><span class="m">0</span> go install -ldflags <span class="s2">&#34;-X </span><span class="si">${</span><span class="nv">PKG</span><span class="si">}</span><span class="s2">/version.Version=</span><span class="si">${</span><span class="nv">VERSION</span><span class="si">}</span><span class="s2">+sha.</span><span class="si">${</span><span class="nv">COMMIT_SHA</span><span class="si">}</span><span class="s2">&#34;</span>
+
+<span class="nv">MAIN_ROOT</span> <span class="o">?=</span> ./cmd/codegen
+
+<span class="nf">install</span><span class="o">:</span>
+	<span class="nb">cd</span> <span class="k">$(</span>MAIN_ROOT<span class="k">)</span> <span class="o">&amp;&amp;</span> <span class="k">$(</span>GOINSTALL<span class="k">)</span>
+
+<span class="nf">build</span><span class="o">:</span>
+	<span class="nb">cd</span> <span class="k">$(</span>MAIN_ROOT<span class="k">)</span> <span class="o">&amp;&amp;</span> <span class="k">$(</span>GOBUILD<span class="k">)</span> -o codegen
+
+<span class="nf">release</span><span class="o">:</span>
+	git push
+	git push origin <span class="k">$(</span>VERSION<span class="k">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2srv-gw-infinity项目makefile">2).srv-gw-infinity项目makefile</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nf">all</span><span class="o">:</span> <span class="n">srv</span>-<span class="n">gw</span>-<span class="n">infinity</span>
+
+<span class="nf">srv-gw-infinity</span><span class="o">:</span> ./*
+	swag init <span class="o">&amp;&amp;</span> <span class="nv">CGO_ENABLED</span><span class="o">=</span><span class="m">0</span> <span class="nv">GOOS</span><span class="o">=</span>linux <span class="nv">GOARCH</span><span class="o">=</span>amd64 go build .
+
+<span class="nf">clean</span><span class="o">:</span>
+	rm srv-gw-infinity
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3infinitygw项目makefile">3).infinitygw项目makefile</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nv">prefix</span><span class="o">=</span>/opt/infinitygw
+
+<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">install</span>
+
+<span class="nf">install</span><span class="o">:</span>
+	<span class="se">\m</span>kdir -p <span class="k">$(</span>DESTDIR<span class="k">)</span><span class="si">${</span><span class="nv">prefix</span><span class="si">}</span>
+
+	<span class="se">\i</span>nstall -p -D -m <span class="m">755</span> <span class="k">$(</span>CURDIR<span class="k">)</span>/bin/infi-srv-gw <span class="k">$(</span>DESTDIR<span class="k">)</span><span class="si">${</span><span class="nv">prefix</span><span class="si">}</span>
+	<span class="se">\m</span>kdir -p <span class="k">$(</span>DESTDIR<span class="k">)</span>/etc/i18n/srv-gw-infinity
+	<span class="se">\c</span>p -r <span class="k">$(</span>CURDIR<span class="k">)</span>/i18n/* <span class="k">$(</span>DESTDIR<span class="k">)</span>/etc/i18n/srv-gw-infinity/
+	<span class="se">\m</span>kdir -p <span class="k">$(</span>DESTDIR<span class="k">)</span>/usr/lib/systemd/system/
+	<span class="se">\c</span>p -f <span class="k">$(</span>CURDIR<span class="k">)</span>/conf/*.service <span class="k">$(</span>DESTDIR<span class="k">)</span>/usr/lib/systemd/system/
+	<span class="se">\m</span>kdir -p <span class="k">$(</span>DESTDIR<span class="k">)</span>/var/log
+	<span class="se">\m</span>kdir -p <span class="k">$(</span>DESTDIR<span class="k">)</span>/etc/logrotate.d/
+	<span class="se">\c</span>p -r <span class="k">$(</span>CURDIR<span class="k">)</span>/conf/infi-srv-gw.logrotate <span class="k">$(</span>DESTDIR<span class="k">)</span>/etc/logrotate.d/
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="4go项目标准makefile">4).go项目标准makefile</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nv">BUILD_NAME</span><span class="o">:=</span>goappname
+<span class="nv">BUILD_VERSION</span><span class="o">:=</span>1.0
+<span class="nv">SOURCE</span><span class="o">:=</span>*.go
+<span class="nv">LDFLAGS</span><span class="o">:=</span>-ldflags <span class="s2">&#34;-X main.Version=</span><span class="si">${</span><span class="nv">BUILD_VERSION</span><span class="si">}</span><span class="s2">&#34;</span>
+
+<span class="nf">all</span><span class="o">:</span> <span class="n">deps</span> <span class="n">build</span> <span class="n">install</span>
+
+<span class="nf">deps</span><span class="o">:</span>
+	<span class="c1">#安装依赖</span>
+	<span class="o">[</span> -x glide <span class="o">]</span> <span class="o">&amp;&amp;</span> glide install <span class="o">||</span> yum install glide
+
+<span class="nf">test</span><span class="o">:</span> 
+	go <span class="nb">test</span>
+
+<span class="nf">build</span><span class="o">:</span> <span class="n">test</span>
+	go build -o <span class="si">${</span><span class="nv">BUILD_NAME</span><span class="si">}</span> <span class="si">${</span><span class="nv">SOURCE</span><span class="si">}</span>
+
+<span class="nf">build_linux</span><span class="o">:</span> <span class="n">test</span>
+	<span class="nv">CGO_ENABLED</span><span class="o">=</span><span class="m">0</span> <span class="nv">GOOS</span><span class="o">=</span>linux <span class="nv">GOARCH</span><span class="o">=</span>amd64 go build -o <span class="si">${</span><span class="nv">BUILD_NAME</span><span class="si">}</span> <span class="si">${</span><span class="nv">SOURCE</span><span class="si">}</span>
+
+<span class="nf">build_win</span><span class="o">:</span> <span class="n">test</span>
+	<span class="nv">CGO_ENABLED</span><span class="o">=</span><span class="m">0</span> <span class="nv">GOOS</span><span class="o">=</span>windows <span class="nv">GOARCH</span><span class="o">=</span>amd64 go build -o <span class="si">${</span><span class="nv">BUILD_NAME</span><span class="si">}</span> <span class="si">${</span><span class="nv">SOURCE</span><span class="si">}</span>
+
+<span class="nf">install</span><span class="o">:</span> <span class="n">deps</span> <span class="n">build</span>
+	go install
+	<span class="c1">#生成配置文件等</span>
+	<span class="c1">#cp app.conf.example /etc/app.conf</span>
+
+<span class="nf">clean</span><span class="o">:</span>
+	go clean
+
+<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">all</span> <span class="n">deps</span> <span class="n">test</span> <span class="n">build</span> <span class="n">build_linux</span> <span class="n">build_win</span> <span class="n">install</span> <span class="n">clean</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2制作go项目二进制软件包安装包">2.制作Go项目二进制软件包安装包</h3>
+<h4 id="1gitlab新建项目hello-world">1).gitlab新建项目hello-world</h4>
+<p><a href="https://gitee.com/dysoso/gocode-build">dysoso/gocode-build</a>  我新建的项目,如果需要请下载源码</p>
+<p>项目目录:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@dy-workspace /workspace/gocode-build/SOURCES<span class="o">]</span><span class="c1"># tree</span>
+.
+├── bin
+│   ├── hello-world
+│   └── tips.md
+├── build
+│   ├── configure
+│   ├── Makefile
+│   └── README.md
+├── conf
+│   ├── global.conf
+│   ├── hello-world.logrotate
+│   └── hello-world.service
+├── go.mod
+├── go.sum
+├── hello_world.go
+├── hello_world_test.go
+├── hello-world-v1.0.0.tar.gz
+├── Makefile
+└── README.md
+
+<span class="m">3</span> directories, <span class="m">15</span> files
+<span class="o">[</span>root@dy-workspace /workspace/gocode-build/SOURCES<span class="o">]</span><span class="c1">#</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>目录说明</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">├── SOURCES                         二进制源码包制作文件夹
+│   ├── bin                         构建后的二进制文件
+│   ├── build                       存放构建脚本
+│   ├── build                       存放构建脚本
+│   │   ├── configure               用来打包二进制源码包
+│   │   ├── Makefile                用来生成项目二进制文件
+│   │   └── README.md               build文件夹说明
+│   ├── go.mod                      使用Go Module包管理的依赖描述文件
+│   ├── go.sum                      包管理依赖内容校验文件
+│   ├── helle-world.gz              制作好的二进制源码安装包
+│   ├── helle-world.go              应用主程序
+│   ├── helle-world_test.go         应用程序测试文件
+│   ├── Makefile                    二进制源码安装包中的Makefile,用户应用安装
+│   └── README.md                   构建说明及制作流程
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2应用主要代码如下">2).应用主要代码如下</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="err">package</span> <span class="err">main</span>
+
+<span class="err">import</span> <span class="err">(</span>
+	<span class="s2">&#34;fmt&#34;</span>
+	<span class="s2">&#34;io&#34;</span>
+	<span class="s2">&#34;log&#34;</span>
+	<span class="s2">&#34;net/http&#34;</span>
+	<span class="s2">&#34;os&#34;</span>
+
+	<span class="s2">&#34;github.com/Unknwon/goconfig&#34;</span>
+	<span class="s2">&#34;github.com/gin-gonic/gin&#34;</span>
+<span class="err">)</span>
+
+<span class="err">var</span> <span class="err">(</span>
+	<span class="nv">StartupLogPath</span>     <span class="o">=</span> <span class="s2">&#34;/var/log/hello-world/&#34;</span>
+	<span class="nv">StartupLogFileName</span> <span class="o">=</span> <span class="s2">&#34;go-gin-startup.log&#34;</span>
+	<span class="nv">GlobalConfPath</span>     <span class="o">=</span> <span class="s2">&#34;/etc/hello-world/&#34;</span>
+	<span class="nv">GlobalConfFileName</span> <span class="o">=</span> <span class="s2">&#34;global.conf&#34;</span>
+	<span class="nv">Port</span>               <span class="o">=</span> <span class="s2">&#34;80&#34;</span>
+	<span class="nv">Version</span>            <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+<span class="err">)</span>
+
+<span class="err">func</span> <span class="err">main()</span> <span class="err">{</span>
+	<span class="nf">fmt.Printf(&#34;App Version</span><span class="o">:</span>%<span class="n">s</span>\<span class="n">n</span>&#34;<span class="p">,</span> <span class="n">Version</span>)
+
+	//1.控制台及启动日志配置
+	<span class="k">if</span> yes :<span class="o">=</span> IsPathExist<span class="o">(</span>StartupLogPath<span class="o">)</span><span class="p">;</span> !yes <span class="o">{</span>
+		os.MkdirAll<span class="o">(</span>StartupLogPath, os.ModePerm<span class="o">)</span>
+	<span class="o">}</span>
+	logFile, err :<span class="o">=</span> os.OpenFile<span class="o">(</span>StartupLogPath+StartupLogFileName, os.O_APPEND<span class="p">|</span>os.O_WRONLY<span class="p">|</span>os.O_CREATE, os.ModePerm<span class="o">)</span>
+	<span class="k">if</span> err !<span class="o">=</span> nil <span class="o">{</span>
+		log.Fatal<span class="o">(</span><span class="s2">&#34;OpenFile[err]: &#34;</span>, err.Error<span class="o">())</span>
+	<span class="o">}</span>
+	gin.DefaultWriter <span class="o">=</span> io.MultiWriter<span class="o">(</span>logFile, os.Stdout<span class="o">)</span>
+
+	// 2.创建路由
+	Router :<span class="o">=</span> gin.Default<span class="o">()</span>
+
+	// 3.绑定路由规则，执行的函数
+	Router.GET<span class="o">(</span><span class="s2">&#34;/&#34;</span>, func<span class="o">(</span>c *gin.Context<span class="o">)</span> <span class="o">{</span>
+		c.String<span class="o">(</span>http.StatusOK, <span class="s2">&#34;hello Go-Gin!&#34;</span><span class="o">)</span>
+	<span class="o">})</span>
+	Router.GET<span class="o">(</span><span class="s2">&#34;/favicon.ico&#34;</span>, func<span class="o">(</span>c *gin.Context<span class="o">)</span> <span class="o">{</span>
+		c.String<span class="o">(</span>http.StatusNoContent, <span class="s2">&#34;&#34;</span><span class="o">)</span>
+	<span class="o">})</span>
+
+	// 4.从配置获取端口号
+	port, _ :<span class="o">=</span> GetConfPort<span class="o">(</span>GlobalConfPath, GlobalConfFileName<span class="o">)</span>
+	<span class="k">if</span> port !<span class="o">=</span> <span class="s2">&#34;&#34;</span> <span class="o">{</span>
+		<span class="nv">Port</span> <span class="o">=</span> port
+	<span class="o">}</span>
+
+	// 5.监听端口
+	<span class="nv">err</span> <span class="o">=</span> Router.Run<span class="o">(</span><span class="s2">&#34;:&#34;</span> + Port<span class="o">)</span>
+	<span class="k">if</span> err !<span class="o">=</span> nil <span class="o">{</span>
+		log.Fatal<span class="o">(</span><span class="s2">&#34;ListenAndServe[err]: &#34;</span>, err.Error<span class="o">())</span>
+	<span class="o">}</span>
+<span class="err">}</span>
+
+<span class="err">//</span> <span class="err">GetConfPort</span> <span class="err">获取配置文件中端口号</span>
+<span class="err">func</span> <span class="err">GetConfPort(confPath</span> <span class="err">string,</span> <span class="err">confFileName</span> <span class="err">string)</span> <span class="err">(string,</span> <span class="err">error)</span> <span class="err">{</span>
+	<span class="nf">if yes </span><span class="o">:</span>= <span class="n">IsPathExist</span>(<span class="n">confPath</span>); !<span class="n">yes</span> {
+		os.MkdirAll<span class="o">(</span>confPath, os.ModePerm<span class="o">)</span>
+	<span class="o">}</span>
+
+	confFile :<span class="o">=</span> confPath + confFileName
+
+	cfg, err :<span class="o">=</span> goconfig.LoadConfigFile<span class="o">(</span>confFile<span class="o">)</span>
+	<span class="k">if</span> err !<span class="o">=</span> nil <span class="o">{</span>
+		<span class="k">return</span> <span class="s2">&#34;&#34;</span>, err
+	<span class="o">}</span>
+
+	val, err :<span class="o">=</span> cfg.GetValue<span class="o">(</span><span class="s2">&#34;global&#34;</span>, <span class="s2">&#34;port&#34;</span><span class="o">)</span>
+	<span class="k">if</span> err !<span class="o">=</span> nil <span class="o">{</span>
+		<span class="k">return</span> <span class="s2">&#34;&#34;</span>, err
+	<span class="o">}</span>
+
+	<span class="k">return</span> val, nil
+<span class="err">}</span>
+
+<span class="err">//</span> <span class="err">IsPathExist</span> <span class="err">判断path是否存在</span>
+<span class="err">func</span> <span class="err">IsPathExist(path</span> <span class="err">string)</span> <span class="err">bool</span> <span class="err">{</span>
+	<span class="nf">_, err </span><span class="o">:</span>= <span class="n">os</span>.<span class="n">Stat</span>(<span class="n">path</span>)
+	<span class="k">if</span> <span class="nv">err</span> <span class="o">==</span> nil <span class="o">{</span>
+		<span class="k">return</span> <span class="nb">true</span>
+	<span class="o">}</span>
+	<span class="k">if</span> os.IsNotExist<span class="o">(</span>err<span class="o">)</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="nb">false</span>
+	<span class="o">}</span>
+	<span class="k">return</span> <span class="nb">false</span>
+<span class="err">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3应用makefile">3).应用makefile</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="c">#hello world源码安装
+</span><span class="c">#安装hello world 程序
+</span><span class="c">#edit by Zkq
+</span><span class="c">#edit in 2022-03-06
+</span><span class="c"></span>
+<span class="nf">all</span><span class="o">:</span> <span class="n">deps</span> <span class="n">install</span>
+
+<span class="nf">deps</span><span class="o">:</span>
+	@#安装依赖
+	git version <span class="o">||</span> yum install -y git
+	go version <span class="o">||</span> yum install -y git
+
+<span class="nf">install</span><span class="o">:</span> <span class="n">deps</span>
+	@#安装软件
+	@#生成日志文件夹
+	mkdir -p <span class="k">$(</span>DESTDIR<span class="k">)</span>/var/log/hello-world/
+	@#生成日志分割配置文件夹,并安装配置文件
+	mkdir -p <span class="k">$(</span>DESTDIR<span class="k">)</span>/etc/logrotate.d/
+	cp -r <span class="k">$(</span>CURDIR<span class="k">)</span>/conf/*.logrotate <span class="k">$(</span>DESTDIR<span class="k">)</span>/etc/logrotate.d/
+	@#生成项目配置文件,并安装配置文件
+	mkdir -p <span class="k">$(</span>DESTDIR<span class="k">)</span>/etc/hello-world/
+	cp -r <span class="k">$(</span>CURDIR<span class="k">)</span>/conf/*.conf <span class="k">$(</span>DESTDIR<span class="k">)</span>/etc/hello-world/
+	@#生成项目服务文件夹,并安装配置文件
+	mkdir -p <span class="k">$(</span>DESTDIR<span class="k">)</span>/usr/lib/systemd/system/
+	cp -f <span class="k">$(</span>CURDIR<span class="k">)</span>/conf/*.service <span class="k">$(</span>DESTDIR<span class="k">)</span>/usr/lib/systemd/system/
+	@#安装项目二进制文件
+	mkdir -p <span class="k">$(</span>DESTDIR<span class="k">)</span>/opt/hello-world/
+	install -p -D -m <span class="m">755</span> <span class="k">$(</span>CURDIR<span class="k">)</span>/bin/hello-world <span class="k">$(</span>DESTDIR<span class="k">)</span>/opt/hello-world/
+	@#启动服务
+	systemctl start hello-world
+	systemctl <span class="nb">enable</span> hello-world
+	systemctl status hello-world
+
+<span class="nf">clean</span><span class="o">:</span>
+	@#停止服务
+	systemctl disable hello-world
+	systemctl stop hello-world
+	@#清理项目
+	rm -rf <span class="k">$(</span>DESTDIR<span class="k">)</span>/var/log/hello-world
+	rm -rf <span class="k">$(</span>DESTDIR<span class="k">)</span>/etc/logrotate.d/hello-world.logrotate
+	rm -rf <span class="k">$(</span>DESTDIR<span class="k">)</span>/etc/hello-world/
+	rm -rf <span class="k">$(</span>DESTDIR<span class="k">)</span>/opt/hello-world/
+	rm -rf <span class="k">$(</span>DESTDIR<span class="k">)</span>/usr/lib/systemd/system/hello-world.service
+
+<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">all</span> <span class="n">deps</span> <span class="n">install</span> <span class="n">clean</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="4构建二进制安装包">4).构建二进制安装包</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#进入项目build文件夹</span>
+<span class="nb">cd</span> build <span class="o">&amp;&amp;</span> make
+<span class="nb">cd</span> .. <span class="o">&amp;&amp;</span> sh build/configure <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>
+ll -h hello-world-v1.0.0.tar.gz
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="5使用打包好的安装包安装应用">5).使用打包好的安装包安装应用</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#先获取hello-world-v1.0.0.tar.gz</span>
+<span class="c1">#解压</span>
+tar -zxvf hello-world-v1.0.0.tar.gz
+<span class="nb">cd</span> hello-world-v1.0.0 <span class="o">&amp;&amp;</span> make
+
+<span class="o">[</span>root@dy-workspace /workspace/gocode-build/SOURCES<span class="o">]</span><span class="c1"># cd hello-world-v1.0.0 &amp;&amp; make</span>
+git version <span class="o">||</span> yum install -y git
+git version 1.8.3.1
+go version <span class="o">||</span> yum install -y git
+go version go1.17.6 linux/amd64
+mkdir -p /var/log/hello-world/
+mkdir -p /etc/logrotate.d/
+cp -r /workspace/gocode-build/SOURCES/hello-world-v1.0.0/conf/*.logrotate /etc/logrotate.d/
+mkdir -p /etc/hello-world/
+cp -r /workspace/gocode-build/SOURCES/hello-world-v1.0.0/conf/*.conf /etc/hello-world/
+mkdir -p /usr/lib/systemd/system/
+cp -f /workspace/gocode-build/SOURCES/hello-world-v1.0.0/conf/*.service /usr/lib/systemd/system/
+mkdir -p /opt/hello-world/
+install -p -D -m <span class="m">755</span> /workspace/gocode-build/SOURCES/hello-world-v1.0.0/bin/hello-world /opt/hello-world/
+systemctl start hello-world
+systemctl <span class="nb">enable</span> hello-world
+Created symlink from /etc/systemd/system/multi-user.target.wants/hello-world.service to /usr/lib/systemd/system/hello-world.service.
+systemctl status hello-world
+● hello-world.service - Hello-World service
+   Loaded: loaded <span class="o">(</span>/usr/lib/systemd/system/hello-world.service<span class="p">;</span> enabled<span class="p">;</span> vendor preset: disabled<span class="o">)</span>
+   Active: active <span class="o">(</span>running<span class="o">)</span> since 二 2022-04-26 17:32:24 CST<span class="p">;</span> 95ms ago
+ Main PID: <span class="m">21754</span> <span class="o">(</span>hello-world<span class="o">)</span>
+   CGroup: /system.slice/hello-world.service
+           └─21754 /opt/hello-world/hello-world
+
+4月 <span class="m">26</span> 17:32:24 dy-workspace hello-world<span class="o">[</span>21754<span class="o">]</span>: App Version:
+4月 <span class="m">26</span> 17:32:24 dy-workspace hello-world<span class="o">[</span>21754<span class="o">]</span>: <span class="o">[</span>GIN-debug<span class="o">]</span> <span class="o">[</span>WARNING<span class="o">]</span> Creating an Engine instance with the Logger and Recovery middleware ...ttached.
+4月 <span class="m">26</span> 17:32:24 dy-workspace hello-world<span class="o">[</span>21754<span class="o">]</span>: <span class="o">[</span>GIN-debug<span class="o">]</span> <span class="o">[</span>WARNING<span class="o">]</span> Running in <span class="s2">&#34;debug&#34;</span> mode. Switch to <span class="s2">&#34;release&#34;</span> mode in production.
+4月 <span class="m">26</span> 17:32:24 dy-workspace hello-world<span class="o">[</span>21754<span class="o">]</span>: - using env:        <span class="nb">export</span> <span class="nv">GIN_MODE</span><span class="o">=</span>release
+4月 <span class="m">26</span> 17:32:24 dy-workspace hello-world<span class="o">[</span>21754<span class="o">]</span>: - using code:        gin.SetMode<span class="o">(</span>gin.ReleaseMode<span class="o">)</span>
+4月 <span class="m">26</span> 17:32:24 dy-workspace hello-world<span class="o">[</span>21754<span class="o">]</span>: <span class="o">[</span>GIN-debug<span class="o">]</span> GET    /                         --&gt; main.main.func1 <span class="o">(</span><span class="m">3</span> handlers<span class="o">)</span>
+4月 <span class="m">26</span> 17:32:24 dy-workspace hello-world<span class="o">[</span>21754<span class="o">]</span>: <span class="o">[</span>GIN-debug<span class="o">]</span> GET    /favicon.ico              --&gt; main.main.func2 <span class="o">(</span><span class="m">3</span> handlers<span class="o">)</span>
+4月 <span class="m">26</span> 17:32:24 dy-workspace hello-world<span class="o">[</span>21754<span class="o">]</span>: <span class="o">[</span>GIN-debug<span class="o">]</span> <span class="o">[</span>WARNING<span class="o">]</span> You trusted all proxies, this is NOT safe. We recommend you to <span class="nb">set</span> a value.
+4月 <span class="m">26</span> 17:32:24 dy-workspace hello-world<span class="o">[</span>21754<span class="o">]</span>: Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies <span class="k">for</span> details.
+4月 <span class="m">26</span> 17:32:24 dy-workspace hello-world<span class="o">[</span>21754<span class="o">]</span>: <span class="o">[</span>GIN-debug<span class="o">]</span> Listening and serving HTTP on :9782
+Hint: Some lines were ellipsized, use -l to show in full.
+<span class="o">[</span>root@dy-workspace /workspace/gocode-build/SOURCES/hello-world-v1.0.0<span class="o">]</span><span class="c1">#</span>
+
+<span class="c1">#卸载软件,在hello-world-v1.0.0目录中</span>
+make clean
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="七参考文献">七、参考文献</h2>
+<ul>
+<li><a href="https://blog.csdn.net/yyyljw/article/details/121861679">Linux 下configure配置详解</a></li>
+<li><a href="https://seisman.github.io/how-to-write-makefile/overview.html">跟我一起写Makefile</a>  绝对经典，文章排版很好，内容详实</li>
+<li><a href="https://blog.csdn.net/u010230971/article/details/80335613">使用makefile构建golang项目</a> 内容简介，阅读很舒服</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-03-04
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/linux/">linux</a>
+          <a href="/tags/centos/">centos</a>
+          <a href="/tags/%E6%BA%90%E7%A0%81%E5%8C%85/">源码包</a>
+          <a href="/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%BD%AF%E4%BB%B6%E5%8C%85/">二进制软件包</a>
+          <a href="/tags/configure/">configure</a>
+          <a href="/tags/makefile/">makefile</a>
+          <a href="/tags/make/">make</a>
+          <a href="/tags/install/">install</a>
+          <a href="/tags/clean/">clean</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/linux/build/linux%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8C%85rpm%E5%8C%85%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[linux] Linux二进制包(RPM包)制作教程(教程&#43;资料&#43;案例)</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/linux/build/linux%E6%BA%90%E7%A0%81%E5%8C%85%E5%92%8C%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8C%85%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">
+            <span class="next-text nav-default">[linux] Linux源码包和二进制包安装教程</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

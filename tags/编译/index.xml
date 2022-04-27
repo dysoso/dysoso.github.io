@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>编译 on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/tags/%E7%BC%96%E8%AF%91/</link>
+    <description>Recent content in 编译 on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Fri, 18 Feb 2022 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/%E7%BC%96%E8%AF%91/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[go] Go语言编译和工具链</title>
+      <link>https://blog.nevergiveup.tech/post/dev_language/golang/go%E8%AF%AD%E8%A8%80%E7%BC%96%E8%AF%91%E5%92%8C%E5%B7%A5%E5%85%B7%E9%93%BE/</link>
+      <pubDate>Fri, 18 Feb 2022 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dev_language/golang/go%E8%AF%AD%E8%A8%80%E7%BC%96%E8%AF%91%E5%92%8C%E5%B7%A5%E5%85%B7%E9%93%BE/</guid>
+      <description>Go语言编译和工具链 ​ Go 语言的工具链非常丰富，从获取源码、编译、文档、测试、性能分析，到源码格式化、源码提示、重构工具等应有尽有。 ​ 在 Go 语言</description>
+    </item>
+    
+  </channel>
+</rss>

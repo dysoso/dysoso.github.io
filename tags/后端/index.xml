@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh_CN</language>
     <copyright>蜀ICP备2021005948号-1</copyright>
-    <lastBuildDate>Sun, 16 May 2021 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/%E5%90%8E%E7%AB%AF/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 18 Feb 2022 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/%E5%90%8E%E7%AB%AF/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[go] Go语言编译和工具链</title>
+      <link>https://blog.nevergiveup.tech/post/dev_language/golang/go%E8%AF%AD%E8%A8%80%E7%BC%96%E8%AF%91%E5%92%8C%E5%B7%A5%E5%85%B7%E9%93%BE/</link>
+      <pubDate>Fri, 18 Feb 2022 15:37:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/dev_language/golang/go%E8%AF%AD%E8%A8%80%E7%BC%96%E8%AF%91%E5%92%8C%E5%B7%A5%E5%85%B7%E9%93%BE/</guid>
+      <description>Go语言编译和工具链 ​ Go 语言的工具链非常丰富，从获取源码、编译、文档、测试、性能分析，到源码格式化、源码提示、重构工具等应有尽有。 ​ 在 Go 语言</description>
+    </item>
+    
     <item>
       <title>[go] Golang开发规范</title>
       <link>https://blog.nevergiveup.tech/post/dev_language/golang/golang%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/</link>
@@ -29,7 +38,7 @@
     <item>
       <title>[go] golang安装和配置</title>
       <link>https://blog.nevergiveup.tech/post/dev_language/golang/golang%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/</link>
-      <pubDate>Thu, 13 May 2021 15:37:56 +0800</pubDate>
+      <pubDate>Sat, 13 Feb 2021 15:37:56 +0800</pubDate>
       
       <guid>https://blog.nevergiveup.tech/post/dev_language/golang/golang%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/</guid>
       <description>Golang 一.Windows安装 1.下载Golang 访问Go国内镜像站下载页面 https://golang.google.cn/dl/ 并在页面最上方的版本中选择你当前的系统版本，会下载最新版本的Go开发</description>

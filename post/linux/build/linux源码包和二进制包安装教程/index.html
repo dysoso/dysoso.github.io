@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[linux] Linux源码包和二进制包安装教程 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="Linux二进制包的安装教程(二进制软件和rpm包)" /><meta name="keywords" content="linux, 源码包, 二进制包, configure, make, install, makefile, clean, rpm" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/linux/build/linux%E6%BA%90%E7%A0%81%E5%8C%85%E5%92%8C%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8C%85%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[linux] Linux源码包和二进制包安装教程" />
+<meta property="og:description" content="Linux二进制包的安装教程(二进制软件和rpm包)" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/linux/build/linux%E6%BA%90%E7%A0%81%E5%8C%85%E5%92%8C%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8C%85%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-03-04T11:31:56+08:00" />
+<meta property="article:modified_time" content="2022-03-04T15:37:56+08:00" />
+
+<meta itemprop="name" content="[linux] Linux源码包和二进制包安装教程">
+<meta itemprop="description" content="Linux二进制包的安装教程(二进制软件和rpm包)"><meta itemprop="datePublished" content="2022-03-04T11:31:56+08:00" />
+<meta itemprop="dateModified" content="2022-03-04T15:37:56+08:00" />
+<meta itemprop="wordCount" content="1742">
+<meta itemprop="keywords" content="linux,源码包,二进制包,configure,make,install,makefile,clean,rpm," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[linux] Linux源码包和二进制包安装教程"/>
+<meta name="twitter:description" content="Linux二进制包的安装教程(二进制软件和rpm包)"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[linux] Linux源码包和二进制包安装教程</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-03-04 </span>
+        <div class="post-category">
+            <a href="/categories/linux/"> linux </a>
+            </div>
+          <span class="more-meta"> 约 1742 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#linux源码包和二进制包安装教程">Linux源码包和二进制包安装教程</a>
+      <ul>
+        <li><a href="#一源码包安装">一.源码包安装</a>
+          <ul>
+            <li><a href="#1下载源码包并解压">1.下载源码包并解压</a></li>
+            <li><a href="#2进入源码包的目录解后压">2.进入源码包的目录解后压</a></li>
+            <li><a href="#3软件配置与软件环境依赖检查">3.软件配置与软件,环境依赖检查</a></li>
+            <li><a href="#4安装成功">4.安装成功</a></li>
+            <li><a href="#5注意">5.注意</a></li>
+          </ul>
+        </li>
+        <li><a href="#二二进制软件包">二.二进制软件包</a>
+          <ul>
+            <li><a href="#1获取软件包并解压">1.获取软件包并解压</a></li>
+            <li><a href="#2执行命令安装">2.执行命令安装</a></li>
+          </ul>
+        </li>
+        <li><a href="#三二进制包-rpm包安装">三.二进制包-rpm包安装</a>
+          <ul>
+            <li></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="linux源码包和二进制包安装教程">Linux源码包和二进制包安装教程</h1>
+<blockquote>
+<p>本文讲述怎么安装源码包，二进制软件包和rpm包。</p>
+</blockquote>
+<h2 id="一源码包安装">一.源码包安装</h2>
+<blockquote>
+<p>源码包的制作可以参考教程：<a href="https://blog.nevergiveup.tech/post/linux/build/linux%E6%BA%90%E7%A0%81%E5%8C%85%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B/">Linux源码包的制作教程</a></p>
+</blockquote>
+<h3 id="1下载源码包并解压">1.下载源码包并解压</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#可使用 wget 命令“http:\\”直接下载到主机 或者其他方式上传源码包</span>
+<span class="c1">#根据源码包的格式去解压</span>
+tar  -xvf *.tar  /tar -xvjf *tar.bz2 /unzip -o *.zip
+
+em:
+<span class="nb">cd</span> /root
+scp root@10.0.8.116:/workspace/upgrade-maintain-patch.tgz /root/
+tar -xvf upgrade-maintain-patch.tgz
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2进入源码包的目录解后压">2.进入源码包的目录解后压</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> 目录
+
+em:
+<span class="nb">cd</span> upgrade-maintain-patch
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3软件配置与软件环境依赖检查">3.软件配置与软件,环境依赖检查</h3>
+<h4 id="31如果有configure">3.1.如果有configure</h4>
+<p>/configure是源代码安装的第一步，主要的作用是对即将安装的软件进行配置，检查当前的环境是否满足要安装软件的依赖关系，生成makefile文件)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#生成makefile文件</span>
+./configure 
+<span class="c1">#或者 </span>
+.configure
+
+<span class="c1">#指定安装根目录</span>
+./configure --prefix<span class="o">=</span>/usr/local/ 
+<span class="c1">#.--with指的是安装本文件所依赖的库文件。</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="32如果有makefile就直接make然后make-install">3.2.如果有makefile，就直接make，然后make install</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">make <span class="o">&amp;&amp;</span> make install
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="33默认安装目录">3.3.默认安装目录</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">/usr/local 系统预设软件安装位置
+/etc/  配置文件安装目录
+/usr/sbin/   可执行的命令安装目录
+/usr/lib/   程序使用的函数库保存位置
+/usr/share/doc/  软件使用手册保存位置
+/usr/share/man/  帮助文件保存位置
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4安装成功">4.安装成功</h3>
+<p>make 是用来编译 它从Makefile中读取指令，然后编译。编译出错可以用make clean 清除编译过程文件
+make install是用来安装的，它也从Makefile中读取指令，安装到指定的位置。只有在执行install的时候才会向指定的安装目录写入文件。</p>
+<h3 id="5注意">5.注意</h3>
+<p>安装过程报错 ：编译配置过程停止并出现error warning no。一般Leaving directory&hellip;表示成功 源码包是没有卸载命令，直接执行rm命令卸载即可，没有垃圾残留</p>
+<h2 id="二二进制软件包">二.二进制软件包</h2>
+<blockquote>
+<p>二进制软件包的制作可以参考教程：<a href="https://blog.nevergiveup.tech/post/linux/build/linux%E6%BA%90%E7%A0%81%E5%8C%85%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B/">Linux源码包的制作教程</a></p>
+</blockquote>
+<p>一般情况下自制的软件包都有自定义的安装脚本，如果使用makefile配置的二进制软件包和源码安装步骤一致。</p>
+<h3 id="1获取软件包并解压">1.获取软件包并解压</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#根据源码包的格式去解压</span>
+tar  -xvf *.tar  /tar -xvjf *tar.bz2 /unzip -o *.zip
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2执行命令安装">2.执行命令安装</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#如果存在configure,则按照软件方说明,进行使用</span>
+./configure
+
+<span class="c1">#如果存在makefile文件则,直接执行</span>
+make <span class="o">&amp;&amp;</span> make install
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="三二进制包-rpm包安装">三.二进制包-rpm包安装</h2>
+<blockquote>
+<p>rpm打包可以参考教程：<a href="https://blog.nevergiveup.tech/post/linux/build/linux%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8C%85rpm%E5%8C%85%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B/">Linux二进制包(RPM包)制作教程(教程+资料+案例)</a></p>
+</blockquote>
+<h4 id="1-安装">1) 安装</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">－i: 安装
+－v: 显示安装过程
+－vv: 显示安装详细过程
+－h: 显示安装进度 
+－U: 指定的安装包比已安装的安装包新或者未安装
+－F: 指定的包比已安装的包新 --oldpackage 指定的包比已安装过的包旧
+－ivh：安装显示安装进度--install--verbose--hash
+－Uvh：升级软件包--Update；
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2-卸载">2) 卸载</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">－e：删除包
+
+－e 包名
+rpm -e <span class="sb">`</span>rpm -q vsftpd<span class="sb">`</span> 
+或
+rpm -e vsftpd --allmatches 安装了多个版本的某个rpm可以一次性全部删除
+--nodeps 删除时不检查依赖性关系
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3-查询">3) 查询</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">－q: 查询包是否安装
+－qa: 查询已安装的所有包
+－qf: 文件路径  查询指定的文件来源于哪一个rpm包
+－ql: 包名 查询该包提供了哪些文件
+－qp: rpm包 对未安装的包，指定rpm文件再配合其他查询子选项来进行各项查询操作
+－q: --changelog 包名 查看更新日志
+－qc: 包名 查看该软件包所提供的配置文件
+－qd: 包名 查看该软件包所提供的文档文件
+－qi: 包名 查看该软件包的详细信息
+－q**: --scripts 查看安装前及安装后的脚本** 
+－q: --provides 包名 查看一个软件包提供了哪些能力
+－qR: 包名 查看一个软件包的运行所依赖的能力
+－q: --whatprovides 能力名 查看一个能力由哪个包提供
+－q: --whatrequires 能力名 查看一个能力依赖于哪些包
+－qpl：列出RPM软件包内的文件信息<span class="o">[</span>Query Package list<span class="o">]</span>；
+－qpi：列出RPM软件包的描述信息<span class="o">[</span>Query Package install package<span class="o">(</span>s<span class="o">)]</span>；
+－qf：查找指定文件属于哪个RPM软件包<span class="o">[</span>Query File<span class="o">]</span>；
+
+－Va：校验所有的RPM软件包，查找丢失的文件<span class="o">[</span>View Lost<span class="o">]</span>；
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="4-示例">4) 示例</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">&gt;#rpm  -ivh  软件包全名          //安装软件
+&gt;#rpm  -q   软件包名<span class="o">(</span>完整<span class="o">)</span>    //query查看软件是否有安装
+&gt;#rpm  -e   软件包名 <span class="o">(</span>完整<span class="o">)</span>      //卸载软件
+&gt;#rpm  -ql  软件包名 <span class="o">(</span>完整<span class="o">)</span>      //query all  软件安装目录
+&gt;#rpm  -qa                      //query all  查看系统里边全部rpm方式安装的软件
+&gt;#rpm  -qa  <span class="p">|</span>  grep ftpd<span class="o">(</span>部分名字<span class="o">)</span>          //模糊查找指定软件ftpd是否有安装
+<span class="nv">软件包全名</span> <span class="o">=</span> 软件包名+软件版本+支持的系统+支持cpu型号+文件后缀
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-03-04
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/linux/">linux</a>
+          <a href="/tags/%E6%BA%90%E7%A0%81%E5%8C%85/">源码包</a>
+          <a href="/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8C%85/">二进制包</a>
+          <a href="/tags/configure/">configure</a>
+          <a href="/tags/make/">make</a>
+          <a href="/tags/install/">install</a>
+          <a href="/tags/makefile/">makefile</a>
+          <a href="/tags/clean/">clean</a>
+          <a href="/tags/rpm/">rpm</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/linux/build/linux%E6%BA%90%E7%A0%81%E5%8C%85%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[linux] Linux源码包的制作教程</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/dev_language/golang/go%E8%AF%AD%E8%A8%80%E7%BC%96%E8%AF%91%E5%92%8C%E5%B7%A5%E5%85%B7%E9%93%BE/">
+            <span class="next-text nav-default">[go] Go语言编译和工具链</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

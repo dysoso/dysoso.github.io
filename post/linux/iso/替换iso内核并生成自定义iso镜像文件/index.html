@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[linux] 替换ISO内核并生成自定义iso镜像文件 - Never Give Up</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ZhangKQ" /><meta name="description" content="[TOC] 替换ISO内核并生成自定义iso镜像文件 一些说明 initrd.img 什么是initrd?安装系统引到模式下的RAM镜像 initrd 的英文含义是 boot loader initialized RAM disk，就是由" /><meta name="keywords" content="linux, centos, iso, initrd.img, squashfs.img, 解压, 打包, 解压iso, 打包iso, 生成iso" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.nevergiveup.tech/post/linux/iso/%E6%9B%BF%E6%8D%A2iso%E5%86%85%E6%A0%B8%E5%B9%B6%E7%94%9F%E6%88%90%E8%87%AA%E5%AE%9A%E4%B9%89iso%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[linux] 替换ISO内核并生成自定义iso镜像文件" />
+<meta property="og:description" content="[TOC] 替换ISO内核并生成自定义iso镜像文件 一些说明 initrd.img 什么是initrd?安装系统引到模式下的RAM镜像 initrd 的英文含义是 boot loader initialized RAM disk，就是由" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nevergiveup.tech/post/linux/iso/%E6%9B%BF%E6%8D%A2iso%E5%86%85%E6%A0%B8%E5%B9%B6%E7%94%9F%E6%88%90%E8%87%AA%E5%AE%9A%E4%B9%89iso%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-04-20T09:45:56+08:00" />
+<meta property="article:modified_time" content="2022-04-24T09:45:56+08:00" />
+
+<meta itemprop="name" content="[linux] 替换ISO内核并生成自定义iso镜像文件">
+<meta itemprop="description" content="[TOC] 替换ISO内核并生成自定义iso镜像文件 一些说明 initrd.img 什么是initrd?安装系统引到模式下的RAM镜像 initrd 的英文含义是 boot loader initialized RAM disk，就是由"><meta itemprop="datePublished" content="2022-04-20T09:45:56+08:00" />
+<meta itemprop="dateModified" content="2022-04-24T09:45:56+08:00" />
+<meta itemprop="wordCount" content="3940">
+<meta itemprop="keywords" content="linux,centos,iso,initrd.img,squashfs.img,解压,打包,解压iso,打包iso,生成iso," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[linux] 替换ISO内核并生成自定义iso镜像文件"/>
+<meta name="twitter:description" content="[TOC] 替换ISO内核并生成自定义iso镜像文件 一些说明 initrd.img 什么是initrd?安装系统引到模式下的RAM镜像 initrd 的英文含义是 boot loader initialized RAM disk，就是由"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Never Give Up</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/remark/">
+        <li class="mobile-menu-item">随言碎语</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Never Give Up</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/remark/">随言碎语</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[linux] 替换ISO内核并生成自定义iso镜像文件</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-04-20 </span>
+        <div class="post-category">
+            <a href="/categories/linux/"> linux </a>
+            </div>
+          <span class="more-meta"> 约 3940 字 </span>
+          <span class="more-meta"> 预计阅读 8 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#替换iso内核并生成自定义iso镜像文件">替换ISO内核并生成自定义iso镜像文件</a>
+      <ul>
+        <li><a href="#一些说明">一些说明</a>
+          <ul>
+            <li><a href="#initrdimg">initrd.img</a></li>
+            <li><a href="#squashfsimg">squashfs.img</a></li>
+            <li><a href="#rootfsimg">rootfs.img</a></li>
+          </ul>
+        </li>
+        <li><a href="#注意事项">注意事项</a></li>
+        <li><a href="#一挂载并获取原iso镜像内容">一.挂载并获取原iso镜像内容</a>
+          <ul>
+            <li><a href="#1需要用到的临时目录">1.需要用到的临时目录</a></li>
+            <li><a href="#2新建目录iso镜像挂载">2.新建目录&amp;iso镜像挂载</a></li>
+            <li><a href="#3将镜像内容复制到新目录并取消挂载镜像">3.将镜像内容复制到新目录,并取消挂载镜像</a></li>
+            <li><a href="#4安装需要用到的工具">4.安装需要用到的工具</a></li>
+          </ul>
+        </li>
+        <li><a href="#二initrdimg解压修改打包">二.initrd.img解压&amp;修改&amp;打包</a>
+          <ul>
+            <li><a href="#1新建目录">1.新建目录</a></li>
+            <li><a href="#2解压initrdimg">2.解压initrd.img</a></li>
+            <li><a href="#3替换修改initrdimg">3.替换修改initrd.img</a></li>
+            <li><a href="#4压缩initrd">4.压缩initrd</a></li>
+            <li><a href="#5替换iso中的initrdimg">5.替换iso中的initrd.img</a></li>
+            <li><a href="#6安装iso过程中出现的问题">6.安装iso过程中出现的问题</a></li>
+            <li><a href="#7出现问题尝试另一种处理方式">7.出现问题,尝试另一种处理方式</a></li>
+          </ul>
+        </li>
+        <li><a href="#三squashfsimg解压修改打包">三.squashfs.img解压&amp;修改&amp;打包</a>
+          <ul>
+            <li><a href="#1拷贝源文件到新目录">1.拷贝源文件到新目录</a></li>
+            <li><a href="#2安装工具">2.安装工具</a></li>
+            <li><a href="#3使用squashfs工具解压squashfsimg">3.使用squashfs工具解压squashfs.img</a></li>
+            <li><a href="#4挂载镜像rootfsimg">4.挂载镜像rootfs.img</a></li>
+            <li><a href="#5根据需要可以修改workmkisorootfs目录下文件">5.根据需要可以修改/work/mkiso/rootfs目录下文件</a></li>
+            <li><a href="#6开机自动加载模块配置">6.开机自动加载模块配置</a></li>
+            <li><a href="#7重新打包squashfsimg">7.重新打包squashfs.img</a></li>
+            <li><a href="#8替换iso中的squashfsimg">8.替换iso中的squashfs.img</a></li>
+          </ul>
+        </li>
+        <li><a href="#四修改并替换packages中的rpm包">四.修改并替换Packages中的rpm包</a>
+          <ul>
+            <li><a href="#1新建文件夹拷贝原始文件">1.新建文件夹,拷贝原始文件</a></li>
+            <li><a href="#2提取rpm的spec文件">2.提取rpm的spec文件</a></li>
+            <li><a href="#3解压rpm包内容">3.解压rpm包内容</a></li>
+            <li><a href="#4替换驱动">4.替换驱动</a></li>
+            <li><a href="#5开机自动加载模块配置">5.开机自动加载模块配置</a></li>
+            <li><a href="#6修改kernel-41437-4el7x86_64spec文件">6.修改kernel-4.14.37-4.el7.x86_64.spec文件</a></li>
+            <li><a href="#7重新打包rpm">7.重新打包rpm</a></li>
+            <li><a href="#8替换iso中rpm包">8.替换iso中rpm包</a></li>
+          </ul>
+        </li>
+        <li><a href="#五打包iso镜像">五.打包iso镜像</a>
+          <ul>
+            <li><a href="#1本地yum源">1.本地yum源</a></li>
+            <li><a href="#2生成新iso镜像">2.生成新iso镜像</a></li>
+            <li><a href="#3镜像md5值">3.镜像md5值</a></li>
+          </ul>
+        </li>
+        <li><a href="#六验证iso镜像">六.验证iso镜像</a></li>
+        <li><a href="#七自定义打包iso脚本">七.自定义打包iso脚本</a></li>
+        <li><a href="#八一些相关资料">八.一些相关资料</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>[TOC]</p>
+<h1 id="替换iso内核并生成自定义iso镜像文件">替换ISO内核并生成自定义iso镜像文件</h1>
+<h2 id="一些说明">一些说明</h2>
+<h3 id="initrdimg">initrd.img</h3>
+<ul>
+<li>
+<p>什么是initrd?安装系统引到模式下的RAM镜像</p>
+<blockquote>
+<p>initrd 的英文含义是 boot loader initialized RAM disk，就是由 boot loader 初始化的内存盘。在 linux内核启动前， boot loader会将存储介质中的 initrd 文件加载到内存，内核启动时会在访问真正的根文件系统前先访问该内存中的 initrd 文件系统</p>
+</blockquote>
+</li>
+<li>
+<p>initrd具体干了什么</p>
+<blockquote>
+<p>把 initrd.img 初始化成一个设备 /dev/intrd。接着boot loader 把内核以及/dev/initrd的内容加载到内存</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="squashfsimg">squashfs.img</h3>
+<ul>
+<li>Squashfs(.sfs)是一套供Linux核心使用的GPL开源只读压缩文件系统</li>
+</ul>
+<h3 id="rootfsimg">rootfs.img</h3>
+<ul>
+<li>由squashfs.img解压得到</li>
+<li>根文件系统，是ramfs的一种，是为安装系统准备的环境</li>
+</ul>
+<h2 id="注意事项">注意事项</h2>
+<blockquote>
+<p>系统安装过程中需要用到megaraid_sas驱动，故需要替换initrd.img和squashfs.img内的驱动，并修改自动加载mod的配置。</p>
+<p>安装iso过程中会安装kernel-4.14.rpm内核包，要在系统安装成功后也能用megaraid_sas驱动，需要修改kernel-4.14.rpm内核包中的的驱动，并新增开机自动加载mod的配置文件。</p>
+</blockquote>
+<h2 id="一挂载并获取原iso镜像内容">一.挂载并获取原iso镜像内容</h2>
+<h3 id="1需要用到的临时目录">1.需要用到的临时目录</h3>
+<p>临时目录在打包好iso后会删除</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">dtos_iso_mount_path=/work/mkiso/bootiso-up
+dtos_iso_create_tmp_path=/work/mkiso/anaconda/createCD-up
+dtos_iso_initrd_tmp_path=/work/mkiso/initrd-up
+dtos_iso_squashfs_tmp_path=/work/mkiso/squashfs-up
+dtos_iso_packages_tmp_path=/work/mkiso/Packages-up
+</code></pre></td></tr></table>
+</div>
+</div><p>备份目录,备份原iso镜像文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">#原驱动文件
+/work/mkiso/backup/dtos7.4/old/megaraid_sas.ko.xz
+#原initrd.img文件
+/work/mkiso/backup/dtos7.4/old/initrd.img
+#原squashfs.img文件
+/work/mkiso/backup/dtos7.4/old/squashfs.img
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2新建目录iso镜像挂载">2.新建目录&amp;iso镜像挂载</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">mkdir -p /work/mkiso/bootiso-up
+mount -o loop /work/release/dtos/dtos-7.4-x86_64-20190111.iso /work/mkiso/bootiso-up
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3将镜像内容复制到新目录并取消挂载镜像">3.将镜像内容复制到新目录,并取消挂载镜像</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">rm -rf /work/mkiso/anaconda/createCD-up/
+mkdir -p /work/mkiso/anaconda/createCD-up
+cd /work/mkiso/bootiso-up
+cp -a . /work/mkiso/anaconda/createCD-up
+sed -i &#39;s/CentOS/dtos/g&#39; /work/mkiso/anaconda/createCD-up/isolinux/isolinux.cfg
+sed -i &#39;s/CentOS/dtos/g&#39; /work/mkiso/anaconda/createCD-up/isolinux/grub.conf
+cd /work/mkiso/anaconda/createCD-up/
+umount /work/mkiso/bootiso-up &amp;&amp; rmdir /work/mkiso/bootiso-up
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4安装需要用到的工具">4.安装需要用到的工具</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">yum install -y createrepo mkisofs isomd5sum squashfs-tools rpmbuild rpmrebuild
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="二initrdimg解压修改打包">二.initrd.img解压&amp;修改&amp;打包</h2>
+<p>initrd.img为安装iso时使用的系统，如果是装机过程中用到的驱动或工具，是必须要修改initrd.img的</p>
+<h3 id="1新建目录">1.新建目录</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">rm -rf /work/mkiso/initrd-up
+mkdir -p /work/mkiso/initrd-up
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2解压initrdimg">2.解压initrd.img</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[root@infi-builder initrd-up]# ll -h /work/mkiso/anaconda/createCD-up/images/pxeboot/initrd.img
+-rw-r--r-- 1 root root 47M Jan 11  2019 /work/mkiso/anaconda/createCD-up/images/pxeboot/initrd.img
+
+mkdir -p /work/mkiso/initrd-up/initrd
+cd /work/mkiso/initrd-up/initrd
+xz -dc / /work/mkiso/anaconda/createCD-up/images/pxeboot/initrd.img | cpio -id
+
+[root@infi-builder initrd]# ls
+bin  dev  etc  init  lib  lib64  proc  root  run  sbin  shutdown  sys  sysroot  tmp  usr  var
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3替换修改initrdimg">3.替换修改initrd.img</h3>
+<p>我这里是替换了megaraid_sas驱动</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[root@infi-builder initrd-up]# ll -h /work/mkiso/initrd-up/initrd/usr/lib/modules/3.10.0-693.el7.x86_64/kernel/drivers/scsi/megaraid/megaraid_sas.ko.xz
+-rw-r--r-- 1 root root 61K Apr 20 17:25 /work/mkiso/initrd-up/initrd/usr/lib/modules/3.10.0-693.el7.x86_64/kernel/drivers/scsi/megaraid/megaraid_sas.ko.xz
+
+cp /work/mkiso/modules/drivers/3.10.0-693.el7x86_64/megaraid_sas.ko.xz /work/mkiso/initrd-up/initrd/usr/lib/modules/3.10.0-693.el7.x86_64/kernel/drivers/scsi/megaraid/megaraid_sas.ko.xz
+cp /work/mkiso/modules/drivers/3.10.0-693.el7x86_64/megaraid_sas.ko.xz /work/mkiso/initrd-up/initrd/lib/modules/3.10.0-693.el7.x86_64/kernel/drivers/scsi/megaraid/megaraid_sas.ko.xz
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4压缩initrd">4.压缩initrd</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">cd /work/mkiso/initrd-up/initrd
+find . | cpio -c -o | xz -9 --check=crc32 &gt; ../initrd.img
+hexdump -C ../initrd.img | head -10
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="5替换iso中的initrdimg">5.替换iso中的initrd.img</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[root@infi-builder initrd-up]# ll -h /work/mkiso/initrd-up/initrd.img
+-rw-r--r-- 1 root root 45M Apr 20 17:35 /work/mkiso/initrd-up/initrd.img
+
+cp -rf /work/mkiso/initrd-up/initrd.img /work/mkiso/anaconda/createCD-up/images/pxeboot/initrd.img
+cp -rf /work/mkiso/initrd-up/initrd.img /work/mkiso/anaconda/createCD-up/isolinux/initrd.img
+
+rm -rf /work/mkiso/initrd-up
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="6安装iso过程中出现的问题">6.安装iso过程中出现的问题</h3>
+<p>改完之后直接cpio+xz打回去之后发现不能用,不识别initrd.img导致启动失败</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">#查看文件头，发现和原有initrd.img文件不太一样
+hexdump -C ../initrd.img | head -10
+hexdump -C initrd.img | head -10
+#文件校验块原来是01重新压回去为啥变04了？fd 37 7a 58 5a 00 00 01 → fd 37 7a 58 5a 00 00 04
+#查询xz算法和xz工具后发现新的xz工具在压缩的时候自动采用了新的校验算法crc64，虽然说这个crc64要优于原本的crc32，但是linux内核用的还是crc32而且不认识crc64。怪不得报错呢。
+#在参数上指定强制使用crc32校验算法即可
+xz -zk initrd.img --check=crc32
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="7出现问题尝试另一种处理方式">7.出现问题,尝试另一种处理方式</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">#拷贝源文件到新目录
+rm -rf /work/mkiso/initrd-up
+mkdir -p /work/mkiso/initrd-up
+cd /work/mkiso/initrd-up
+cp -rf /work/mkiso/anaconda/createCD-up/isolinux/initrd.img /work/mkiso/initrd-up/initrd.img
+
+#解压initrd.img
+[root@infi-builder initrd-up]# file /work/mkiso/initrd-up/initrd.img
+/work/mkiso/initrd-up/initrd.img: XZ compressed data
+#是个xz压缩文件,继续解压
+mv initrd.img initrd.img.xz
+xz -d initrd.img.xz
+[root@infi-builder initrd-up]# file initrd.img
+initrd.img: ASCII cpio archive (SVR4 with no CRC)
+#是个二进制镜像文件,继续解
+mkdir initd
+cd initd
+cpio -i -F ../initrd.img  
+#可以看到解压完的内容
+[root@infi-builder initd]# ls
+bin  dev  etc  init  lib  lib64  proc  root  run  sbin  shutdown  sys  sysroot  tmp  usr  var
+
+#替换修改initrd.img
+cp -rf /work/mkiso/modules/drivers/3.10.0-693.el7x86_64/megaraid_sas.ko.xz /work/mkiso/initrd-up/initd/usr/lib/modules/3.10.0-693.el7.x86_64/kernel/drivers/scsi/megaraid/megaraid_sas.ko.xz
+cp -rf /work/mkiso/modules/drivers/3.10.0-693.el7x86_64/megaraid_sas.ko.xz /work/mkiso/initrd-up/initd/lib/modules/3.10.0-693.el7.x86_64/kernel/drivers/scsi/megaraid/megaraid_sas.ko.xz
+
+#重新打包initrd.img
+find . -depth |cpio -oc -O /work/mkiso/initrd.img
+cd /work/mkiso/
+xz -zk initrd.img --check=crc32
+mv initrd.img.xz initrd.img
+[root@infi-builder release]# ll -h initrd.img
+-rw-r--r-- 1 root root 46M Apr 20 15:20 initrd.img
+[root@infi-builder release]# md5sum initrd.img
+5440715388347f3e6c60edf0833fa831  initrd.img
+
+#替换iso中的initrd.img
+cp -rf /work/mkiso/initrd.img /work/mkiso/anaconda/createCD-up/isolinux/initrd.img
+cp -rf /work/mkiso/initrd.img /work/mkiso/anaconda/createCD-up/images/pxeboot/initrd.img
+
+rm -rf /work/mkiso/initrd.img
+rm -rf /work/mkiso/initrd-up
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="三squashfsimg解压修改打包">三.squashfs.img解压&amp;修改&amp;打包</h2>
+<p>squashfs.img为需要安装的系统，如果安装完成后的系统需要用到的驱动或工具，是必须要修改squashfs.img的</p>
+<h3 id="1拷贝源文件到新目录">1.拷贝源文件到新目录</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">rm -rf /work/mkiso/squashfs-up
+mkdir -p /work/mkiso/squashfs-up
+cp -rf /work/mkiso/anaconda/createCD-up/LiveOS/squashfs.img /work/mkiso/squashfs-up/squashfs.img
+
+[root@infi-builder release]# ll -h /work/mkiso/squashfs-up/squashfs.img
+-rw-r--r-- 1 root root 352M Apr 20 15:27 /work/mkiso/squashfs-up/squashfs.img
+[root@infi-builder release]# md5sum /work/mkiso/squashfs-up/squashfs.img
+9fbbe1469f75bb6d360d6da42f9b4eac  /work/mkiso/squashfs-up/squashfs.img
+[root@node1 /work/mkiso/squashfs-up]# hexdump -C squashfs.img | head -10
+00000000  68 73 71 73 03 00 00 00  07 a8 ae 59 00 00 02 00  |hsqs.......Y....|
+00000010  00 00 00 00 04 00 11 00  c0 04 01 00 04 00 00 00  |................|
+00000020  58 00 60 4b 00 00 00 00  56 f8 f7 15 00 00 00 00  |X.`K....V.......|
+00000030  4e f8 f7 15 00 00 00 00  ff ff ff ff ff ff ff ff  |N...............|
+00000040  2e ac f7 15 00 00 00 00  ec f7 f7 15 00 00 00 00  |................|
+00000050  26 f8 f7 15 00 00 00 00  40 f8 f7 15 00 00 00 00  |&amp;.......@.......|
+00000060  08 80 00 00 02 00 01 00  00 00 fd 37 7a 58 5a 00  |...........7zXZ.|
+00000070  00 01 69 22 de 36 03 c0  a2 16 80 80 08 21 01 0a  |..i&#34;.6.......!..|
+00000080  00 00 ba d0 61 a1 e1 ff  ff 0b 1a 5d 00 00 6f fd  |....a......]..o.|
+00000090  ff ff a3 b7 82 62 39 8a  27 9a 46 6f 4c a2 1d 31  |.....b9.&#39;.FoL..1|
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2安装工具">2.安装工具</h3>
+<p>如果未安装squashfs-tools工具，请执行以下命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">yum install -y squashfs-tools
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3使用squashfs工具解压squashfsimg">3.使用squashfs工具解压squashfs.img</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">cd /work/mkiso/squashfs-up
+[root@node1 /work/mkiso/squashfs-up]# unsquashfs squashfs.img
+Parallel unsquashfs: Using 4 processors
+1 inodes (16384 blocks) to write
+
+[==============================================================/] 16384/16384 100%
+
+created 1 files
+created 2 directories
+created 0 symlinks
+created 0 devices
+created 0 fifos
+
+#获取到rootfs.img镜像
+[root@dy-workspace /work/mkiso/squashfs-up]# ll -h squashfs-root/LiveOS/rootfs.img
+-rw-r--r--. 1 root root 2.0G 4月  24 13:48 squashfs-root/LiveOS/rootfs.img
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4挂载镜像rootfsimg">4.挂载镜像rootfs.img</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[root@node1 /work/mkiso/squashfs-up/squashfs-root/LiveOS]# mkdir /work/mkiso/squashfs-up/rootfs/
+[root@node1 /work/mkiso/squashfs-up/squashfs-root/LiveOS]# mount /work/mkiso/squashfs-up/squashfs-root/LiveOS/rootfs.img /work/mkiso/squashfs-up/rootfs/
+[root@dy-workspace /work/mkiso/squashfs-up]# ls /work/mkiso/squashfs-up/rootfs/
+bin  dev  etc  firmware  lib  lib64  lost+found  mnt  modules  proc  root  run  sbin  sys  tmp  usr  var
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="5根据需要可以修改workmkisorootfs目录下文件">5.根据需要可以修改/work/mkiso/rootfs目录下文件</h3>
+<p>我这里是替换了megaraid_sas驱动</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">cp -rf /work/mkiso/modules/drivers/3.10.0-693.el7x86_64/megaraid_sas.ko.xz /work/mkiso/squashfs-up/rootfs/usr/lib/modules/3.10.0-693.el7.x86_64/kernel/drivers/scsi/megaraid/megaraid_sas.ko.xz
+cp -rf /work/mkiso/modules/drivers/3.10.0-693.el7x86_64/megaraid_sas.ko.xz /work/mkiso/squashfs-up/rootfs/lib/modules/3.10.0-693.el7.x86_64/kernel/drivers/scsi/megaraid/megaraid_sas.ko.xz
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="6开机自动加载模块配置">6.开机自动加载模块配置</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">cd /work/mkiso/squashfs-up/rootfs/
+
+#方式一,正常情况下二选一
+mkdir -p etc/modules-load.d
+vim etc/modules-load.d/config.conf
+[添加内容]
+megaraid_sas
+
+#方式二,正常情况下二选一
+mkdir -p etc/sysconfig/modules
+vim etc/sysconfig/modules/megaraid_sas.modules
+[添加内容]
+modprobe megaraid_sas
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="7重新打包squashfsimg">7.重新打包squashfs.img</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">cd /work/mkiso/squashfs-up
+umount /work/mkiso/squashfs-up/rootfs/ &amp;&amp; rm -rf /work/mkiso/squashfs-up/rootfs/
+rm -rf squashfs.img
+mksquashfs squashfs-root/ squashfs.img -comp xz -Xbcj x86 -e boot
+
+[root@node1 /work/mkiso/squashfs-up]# mksquashfs squashfs-root/ squashfs.img -comp xz -Xbcj x86 -e boot
+Parallel mksquashfs: Using 4 processors
+Creating 4.0 filesystem on squashfs.img, block size 131072.
+[=============================================================-] 16384/16384 100%
+
+Exportable Squashfs 4.0 filesystem, xz compressed, data block size 131072
+        compressed data, compressed metadata, compressed fragments, compressed xattrs
+        duplicates are removed
+Filesystem size 360866.57 Kbytes (352.41 Mbytes)
+        17.21% of uncompressed filesystem size (2097216.33 Kbytes)
+Inode table size 19390 bytes (18.94 Kbytes)
+        29.52% of uncompressed inode table size (65674 bytes)
+Directory table size 58 bytes (0.06 Kbytes)
+        100.00% of uncompressed directory table size (58 bytes)
+Number of duplicate files found 0
+Number of inodes 3
+Number of files 1
+Number of fragments 0
+Number of symbolic links  0
+Number of device nodes 0
+Number of fifo nodes 0
+Number of socket nodes 0
+Number of directories 2
+Number of ids (unique uids + gids) 1
+Number of uids 1
+        root (0)
+Number of gids 1
+        root (0)
+
+[root@node1 /work/mkiso/squashfs-up]# ll -h squashfs-root/LiveOS/rootfs.img
+-rw-r--r-- 1 root root 2.0G 4月  20 15:36 squashfs-root/LiveOS/rootfs.img
+[root@node1 /work/mkiso/squashfs-up]# ll -h
+总用量 353M
+-rw-r--r-- 1 root root 353M 4月  20 15:43 squashfs.img
+drwxr-xr-x 3 root root   20 9月   5 2017 squashfs-root
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="8替换iso中的squashfsimg">8.替换iso中的squashfs.img</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">cp -rf /work/mkiso/squashfs-up/squashfs.img /work/mkiso/anaconda/createCD-up/LiveOS/squashfs.img
+
+rm -rf /work/mkiso/squashfs-up
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="四修改并替换packages中的rpm包">四.修改并替换Packages中的rpm包</h2>
+<p>如果有自定义的rpm安装包，且rpm包中驱动会覆盖安装完的系统中的驱动时，需要替换rpm包中驱动</p>
+<p>此处修改的是linux内核4.14包:kernel-4.14.37-4.el7.x86_64.rpm</p>
+<h3 id="1新建文件夹拷贝原始文件">1.新建文件夹,拷贝原始文件</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">mkdir -p /work/mkiso/Packages-up/
+cp -rf /work/mkiso/anaconda/createCD-up/Packages/kernel-4.14.37-4.el7.x86_64.rpm /work/mkiso/Packages-up/kernel-4.14.37-4.el7.x86_64.rpm 
+cd /work/mkiso/Packages-up
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2提取rpm的spec文件">2.提取rpm的spec文件</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">rpmrebuild</span> <span class="o">--</span><span class="kn">package</span> <span class="o">--</span><span class="nx">notest</span><span class="o">-</span><span class="nx">install</span> <span class="o">--</span><span class="nx">spec</span><span class="o">-</span><span class="nx">only</span><span class="p">=</span><span class="nx">kernel</span><span class="o">-</span><span class="mf">4.14.37</span><span class="o">-</span><span class="mf">4.</span><span class="nx">el7</span><span class="p">.</span><span class="nx">x86_64</span><span class="p">.</span><span class="nx">spec</span> <span class="nx">kernel</span><span class="o">-</span><span class="mf">4.14.37</span><span class="o">-</span><span class="mf">4.</span><span class="nx">el7</span><span class="p">.</span><span class="nx">x86_64</span><span class="p">.</span><span class="nx">rpm</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3解压rpm包内容">3.解压rpm包内容</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">mkdir -p /work/mkiso/Packages-up/kernel-4.14.37-4.el7.x86_64
+cd /work/mkiso/Packages-up/kernel-4.14.37-4.el7.x86_64
+rpm2cpio ../kernel-4.14.37-4.el7.x86_64.rpm | cpio -div
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4替换驱动">4.替换驱动</h3>
+<p>我这里是替换了megaraid_sas驱动</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">cp -rf /work/mkiso/modules/drivers/4.14.37-4.el7.x86_64/megaraid_sas.ko.xz /work/mkiso/Packages-up/kernel-4.14.37-4.el7.x86_64/lib/modules/4.14.37-4.el7.x86_64/kernel/drivers/scsi/megaraid/megaraid_sas.ko.xz
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="5开机自动加载模块配置">5.开机自动加载模块配置</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">cd /work/mkiso/Packages-up/kernel-4.14.37-4.el7.x86_64
+
+#方式一,正常情况下二选一
+mkdir -p etc/modules-load.d
+vim etc/modules-load.d/config.conf
+[添加内容]
+megaraid_sas
+
+#方式二,正常情况下二选一
+mkdir -p etc/sysconfig/modules
+vim etc/sysconfig/modules/megaraid_sas.modules
+[添加内容]
+modprobe megaraid_sas
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="6修改kernel-41437-4el7x86_64spec文件">6.修改kernel-4.14.37-4.el7.x86_64.spec文件</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">vim /work/mkiso/Packages-up/kernel-4.14.37-4.el7.x86_64.spec
+跳转至:16165行,在 %files 模块新增内容
+<span class="o">[</span>新增内容<span class="o">]</span>
+%dir %attr<span class="o">(</span>0755, root, root<span class="o">)</span> <span class="s2">&#34;/etc/modules-load.d&#34;</span>
+%attr<span class="o">(</span>0644, root, root<span class="o">)</span> <span class="s2">&#34;/etc/modules-load.d/config.conf&#34;</span>
+%dir %attr<span class="o">(</span>0755, root, root<span class="o">)</span> <span class="s2">&#34;/etc/sysconfig&#34;</span>
+%dir %attr<span class="o">(</span>0755, root, root<span class="o">)</span> <span class="s2">&#34;/etc/sysconfig/modules&#34;</span>
+%attr<span class="o">(</span>0755, root, root<span class="o">)</span> <span class="s2">&#34;/etc/sysconfig/modules/megaraid_sas.modules&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="7重新打包rpm">7.重新打包rpm</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">rm -rf /root/rpmbuild
+mkdir -p /root/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
+cp -rf /work/mkiso/Packages-up/kernel-4.14.37-4.el7.x86_64 /root/rpmbuild/BUILDROOT/kernel-4.14.37-4.el7.x86_64
+cp -rf /work/mkiso/Packages-up/kernel-4.14.37-4.el7.x86_64.spec /root/rpmbuild/SPECS/
+cd /root/rpmbuild/SPECS
+rpmbuild -ba /root/rpmbuild/SPECS/kernel-4.14.37-4.el7.x86_64.spec
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="8替换iso中rpm包">8.替换iso中rpm包</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">cp -rf /root/rpmbuild/RPMS/x86_64/kernel-4.14.37-4.el7.x86_64.rpm /work/mkiso/anaconda/createCD-up/Packages/kernel-4.14.37-4.el7.x86_64.rpm
+
+rm -rf /work/mkiso/Packages-up
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="五打包iso镜像">五.打包iso镜像</h2>
+<h3 id="1本地yum源">1.本地yum源</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> /work/mkiso/anaconda/createCD-up/Packages <span class="o">&amp;&amp;</span> createrepo -dpo .. .
+createrepo -g /work/mkiso/comps/comps.xml /work/mkiso/anaconda/createCD-up
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2生成新iso镜像">2.生成新iso镜像</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">rm -rf /work/mkiso/dtos/dtos-7.4-x86_64-20190111-megaraid_sas.iso
+cd /work/mkiso/anaconda/createCD-up
+
+mkisofs -V &#34;dtos 7 x86_64&#34; -o /work/mkiso/dtos/dtos-7.4-x86_64-20190111-megaraid_sas.iso -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -R -J -v -T -eltorito-alt-boot -bimages/efiboot.img -no-emul-boot /work/mkiso/anaconda/createCD-up
+
+rm -rf /work/mkiso/anaconda/createCD-up
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3镜像md5值">3.镜像md5值</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">implantisomd5 /work/mkiso/dtos/dtos-7.4-x86_64-20190111-megaraid_sas.iso
+md5sum /work/mkiso/dtos/dtos-7.4-x86_64-20190111-megaraid_sas.iso
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="六验证iso镜像">六.验证iso镜像</h2>
+<ul>
+<li>
+<p>本地虚拟机安装新生成的iso镜像</p>
+</li>
+<li>
+<p>装机开始前CTRL+ALT+F2进入shell环境</p>
+</li>
+<li>
+<p>发现版本已经由07.701变为07.719,驱动替换成功</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[root@node1 /workspace/srv-gw-infinity]# modinfo megaraid_sas
+filename:       /lib/modules/3.10.0-693.el7.x86_64/kernel/drivers/scsi/megaraid/megaraid_sas.ko.xz
+description:    Broadcom MegaRAID SAS Driver
+author:         megaraidlinux.pdl@broadcom.com
+version:        07.719.04.00
+license:        GPL
+srcversion:     05F4386F098293464A7277C
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>发现驱动已经自动加载</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@dy-workspace /work/mkiso/anaconda/createCD-up<span class="o">]</span><span class="c1"># lsmod |grep megaraid_sas</span>
+megaraid_sas          <span class="m">143360</span>  <span class="m">0</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>CTRL+ALT+F6继续装机</p>
+</li>
+<li>
+<p>装机完成后运行命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[root@node1 /workspace/srv-gw-infinity]# rpm -qf /lib/modules/4.14.37-4.el7.x86_64/kernel/drivers/scsi/megaraid/megaraid_sas.ko.xz
+kernel-4.14.37-4.el7.x86_64
+
+[root@node1 /workspace/srv-gw-infinity]# modinfo megaraid_sas
+filename:       /lib/modules/4.14.37-4.el7.x86_64/kernel/drivers/scsi/megaraid/megaraid_sas.ko.xz
+description:    Broadcom MegaRAID SAS Driver
+author:         megaraidlinux.pdl@broadcom.com
+version:        07.719.04.00
+license:        GPL
+srcversion:     05F4386F098293464A7277C
+
+[root@dy-workspace /work/mkiso/anaconda/createCD-up]# lsmod |grep megaraid_sas
+megaraid_sas          143360  0
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>手动加载模块</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">lsmod <span class="p">|</span> grep megaraid_sas <span class="c1">#检查有没有正常加载</span>
+modprobe megaraid_sas <span class="c1">#加载模块</span>
+lsmod <span class="p">|</span> grep megaraid_sas <span class="c1">#确认模块有没有正常加载</span>
+fdisk –l <span class="c1">#确认驱动驱动是否正常</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>查看已挂载的磁盘</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">lsblk
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h2 id="七自定义打包iso脚本">七.自定义打包iso脚本</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">vim buildiso74.sh
+</code></pre></td></tr></table>
+</div>
+</div><p>写入如下内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/bin/bash
+</span><span class="cp"></span><span class="nb">set</span> -x
+
+<span class="k">if</span> <span class="o">[</span> -z <span class="nv">$1</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+	<span class="nv">ISONAME</span><span class="o">=</span>dtos-7.4-x86_64-<span class="k">$(</span>date +%Y%m%d<span class="k">)</span>.iso
+<span class="k">else</span>
+	<span class="nv">ISONAME</span><span class="o">=</span>dtos-<span class="si">${</span><span class="nv">1</span><span class="si">}</span>-x86_64.iso
+	<span class="nv">version</span><span class="o">=</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span>
+<span class="k">fi</span>
+
+<span class="nv">centos_file</span><span class="o">=</span>CentOS-7-x86_64-Minimal-1905-02.iso
+<span class="c1">#centos_file=CentOS-7-x86_64-Minimal-1905-01.iso</span>
+<span class="c1">#centos_file=CentOS-7-x86_64-Minimal-1904-01.iso</span>
+<span class="c1">#centos_file=CentOS-7-x86_64-Minimal-1802-01.iso</span>
+
+<span class="nv">userdir</span><span class="o">=</span><span class="s2">&#34;mkiso&#34;</span>
+<span class="nv">workdir</span><span class="o">=</span>/work/<span class="si">${</span><span class="nv">userdir</span><span class="si">}</span>
+<span class="nv">epelconf</span><span class="o">=</span><span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/pubscripts/epelconf.txt
+<span class="k">if</span> <span class="o">[</span> ! -e <span class="nv">$epelconf</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+	<span class="nb">echo</span> <span class="s2">&#34;config file </span><span class="nv">$epelconf</span><span class="s2"> does not exist&#34;</span>
+	<span class="nb">exit</span>
+<span class="k">fi</span>
+<span class="nv">epels</span><span class="o">=</span><span class="sb">`</span>cat <span class="nv">$epelconf</span><span class="sb">`</span>
+<span class="c1">#epels=&#34;core_append_epel infinity_epel infinity_devel_epel&#34;</span>
+
+<span class="k">if</span> <span class="o">[</span> -d <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/ <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+	rm -rf <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/
+<span class="k">fi</span>
+
+<span class="k">if</span> <span class="o">[</span> ! -e <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/pubscripts/remove_rpm_list_generate.py <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+	<span class="nb">echo</span> <span class="s2">&#34;file remove_rpm_list_generate.py does not exist!&#34;</span>
+	<span class="c1">#exit</span>
+<span class="k">fi</span>
+
+mkdir -p <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/bootiso
+mount -o loop <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/commons/centos-minimal/<span class="si">${</span><span class="nv">centos_file</span><span class="si">}</span> <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/bootiso
+<span class="o">[</span> -e <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/ <span class="o">]</span> <span class="o">&amp;&amp;</span> rm -fr <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/
+
+mkdir -p <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/
+cp -r <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/bootiso/* <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/
+cp -r <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/bootiso/.treeinfo <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/
+cp -r <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/bootiso/.discinfo <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/
+sed -i <span class="s1">&#39;s/CentOS/dtos/g&#39;</span> <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/isolinux/isolinux.cfg
+sed -i <span class="s1">&#39;s/CentOS/dtos/g&#39;</span> <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/isolinux/grub.conf
+<span class="c1">#sed -i &#39;s/CentOS/dtos/g&#39; ${workdir}/anaconda/createCD/EFI/BOOT/grub.cfg</span>
+umount <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/bootiso <span class="o">&amp;&amp;</span> rmdir <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/bootiso
+
+<span class="c1">#If new kernel rpms exists, copy to Packages</span>
+<span class="c1">#[ -e ${workdir}/commons/kernel_rpms ] &amp;&amp; cp ${workdir}/commons/kernel_rpms/*.rpm ${workdir}/anaconda/createCD/Packages/</span>
+
+<span class="c1">#cp ${workdir}/ks.cfg ${workdir}/anaconda/createCD/isolinux/ks.cfg</span>
+<span class="k">for</span> epeldir in <span class="sb">`</span><span class="nb">echo</span> <span class="nv">$epels</span><span class="sb">`</span><span class="p">;</span> <span class="k">do</span>
+	<span class="k">if</span> <span class="o">[</span> -d <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/commons/<span class="si">${</span><span class="nv">epeldir</span><span class="si">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> 
+		<span class="nb">echo</span> <span class="s2">&#34;Copy epel </span><span class="nv">$epeldir</span><span class="s2">&#34;</span>
+		cp <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/commons/<span class="si">${</span><span class="nv">epeldir</span><span class="si">}</span>/*.rpm <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/Packages/
+	<span class="k">else</span>
+		<span class="nb">echo</span> <span class="s2">&#34;epel </span><span class="nv">$epeldir</span><span class="s2"> does not exist&#34;</span>
+	<span class="k">fi</span>
+<span class="k">done</span>
+
+<span class="k">if</span> <span class="o">[</span> ! -z <span class="si">${</span><span class="nv">version</span><span class="si">}</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+	cp <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/commons/dtos-release/dtos-release-<span class="si">${</span><span class="nv">version</span><span class="si">}</span>-el7.x86_64.rpm <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/Packages/
+<span class="k">fi</span>
+
+<span class="c1">#This is to remove rpm with older version from Packages</span>
+<span class="o">[</span> -e rm_rpm.sh <span class="o">]</span> <span class="o">&amp;&amp;</span> rm -f rm_rpm.sh
+python <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/pubscripts/remove_rpm_list_generate.py <span class="o">&amp;&amp;</span> <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/pubscripts/rm_rpm.sh
+<span class="o">[</span> -e <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/commons/kernel_714rpms <span class="o">]</span> <span class="o">&amp;&amp;</span> cp -vf <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/commons/kernel_714rpms/*.rpm <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/Packages/
+cp -vf <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/commons/kernel_714rpms/grub.cfg <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/EFI/BOOT/grub.cfg
+rm -rf <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/Packages/polkit-0.112-12.el7_3.x86_64.rpm
+rm -rf <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/Packages/openssh-clients-7.4p1*
+rm -rf <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/Packages/openssh-7.4p1-21.el7.x86_64.rpm
+rm -rf <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/Packages/openssh-server-7.4p1-21.el7.x86_64.rpm
+rm -rf <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/Packages/iwl*
+rm -rf <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/Packages/alsa-firmware-1.0.28-2.el7.noarch
+rm -rf <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/Packages/aic94xx-firmware-30-6.el7.noarch
+rm -rf <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/Packages/ivtv-firmware-20080701-26.el7.noarch
+rm -rf <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/Packages/alsa-tools-firmware-1.1.0-1.el7.x86_64
+rm -f rm_rpm.sh
+rm -rf <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/Packages/rsync-3.0.9-18.el7.x86_64.rpm
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD/Packages <span class="o">&amp;&amp;</span> createrepo -dpo .. .
+<span class="k">if</span> <span class="o">[</span> -z <span class="nv">$1</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+	createrepo -g <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/comps/comps.xml <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD
+<span class="k">else</span>
+	createrepo -g <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/comps/comps_<span class="si">${</span><span class="nv">1</span><span class="si">}</span>.xml <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD
+<span class="k">fi</span>
+
+<span class="c1">#cp -fr ${workdir}/isolinux.cfg ${workdir}/anaconda/createCD/isolinux/isolinux.cfg</span>
+
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD
+
+mkisofs -V <span class="s2">&#34;dtos 7 x86_64&#34;</span> -o <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">ISONAME</span><span class="si">}</span> -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size <span class="m">4</span> -boot-info-table -R -J -v -T -eltorito-alt-boot -bimages/efiboot.img -no-emul-boot <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/anaconda/createCD
+
+implantisomd5 <span class="si">${</span><span class="nv">workdir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">ISONAME</span><span class="si">}</span>
+
+<span class="nb">set</span> +x
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="八一些相关资料">八.一些相关资料</h2>
+<p><a href="https://blog.csdn.net/native_lee/article/details/108872458">iso镜像替换megaraid_sas驱动</a></p>
+<p><a href="https://its201.com/article/chyq112366/90107753">使用Centos7.3定制自定义ISO定制iso</a></p>
+<p><a href="https://blog.csdn.net/weixin_43823244/article/details/122959774">替换CentOS ISO内核</a></p>
+<p><a href="https://blog.csdn.net/tian3559060/article/details/103031153">CentOS7安装光盘修改过程中initrd.img的解包及打包排雷</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/344256963">使用squashfs工具解压并创建的 squashfs.img文件</a></p>
+<p><a href="https://blog.csdn.net/u012318074/article/details/103755729">使用rpmrebuild从rpm包中提取spec文件</a></p>
+<p><a href="https://blog.csdn.net/nikolay/article/details/109485236">Centos7 开机自动加载模块</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">ZhangKQ</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-04-24
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/wechat-qr-code.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/qrcode/alipay-qr-code.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/linux/">linux</a>
+          <a href="/tags/centos/">centos</a>
+          <a href="/tags/iso/">iso</a>
+          <a href="/tags/initrd.img/">initrd.img</a>
+          <a href="/tags/squashfs.img/">squashfs.img</a>
+          <a href="/tags/%E8%A7%A3%E5%8E%8B/">解压</a>
+          <a href="/tags/%E6%89%93%E5%8C%85/">打包</a>
+          <a href="/tags/%E8%A7%A3%E5%8E%8Biso/">解压iso</a>
+          <a href="/tags/%E6%89%93%E5%8C%85iso/">打包iso</a>
+          <a href="/tags/%E7%94%9F%E6%88%90iso/">生成iso</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/linux/tools/linux%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86%E5%99%A8logrotate/">
+            <span class="next-text nav-default">[linux]Linux日志管理工具logrotate</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wdyxzkq@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/dysoso" class="iconfont icon-github" title="github"></a>
+      <a href="https://gitee.com/dysoso" class="iconfont icon-gitlab" title="gitlab"></a>
+  <a href="https://blog.nevergiveup.tech/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://blog.nevergiveup.tech/">blog.nevergiveup.tech</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span><a href="https://beian.miit.gov.cn/">蜀ICP备2021005948号-1</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'never-give-up', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

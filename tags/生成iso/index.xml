@@ -10,10 +10,10 @@
     <lastBuildDate>Wed, 20 Apr 2022 09:45:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/%E7%94%9F%E6%88%90iso/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[linux] 替换ISO内核并生成自定义iso镜像文件</title>
-      <link>https://blog.nevergiveup.tech/post/linux/%E6%9B%BF%E6%8D%A2iso%E5%86%85%E6%A0%B8%E5%B9%B6%E7%94%9F%E6%88%90%E8%87%AA%E5%AE%9A%E4%B9%89iso%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6/</link>
+      <link>https://blog.nevergiveup.tech/post/linux/iso/%E6%9B%BF%E6%8D%A2iso%E5%86%85%E6%A0%B8%E5%B9%B6%E7%94%9F%E6%88%90%E8%87%AA%E5%AE%9A%E4%B9%89iso%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6/</link>
       <pubDate>Wed, 20 Apr 2022 09:45:56 +0800</pubDate>
       
-      <guid>https://blog.nevergiveup.tech/post/linux/%E6%9B%BF%E6%8D%A2iso%E5%86%85%E6%A0%B8%E5%B9%B6%E7%94%9F%E6%88%90%E8%87%AA%E5%AE%9A%E4%B9%89iso%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6/</guid>
+      <guid>https://blog.nevergiveup.tech/post/linux/iso/%E6%9B%BF%E6%8D%A2iso%E5%86%85%E6%A0%B8%E5%B9%B6%E7%94%9F%E6%88%90%E8%87%AA%E5%AE%9A%E4%B9%89iso%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6/</guid>
       <description>[TOC] 替换ISO内核并生成自定义iso镜像文件 一些说明 initrd.img 什么是initrd?安装系统引到模式下的RAM镜像 initrd 的英文含义是 boot loader initialized RAM disk，就是由</description>
     </item>
     

@@ -49,7 +49,7 @@
 <meta itemprop="name" content="[linux]linux磁盘管理及本地文件系统&amp;磁盘挂载">
 <meta itemprop="description" content="linux磁盘管理及本地文件系统&amp;磁盘挂载 一.linux磁盘管理 二.本地文件系统&amp;磁盘挂载 查看磁盘挂载情况 1 2 3 4 5 #查看挂"><meta itemprop="datePublished" content="2021-09-13T15:37:56+08:00" />
 <meta itemprop="dateModified" content="2022-02-10T16:37:56+08:00" />
-<meta itemprop="wordCount" content="462">
+<meta itemprop="wordCount" content="469">
 <meta itemprop="keywords" content="linux,磁盘管理,本地文件系统,ext4,磁盘分区,磁盘挂载," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[linux]linux磁盘管理及本地文件系统&amp;磁盘挂载"/>
 <meta name="twitter:description" content="linux磁盘管理及本地文件系统&amp;磁盘挂载 一.linux磁盘管理 二.本地文件系统&amp;磁盘挂载 查看磁盘挂载情况 1 2 3 4 5 #查看挂"/>
@@ -140,7 +140,7 @@
         <div class="post-category">
             <a href="/categories/linux/"> linux </a>
             </div>
-          <span class="more-meta"> 约 462 字 </span>
+          <span class="more-meta"> 约 469 字 </span>
           <span class="more-meta"> 预计阅读 1 分钟 </span>
         
       </div>
@@ -211,8 +211,8 @@ $: fdisk -l
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 当前未挂载的磁盘为 /dev/sda</span>
-$: fdisk /dev/sda
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 当前未挂载的磁盘为 /dev/vdb</span>
+$: fdisk /dev/vdb
  
 <span class="c1"># 查看帮助信息</span>
  1. 输入 m 显示所有命令列示。
@@ -244,7 +244,7 @@ $: <span class="nv">p</span>  <span class="o">=</span>&gt; 可查看磁盘类型
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$: fdisk /dev/sda
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$: fdisk /dev/vdb
 $: n
 $: 一直回车
 $: w <span class="c1">#保存</span>
@@ -258,7 +258,7 @@ $: w <span class="c1">#保存</span>
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">mke2fs  -t ext4 /dev/sda1
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">mke2fs -t ext4 /dev/vdb
 </code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -277,9 +277,9 @@ $: w <span class="c1">#保存</span>
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 查看挂载信息</span>
 $: lsblk  
 <span class="c1"># 创建文件夹</span>
-$: mkdir /data
+$: mkdir /work
 <span class="c1">#开始挂载</span>
-$: mount /dev/sda1 /data
+$: mount /dev/vdb /work
 </code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -302,12 +302,14 @@ $: mount /dev/sda1 /data
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
+</span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 编辑配置</span>
-$: vi  /etc/fstab 
+$: vim /etc/fstab 
 <span class="c1">#在文件中添加如下：</span>
-/dev/sda1       /data      ext4   defaults   <span class="m">0</span>    <span class="m">0</span>
+/dev/vdb        /work   ext4    defaults        <span class="m">0</span>       <span class="m">0</span>
+/dev/vdc        /workspace      ext4    defaults        <span class="m">0</span>       <span class="m">0</span>
 </code></pre></td></tr></table>
 </div>
 </div>

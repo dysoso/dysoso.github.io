@@ -7,14 +7,14 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh_CN</language>
     <copyright>蜀ICP备2021005948号-1</copyright>
-    <lastBuildDate>Fri, 04 Mar 2022 15:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/build/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 05 Mar 2022 10:37:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/build/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>[linux] RPM打包教程(教程&#43;资料&#43;案例)</title>
-      <link>https://blog.nevergiveup.tech/post/linux/rpm%E6%89%93%E5%8C%85%E6%95%99%E7%A8%8B%E6%96%B0%E6%89%8B%E5%90%91centos/</link>
-      <pubDate>Fri, 04 Mar 2022 15:37:56 +0800</pubDate>
+      <title>[linux] Linux二进制包(RPM包)制作教程(教程&#43;资料&#43;案例)</title>
+      <link>https://blog.nevergiveup.tech/post/linux/build/linux%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8C%85rpm%E5%8C%85%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B/</link>
+      <pubDate>Sat, 05 Mar 2022 10:37:56 +0800</pubDate>
       
-      <guid>https://blog.nevergiveup.tech/post/linux/rpm%E6%89%93%E5%8C%85%E6%95%99%E7%A8%8B%E6%96%B0%E6%89%8B%E5%90%91centos/</guid>
-      <description>RPM打包教程 学习rpm打包，一篇文章就够了 RPM（Redhat Package Manager）是用于Redhat、CentOS、Fedora等Linux</description>
+      <guid>https://blog.nevergiveup.tech/post/linux/build/linux%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8C%85rpm%E5%8C%85%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B/</guid>
+      <description>Linux二进制包(RPM包)制作教程 学习rpm打包，一篇文章就够了 本文详细讲解打包的各个步骤并重点讲述spec文件的编写。 rpm打包过程使</description>
     </item>
     
   </channel>

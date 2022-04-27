@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>二进制包 on Never Give Up</title>
+    <link>https://blog.nevergiveup.tech/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8C%85/</link>
+    <description>Recent content in 二进制包 on Never Give Up</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh_CN</language>
+    <copyright>蜀ICP备2021005948号-1</copyright>
+    <lastBuildDate>Fri, 04 Mar 2022 11:31:56 +0800</lastBuildDate><atom:link href="https://blog.nevergiveup.tech/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8C%85/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[linux] Linux源码包和二进制包安装教程</title>
+      <link>https://blog.nevergiveup.tech/post/linux/build/linux%E6%BA%90%E7%A0%81%E5%8C%85%E5%92%8C%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8C%85%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</link>
+      <pubDate>Fri, 04 Mar 2022 11:31:56 +0800</pubDate>
+      
+      <guid>https://blog.nevergiveup.tech/post/linux/build/linux%E6%BA%90%E7%A0%81%E5%8C%85%E5%92%8C%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8C%85%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</guid>
+      <description>Linux源码包和二进制包安装教程 本文讲述怎么安装源码包，二进制软件包和rpm包。 一.源码包安装 源码包的制作可以参考教程：Linux源码包的</description>
+    </item>
+    
+  </channel>
+</rss>
